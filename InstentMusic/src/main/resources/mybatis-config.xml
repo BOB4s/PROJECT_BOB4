@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Customer" alias="Customer"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Follow" alias="Follow"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />

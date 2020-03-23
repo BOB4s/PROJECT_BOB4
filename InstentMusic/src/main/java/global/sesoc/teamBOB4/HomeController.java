@@ -40,4 +40,9 @@ public class HomeController {
 	public String musicmake() {
 		return "music/musicmake";
 	}
+	@GetMapping("/follow")
+	public String follow() {
+		return "customer/follow";
+	}
+	
 }

@@ -18,6 +18,7 @@ $(function(){
 		<h1>첫페이지데스</h1>
 		<a href="login">로그인</a>
 		<a href="join">회원가입</a>
+		<a href="profile"> 프로필 이예영</a>
 	</div>
 </body>
 </html>

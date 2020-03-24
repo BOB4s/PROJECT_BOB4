@@ -39,7 +39,30 @@
 
 	</delete>
 
+	<select id="getFollowers" parameterType="int" resultType="int">
+		select
+		FOLLOWER_NUMBER
+		from Follow
+		where
+		FOLLOW_NUMBER =#{follow_number}
 
 
+	</select>
+		<select id="getFollowings" parameterType="int" resultType="int">
+		select
+		FOLLOW_NUMBER
+		from Follow
+		where
+		FOLLOWER_NUMBER =#{cust_number}
+
+
+	</select>
+	<select id="searchOne" parameterType="String"
+		resultType="Customer">
+		select *
+		from Customer
+		where
+		cust_nickname =#{cust_nickname}
+	</select>
 
 </mapper>

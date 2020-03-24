@@ -6,8 +6,10 @@
 	<typeAliases>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Customer" alias="Customer"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Follow" alias="Follow"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Post" alias="Post"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />
+		<mapper resource="mapper/postMapper.xml" />
 	</mappers>
 </configuration>

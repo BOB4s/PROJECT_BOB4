@@ -5,8 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var follower_number = 1;
@@ -48,7 +47,28 @@
 			})
 
 		});
+		$("#followList").on("click", function() {
+			var follow_number = 2;
+			$.ajax({
+				method : 'GET',
+				url : 'getFollowers',
+				data : {
+					"follow_number" : follow_number
+				},
+				success :	function followersList(resp) {
+					var data = '';
+					$.each(resp,function(index, item) {
+						data += '<a>'+item+'</a>';				
+									})
+					
 
+					$("#followlists").html(data);
+
+				}
+			})
+
+		});
+	
 		//끝
 	});
 </script>
@@ -59,7 +79,10 @@
 
 
 		<input type="button" id="following" name="following" value="팔로우">
-	
+
+		<input type="button" id="followList" value="리스트 가져오기">
+		<div id="followlists">
+		</div>
 	</div>
 </body>
 </html>

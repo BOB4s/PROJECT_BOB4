@@ -1,5 +1,8 @@
 package global.sesoc.teamBOB4;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,5 +56,13 @@ public class CustomerController {
 		
 		return "";
 	}
-	
+	@RequestMapping(value = "/getFollowers", method = RequestMethod.GET)
+	public String getFollowers(int follow_number,Model model) {
+
+		List<Integer> fList = dao.getFollowers(follow_number);
+		
+		
+		model.addAttribute("fList", fList);
+		return "success";
+	}
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.CustomerMapper">
+
+	<insert id="following" parameterType="Follow">
+		insert into Follow
+		(
+		FOL_NUMBER
+		,FOLLOWER_NUMBER
+		,FOLLOW_NUMBER
+		)
+		values
+		(
+		SEQ_Follow_fol_number.nextval
+		,#{follower_number}
+		,#{follow_number}
+		)
+
+	</insert>
+
+	<select id="checkfollow" parameterType="Follow" resultType="int">
+		select count(*)
+		from Follow
+		where
+		FOLLOWER_NUMBER=#{follower_number}
+		and
+		FOLLOW_NUMBER =#{follow_number}
+
+
+	</select>
+
+	<delete id="unfollowing" parameterType="Follow">
+		delete from Follow
+		where
+		FOLLOWER_NUMBER=#{follower_number}
+		and
+		FOLLOW_NUMBER =#{follow_number}
+
+	</delete>
+
+
+
+
+</mapper>

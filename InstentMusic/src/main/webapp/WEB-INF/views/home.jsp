@@ -63,7 +63,7 @@ $(function(){
 		<a href="login">로그인</a>
 		<a href="join">회원가입</a>
 		<a href="profile"> 프로필 이예영</a>
-		실험용실험용
+		<a href="chattingTemp">채팅연습하러가기</a>
 		
 		<br><br>
 		<span id="target">Please press Enter!</span>

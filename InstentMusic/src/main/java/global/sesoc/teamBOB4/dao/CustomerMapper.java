@@ -18,6 +18,11 @@ public interface CustomerMapper {
 	Customer searchOne(String cust_nickname);
 
 	List<Integer> getFollowings(int cust_number);
+	
+	public int signup(Customer customer);
 
+	public Customer selectOne(Customer customer);
+	
+	public Customer selectEmail(Customer customer);
 
 }

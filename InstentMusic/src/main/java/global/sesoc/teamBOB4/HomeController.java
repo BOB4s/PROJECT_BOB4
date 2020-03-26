@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
@@ -91,5 +93,11 @@ public class HomeController {
 		// 글마다 좋아요나 재생수같은것도 가져와야함
 
 		return "customer/profile";
+	}
+	@RequestMapping(value="/join", method = RequestMethod.POST)
+	public String join(Customer customer) {
+		custdao.signup(customer);
+		
+		return "home";
 	}
 }

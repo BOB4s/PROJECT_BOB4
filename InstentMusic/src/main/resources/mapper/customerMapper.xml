@@ -64,5 +64,48 @@
 		where
 		cust_nickname =#{cust_nickname}
 	</select>
-
+	<!-- 회원가입 -->
+	<insert id="signup" parameterType="Customer">
+		insert into customer(
+			cust_number,
+			cust_id,
+			cust_password,
+			cust_email,
+			cust_nickname
+			<if test="cust_photo_original != null">
+			,
+			cust_photo_original,
+			cust_photo_saved
+			</if>
+			<if test="cust_introduce != null">
+			,
+			cust_introduce
+			</if>
+		)values(
+		seq_customer_cust_number.nextval,
+			#{cust_id},
+			#{cust_password},
+			#{cust_email},
+			#{cust_nickname}
+			<if test="cust_photo_original != null">
+			,
+			#{cust_photo_original},
+			#{cust_photo_saved}
+			</if>
+			<if test="cust_introduce != null">
+			,
+			#{cust_introduce}
+			</if>
+		)
+	</insert>
+	<select id="selectOne" parameterType="Customer" resultType="Customer">
+		select * from customer where cust_id=#{cust_id} 
+		<if test="cust_password != null">
+		and cust_password=#{cust_password}
+		</if>
+	</select>
+	<select id="selectEmail" parameterType="Customer" resultType="Customer">
+		select * from customer where
+		 cust_email = #{cust_email}
+	</select>
 </mapper>

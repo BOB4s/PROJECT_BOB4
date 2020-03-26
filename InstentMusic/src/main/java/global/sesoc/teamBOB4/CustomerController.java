@@ -6,22 +6,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.vo.Follow;
 
-@Controller
 @RestController
+@Controller
 public class CustomerController {
 
 	@Autowired
 	CustomerDao dao;
 
-	
 	@RequestMapping(value = "/following", method = RequestMethod.GET)
 	public String follwing(int follower_number, int follow_number) {
 
@@ -40,7 +42,6 @@ public class CustomerController {
 		return "unfollowed";
 	
 	}
-	
 	@RequestMapping(value = "/followchecking", method = RequestMethod.GET)
 	public String followchecking(int follower_number, int follow_number) {
 
@@ -65,4 +66,25 @@ public class CustomerController {
 		model.addAttribute("fList", fList);
 		return "success";
 	}
+	
+	@RequestMapping(value="/idCheck", method=RequestMethod.GET)
+	public String idCheck(Customer customer) {
+		
+		Customer c = dao.selectOne(customer);
+		
+		if(c == null) {
+			return "success";
+		}
+		return "fail";
+	}
+	@RequestMapping(value = "/emailCheck", method = RequestMethod.GET)
+	public String useremailCheck(Customer customer) {
+		Customer c = dao.selectEmail(customer);
+
+		if (c == null) {
+			return "success";
+		}
+		return "fail";
+	}
+	
 }

@@ -63,7 +63,6 @@ $(function(){
 		<a href="login">로그인</a>
 		<a href="join">회원가입</a>
 		<a href="profile"> 프로필 이예영</a>
-		연결확인
 		<br><br>
 		<span id="target">Please press Enter!</span>
 	</div>

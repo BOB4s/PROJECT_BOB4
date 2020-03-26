@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import global.sesoc.teamBOB4.dao.CustomerMapper;
 import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Follow;
 
@@ -52,5 +53,23 @@ public class CustomerDao {
 		tempList= mapper.getFollowings(custId);
 		return tempList;
 	}
+	
+	public int signup(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		int result = mapper.signup(customer);
+		
+		System.out.println(result);
+		return result;
+	}
 
+	public Customer selectOne(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		return mapper.selectOne(customer);
+	}
+	public Customer selectEmail(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		return mapper.selectEmail(customer);
+	}
 }

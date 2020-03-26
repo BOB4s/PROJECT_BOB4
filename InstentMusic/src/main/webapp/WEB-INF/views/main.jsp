@@ -8,7 +8,7 @@
 </head>
 <body>
 로그인 후 메인 페이지
-<a href="musicmake">작곡</a>
+<a href="musiclist">MyMusic</a>
 <a href="follow">follow</a>
 </body>
 </html>

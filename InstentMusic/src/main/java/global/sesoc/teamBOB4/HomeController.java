@@ -48,6 +48,11 @@ public class HomeController {
 		return "main";
 	}
 
+	@GetMapping("/musiclist")
+	public String musiclist() {
+		return "music/musiclist";
+	}
+
 	@GetMapping("/musicmake")
 	public String musicmake() {
 		return "music/musicmake";

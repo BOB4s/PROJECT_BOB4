@@ -50,6 +50,11 @@ public class HomeController {
 		return "main";
 	}
 
+	@GetMapping("/musiclist")
+	public String musiclist() {
+		return "music/musiclist";
+	}
+
 	@GetMapping("/musicmake")
 	public String musicmake() {
 		return "music/musicmake";
@@ -72,7 +77,7 @@ public class HomeController {
 		List<Integer> followingList=custdao.getFollowings(cust_number);
 		int followings=followingList.size();
 		List<Post> ListAll =  postdao.getAll(cust_number);*/
-	
+		
 		Customer customersData = new Customer();
 		customersData.setCust_introduce("이지은입니다");
 		customersData.setCust_nickname("IU");

@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MusicList</title>
 </head>
 <body>
-로그인 후 메인 페이지
-<a href="musiclist">MyMusic</a>
-<a href="follow">follow</a>
+<button>My Music List</button>
+<button>Temporary List</button>
+<a href="musicmake"><button>New Music Make</button></a>
 </body>
 </html>

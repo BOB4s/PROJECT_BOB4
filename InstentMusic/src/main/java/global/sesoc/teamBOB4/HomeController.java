@@ -76,10 +76,6 @@ public class HomeController {
 		int followings=followingList.size();
 		List<Post> ListAll =  postdao.getAll(cust_number);*/
 		
-		
-		
-		
-		
 		Customer customersData = new Customer();
 		customersData.setCust_introduce("이지은입니다");
 		customersData.setCust_nickname("IU");

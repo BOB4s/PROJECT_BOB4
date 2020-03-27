@@ -169,8 +169,7 @@ h1 {
 }
 
 #status-label {
-	display: block;
-	float: left;
+	display: block;x`
 	width: 75%;
 	margin: 10px 0;
 	font-style: italic;
@@ -220,13 +219,32 @@ h1 {
 		<h1>HTML5 WebSocket chat</h1>
 	</header>
 	<article>
-		<label id="status-label">Status...</label> <input type="text"
-			id="name-view" placeholder="닉네임" /> <input type="text"
-			id="text-view" placeholder="메시지" /> <input type="button"
-			id="send-button" value="Send!" />
+		<label id="status-label">Status...</label> 
+		
+		
+		<%-- <input type="hidden" value="${opp.Name}"> --%>
+		<div class="inbox_list_fullscrollable_chatrooms">
+			<div class="chatrooms_inner"  style="height:78px;overflow:hidden;width: 267px;padding-right: 30px ">
+			<ul class="chatroomList_lists">
+				<li class="inbox__item">
+					<div tabindex="0" class="inboxItem_picture"></div>
+					<!-- <time class="relativeTime" title="Posted on 27 March 2020 13:42" datetime="sysdate"></time> -->
+				</li>
+			</ul>
+			
+			</div>
+		
+		</div>
+		
+		<input type="hidden" value="Jaysland">Jaysland
+		
+		
+		<input type="text" id="name-view" placeholder="닉네임" /> 	
 		<div class="clear"></div>
 		<div id="chat-area"></div>
-		<input type="button" id="stop-button" value="Disconnect" />
+		
+		<input type="text" id="text-view" placeholder="메시지" />
+		 <input type="button" id="send-button" value="Send!" />
 	</article>
 	<footer></footer>
 </body>

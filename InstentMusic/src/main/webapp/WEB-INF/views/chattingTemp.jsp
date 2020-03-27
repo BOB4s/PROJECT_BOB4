@@ -7,9 +7,10 @@
 <title>WebSocket chat client</title>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-	/**
+	
+	/* 
 	 * Executed when the page has finished loading.
-	 */
+	 
 	window.onload = function() {
 
 		// Create a reference for the required DOM elements.
@@ -25,14 +26,14 @@
 
 		/**
 		 * WebSocket onopen event.
-		 */
+		 
 		socket.onopen = function(event) {
 			label.innerHTML = "Connection open";
 		}
 
 		/**
 		 * WebSocket onmessage event.
-		 */
+		
 
 		socket.onmessage = function(event) {
 			if (typeof event.data === "string") {
@@ -56,7 +57,7 @@
 
 		/**
 		 * WebSocket onclose event.
-		 */
+		
 		socket.onclose = function(event) {
 			var code = event.code;
 			var reason = event.reason;
@@ -72,14 +73,14 @@
 
 		/**
 		 * WebSocket onerror event.
-		 */
+		
 		socket.onerror = function(event) {
 			label.innerHTML = "Error: " + event;
 		}
 
 		/**
 		 * Disconnect and close the connection.
-		 */
+	
 		buttonStop.onclick = function(event) {
 			if (socket.readyState == WebSocket.OPEN) {
 				socket.close();
@@ -88,14 +89,14 @@
 
 		/**
 		 * Send the message and empty the text field.
-		 */
+		
 		buttonSend.onclick = function(event) {
 			sendText();
 		}
 
 		/**
 		 * Send the message and empty the text field.
-		 */
+	
 		textView.onkeypress = function(event) {
 			if (event.keyCode == 13) {
 				sendText();
@@ -104,7 +105,7 @@
 
 		/**
 		 * Handle the drop event.
-		 */
+		
 		document.ondrop = function(event) {
 			var file = event.dataTransfer.files[0];
 			socket.send(file);
@@ -114,14 +115,14 @@
 
 		/**
 		 * Prevent the default behaviour of the dragover event.
-		 */
+		
 		document.ondragover = function(event) {
 			event.preventDefault();
 		}
 
 		/**
 		 * Send a text message using WebSocket.
-		 */
+		
 		function sendText() {
 			if (socket.readyState == WebSocket.OPEN) {
 
@@ -134,14 +135,152 @@
 						"userMessage" : textView.value
 					},
 					success : function(resp) {
-						chatArea.innerHTML = chatArea.innerHTML + "<p><strong>" +resp + "</strong>" + "</p>";
-						
+						chatArea.innerHTML = chatArea.innerHTML + "<p><strong>"
+								+ resp + "</strong>" + "</p>";
+
 					}
 				});
 				textView.value = "";
 			}
 		}
+	}*/
+	/**
+	* Executed when the page has finished loading.
+	*/
+	window.onload = function () {
+
+	    // Create a reference for the required DOM elements.
+	    var nameView = document.getElementById("name-view");
+	    var textView = document.getElementById("text-view");
+	    var buttonSend = document.getElementById("send-button");
+	    var buttonStop = document.getElementById("stop-button");
+	    var label = document.getElementById("status-label");
+	    var chatArea = document.getElementById("chat-area");
+
+	    // Connect to the WebSocket server!
+	    var socket = new WebSocket("ws://echo.websocket.org/");
+
+	    /**
+	    * WebSocket onopen event.
+	    */
+	    socket.onopen = function (event) {
+	        label.innerHTML = "Connection open";
+	    }
+
+	    /**
+	    * WebSocket onmessage event.
+	    */
+	    socket.onmessage = function (event) {
+	        if (typeof event.data === "string") {
+	            
+	            // Create a JSON object.
+	            var jsonObject = JSON.parse(event.data);
+
+	            // Extract the values for each key.
+	            var userName = jsonObject.name;
+	            var userMessage = jsonObject.message;
+
+	            // Display message.
+	            chatArea.innerHTML = chatArea.innerHTML + "<p>" + userName + " says: <strong>" + userMessage + "</strong>" + "</p>";
+
+	            // Scroll to bottom.
+	            chatArea.scrollTop = chatArea.scrollHeight;
+	        }
+	        else if (event.data instanceof Blob) {
+
+	            // Get the raw data and create an image element.
+	            var blob = event.data;
+
+	            window.URL = window.URL || window.webkitURL;
+	            var source = window.URL.createObjectURL(blob);
+
+	            var image = document.createElement("img");
+	            image.src = source;
+	            image.alt = "Image generated from blob";
+
+	            document.body.appendChild(image);
+	        }
+	    }
+
+	    /**
+	    * WebSocket onclose event.
+	    */
+	    socket.onclose = function (event) {
+	        var code = event.code;
+	        var reason = event.reason;
+	        var wasClean = event.wasClean;
+
+	        if (wasClean) {
+	            label.innerHTML = "Connection closed normally.";
+	        }
+	        else {
+	            label.innerHTML = "Connection closed with message: " + reason + " (Code: " + code + ")";
+	        }
+	    }
+
+	    /**
+	    * WebSocket onerror event.
+	    */
+	    socket.onerror = function (event) {
+	        label.innerHTML = "Error: " + event;
+	    }
+
+	    /**
+	    * Disconnect and close the connection.
+	    */
+	    buttonStop.onclick = function (event) {
+	        if (socket.readyState == WebSocket.OPEN) {
+	            socket.close();
+	        }
+	    }
+
+	    /**
+	    * Send the message and empty the text field.
+	    */
+	    buttonSend.onclick = function (event) {
+	        sendText();
+	    }
+
+	    /**
+	    * Send the message and empty the text field.
+	    */
+	    textView.onkeypress = function (event) {
+	        if (event.keyCode == 13) {
+	            sendText();
+	        }
+	    }
+
+	    /**
+	    * Handle the drop event.
+	    */
+	    document.ondrop = function (event) {
+	        var file = event.dataTransfer.files[0];
+	        socket.send(file);
+
+	        return false;
+	    }
+
+	    /**
+	    * Prevent the default behaviour of the dragover event.
+	    */
+	    document.ondragover = function (event) {
+	        event.preventDefault();
+	    }
+
+	    /**
+	    * Send a text message using WebSocket.
+	    */
+	    function sendText() {
+	        if (socket.readyState == WebSocket.OPEN) {
+	            var json = '{ "name" : "' + nameView.value + '", "message" : "' + textView.value + '" }';
+	            socket.send(json);
+
+	            textView.value = "";
+	        }
+	    }
 	}
+
+	
 </script>
 <style type="text/css">
 * {
@@ -218,11 +357,11 @@ h1 {
 	<header>
 		<h1>HTML5 WebSocket chat</h1>
 	</header>
-	<article>
+	<%-- <article>
 		<label id="status-label">Status...</label> 
 		
 		
-		<%-- <input type="hidden" value="${opp.Name}"> --%>
+		<input type="hidden" value="${opp.Name}">
 		<div class="inbox_list_fullscrollable_chatrooms">
 			<div class="chatrooms_inner"  style="height:78px;overflow:hidden;width: 267px;padding-right: 30px ">
 			<ul class="chatroomList_lists">
@@ -247,5 +386,17 @@ h1 {
 		 <input type="button" id="send-button" value="Send!" />
 	</article>
 	<footer></footer>
-</body>
+</body> --%>
+
+ <article>
+            <label id="status-label">Status...</label>
+            <input type="text" id="name-view" placeholder="Your name" />
+            <input type="text" id="text-view" placeholder="Type your message..." />
+            <input type="button" id="send-button" value="Send!" />
+            <div class="clear"></div>
+            <div id="chat-area"></div>
+            <input type="button" id="stop-button" value="Disconnect" />
+        </article>
+        <footer></footer>
+    </body>
 </html>

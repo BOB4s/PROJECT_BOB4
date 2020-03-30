@@ -64,6 +64,11 @@ public class HomeController {
 	public String follow() {
 		return "customer/follow";
 	}
+	@GetMapping("/chattingTemp")
+	public String chattingTemp() {
+		return "chattingTemp";
+	}
+
 
 	@GetMapping("/profile")
 	public String profile(Model model) {

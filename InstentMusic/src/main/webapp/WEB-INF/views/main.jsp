@@ -10,5 +10,8 @@
 로그인 후 메인 페이지
 <a href="musiclist">MyMusic</a>
 <a href="follow">follow</a>
+		<a href="profile"> 프로필 이예영</a>
+		<a href="chattingTemp">채팅연습하러가기</a>
+
 </body>
 </html>

@@ -13,6 +13,7 @@
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
+<script src="https://github.com/dominikhofacker/audiovisualization.git>"></script>
 <script>
 $(function(){
 	var i = 0 ;

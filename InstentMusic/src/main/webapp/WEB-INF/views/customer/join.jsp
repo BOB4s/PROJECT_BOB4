@@ -11,27 +11,66 @@
 		width : 500px;
 		margin : 0 auto;
 	}
-	.header {
+	.img_wrap {
+		width: 300px;
+		margin-top: 50px;
 	}
-	img {
-		width : 30px;
+	.img_wrap img{
+		max-width: 100%;
 	}
+	
 	
 </style>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script>
+function formCheck(){
+	var password = document.getElementById("cust_password").value;
+	var password2 = document.getElementById("cust_password2").value;
+	if (password!== password2) {
+		$("#pwdCheck").css("color","red");
+		$("#pwdCheck").text("비밀번호가 맞지 않습니다.");
+		document.getElementById("pass_word2").select();
+		return;
+	}
+	var mail = document.getElementById("cust_email").value;
+	var mailCheck = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+		if(mailCheck.test(mail)==false){
+			alert("올바른 Email 형식을 입력해 주세요.");
+			document.getElementById("cust_email").select();
+			return ;
+		}
+}
+
+var sel_file;
+$(document).ready(function(){
+	$("#input_img").on("change",handleImgFileSelect);
+});
+	function handleImgFileSelect(e){
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+
+	filesArr.forEach(function(f){
+		if(!f.type.match("image.*")){
+			alert("이미지 파일을 업로드 해주세요.");
+			return;
+		}
+		sel_file=f;
+		var reader = new FileReader();
+		reader.onload = function(e){
+			$("#img").attr("src",e.target.result);	
+		}
+		reader.readAsDataURL(f);	
+		});
+}
 $(function(){
 	$("#cust_id").on('keyup',function(){
 		var custid = $('#cust_id').val();
 		$("#idCheck").text('');
-		// 입력한 아이디가 사용가능한지 여부 체크
 		$.ajax({
 			type : "GET"
 			,url : "idCheck"
 			,data : {"cust_id" : custid}
 			,success : function(resp){
-				// 사용 가능한 경우 : 'success'
-				// 사용 불가능한 경우 : 'fail'	
 				if(resp == 'success'){
 					$("#idCheck").css("color","blue");
 					$("#idCheck").text("사용가능한 아이디입니다.");
@@ -46,7 +85,6 @@ $(function(){
 	})
 	$("#cust_email").on("keyup", function() {
 		var email = $("#cust_email").val();
-
 		$.ajax({
 			type : 'GET',
 			url : "emailCheck",
@@ -86,13 +124,13 @@ $(function(){
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" id="cust_password2" name="cust_password"
+			<td><input type="password" id="cust_password" name="cust_password"
 		    placeholder="비밀번호를 입력하세요" /></td> 
 		</tr>
 		<tr>
 			<th>비밀번호 확인</th>
 			<td><input type="password" id="cust_password2" 
-			placeholder="비밀번호 재확인" /></td> 
+			placeholder="비밀번호 재확인" /><span id="pwdCheck"></span></td> 
 		</tr>
 		<tr>
 			<th>닉네임</th>
@@ -113,7 +151,9 @@ $(function(){
 		</tr>
 		<tr>
 			<th>프로필 사진</th>
-			<td><input type="file" value="사진 첨부" name="upload"></td>
+			<td><input type="file" value="사진 첨부" name="upload" id="input_img">
+			<div class="img_wrap"><img id="img" /></div>
+			</td>
 		</tr>
 		<tr>
 			<th colspan="2">

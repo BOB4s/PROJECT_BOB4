@@ -17,6 +17,22 @@
 	}
 	.img_wrap img{
 		max-width: 100%;
+	img {
+		width : 60px;
+	}
+	body, html{
+		height: 100%;
+		margin: 0;
+	}
+	.bg{
+		background-image: url("resources/images/join/songwriter.jpg");
+		height: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	th{
+		background-color: white;
 	}
 	
 	
@@ -85,6 +101,7 @@ $(function(){
 	})
 	$("#cust_email").on("keyup", function() {
 		var email = $("#cust_email").val();
+
 		$.ajax({
 			type : 'GET',
 			url : "emailCheck",
@@ -109,10 +126,9 @@ $(function(){
 
 </head>
 <body>
-
+<div class="bg">
 <div id="wrapper">
-	<h2>[ 회원 가입  ] 
-	</h2>
+	<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
 	<form id="join" action="join" method="POST">
 	<table border="1">
 		<tr>
@@ -151,7 +167,7 @@ $(function(){
 		</tr>
 		<tr>
 			<th>프로필 사진</th>
-			<td><input type="file" value="사진 첨부" name="upload" id="input_img">
+			<td><input class="fa text-white" type="file" value="사진 첨부" name="upload" id="input_img">
 			<div class="img_wrap"><img id="img" /></div>
 			</td>
 		</tr>
@@ -163,6 +179,7 @@ $(function(){
 		</tr>
 	</table>
 	</form>
+</div>
 </div>
 </body>
 </html>

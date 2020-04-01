@@ -1,7 +1,9 @@
 package global.sesoc.teamBOB4.dao;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +29,17 @@ public class PostDao {
 		PostMapper mapper =session.getMapper(PostMapper.class);
 		List<Post> tempList = mapper.getAll(cust_number);
 		return tempList;
+	}
+
+	public List<Post> postList(String searchItem, String searchWord) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("searchItem", searchItem);
+		map.put("searchWord", searchWord);
+		List<Post> postList = mapper.listAll(map);
+		
+		return postList;
 	}
 }

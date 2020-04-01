@@ -2,12 +2,15 @@ package global.sesoc.teamBOB4;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -34,9 +37,37 @@ public class HomeController {
 		return "home";
 	}
 
-	@GetMapping("/login")
-	public String login() {
-		return "customer/login";
+	@PostMapping("/login")
+	public String login(Customer customer, boolean rememberMe,
+			Model model, HttpServletResponse response,
+			HttpSession session) {
+		
+		if(rememberMe) {
+			Cookie cookie = new Cookie("savedId", customer.getCust_id());
+			response.addCookie(cookie);
+		}else {
+			Cookie cookie = new Cookie("savedId", null);
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+		}
+		
+		Customer c = custdao.selectOne(customer);
+		
+		if(c != null) {
+			session.setAttribute("login", c.getCust_id());
+			session.setAttribute("nickname", c.getCust_nickname());
+			return "main";
+		}else {
+			model.addAttribute("Error", "Typed down with wrong ID or Password");
+			return "redirect:/";
+		}
+	}
+	
+	//must be linked with HTTP through the 'value=""'
+	@GetMapping(value="")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "home";
 	}
 
 	@GetMapping("/join")

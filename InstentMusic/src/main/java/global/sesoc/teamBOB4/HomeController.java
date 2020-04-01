@@ -66,7 +66,10 @@ public class HomeController {
 	public String chattingTemp() {
 		return "chattingTemp";
 	}
-
+	@GetMapping("/chatBangCreate")
+	public String chatBangCreate() {
+		return "chatBangCreate";
+	}
 
 	@GetMapping("/profile")
 	public String profile(Model model) {

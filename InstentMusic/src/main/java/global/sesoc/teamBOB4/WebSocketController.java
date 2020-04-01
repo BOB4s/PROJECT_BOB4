@@ -31,7 +31,7 @@ import global.sesoc.teamBOB4.vo.Message;
  
  
 @Controller
-@ServerEndpoint(value="/echo.do")
+
 
 
 public class WebSocketController {

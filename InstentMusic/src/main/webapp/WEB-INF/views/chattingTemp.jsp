@@ -76,7 +76,7 @@ h1 {
 	clear: both;
 }
 
-div.friends-Bar {
+div.friends_bar {
 	margin-top :5%;
 	margin-left: 10%; width : 20%;
 	float: left;
@@ -106,8 +106,13 @@ div.friends_bar_list{
 </head>
 <body>
 	<div id="wrapper">
-		<div class="friends-Bar">
-			자기 프로필 채팅방 리스트 쭈욱
+		<div class="friends_bar">
+			자기 프로필 
+				<div class="friends_bar_profile">
+				
+				
+				</div>
+			
 				<div class="friends_bar_list">
 				
 				

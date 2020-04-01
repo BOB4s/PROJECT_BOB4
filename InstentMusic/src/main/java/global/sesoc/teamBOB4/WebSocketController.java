@@ -1,56 +1,97 @@
 package global.sesoc.teamBOB4;
  
-import java.util.ArrayList;
-import java.util.List;
  
 import javax.websocket.server.ServerEndpoint;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
- 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+
+import global.sesoc.teamBOB4.dao.MessageDao;
+import global.sesoc.teamBOB4.vo.Message;
  
-import javax.websocket.RemoteEndpoint.Basic;
  
 @Controller
-@ServerEndpoint(value="/echo.do")
+
+
+
 public class WebSocketController {
-    
-	@OnOpen
-	public void handleOpen() {
-	// 콘솔에 접속 로그를 출력한다.
-	System.out.println("client is now connected...");
-	}
+	
+	   private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());
+	static Boolean runCheck = false;
+	@Autowired
+	MessageDao mesdao;
+	   @OnOpen
+	    public void onOpen(Session session) {
+	        System.out.println(session);
+	        clients.add(session);
+	    }
+	    
+	    @OnClose
+	    public void onClose(Session session) {
+	        clients.remove(session);
+	    }
 	// WebSocket으로 메시지가 오면 요청되는 함수
-	/* @OnMessage */
-	@GetMapping("/socketsend")
-	public @ResponseBody String handleMessage(String userName,String userMessage) {
+	
+	/*
+	 * @OnMessage public void onMessage(String message, Session session) throws
+	 * IOException { System.out.println(message); synchronized(clients) {
+	 * for(Session client : clients) { if(!client.equals(session)) {
+	 * client.getBasicRemote().sendText(message); } } } }
+	 */
+	 
+	/*
+	 * @OnMessage public void onmessage(String message){
+	 * System.out.println("여깁니다 시발"); }
+	 */
+
+	 @GetMapping("/pastChatGet")
+	 public @ResponseBody List<Message> pastChatGet(int messangerRoom){
+		 List<Message> MsList = mesdao.getChatedAll(messangerRoom);
+		 
+		 return MsList;
+	 }
+	@RequestMapping(value = "/socketsend", method = RequestMethod.GET )
+	public @ResponseBody List<Message>  handleMessage(Message mstemp) 
+	{
+
+	// 메시지 내용을 저장하는
+		if(mstemp.getMes_File()==null) {
+			mstemp.setMes_File("");
+		}
+		 mesdao.savedMessage(mstemp);
 		
-	// 메시지 내용을 콘솔에 출력한다.
-	System.out.println("receive from client : " + userName+"!!!"+userMessage);
-	// 에코 메시지를 작성한다.
-	String replymessage = "echo " + userName+"!!!"+userMessage;
-	// 에코 메시지를 콘솔에 출력한다.
-	System.out.println("send to client : "+userName+"!!!"+userMessage);
-	
-	
+		List<Message> MsList = mesdao.getChatedAll(mstemp.getMessangerRoom());
+		
+
+		
+		
 	// 에코 메시지를 브라우저에 보낸다.
-	return replymessage;
+		//메시지 리스트를 주는것로 바꿔야한다.
+	return MsList;
+	
 	}
 	// WebSocket과 브라우저가 접속이 끊기면 요청되는 함수
-	@OnClose
-	public void handleClose() {
-	// 콘솔에 접속 끊김 로그를 출력한다.
-	System.out.println("client is now disconnected...");
-	}
+
 	// WebSocket과 브라우저 간에 통신 에러가 발생하면 요청되는 함수.
 	@OnError
 	public void handleError(Throwable t) {

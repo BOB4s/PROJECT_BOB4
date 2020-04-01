@@ -10,5 +10,6 @@ public class MessageList {
 	private String opponentName;
 	private int HowManyChecks;
 	private String recentMessage;
-	private Message message;
+	/* private Message message; */
+	
 }

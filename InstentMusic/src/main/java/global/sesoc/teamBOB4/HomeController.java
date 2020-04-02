@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
+import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
 public class HomeController {

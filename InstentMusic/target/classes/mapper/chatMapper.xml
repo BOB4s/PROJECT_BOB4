@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.ChatMapper">
+	
+	<insert id="createChatRoom" parameterType="MessageList">
+
+		insert into MessageList
+		(
+		messangerRoom
+		,UserName
+		,opponentName
+		,HowManyChecks
+		,recentMessage
+		)
+		values
+		(
+		 SEQ_messangerRoom.nextval
+		,#{UserName}
+		,#{opponentName}
+		,1
+		,#{recentMessage}
+		)
+
+
+	</insert>
+	
+</mapper>

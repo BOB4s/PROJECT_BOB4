@@ -74,21 +74,15 @@ public class CustomerDao {
 		return mapper.selectEmail(customer);
 	}
 
-	public List<String> getDataFromDBsendData(String sendData) {
+	public String getDataFromDBsendData(String sendData) {
 		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
-		List<Customer> AllList = mapper.getAllList();
-		List<String> tempList = new ArrayList<>();
-		for(Customer temp : AllList) {
-			if(temp.getCust_email().equals(sendData)) {
-			String tempData = "eamil/"+sendData;
-				tempList.add(tempData);
-			}
-			else if(temp.getCust_nickname().equals(sendData)) {
-				String tempData = "nickname/"+sendData;
-				tempList.add(tempData);
-			}
-		}
+		Customer c =mapper.searchOne(sendData);
 		
-		return tempList;
+		String reciver ="";
+		
+			if(c!=null) {
+				reciver= c.getCust_nickname();
+			}
+		return reciver;
 	}
 }

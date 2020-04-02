@@ -88,10 +88,10 @@ public class CustomerController {
 		return "fail";
 	}
 	@RequestMapping(value = "/toSendIsCorrect", method = RequestMethod.GET)
-	public List<String> toSendIsCorrect(String sendData) {
-		List<String> tempList =dao.getDataFromDBsendData(sendData);
-		tempList.add("email/ad");
-	return tempList;
+	public String toSendIsCorrect(String sendData) {
+		String reciver =dao.getDataFromDBsendData(sendData);
+		
+	return reciver;
 		
 	}
 	

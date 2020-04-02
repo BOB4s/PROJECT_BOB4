@@ -18,7 +18,7 @@ public class ChatController {
 	@RequestMapping(value = "/CreateChatRoom", method = RequestMethod.POST)
 	public String CreateChatRoom(MessageList newList) {
 
-		int result=chatdao.createChatRoom(newList);
+		int result-=chatdao.createChatRoom(newList);
 		
 		
 		return "chattingTemp";
@@ -26,11 +26,6 @@ public class ChatController {
 
 	@GetMapping("/chattingTemp")
 	public String chattingTemp() {
-		
-		
-		
-		
-		
 		return "chattingTemp";
 	}
 

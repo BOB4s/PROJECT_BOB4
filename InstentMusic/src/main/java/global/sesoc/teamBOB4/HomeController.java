@@ -1,6 +1,5 @@
 package global.sesoc.teamBOB4;
 
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class HomeController {
 	CustomerDao custdao;
 	@Autowired
 	PostDao postdao;
-	
+
 	@GetMapping("/")
 	public String index() {
 		return "home";
@@ -62,35 +61,39 @@ public class HomeController {
 	public String follow() {
 		return "customer/follow";
 	}
+
 	@GetMapping("/chattingTemp")
 	public String chattingTemp() {
 		return "chattingTemp";
 	}
-	@GetMapping("/chatBangCreate")
-	public String chatBangCreate() {
-		return "chatBangCreate";
+
+	@RequestMapping(value = "/popup", method = RequestMethod.GET)
+	public String popup() {
+		return "pop";
 	}
 
 	@GetMapping("/profile")
 	public String profile(Model model) {
-		//닉네임으로 원하는값 찾기
-		// profile 에 파라미터로  >>> String cust_nickname, 를넣고 아래의
+		// 닉네임으로 원하는값 찾기
+		// profile 에 파라미터로 >>> String cust_nickname, 를넣고 아래의
 		// 회원가입 만들어지면 주석 풀면됩니다.
-		/*Customer customersData =custdao.searchOne(cust_nickname);
-		int cust_number =customersData.getCust_number();
-		List<Integer> followersList=custdao.getFollowers(cust_number);
-		int followers=followersList.size();
-		List<Integer> followingList=custdao.getFollowings(cust_number);
-		int followings=followingList.size();
-		List<Post> ListAll =  postdao.getAll(cust_number);*/
-		
+		/*
+		 * Customer customersData =custdao.searchOne(cust_nickname); int cust_number
+		 * =customersData.getCust_number(); List<Integer>
+		 * followersList=custdao.getFollowers(cust_number); int
+		 * followers=followersList.size(); List<Integer>
+		 * followingList=custdao.getFollowings(cust_number); int
+		 * followings=followingList.size(); List<Post> ListAll =
+		 * postdao.getAll(cust_number);
+		 */
+
 		Customer customersData = new Customer();
 		customersData.setCust_introduce("이지은입니다");
 		customersData.setCust_nickname("IU");
 		customersData.setCust_number(123);
-		int followers= 5030;
-		int followings =150;
-		
+		int followers = 5030;
+		int followings = 150;
+
 		model.addAttribute("customersData", customersData);
 		model.addAttribute("followers", followers);
 		model.addAttribute("followings", followings);
@@ -100,10 +103,17 @@ public class HomeController {
 
 		return "customer/profile";
 	}
-	@RequestMapping(value="/join", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(Customer customer) {
 		custdao.signup(customer);
-		
+
 		return "home";
+	}
+	@RequestMapping(value = "/CreateChatRoom", method = RequestMethod.POST)
+	public String CreateChatRoom(String sendData) {
+		System.out.println("ggg");
+		
+		return "chattingTemp";
 	}
 }

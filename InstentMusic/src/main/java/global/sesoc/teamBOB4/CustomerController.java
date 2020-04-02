@@ -1,6 +1,7 @@
 package global.sesoc.teamBOB4;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,5 +87,13 @@ public class CustomerController {
 		}
 		return "fail";
 	}
+	@RequestMapping(value = "/toSendIsCorrect", method = RequestMethod.GET)
+	public List<String> toSendIsCorrect(String sendData) {
+		List<String> tempList =dao.getDataFromDBsendData(sendData);
+		tempList.add("email/ad");
+	return tempList;
+		
+	}
 	
+
 }

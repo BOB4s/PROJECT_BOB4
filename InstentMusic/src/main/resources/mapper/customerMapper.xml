@@ -108,4 +108,9 @@
 		select * from customer where
 		 cust_email = #{cust_email}
 	</select>
+	
+	<select id="getAllList"  resultType="Customer">
+		select * from customer
+		
+	</select>
 </mapper>

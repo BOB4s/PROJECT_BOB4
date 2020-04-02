@@ -108,16 +108,7 @@ body, html {
 </style>
 </head>
 <body>
-	<!-- <div id="wrapper">
-		<a href="login">로그인</a>
-		<a href="join">회원가입</a>
-		<a href="profile"> 프로필 이예영</a>
-
-		<br><br>
-		<span id="target">Please press Enter!</span>
-	</div> -->
-<!-- ///////////////////////////////////////////////// -->
-	<!-- Navbar (sit on top) -->
+	
 <div class="w3-top">
   <div class="w3-bar w3-white w3-card" id="myNavbar">
     <a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>

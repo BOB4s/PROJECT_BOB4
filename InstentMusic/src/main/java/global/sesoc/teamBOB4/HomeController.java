@@ -107,6 +107,7 @@ public class HomeController {
 	@GetMapping("/chatBangCreate")
 	public String chatBangCreate() {
 		return "chatBangCreate";
+	}
 
 	@GetMapping("/profile")
 	public String profile(Model model) {

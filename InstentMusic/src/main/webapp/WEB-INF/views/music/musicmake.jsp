@@ -152,16 +152,20 @@ $(function(){
 		});
 	});
 })
+var amp;
 function setup(){
 	var cnv = createCanvas(200,200);
 	cnv.parent('sketch-target');
 	song = loadSound(path, loaded);
+	amp = new p5.Amplitude();
 }
 function loaded(){
 	song.play();
 }
 function draw(){
 	background(0);
+	var vol = amp.getLevel();
+	ellipse(100,100,200,vol * 200);
 }
 </script>
 </head>

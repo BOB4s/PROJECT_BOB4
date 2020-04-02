@@ -16,11 +16,5 @@ public class ChatDao {
 	@Autowired
 	SqlSession session;
 
-	public int following(Follow follow) {
-	
-		ChatMapper mapper= session.getMapper(ChatMapper.class);
-		return mapper.following(follow);
-		
-	}
 
 }

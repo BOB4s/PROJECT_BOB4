@@ -1,11 +1,7 @@
 package global.sesoc.teamBOB4;
 
-<<<<<<< HEAD
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-=======
->>>>>>> branch 'newsejun' of https://github.com/BOB4s/PROJECT_BOB4.git
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;

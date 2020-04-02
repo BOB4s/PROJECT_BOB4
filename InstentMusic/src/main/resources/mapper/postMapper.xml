@@ -20,6 +20,7 @@
 		</choose>
 	like '%'||#{searchWord}||'%'
 	order by post_number desc
+	limit 0, 20
 	</select>
 	
 	

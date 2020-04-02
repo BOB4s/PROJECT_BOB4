@@ -34,15 +34,15 @@
 			
 			
 	function SendNewChatRoom(){
-		var senderName = document.getElementById("senderName").value;
+		var UserName = document.getElementById("senderName").value;
 		var sendDatas = document.getElementById("sendDatas").value;
-		var firstcontent =document.getElementById("sendContents").value; 
+		var recentMessage =document.getElementById("sendContents").value; 
 		$.ajax({
 			type : "POST"
 			,url : "CreateChatRoom"
-			,data : {"senderName" : senderName,
+			,data : {"UserName" : UserName,
 					"sendDatas" :sendDatas,
-					"firstcontent":firstcontent }
+					"recentMessage":recentMessage }
 			
 			
 				

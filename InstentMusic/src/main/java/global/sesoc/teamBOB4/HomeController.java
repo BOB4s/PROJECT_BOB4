@@ -52,9 +52,8 @@ public class HomeController {
 		Customer c = custdao.selectOne(customer);
 		
 		if(c != null) {
-			session.setAttribute("login", c.getCust_id());
+			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			session.setAttribute("password", c.getCust_password());
 			return "main";
 		}else {
 			model.addAttribute("Error", "Typed down with wrong ID or Password");
@@ -63,7 +62,7 @@ public class HomeController {
 	}
 	
 	//must be linked with HTTP through the 'value=""'
-	@GetMapping(value="")
+	@GetMapping(value="/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "home";

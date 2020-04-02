@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.MusicMapper">
+
+<select id="getSoundlib" parameterType="int" resultType="Sound">
+select sou_type
+from sound_library
+where cust_number = #{cust_number}
+</select>
+
+<insert id="insertSound" parameterType="Sound">
+insert into sound_library(
+sou_number
+,cust_number
+,sou_type
+<if test="sou_name!=null">
+,sou_name
+,sou_saved
+</if>
+)
+values(
+SEQ_SOUND_LIBRARY_SOU_NUMBER.nextval
+,#{cust_number}
+,#{sou_type}
+<if test="sou_name!=null">
+,#{sou_name}
+,#{sou_saved}
+</if>
+)
+</insert>
+</mapper>

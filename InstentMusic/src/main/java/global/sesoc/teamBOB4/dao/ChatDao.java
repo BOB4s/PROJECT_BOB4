@@ -18,14 +18,9 @@ public class ChatDao {
 
 	public int following(Follow follow) {
 	
-		CustomerMapper mapper= session.getMapper(CustomerMapper.class);
+		ChatMapper mapper= session.getMapper(ChatMapper.class);
 		return mapper.following(follow);
 		
 	}
 
-	public List<Post> getAll(int cust_number) {
-		PostMapper mapper =session.getMapper(PostMapper.class);
-		List<Post> tempList = mapper.getAll(cust_number);
-		return tempList;
-	}
 }

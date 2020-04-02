@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
@@ -54,6 +55,7 @@ public class HomeController {
 		if(c != null) {
 			session.setAttribute("login", c.getCust_id());
 			session.setAttribute("nickname", c.getCust_nickname());
+			session.setAttribute("password", c.getCust_password());
 			return "main";
 		}else {
 			model.addAttribute("Error", "Typed down with wrong ID or Password");
@@ -137,4 +139,26 @@ public class HomeController {
 		
 		return "home";
 	}
+	@GetMapping("/deleteView")
+	public String deletePage() {
+		
+		return "customer/withdrawal";
+	}
+	
+	@PostMapping("/customerDelete")
+	public String customerDelete(Customer customer,HttpSession session, RedirectAttributes rttr) {
+		
+		String sessionpwd = (String)session.getAttribute("password");
+		
+		String vopwd = customer.getCust_password();
+		
+		if(!(sessionpwd.equals(vopwd))) {
+			rttr.addFlashAttribute("msg",false);
+			return "redirect:/customer/withdrawal";
+		}
+		custdao.withdrawal(customer);
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 }

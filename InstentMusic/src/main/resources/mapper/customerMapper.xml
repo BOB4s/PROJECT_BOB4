@@ -113,4 +113,9 @@
 		select * from customer
 		
 	</select>
+	
+	<delete id="deleteCustomer" parameterType="Customer">
+		delete from customer where
+		cust_password = #{cust_password} 
+	</delete>
 </mapper>

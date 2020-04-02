@@ -25,6 +25,6 @@
 		<a href="profile"> 프로필 이예영</a>
 		<a href="chattingTemp">채팅연습하러가기</a>
 		<input type="button" value="챗방" onclick="chatOpen()">
-
+		<a href="deleteView">탈주닌자</a>
 </body>
 </html>

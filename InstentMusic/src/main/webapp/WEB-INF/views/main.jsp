@@ -24,7 +24,11 @@
 <a href="follow">follow</a>
 		<a href="profile"> 프로필 이예영</a>
 		<a href="chattingTemp">채팅연습하러가기</a>
+<<<<<<< HEAD
 		<input type="button" value="챗방" onclick="chatOpen()">
 
+=======
+		<a href="chatBangCreate"> 채팅방만들기</a>
+>>>>>>> refs/heads/master
 </body>
 </html>

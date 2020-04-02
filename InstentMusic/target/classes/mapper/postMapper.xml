@@ -10,6 +10,17 @@
 	
 	
 	</select>
+	<select id="listAll" resultType="map">
+	select * from post 
+	where 
+		<choose>
+			<when test="searchItem == 'title'">mus_title</when>
+			<when test="searchItem == 'content'">post_content</when>
+			<when test="searchItem == 'writer'">post_nickname</when>
+		</choose>
+	like '%'||#{searchWord}||'%'
+	order by post_number desc
+	</select>
 	
 	
 </mapper>

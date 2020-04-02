@@ -24,5 +24,11 @@
 
 
 	</insert>
+	<select id="getUsersChatRoom" parameterType="String" resultType="MessageList">
+	select * from MessageList
+	where UserName = #{UserName}
+	
+	</select>
+	
 	
 </mapper>

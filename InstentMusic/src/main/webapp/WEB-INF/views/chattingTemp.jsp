@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,68 +77,59 @@ h1 {
 }
 
 div.friends_bar {
-	margin-top :5%;
-	margin-left: 10%; width : 20%;
+	margin-top: 5%;
+	margin-left: 10%;
+	width: 20%;
 	float: left;
 	box-sizing: border-box;
 	background-color: white;
 	border-right: 3px solid black;
-
-	}
+}
 
 div.chattings {
-	margin-top :5%;
-	margin-right: 10%; width : 60%;
+	margin-top: 5%;
+	margin-right: 10%;
+	width: 60%;
 	float: right;
 	box-sizing: border-box;
 	background-color: white;
 }
-div.friends_bar_list{
-    margin: 20px 0;
-    height: 450px;
-    padding: 20px;
-    max-height: 450px;
-    overflow-y: auto;
-	
-	
+
+div.friends_bar_list {
+	margin: 20px 0;
+	height: 450px;
+	padding: 20px;
+	max-height: 450px;
+	overflow-y: auto;
 }
 </style>
 </head>
 <body>
 	<div id="wrapper">
 		<div class="friends_bar">
-			자기 프로필 
-				<div class="friends_bar_profile">
-				
-				
-				</div>
-			
-				<div class="friends_bar_list">
-				
-				
-				
-				</div>
-			</div>
-			<!-- 		<div class="inbox_list_fullscrollable_chatrooms">
-			<div class="chatrooms_inner"
-				style="height: 78px; overflow: hidden; width: 267px; padding-right: 30px">
-				<ul class="chatroomList_lists">
-					<li class="inbox__item">
-						<div tabindex="0" class="inboxItem_picture"></div> <time class="relativeTime" title="Posted on 27 March 2020 13:42" datetime="sysdate"></time>
-					</li>
-				</ul>
 
-			</div>
-
-		</div> -->
-
-
+		
+			<div id="friends_bar_profile" class="friends_bar_profile"></div>
+	<%-- <c:forEach var="room" items="${RoomList}" >
+					<p>room.messangerRoom</p>
+					<br>
+					<p>room.UserName</p>
+					<br>
+					<p>room.opponentName</p>
+					<br>
+					<p>room.HowManyChecks</p>
+					<br>
+					<p>room.recentMessage</p>
+					<br>
+					
+				</c:forEach> --%>
+			<div class="friends_bar_list"></div>
 
 		</div>
 		<div class="chattings">
-			Jaysland&nbsp;&nbsp;&nbsp;<input type="button" value="버튼을 넣어요">
-			<input type="hidden" value="${opp.Name}"> <input
-				type="hidden" value="1" id="messangerRoom"> <input
+			<span>user</span>&nbsp;&nbsp;&nbsp;<input type="button"
+				value="버튼을 넣어요"> <input type="hidden" value="${opp.Name}">
+			<input type="hidden" value="1" id="messangerRoom"> <input
 				type="hidden" value="7777" id="sender_number">
 
 			<ul id="chat-area"></ul>
@@ -164,6 +155,7 @@ div.friends_bar_list{
 		var chatArea = document.getElementById("chat-area");
 
 		socket.emit('add user', username);
+		/* 		getList(); */
 		init();
 
 		$('form').submit(function() {

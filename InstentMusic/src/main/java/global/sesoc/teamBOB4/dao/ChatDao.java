@@ -23,6 +23,14 @@ public class ChatDao {
 		return res;
 	}
 
+	public List<MessageList> getUsersChatRoom(String username) {
+		ChatMapper mapper =session.getMapper(ChatMapper.class);
+		List<MessageList> userList= null;
+		 userList= mapper.getUsersChatRoom(username);
+		 
+		return userList;
+	}
+
 	
 	
 	

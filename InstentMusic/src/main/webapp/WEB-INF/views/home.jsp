@@ -12,10 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
+<script src="resources/js/p5.min.js"></script>
+<script src="resources/js/p5.sound.min.js"></script>
+<script src="resources/js/sketch.js"></script>
 <script>
+var path, song, i;
 $(function(){
-	var i = 0 ;
+	i = 0 ;
 	 
 	function fname(){
 		   i++;
@@ -26,24 +29,17 @@ $(function(){
 
 	var sounds = new Array();
 	for(var j=0; j<26; j++){
-		sounds[j] = new Howl({
-			src: ['resources/sound/beatbox/bb'+j+'.mp3']
-		});
+		sounds[j] = 'resources/sound/beatbox/bb'+j+'.mp3'
 	}
 	
 	$(document).keydown(function(event){
 		for(var k=0; k<26; k++){
 			var idx = k+65;
 			if(event.keyCode == idx){
-				sounds[k].play();
+				path = sounds[k];
+				setup();
 			}
 		}
-		
-		if(i>30||i==0){
-			Howler.volume(0.0);
-		}else{
-			Howler.volume(1.0);
-			}
 	})
 	/*1초마다 fname 함수 실행*/
 	$(document).keydown(function(event){
@@ -60,7 +56,22 @@ $(function(){
 		}
 	});
 })
-
+function setup(){
+	song = loadSound(path, loaded);
+	if(i>30||i==0){
+		song.setVolume(0.0);
+	}else{
+		song.setVolume(1.0);
+	}
+}
+function loaded(){
+	song.play();
+}
+function draw(){
+	
+}
+</script>
+<script>
 //Login block section
 var modal='';
 function loginBlock(){

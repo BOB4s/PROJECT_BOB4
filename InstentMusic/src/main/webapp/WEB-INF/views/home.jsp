@@ -136,9 +136,6 @@ body, html {
 }
 
 /* logo */
-.logo{
-	width: auto;
-}
 .w3-third{
 	color: white;
 	margin-top: 5%;

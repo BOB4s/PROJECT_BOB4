@@ -13,7 +13,6 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/navigation.css">
-<link rel="stylesheet" href="resources/css/home.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
@@ -105,6 +104,154 @@ function login(){
 
 <style type="text/css">
 
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+/* Full height image header */
+.bgimg-1 {
+	position: relative;
+	background-position: center;
+	background-size: cover;
+	background-image: url("resources/images/home/home_background.jpg");
+	min-height: 100%;
+}
+.aboutHeader{
+	position: relateive;
+	background-position: center;
+	background-size: cover;
+	background-image: url("resources/images/home/producing.jpg");
+	height: 100%;
+	height: 400px;
+}
+.tryIt{
+	position: absolute;
+	top: 50%;
+	left: 65%;
+	text-align: center;
+} 
+.w3-button {
+  padding: 16px;
+}
+
+/* logo */
+.logo{
+	width: auto;
+}
+.w3-third{
+	color: white;
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+
+/* Login block */
+body{
+	font-family: Arial, Helvetica, sans-serif;
+}
+#id01{
+	width: auto;
+}
+.container{
+	background-color: #f1f1f1;
+}
+input[type=text], input[type=password]{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+.loginbtn{
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+}
+input:hover{
+	opacity: 0.8;
+}
+.cancelbtn{
+	width: auto;
+	padding: 10px 18px;
+	background-color: #f44336;
+}
+.imgcontainer{
+	text-align: center;
+	margin: 24px 0 12px 0;
+	position: relative;
+}
+.container{
+	padding: 16px;
+}
+span.forgotPassword{
+	float: right;
+	padding-top: 16px;
+}
+.modal{
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+	padding-top: 60px;
+}
+.modal-content{
+	background-color: #fefefe;
+	margin: 5% auto 15% auto;
+	border: 1px solid #888;
+	width: 80%;
+}
+.close{
+	position: absolute;
+	right: 25px;
+	top: 0;
+	color: #000;
+	font-size: 35px;
+	font-weight: bold;
+}
+.close:hover, .close:focus{
+	color: red;
+	cursor: pointer;
+}
+.animate{
+	-webkit-animation: animatezoom 0.6s;
+	animation: animatezoom 0.6s
+}
+@-webkit-keyframes animatezoom {
+	from {-webkit-transform: scale(0)} 
+	to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+	from {transform: scale(0)} 
+	to {transform: scale(1)}
+}
+@media screen and (max-width: 300px) {
+	span.psw {
+		display: block;
+		float: none;
+  }
+	.cancelbtn {
+		width: 100%;
+  }
+}
+
+/* top (logo and sidebar menu)*/
+.navigation{
+	border-bottom-width: 0px;
+	margin-bottom: 0px;
+}
 </style>
 </head>
 <body>

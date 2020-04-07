@@ -5,10 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Instent Music</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="resources/css/navigation.css">
+<link rel="stylesheet" href="resources/css/home.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
@@ -100,177 +105,26 @@ function login(){
 
 <style type="text/css">
 
-body, html {
-  height: 100%;
-  line-height: 1.8;
-}
-
-/* Full height image header */
-.bgimg-1 {
-	position: relative;
-	background-position: center;
-	background-size: cover;
-	background-image: url("resources/images/home/home_background.jpg");
-	min-height: 100%;
-}
-.aboutHeader{
-	position: relateive;
-	background-position: center;
-	background-size: cover;
-	background-image: url("resources/images/home/producing.jpg");
-	height: 100%;
-}
-.tryIt{
-	position: absolute;
-	top: 50%;
-	left: 65%;
-	text-align: center;
-} 
-.w3-bar .w3-button {
-  padding: 16px;
-}
-
-/* logo */
-.logo{
-	width: 60px;
-	margin: -20px;	
-}
-.w3-third{
-	color: white;
-	margin-top: 5%;
-	margin-bottom: 5%;
-}
-
-/* Login block */
-body{
-	font-family: Arial, Helvetica, sans-serif;
-}
-#id01{
-	width: auto;
-}
-.container{
-	background-color: #f1f1f1;
-}
-input[type=text], input[type=password]{
-	width: 100%;
-	padding: 12px 20px;
-	margin: 8px 0;
-	display: inline-block;
-	border: 1px solid #ccc;
-	box-sizing: border-box;
-}
-.loginbtn{
-	background-color: #4CAF50;
-	color: white;
-	padding: 14px 20px;
-	margin: 8px 0;
-	border: none;
-	cursor: pointer;
-	width: 100%;
-}
-input:hover{
-	opacity: 0.8;
-}
-.cancelbtn{
-	width: auto;
-	padding: 10px 18px;
-	background-color: #f44336;
-}
-.imgcontainer{
-	text-align: center;
-	margin: 24px 0 12px 0;
-	position: relative;
-}
-.container{
-	padding: 16px;
-}
-span.forgotPassword{
-	float: right;
-	padding-top: 16px;
-}
-.modal{
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	right: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0,0,0);
-	background-color: rgba(0,0,0,0.4);
-	padding-top: 60px;
-}
-.modal-content{
-	background-color: #fefefe;
-	margin: 5% auto 15% auto;
-	border: 1px solid #888;
-	width: 80%;
-}
-.close{
-	position: absolute;
-	right: 25px;
-	top: 0;
-	color: #000;
-	font-size: 35px;
-	font-weight: bold;
-}
-.close:hover, .close:focus{
-	color: red;
-	cursor: pointer;
-}
-.animate{
-	-webkit-animation: animatezoom 0.6s;
-	animation: animatezoom 0.6s
-}
-@-webkit-keyframes animatezoom {
-	from {-webkit-transform: scale(0)} 
-	to {-webkit-transform: scale(1)}
-}
-  
-@keyframes animatezoom {
-	from {transform: scale(0)} 
-	to {transform: scale(1)}
-}
-@media screen and (max-width: 300px) {
-	span.psw {
-		display: block;
-		float: none;
-  }
-	.cancelbtn {
-		width: 100%;
-  }
-}
 </style>
 </head>
 <body>
 	<!-- Navbar (sit on top) -->
-<div class="w3-top">
-  <div class="w3-bar w3-white w3-card" id="myNavbar">
-    <a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
-    <!-- left-sided navbar links -->
-    <div class="w3-right w3-hide-small">
-      <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-      <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> TEAM</a>
-      <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> WORK</a>
-      <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRICING</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
-    </div>
-    <!-- Hide left-floated links on small screens and replace them with a menu icon -->
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-  </div>
-</div>
-
-<!-- Sidebar on small screens when clicking the menu icon -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">× Close</a>
-  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">ABOUT</a>
-  <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">TEAM</a>
-  <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button">WORK</a>
-  <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">PRICING</a>
-  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a>
-</nav>
+<nav class="navigation">
+		<div class="navigation__column">
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>
+		</div>
+			<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+		</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="#about">About</a>
+			  <a href="#team">Team</a>
+			  <a href="#">Clients</a>
+			  <a href="#">Contact</a>
+		</div>
+	</nav>
 
 <!-- Header with full-height image -->
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
@@ -419,8 +273,16 @@ function onClick(element) {
   captionText.innerHTML = element.alt;
 }
 
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
+
 // Toggle between showing and hiding the sidebar when clicking the menu icon
-var mySidebar = document.getElementById("mySidebar");
+/* var mySidebar = document.getElementById("mySidebar");
 
 function w3_open() {
   if (mySidebar.style.display === 'block') {
@@ -433,7 +295,7 @@ function w3_open() {
 // Close the sidebar with the close button
 function w3_close() {
     mySidebar.style.display = "none";
-}
+} */
 
 </script>
 </body>

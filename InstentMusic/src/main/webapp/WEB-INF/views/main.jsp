@@ -9,7 +9,7 @@
 <title>Main page after login</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="resources/css/sideNavBar.css">
+<link rel="stylesheet" href="resources/css/navigation.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script>
 
@@ -24,6 +24,7 @@ a:link{
 </style>
 </head>
 <body>
+	<!-- Top for logo and navibar -->
 	 <nav class="navigation">
 		<div class="navigation__column">
 			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
@@ -46,13 +47,15 @@ a:link{
 			</div>
 			<div id="mySidenav" class="sidenav">
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			  <a href="#">About</a>
+			  <a href="musiclist"><img class="musicList" alt="musicList" src="resources/images/musicList.png">Music List</a>
 			  <a href="#">Services</a>
 			  <a href="#">Clients</a>
 			  <a href="#">Contact</a>
 			</div>
 		</div>
 	</nav>
+
+<!-- navibar -->
 <a href="musiclist"><img class="musicList" alt="musicList" src="resources/images/musicList.png">Music List</a>
 <a href="follow">Follow</a>
 		<a href="profile"><i class="fa fa-user-o">Profile</i></a>

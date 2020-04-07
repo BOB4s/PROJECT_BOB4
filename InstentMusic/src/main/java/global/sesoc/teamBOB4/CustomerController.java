@@ -87,10 +87,9 @@ public class CustomerController {
 		}
 		return "fail";
 	}
-	@RequestMapping(value = "/toSendIsCorrect", method = RequestMethod.GET)
+	@RequestMapping(value = "/toSendIsCorrect", method = RequestMethod.GET ,produces = "application/text; charset=utf8")
 	public String toSendIsCorrect(String sendData) {
 		String reciver =dao.getDataFromDBsendData(sendData);
-		
 	return reciver;
 		
 	}

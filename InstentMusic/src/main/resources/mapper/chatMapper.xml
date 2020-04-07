@@ -29,6 +29,35 @@
 	where UserName = #{UserName}
 	
 	</select>
+		<select id="getOppsChatRoom" parameterType="String" resultType="MessageList">
+	select * from MessageList
+	where opponentName = #{UserName}
 	
+	</select>
+		<select id="selectmessangerRoom" parameterType="MessageList" resultType="int">
+		
+	select NVL(max(messangerRoom),0)  from MessageList
+	where UserName = #{UserName} and opponentName = #{opponentName}
+
+	</select>
+	<select id="selectmessangerRoomDouble" parameterType="MessageList" resultType="int">
+		
+	select NVL(max(messangerRoom),0)  from MessageList
+	where UserName = #{opponentName} and opponentName = #{UserName}
+
+	</select>
+	<update id="setRecentMessage" parameterType="MessageList">
+	update MessageList set
+	recentMessage = #{recentMessage}
 	
+	where messangerRoom = #{messangerRoom}
+		
+	
+	</update>
+	<select id="getUsersByNumber" parameterType="MessageList" resultType="MessageList">
+	
+		select * from MessageList
+	where messangerRoom = #{messangerRoom}
+	
+	</select>
 </mapper>

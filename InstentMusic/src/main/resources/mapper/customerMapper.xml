@@ -113,4 +113,12 @@
 		select * from customer
 		
 	</select>
+	
+		<select id="getCust_photo_saved" parameterType="String"
+		resultType="String">
+		select cust_photo_saved
+		from Customer
+		where
+		cust_nickname =#{cust_nickname}
+	</select>
 </mapper>

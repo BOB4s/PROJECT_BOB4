@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import global.sesoc.teamBOB4.dao.ChatDao;
 import global.sesoc.teamBOB4.dao.MessageDao;
 import global.sesoc.teamBOB4.vo.Message;
+import global.sesoc.teamBOB4.vo.MessageList;
  
  
 @Controller
@@ -40,6 +42,8 @@ public class WebSocketController {
 	static Boolean runCheck = false;
 	@Autowired
 	MessageDao mesdao;
+	@Autowired
+	ChatDao chatdao;
 	   @OnOpen
 	    public void onOpen(Session session) {
 	        System.out.println(session);
@@ -59,10 +63,7 @@ public class WebSocketController {
 	 * client.getBasicRemote().sendText(message); } } } }
 	 */
 	 
-	/*
-	 * @OnMessage public void onmessage(String message){
-	 * System.out.println("여깁니다 시발"); }
-	 */
+
 
 	 @GetMapping("/pastChatGet")
 	 public @ResponseBody List<Message> pastChatGet(int messangerRoom){
@@ -79,6 +80,10 @@ public class WebSocketController {
 			mstemp.setMes_File("");
 		}
 		 mesdao.savedMessage(mstemp);
+		MessageList msList =new MessageList();
+		msList.setRecentMessage(mstemp.getMes_content());
+		msList.setMessangerRoom(mstemp.getMessangerRoom());
+		chatdao.setRecentMessage(msList);
 		
 		List<Message> MsList = mesdao.getChatedAll(mstemp.getMessangerRoom());
 		

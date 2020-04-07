@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import global.sesoc.teamBOB4.vo.Message;
+import global.sesoc.teamBOB4.vo.MessageList;
 
 @Repository
 public class MessageDao {
@@ -25,6 +26,7 @@ public class MessageDao {
 	public List<Message> getChatedAll(int messangerRoom) {
 		MessageMapper mapper = session.getMapper(MessageMapper.class);
 		return mapper.getChatedAll(messangerRoom);
-	}	
+	}
+
 
 }

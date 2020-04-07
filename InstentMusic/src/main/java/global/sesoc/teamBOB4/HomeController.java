@@ -1,6 +1,5 @@
 package global.sesoc.teamBOB4;
 
-import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
-import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
 public class HomeController {
@@ -81,6 +79,11 @@ public class HomeController {
 		return "main";
 	}
 
+	@GetMapping("/musiclist")
+	public String musiclist() {
+		return "music/musiclist";
+	}
+
 	@GetMapping("/musicmake")
 	public String musicmake() {
 		return "music/musicmake";
@@ -89,6 +92,14 @@ public class HomeController {
 	@GetMapping("/follow")
 	public String follow() {
 		return "customer/follow";
+	}
+	@GetMapping("/chattingTemp")
+	public String chattingTemp() {
+		return "chattingTemp";
+	}
+	@GetMapping("/chatBangCreate")
+	public String chatBangCreate() {
+		return "chatBangCreate";
 	}
 
 	@GetMapping("/profile")
@@ -103,7 +114,7 @@ public class HomeController {
 		List<Integer> followingList=custdao.getFollowings(cust_number);
 		int followings=followingList.size();
 		List<Post> ListAll =  postdao.getAll(cust_number);*/
-	
+		
 		Customer customersData = new Customer();
 		customersData.setCust_introduce("이지은입니다");
 		customersData.setCust_nickname("IU");

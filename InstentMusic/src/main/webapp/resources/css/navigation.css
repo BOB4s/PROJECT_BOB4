@@ -75,3 +75,15 @@
   color: rgba(0, 0, 0, 0.5);
   font-size: 12px;
 }
+
+.logo{
+	width: 50px;
+}
+.w3-third{
+	color: white;
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+.menuBar{
+	color: black;
+}

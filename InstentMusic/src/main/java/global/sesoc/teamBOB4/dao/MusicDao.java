@@ -23,4 +23,9 @@ public class MusicDao {
 		MusicMapper mapper = session.getMapper(MusicMapper.class);
 		return mapper.insertSound(sound);
 	}
+
+	public List<Sound_library> getSounds(Sound_library sound) {
+		MusicMapper mapper = session.getMapper(MusicMapper.class);
+		return mapper.getSounds(sound);
+	}
 }

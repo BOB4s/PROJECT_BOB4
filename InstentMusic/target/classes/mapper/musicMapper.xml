@@ -4,9 +4,16 @@
 <mapper namespace="global.sesoc.teamBOB4.dao.MusicMapper">
 
 <select id="getSoundlib" parameterType="int" resultType="Sound">
-select sou_type
+select distinct sou_type
 from sound_library
 where cust_number = #{cust_number}
+</select>
+
+<select id="getSounds" parameterType="Sound" resultType="Sound">
+select *
+from sound_library
+where cust_number = #{cust_number}
+and sou_type = #{sou_type}
 </select>
 
 <insert id="insertSound" parameterType="Sound">

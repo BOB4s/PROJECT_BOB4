@@ -10,4 +10,6 @@ public interface MusicMapper {
 
 	int insertSound(Sound_library sound);
 
+	List<Sound_library> getSounds(Sound_library sound);
+
 }

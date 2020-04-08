@@ -48,20 +48,18 @@ a:link{
 			</div>
 			<div id="mySidenav" class="sidenav">
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			  <a href="musiclist"><img class="musicList" alt="musicList" src="resources/images/musicList.png">Music List</a>
-			  <a href="#">Services</a>
-			  <a href="#">Clients</a>
-			  <a href="#">Contact</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> 채팅 연습하러 가기</a>
+			  <a href="chatBangCreate"><i class="fa fa-comment-o"></i>채팅방 만들기</a>
 			</div>
 		</div>
 	</nav>
 
-<!-- navibar -->
-<a href="musiclist"><img class="musicList" alt="musicList" src="resources/images/musicList.png">Music List</a>
-<a href="follow">Follow</a>
-		<a href="profile"><i class="fa fa-user-o">Profile</i></a>
-		<a href="chattingTemp">채팅 연습하러 가기</a><!-- connect with 'fa fa-send-o' -->
-		<a href="chatBangCreate"> 채팅방만들기</a>
+<!-- board for main page -->
+
+
 </body>
 <script>
 function openNav() {

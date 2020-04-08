@@ -1,0 +1,6 @@
+.imgContainer{
+	position: relative;
+	background-position: center;
+	background-size: cover;
+	background-image: url("resources/images/home/producing.jpg");
+}

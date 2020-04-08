@@ -13,9 +13,12 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/musiclist.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
-<script>
 
-</script>
+<style type="text/css">
+.navigation{
+	margin-bottom: 0px;
+}
+</style>
 </head>
 <!-- Top for logo and navibar -->
 	 <nav class="navigation">
@@ -48,9 +51,23 @@
 			</div>
 		</div>
 	</nav>
-<div class="imgContainer">
-	
-</div>
+<header class="imgContainer">
+	<div class="w3-third">
+		<i class="fa fa-music w3-margin-bottom w3-jumbo w3-center"></i>
+		<p class="w3-large">Easy Composition</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+		</div>
+	<div class="w3-third">
+      <i class="fa fa-share-alt-square w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Sharing</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+    </div>
+    <div class="w3-third">
+      <i class="fa fa-users w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Social Networking Service</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+    </div>
+</header>
 
 <body>
 <button>My Music List</button>

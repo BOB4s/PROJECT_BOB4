@@ -1,6 +1,9 @@
 .imgContainer{
+	background-image: url("resources/images/musiclist/producing.jpg");
 	position: relative;
 	background-position: center;
-	background-size: cover;
-	background-image: url("resources/images/home/producing.jpg");
+	width: 100%;
+	margin-left: -345px;
+	padding: 0px;
+	background-repeat: no-repeat;
 }

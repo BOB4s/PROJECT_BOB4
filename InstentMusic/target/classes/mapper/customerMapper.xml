@@ -121,4 +121,9 @@
 		where
 		cust_nickname =#{cust_nickname}
 	</select>
+	
+	<delete id="deleteCustomer" parameterType="Customer">
+		delete from customer where
+		cust_password = #{cust_password} 
+	</delete>
 </mapper>

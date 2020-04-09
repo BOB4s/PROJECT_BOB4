@@ -29,4 +29,6 @@ public interface CustomerMapper {
 
 	String getCust_photo_saved(String nickname);
 
+	int deleteCustomer(Customer customer);
+
 }

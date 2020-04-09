@@ -91,4 +91,11 @@ public class CustomerDao {
 		
 		return mapper.getCust_photo_saved(nickname);
 	}
+	public int withdrawal(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.deleteCustomer(customer);
+		
+		return result; 
+	}
 }

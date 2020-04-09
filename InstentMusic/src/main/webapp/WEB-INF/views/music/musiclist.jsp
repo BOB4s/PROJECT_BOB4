@@ -58,12 +58,12 @@ body {
 	<div class="container">
 		<img class="imgContainer" alt="produce" src="resources/images/musiclist/produce.png">
 		<div class="myMusicList">
-			<a href="#"><img class="imgFormyMusicList" alt="musiclist" src="resources/images/musiclist/musiclist.png"></a>
+			<a href="#"><img class="imgFormyMusicList" alt="musiclist" src="resources/images/musiclist/myMusicList.png"></a>
 			<br>
 			myMusicList
 			</div>
 		<div class="temporaryList">
-			<a><img alt="remporaryList" src=""></a>
+			<a><img alt="temporaryList" src="resources/images/musiclist/temporaryList.png"></a>
 			<br>
 			temporaryList
 	    </div>

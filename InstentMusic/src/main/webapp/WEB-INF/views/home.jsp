@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
 <title>Instent Music</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -24,7 +25,11 @@ $(function(){
 				data+= "<br><br>"+i
 		   $("#target").html(data);
 	  }
+=======
+<title></title>
+>>>>>>> branch 'sejun' of https://github.com/BOB4s/PROJECT_BOB4.git
 
+<<<<<<< HEAD
 	var sounds = new Array();
 	for(var j=0; j<26; j++){
 		sounds[j] = new Howl({
@@ -243,8 +248,11 @@ span.forgotPassword{
   }
 }
 </style>
+=======
+>>>>>>> branch 'sejun' of https://github.com/BOB4s/PROJECT_BOB4.git
 </head>
 <body>
+<<<<<<< HEAD
 <<<<<<< HEAD
 	
 =======
@@ -443,5 +451,8 @@ function w3_close() {
 }
 
 </script>
+=======
+
+>>>>>>> branch 'sejun' of https://github.com/BOB4s/PROJECT_BOB4.git
 </body>
 </html>

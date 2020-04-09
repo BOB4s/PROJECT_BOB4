@@ -26,10 +26,14 @@
 로그인 후 메인 페이지
 <a href="musiclist">MyMusic</a>
 <a href="follow">follow</a>
+<<<<<<< HEAD
 		<a href="profile"> 프로필 이예영</a>
 		<a href="chattingTemp">채팅연습하러가기</a>
 		<input type="button" value="챗방" onclick="chatOpen()">
 
 		<a href="chatBangCreate"> 채팅방만들기</a>
+=======
+
+>>>>>>> branch 'sejun' of https://github.com/BOB4s/PROJECT_BOB4.git
 </body>
 </html>

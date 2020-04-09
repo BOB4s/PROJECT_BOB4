@@ -12,5 +12,4 @@ public class Message {
 	private int mes_checked;   // 혹시 봤어?
 	private String mes_date; // 발송 일시
 	private int messangerRoom; //룸넘버
-	
 }

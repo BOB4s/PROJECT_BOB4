@@ -90,6 +90,10 @@ public class HomeController {
 	public String musicmake() {
 		return "music/musicmake";
 	}
+	@GetMapping("/chattingTemp")
+	public String chattingTemp() {
+		return "chattingTemp";
+	}
 
 	@GetMapping("/follow")
 	public String follow() {

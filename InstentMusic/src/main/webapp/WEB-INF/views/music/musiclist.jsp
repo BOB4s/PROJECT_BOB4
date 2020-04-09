@@ -52,10 +52,10 @@
 			</div>
 		</div>
 	</nav>
-	<div class="imgContainer">
-		<img alt="produing" src="resources/images/musiclist/produce.png">
+	<div class="bodyForMusiclist">
+		<img class="imgContainer" alt="produing" src="resources/images/musiclist/produce.png">
 		<div class="myMusicList">
-			<a href="#"><img alt="musiclist" src=""></a>
+			<a href="#"><img class="imgFormyMusicList" alt="musiclist" src="resources/images/musiclist/musiclist.png"></a>
 			<p class="w3-large">Easy Composition</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 			</div>

@@ -7,6 +7,9 @@
 	position: absolute;
 	left: 16px;
 }
+.imgFormyMusicList{
+	width: 50px;
+}
 .temporaryList{
 	position: absolute;
 	top: 50%;

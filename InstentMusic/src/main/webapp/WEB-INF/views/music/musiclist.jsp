@@ -53,27 +53,27 @@
 		</div>
 	</nav>
 	<div class="imgContainer">
-		<img alt="produing" src="resources/images/musiclist/produce.jpg">
-		<div class="centered">
+		<img alt="produing" src="resources/images/musiclist/produce.png">
+		<div class="myMusicList">
 			<i class="fa fa-music w3-margin-bottom w3-jumbo w3-center"></i>
 			<p class="w3-large">Easy Composition</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 			</div>
-		<div class="w3-third">
-	      <i class="fa fa-share-alt-square w3-margin-bottom w3-jumbo"></i>
-	      <p class="w3-large">Sharing</p>
-	      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+		<div class="temporaryList">
+			<i class="fa fa-share-alt-square w3-margin-bottom w3-jumbo"></i>
+			<p class="w3-large">Sharing</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 	    </div>
-	    <div class="w3-third">
-	      <i class="fa fa-users w3-margin-bottom w3-jumbo"></i>
-	      <p class="w3-large">Social Networking Service</p>
-	      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+	    <div class="musicMake">
+			<a href="musicmake"><img alt="makeMusic" src="resources/images/makeMusic.png"></a>
+			<p class="w3-large">Social Networking Service</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 	    </div>
 	</div>
 
 <button>My Music List</button>
 <button>Temporary List</button>
-<a href="musicmake"><img alt="makeMusic" src="resources/images/makeMusic.png"></a>
+
 </body>
 <script>
 function openNav() {

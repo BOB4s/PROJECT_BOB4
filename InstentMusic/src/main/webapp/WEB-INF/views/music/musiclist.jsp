@@ -55,7 +55,7 @@
 	<div class="imgContainer">
 		<img alt="produing" src="resources/images/musiclist/produce.png">
 		<div class="myMusicList">
-			<a href="#"><i></i></a>
+			<a href="#"><img alt="musiclist" src=""></a>
 			<p class="w3-large">Easy Composition</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 			</div>

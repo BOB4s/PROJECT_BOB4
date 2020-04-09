@@ -91,10 +91,6 @@ public class HomeController {
 	public String musicmake() {
 		return "music/musicmake";
 	}
-	@GetMapping("/chattingTemp")
-	public String chattingTemp() {
-		return "chattingTemp";
-	}
 
 	@GetMapping("/follow")
 	public String follow() {
@@ -102,10 +98,6 @@ public class HomeController {
 	}
 
 
-	@RequestMapping(value = "/popup", method = RequestMethod.GET)
-	public String popup() {
-		return "pop";
-	}
 	@GetMapping("/chatBangCreate")
 	public String chatBangCreate() {
 		return "chatBangCreate";
@@ -152,12 +144,7 @@ public class HomeController {
 		
 		return "customer/withdrawal";
 	}
-	@RequestMapping(value = "/CreateChatRoom", method = RequestMethod.POST)
-	public String CreateChatRoom(String sendData) {
-		System.out.println("ggg");
-		
-		return "chattingTemp";
-	}
+
 	@PostMapping("/customerDelete")
 	public String customerDelete(Customer customer,HttpSession session, RedirectAttributes rttr) {
 		

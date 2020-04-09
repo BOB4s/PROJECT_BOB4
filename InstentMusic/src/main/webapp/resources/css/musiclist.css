@@ -1,13 +1,28 @@
-.imgContainer{
-	position: relatvie;
-	text-align: center;
-	color: white;
+body {
+    display: block;
+    margin: 0px;
+}
+.imgContainer {
+    position: relative;
+    background-position: center;
+    width: 100%;
+    /* margin-left: -345px; */
+    padding: 0px;
+    background-repeat: no-repeat;
+}
+.imgContainers {
+    position: relative;
+    background-position: center;
+    width: 100%;
+    /* margin-left: -345px; */
+    padding: 0px;
+    background-repeat: no-repeat;
 }
 .myMusicList{
 	position: absolute;
 	left: 16px;
 }
-.imgFormyMusicList{
+.imgFormyMusicLists{
 	width: 50px;
 }
 .temporaryList{

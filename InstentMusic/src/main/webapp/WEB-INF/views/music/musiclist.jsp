@@ -55,12 +55,12 @@
 	<div class="imgContainer">
 		<img alt="produing" src="resources/images/musiclist/produce.png">
 		<div class="myMusicList">
-			<i class="fa fa-music w3-margin-bottom w3-jumbo w3-center"></i>
+			<a href="#"><i></i></a>
 			<p class="w3-large">Easy Composition</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 			</div>
 		<div class="temporaryList">
-			<i class="fa fa-share-alt-square w3-margin-bottom w3-jumbo"></i>
+			<a><img alt="" src=""></a>
 			<p class="w3-large">Sharing</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 	    </div>

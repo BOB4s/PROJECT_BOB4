@@ -15,6 +15,9 @@
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 
 <style type="text/css">
+body {
+    margin: 0px;
+}
 .navigation{
 	margin-bottom: 0px;
 }

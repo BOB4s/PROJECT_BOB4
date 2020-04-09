@@ -20,6 +20,7 @@
 }
 </style>
 </head>
+<body>
 <!-- Top for logo and navibar -->
 	 <nav class="navigation">
 		<div class="navigation__column">
@@ -51,25 +52,25 @@
 			</div>
 		</div>
 	</nav>
-<header class="imgContainer">
-	<div class="w3-third">
-		<i class="fa fa-music w3-margin-bottom w3-jumbo w3-center"></i>
-		<p class="w3-large">Easy Composition</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-		</div>
-	<div class="w3-third">
-      <i class="fa fa-share-alt-square w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Sharing</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-    </div>
-    <div class="w3-third">
-      <i class="fa fa-users w3-margin-bottom w3-jumbo"></i>
-      <p class="w3-large">Social Networking Service</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-    </div>
-</header>
+	<div class="imgContainer">
+		<img alt="produing" src="resources/images/musiclist/produce.jpg">
+		<div class="centered">
+			<i class="fa fa-music w3-margin-bottom w3-jumbo w3-center"></i>
+			<p class="w3-large">Easy Composition</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+			</div>
+		<div class="w3-third">
+	      <i class="fa fa-share-alt-square w3-margin-bottom w3-jumbo"></i>
+	      <p class="w3-large">Sharing</p>
+	      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+	    </div>
+	    <div class="w3-third">
+	      <i class="fa fa-users w3-margin-bottom w3-jumbo"></i>
+	      <p class="w3-large">Social Networking Service</p>
+	      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+	    </div>
+	</div>
 
-<body>
 <button>My Music List</button>
 <button>Temporary List</button>
 <a href="musicmake"><img alt="makeMusic" src="resources/images/makeMusic.png"></a>

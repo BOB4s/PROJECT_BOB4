@@ -55,8 +55,8 @@ body {
 			</div>
 		</div>
 	</nav>
-	<div class="bodyForMusiclist">
-		<img class="imgContainers" alt="produing" src="resources/images/musiclist/produce.png">
+	<div class="container">
+		<img class="imgContainer" alt="produce" src="resources/images/musiclist/produce.png">
 		<div class="myMusicList">
 			<a href="#"><img class="imgFormyMusicList" alt="musiclist" src="resources/images/musiclist/musiclist.png"></a>
 			<br>

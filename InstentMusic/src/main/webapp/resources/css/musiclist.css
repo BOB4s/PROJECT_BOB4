@@ -1,13 +1,9 @@
-.imgContainer {
-    position: relative;
-    background-position: center;
-    width: 100%;
-    /* margin-left: -345px; */
-    padding: 0px;
-    background-repeat: no-repeat;
+.container{
+	position: relative;
+	text-align: center;
+	color: white;
 }
-.imgContainers {
-    position: relative;
+.imgContainer{
     background-position: center;
     width: 100%;
     /* margin-left: -345px; */
@@ -16,18 +12,22 @@
 }
 .myMusicList{
 	position: absolute;
-	left: 16px;
+	top: 20%;
+	left: 25%;
+	tranform: translate(-20%, -25%);
 }
-.imgFormyMusicList{
+.myMusicList img{
 	width: 100px;
 }
 .temporaryList{
 	position: absolute;
-	top: 50%;
+	top: 20%;
 	left: 50%;
-	tranform: translate(-50%, -50%);
+	tranform: translate(-20%, -50%);
 }
 .musicMake{
 	position: absolute;
-	right: 16px;
+	top: 20%;
+	right: 25%;
+	tranform: translate(-20%, -25%);
 }

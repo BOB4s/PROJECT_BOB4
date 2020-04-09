@@ -58,19 +58,19 @@ body {
 	<div class="bodyForMusiclist">
 		<img class="imgContainers" alt="produing" src="resources/images/musiclist/produce.png">
 		<div class="myMusicList">
-			<a href="#"><img class="imgFormyMusicLists" alt="musiclist" src="resources/images/musiclist/musiclist.png"></a>
-			<p class="w3-large">Easy Composition</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+			<a href="#"><img class="imgFormyMusicList" alt="musiclist" src="resources/images/musiclist/musiclist.png"></a>
+			<br>
+			myMusicList
 			</div>
 		<div class="temporaryList">
-			<a><img alt="" src=""></a>
-			<p class="w3-large">Sharing</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+			<a><img alt="remporaryList" src=""></a>
+			<br>
+			temporaryList
 	    </div>
 	    <div class="musicMake">
 			<a href="musicmake"><img alt="makeMusic" src="resources/images/makeMusic.png"></a>
-			<p class="w3-large">Social Networking Service</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+			<br>
+			musicMake
 	    </div>
 	</div>
 

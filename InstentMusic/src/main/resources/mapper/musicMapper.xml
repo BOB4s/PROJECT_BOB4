@@ -14,6 +14,9 @@ select *
 from sound_library
 where cust_number = #{cust_number}
 and sou_type = #{sou_type}
+<if test="sou_number!=0">
+and sou_number = #{sou_number}
+</if>
 </select>
 
 <insert id="insertSound" parameterType="Sound">
@@ -36,4 +39,23 @@ SEQ_SOUND_LIBRARY_SOU_NUMBER.nextval
 </if>
 )
 </insert>
+
+<update id="editlib" parameterType="map">
+update sound_library
+set
+sou_type = #{new_type}
+where
+cust_number = #{Sound.cust_number}
+and sou_type = #{Sound.sou_type}
+</update>
+
+<delete id="deletelib" parameterType="Sound">
+delete from sound_library
+where
+cust_number = #{cust_number}
+and sou_type = #{sou_type}
+<if test="sou_number!=0">
+and sou_number = #{sou_number}
+</if>
+</delete>
 </mapper>

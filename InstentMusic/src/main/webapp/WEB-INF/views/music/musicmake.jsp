@@ -49,8 +49,15 @@
 	padding: 5px;
 }
 
-.sounds img {
+.soundimg {
 	width: 50px;
+	height: 50px;
+}
+
+.soundss{
+position: relative;
+width: 50px;
+height: 50px;
 }
 
 input {
@@ -174,6 +181,26 @@ cursor: pointer;
 #target4, #target3{
 font-size : 20px;
 }
+#editlib, #deletelib{
+width: 20px;
+height: 20px;
+cursor: pointer;
+}
+.del {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 10px;
+	width : 15px;
+	height : 15px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0;
+	background: red;
+	color: #FFFFFF;
+	border-radius: 100%;
+	padding: 0;
+}
 </style>
 <script>
 var path, song;
@@ -217,41 +244,67 @@ $.ajax({
 			$("#newbtn").html(name);
 			$(".userbtn").click(function() {
 			var soutype = $(this).val();
-			$("#target2").text(soutype);
-			$.ajax({
-				method : 'get',
-				url : 'getSounds',
-				data : {
-					'sou_type' : soutype
-				},
-				success : function(resp) {
-					$("#inbox").html('');
-					var cound = 0;
-					$.each(resp,function(index,item) {
-						if(item.sou_name!=null){
-						var data = '';
-						data += '<div class="sounds">';
-						data += '<img alt="'+item.fullPath+'" src="resources/images/sound/sound.png"><br>';
-						data += item.sou_name;
-						data += '</div>';
+			var libname = soutype;
+				libname+= '<img alt="'+soutype+'" src="resources/images/sound/sledit.png" id="editlib">'
+				libname+= '<img alt="'+soutype+'" src="resources/images/sound/sldelete.png" id="deletelib">'
+				$("#target2").html(libname);
+			gets(soutype);
+			$("#editlib").click(function(){
+				var folname = prompt("Please write a new name for "+this.alt);
 
-						$("#inbox").append(data);
-						cound ++;
+				if (folname.trim().length < 1) {
+					alert("You didn't write anything.");
+					return;
+				} else if (folname.length > 10) {
+					alert("Too long name!");
+				} else {
+					var data = {
+						'sou_type' : this.alt
+						,'new_type' : folname
+					};
+					$.ajax({
+						method : 'post',
+						url : 'editlib',
+						data : data,
+						success : function(resp) {
+							if (resp !=0) {
+								newbtn();
+								var libname = folname;
+								libname+= '<img alt="'+folname+'" src="resources/images/sound/sledit.png" id="editlib">'
+								libname+= '<img alt="'+folname+'" src="resources/images/sound/sldelete.png" id="deletelib">'
+								$("#target2").html(libname);
+								gets(folname);
+							} else {
+								alert("Fail");
+							}
+						},
+						error : function(err) {
+							alert("err-insertSound");
 						}
 					})
-					if(cound==0){
-						$("#inbox").append('<br>- empty -');
-					}
-					$('.sounds').click(function() {
-						path = $(this).find('img').attr('alt');
-						setup();
-					});
-				},
-				error : function(err) {
-					alert("err-getSounds");
+				}
+				})
+			$("#deletelib").click(function(){
+				var answer = confirm("If you delete this library, all sound files in it will also be deleted. Do you still want to delete it?")
+				if(answer){
+					$.ajax({
+						method : 'post'
+						,url : 'deletelib'
+						,data : {'sou_type':this.alt}
+						,success : function(resp){
+								if(resp!=0){
+									alert('deleted!');
+									newbtn();
+									$("#target2").html('');
+									$("#inbox").html('');
+								}else{
+									alert('delete fail');
+								}
+							}
+						})
 				}
 			})
-		})
+			})
 		} else {
 			alert("no folders");
 		}
@@ -261,6 +314,64 @@ $.ajax({
 	}
 })
 }
+function gets(soutype){
+	$.ajax({
+		method : 'get',
+		url : 'getSounds',
+		data : {
+			'sou_type' : soutype
+		},
+		success : function(resp) {
+			$("#inbox").html('');
+			var cound = 0;
+			$.each(resp,function(index,item) {
+				if(item.sou_name!=null){
+				var data = '';
+				data += '<div class="sounds">';
+				data += '<div class="soundss"><img class="soundimg" alt="'+item.fullPath+'" src="resources/images/sound/sound.png">';
+				data += '<Button class="del" value="'+item.sou_number+'">X</Button></div>'
+				data += item.sou_name;
+				data += '</div>';
+
+				$("#inbox").append(data);
+				cound ++;
+				}
+			})
+			if(cound==0){
+				$("#inbox").append('<br>- empty -');
+			}
+			$('.sounds').click(function() {
+				path = $(this).find('img').attr('alt');
+				setup();
+			});
+			$('.del').click(function(){
+				var answer = confirm("Are you sure you want to delete this sound?")
+				loaded2();
+				if(answer){
+					$.ajax({
+						method : 'post'
+						,url : 'deletelib'
+						,data : {'sou_number':this.value
+								,'sou_type':soutype}
+						,success : function(resp){
+								if(resp!=0){
+									loaded2();
+									alert('deleted!');
+									newbtn();
+									gets(soutype);
+								}else{
+									alert('delete fail');
+								}
+							}
+						})
+				}
+				})
+		},
+		error : function(err) {
+			alert("err-getSounds");
+		}
+	})
+}
 $(function() {
 	$("#addfolder").click(function() {
 		var folname = prompt("Create a name for the new sound's folder.");
@@ -268,7 +379,7 @@ $(function() {
 		if (folname.trim().length < 1) {
 			alert("You didn't write anything.");
 			return;
-		} else if (folname.length > 13) {
+		} else if (folname.length > 10) {
 			alert("Too long name!");
 		} else {
 			var data = {
@@ -281,6 +392,11 @@ $(function() {
 				success : function(resp) {
 					if (resp == 1) {
 						newbtn();
+						var libname = folname;
+						libname+= '<img alt="'+folname+'" src="resources/images/sound/sledit.png" id="editlib">'
+						libname+= '<img alt="'+folname+'" src="resources/images/sound/sldelete.png" id="deletelib">'
+						$("#target2").html(libname);
+						gets(folname);
 					} else {
 						alert("Fail");
 					}
@@ -300,7 +416,7 @@ $(function() {
 					+ '.mp3';
 			var data = '';
 			data += '<div class="sounds">';
-			data += '<img alt="'+srcs+'" src="resources/images/sound/sound.png"><br>';
+			data += '<img class="soundimg" alt="'+srcs+'" src="resources/images/sound/sound.png"><br>';
 			data += 'bb' + i;
 			data += '</div>';
 
@@ -336,7 +452,7 @@ $(function() {
 				srcs = 'resources/sound/piano/'+ codes[j].code + i + '.mp3';
 				var data = '';
 				data += '<div class="sounds">';
-				data += '<img alt="'+srcs+'" src="resources/images/sound/sound.png"><br>';
+				data += '<img class="soundimg" alt="'+srcs+'" src="resources/images/sound/sound.png"><br>';
 				data += codes[j].code + i;
 				data += '</div>';
 
@@ -413,6 +529,14 @@ function showfile(sfile){
 				        if(resp=='success'){
 				            alert("Success!");
 				            newbtn();
+							var libname = library;
+							libname+= '<img alt="'+library+'" src="resources/images/sound/sledit.png" id="editlib">'
+							libname+= '<img alt="'+library+'" src="resources/images/sound/sldelete.png" id="deletelib">'
+							$("#target2").html(libname);
+							$("#addcom").val('');
+							$("#target3").text('');
+							$("#addfile").val('');
+							gets(library);
 				        }else{
 				            alert("Fail");
 				        }
@@ -421,7 +545,6 @@ function showfile(sfile){
 				        alert("err-sendfile");
 				    }
 				}); 
-
 				$("#target4").text('');
 				loaded2();
 				var modal = document.getElementById('addModal');
@@ -520,6 +643,9 @@ $(function(){
 			  var span = document.getElementsByClassName("close")[0];
 				span.onclick = function(){
 					$("#target4").text('');
+					$("#addcom").val('');
+					$("#target3").text('');
+					$("#addfile").val('');
 					loaded2();
 				modal.style.display = "none";
 			  };

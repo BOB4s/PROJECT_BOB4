@@ -58,56 +58,56 @@ body {
 	</nav>
 <div class="wrapper">
 <img class="imgContainer" alt="produce" src="resources/images/musiclist/produce.png">
-  <ul class="stage">
+	<ul class="stage">
 	<li class="icon">
 		<div class="boxContainer">
-    		<div class="poster"><img alt="manListening" src="resources/images/musiclist/manListening.JPG"></div>
+    		<div class="poster">
+    			<img alt="manListening" src="resources/images/musiclist/manListening.JPG">
+    		</div>
     		<div class="info">
-      <header>
-        <h1>Added Music List</h1>
-        <span class="year">1946</span>
-        <span class="rating">PG</span>
-        <span class="duration">130 minutes</span>
-      </header>
-      <p>
-        In Bedford Falls, New York on Christmas Eve, George Bailey is deeply troubled. Prayers for his well-being from friends and family reach Heaven. Clarence Odbody, Angel Second Class, is assigned to visit Earth to save George, thereby earning his wings. Franklin and Joseph, the head angels, review George's life with Clarence.
-      </p>
-    </div>
-  </div>
+				<header>
+					<h1>Added Music List</h1>
+						<img alt="addedMusicList" src="resources/images/musiclist/addedMusicList.png">
+				</header>
+					<p>
+					In Bedford Falls, New York on Christmas Eve, George Bailey is deeply troubled. Prayers for his well-being from friends and family reach Heaven. Clarence Odbody, Angel Second Class, is assigned to visit Earth to save George, thereby earning his wings. Franklin and Joseph, the head angels, review George's life with Clarence.
+					</p>
+			</div>
+		</div>
+	</li>
+	<li class="icon">
+		<div class="boxContainer">
+			<div class="poster">
+				<img alt="womanListening" src="resources/images/musiclist/womanListening.png">
+			</div>
+			<div class="info">
+				<header>
+					<h1>My Music List</h1>
+					<img alt="myMusicList" src="resources/images/musiclist/myMusicList.png">
+				</header>
+					<p>
+					In Bedford Falls, New York on Christmas Eve, George Bailey is deeply troubled. Prayers for his well-being from friends and family reach Heaven. Clarence Odbody, Angel Second Class, is assigned to visit Earth to save George, thereby earning his wings. Franklin and Joseph, the head angels, review George's life with Clarence.
+					</p>
+			</div>
+		</div>
     </li>
-    <li class="icon">
-    <div class="boxContainer">
-    		<div class="poster"><img alt="womanListening" src="resources/images/musiclist/womanListening.png"></div>
-    		<div class="info">
-      <header>
-        <h1>My Music List</h1>
-        <span class="year">1946</span>
-        <span class="rating">PG</span>
-        <span class="duration">130 minutes</span>
-      </header>
-      <p>
-        In Bedford Falls, New York on Christmas Eve, George Bailey is deeply troubled. Prayers for his well-being from friends and family reach Heaven. Clarence Odbody, Angel Second Class, is assigned to visit Earth to save George, thereby earning his wings. Franklin and Joseph, the head angels, review George's life with Clarence.
-      </p>
-    </div>
-  	</div>
-    </li>
-    <li class="icon">
-    <div class="boxContainer">
-    		<div class="poster"></div>
-    		<div class="info">
-      <header>
-        <h1>Making Music</h1>
-        <span class="year">1946</span>
-        <span class="rating">PG</span>
-        <span class="duration">130 minutes</span>
-      </header>
-      <p>
-        In Bedford Falls, New York on Christmas Eve, George Bailey is deeply troubled. Prayers for his well-being from friends and family reach Heaven. Clarence Odbody, Angel Second Class, is assigned to visit Earth to save George, thereby earning his wings. Franklin and Joseph, the head angels, review George's life with Clarence.
-      </p>
-    </div>
-  	</div>
-    </li>
-  </ul> 
+	<li class="icon">
+		<div class="boxContainer">
+			<div class="poster">
+				<img alt="notesKeyboard" src="resources/images/musiclist/notes_keyboard.JPG">
+			</div>
+			<div class="info">
+				<header>
+					<h1>Making Music</h1>
+					<img alt="notesKeyboard" src=>
+				</header>
+				<p>
+				In Bedford Falls, New York on Christmas Eve, George Bailey is deeply troubled. Prayers for his well-being from friends and family reach Heaven. Clarence Odbody, Angel Second Class, is assigned to visit Earth to save George, thereby earning his wings. Franklin and Joseph, the head angels, review George's life with Clarence.
+				</p>
+			</div>
+		</div>
+	</li>
+</ul> 
 </div>
 </body>
 </html>

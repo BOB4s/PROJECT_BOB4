@@ -372,7 +372,7 @@ span.forgotPassword{
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-card">
-        <img src="" alt="Won" style="width:50%">
+        <img src="resources/images/home/won.jpg" alt="Won" style="width:50%">
         <div class="w3-container">
           <h3>Taehyoung Won</h3>
           <h4>원태형</h4>

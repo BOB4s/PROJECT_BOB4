@@ -25,6 +25,12 @@ public class HomeController {
 	@Autowired
 	PostDao postdao;
 	
+	@GetMapping("temp")
+	public String temp() {
+		return "temp";
+		
+	}
+	
 	@GetMapping("/")
 	public String index() {
 		return "home";

@@ -10,22 +10,22 @@
     padding: 0px;
     background-repeat: no-repeat;
 }
-.myMusicList{
+.addedMusicList{
 	position: absolute;
 	top: 20%;
 	left: 25%;
 	tranform: translate(-20%, -25%);
 }
-.myMusicList img{
+.addedMusicList img, .myMusicList img, .makingMusic img{
 	width: 100px;
 }
-.temporaryList{
+.myMusicList{
 	position: absolute;
 	top: 20%;
 	left: 50%;
 	tranform: translate(-20%, -50%);
 }
-.musicMake{
+.makingMusic{
 	position: absolute;
 	top: 20%;
 	right: 25%;

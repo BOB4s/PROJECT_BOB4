@@ -84,9 +84,9 @@ public class HomeController {
 		return "music/musiclist";
 	}
 
-	@GetMapping("/musicmake")
-	public String musicmake() {
-		return "music/musicmake";
+	@GetMapping("/makingMusic")
+	public String makingMusic() {
+		return "music/makingMusic";
 	}
 
 	@GetMapping("/follow")

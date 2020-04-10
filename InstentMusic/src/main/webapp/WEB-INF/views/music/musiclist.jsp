@@ -57,26 +57,22 @@ body {
 	</nav>
 	<div class="container">
 		<img class="imgContainer" alt="produce" src="resources/images/musiclist/produce.png">
+		<div class="addedMusicList">
+			<a href="#"><img alt="addedMusicList" src="resources/images/musiclist/addedMusicList.png"></a>
+			<br>
+			addedMusicList
+			</div>
 		<div class="myMusicList">
-			<a href="#"><img class="imgFormyMusicList" alt="musiclist" src="resources/images/musiclist/myMusicList.png"></a>
+			<a href="#"><img alt="temporaryList" src="resources/images/musiclist/myMusicList.png"></a>
 			<br>
 			myMusicList
-			</div>
-		<div class="temporaryList">
-			<a><img alt="temporaryList" src="resources/images/musiclist/temporaryList.png"></a>
-			<br>
-			temporaryList
 	    </div>
-	    <div class="musicMake">
-			<a href="musicmake"><img alt="makeMusic" src="resources/images/makeMusic.png"></a>
+	    <div class="makingMusic">
+			<a href="makingMusic"><img alt="makingMusic" src="resources/images/musiclist/makingMusic.png"></a>
 			<br>
-			musicMake
+			makingMusic
 	    </div>
 	</div>
-
-<button>My Music List</button>
-<button>Temporary List</button>
-
 </body>
 <script>
 function openNav() {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.MessageMapper">
+
+	<insert id="savedMessage" parameterType="Message">
+
+		insert into Message
+		(
+		Mes_number
+		,cust_nickname
+		,Mes_content
+		,Mes_File
+		,mes_checked
+		,mes_date
+		,messangerRoom
+		)
+		values
+		(
+		SEQ_Mes_number.nextval
+		,#{cust_nickname}
+		,#{Mes_content}
+		,#{Mes_File}
+		,1
+		,sysdate
+		,#{messangerRoom}
+		)
+
+
+	</insert>
+	<select id="getChatedAll" parameterType="int" resultType="Message">
+		select *
+		from Message
+		where
+		messangerRoom =#{messangerRoom}
+		order by mes_date 
+	</select>
+</mapper>

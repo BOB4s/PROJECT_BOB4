@@ -1,5 +1,6 @@
 package global.sesoc.teamBOB4;
 
+
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
@@ -22,12 +25,13 @@ import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
 public class HomeController {
-
+	
 	@Autowired
 	CustomerDao custdao;
 	@Autowired
 	PostDao postdao;
-
+	final String savePath = "/profile";
+	
 	@GetMapping("/")
 	public String index() {
 		return "home";
@@ -57,7 +61,10 @@ public class HomeController {
 		if(c != null) {
 			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			session.setAttribute("cust_number", c.getCust_number());
+			session.setAttribute("password", c.getCust_password());
+			session.setAttribute("email", c.getCust_email());
+			session.setAttribute("introduce", c.getCust_introduce());
+			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";
 		}else {
 			model.addAttribute("Error", "Typed down with wrong ID or Password");
@@ -100,25 +107,25 @@ public class HomeController {
 
 
 	@GetMapping("/profile")
-	public String profile( String cust_nickname,Model model) {
-		// 닉네임으로 원하는값 찾기
-		// profile 에 파라미터로 >>> String cust_nickname, 를넣고 아래의
+	public String profile(Model model) {
+		//닉네임으로 원하는값 찾기
+		// profile 에 파라미터로  >>> String cust_nickname, 를넣고 아래의
 		// 회원가입 만들어지면 주석 풀면됩니다.
+		/*Customer customersData =custdao.searchOne(cust_nickname);
+		int cust_number =customersData.getCust_number();
+		List<Integer> followersList=custdao.getFollowers(cust_number);
+		int followers=followersList.size();
+		List<Integer> followingList=custdao.getFollowings(cust_number);
+		int followings=followingList.size();
+		List<Post> ListAll =  postdao.getAll(cust_number);*/
 		
-		  Customer customersData =custdao.searchOne(cust_nickname); int cust_number
-		  =customersData.getCust_number(); List<Integer>
-		  followersList=custdao.getFollowers(cust_number); int
-		  followers=followersList.size(); List<Integer>
-		  followingList=custdao.getFollowings(cust_number); int
-		  followings=followingList.size(); List<Post> ListAll =
-		  postdao.getAll(cust_number);
-		 
-		/*
-		 * Customer customersData = new Customer();
-		 * customersData.setCust_introduce("이지은입니다");
-		 * customersData.setCust_nickname("IU"); customersData.setCust_number(123); int
-		 * followers = 5030; int followings = 150;
-		 */
+		Customer customersData = new Customer();
+		customersData.setCust_introduce("이지은입니다");
+		customersData.setCust_nickname("IU");
+		customersData.setCust_number(123);
+		int followers= 5030;
+		int followings =150;
+		
 		model.addAttribute("customersData", customersData);
 		model.addAttribute("followers", followers);
 		model.addAttribute("followings", followings);
@@ -128,20 +135,24 @@ public class HomeController {
 
 		return "customer/profile";
 	}
-
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(Customer customer) {
+	@RequestMapping(value="/join", method = RequestMethod.POST)
+	public String join(Customer customer,MultipartFile upload,RedirectAttributes rttr) {
+		
+		String originalFilename = upload.getOriginalFilename();
+		String savedFilename = FileService.saveFile(upload, savePath);
+		customer.setCust_photo_original(originalFilename);
+		customer.setCust_photo_saved(savedFilename);
+		
 		custdao.signup(customer);
-
-		return "home";
+		
+		return "redirect:home";
 	}
-
 	@GetMapping("/deleteView")
 	public String deletePage() {
 		
 		return "customer/withdrawal";
 	}
-
+	
 	@PostMapping("/customerDelete")
 	public String customerDelete(Customer customer,HttpSession session, RedirectAttributes rttr) {
 		
@@ -156,5 +167,50 @@ public class HomeController {
 		custdao.withdrawal(customer);
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/goModify")
+	public String goModify() {
+		
+		return "customer/modify";
+	}
+	@RequestMapping(value = "/goModify", method = RequestMethod.POST)
+	public String updateCustomer(Customer customer, RedirectAttributes rttr){
+		
+		custdao.updateCustomer(customer);
+		
+		return "main";
+	}
+	
+	@PostMapping("/change")
+	public String changePwd(Customer customer, HttpSession session) {
+		
+		custdao.changePwd(customer);
+		
+		return "main";
+	}
+	@GetMapping("/protest")
+	public String test() {
+		
+		return "customer/followlist";
+	}
+	
+	@GetMapping("/followers")
+	public String followers(Customer customer, Model model) {
+		Customer c = custdao.selectOne(customer);
+		List<Integer> followersList=custdao.getFollowers(c.getCust_number());
+		
+		model.addAttribute("followersList", followersList);
+		
+		return "customer/followers";
+	}
+	@GetMapping("/followings")
+	public String followings(Customer customer, Model model) {
+		Customer c = custdao.selectOne(customer);
+		List<Integer> followingList=custdao.getFollowings(c.getCust_number());
+		
+		model.addAttribute("followingList", followingList);
+		
+		return "customer/followings";
 	}
 }

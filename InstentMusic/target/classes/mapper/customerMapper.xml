@@ -104,6 +104,9 @@
 		and cust_password=#{cust_password}
 		</if>
 	</select>
+	<select id="getNumber" parameterType="Customer" resultType="Customer">
+		select * from customer where cust_number=#{cust_number}
+	</select>
 	<select id="selectEmail" parameterType="Customer" resultType="Customer">
 		select * from customer where
 		 cust_email = #{cust_email}
@@ -118,4 +121,15 @@
 		delete from customer where
 		cust_password = #{cust_password} 
 	</delete>
+	<update id="updateCustomer" parameterType="Customer">
+		update customer set 
+			cust_nickname = #{cust_nickname},
+			cust_introduce = #{cust_introduce}
+			where cust_id = #{cust_id}
+	</update>
+	<update id="changePwd" parameterType="Customer">
+		update customer set
+			cust_password = #{cust_password}
+			where cust_id = #{cust_id}
+	</update>
 </mapper>

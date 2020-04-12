@@ -27,4 +27,6 @@ public interface CustomerMapper {
 
 	public List<Customer> getAllList();
 
+	int deleteCustomer(Customer customer);
+
 }

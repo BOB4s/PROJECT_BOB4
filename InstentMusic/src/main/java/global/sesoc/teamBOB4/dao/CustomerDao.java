@@ -85,4 +85,12 @@ public class CustomerDao {
 			}
 		return reciver;
 	}
+	
+	public int withdrawal(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.deleteCustomer(customer);
+		
+		return result; 
+	}
 }

@@ -78,5 +78,7 @@
 		<input type="button" value="챗방" onclick="chatOpen()">
 	<input type="button" id="test1"  value="toast" onclick="toasted()">
 		<a href="postWrite"> 글쓰자</a>
+		<a href="logout">로그아웃</a>
+		<a href="deleteView">탈주닌자</a>
 </body>
 </html>

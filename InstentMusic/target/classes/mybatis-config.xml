@@ -9,13 +9,13 @@
 		<typeAlias type="global.sesoc.teamBOB4.vo.Post" alias="Post"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Message" alias="Message"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.MessageList" alias="MessageList"/>
-		<typeAlias type="global.sesoc.teamBOB4.vo.Tag" alias="Tag"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Sound_library" alias="Sound"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />
 		<mapper resource="mapper/postMapper.xml" />
 		<mapper resource="mapper/MessageMapper.xml" />
 		<mapper resource="mapper/chatMapper.xml" />
-		<mapper resource="mapper/tagMapper.xml" />
+		<mapper resource="mapper/musicMapper.xml" />
 	</mappers>
 </configuration>

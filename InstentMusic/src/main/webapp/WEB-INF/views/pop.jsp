@@ -15,25 +15,34 @@
 				type : "GET"
 				,url : "toSendIsCorrect"
 				,data : {"sendData" : sendData}
-				,success :function (resp) {
+				,success :function (reciver) {
+					
 					var data ='';
-							if(resp==''){
+							if(reciver==''){
 							data +=sendData+'의 아이디를 확인해주세요'
+
 								}else{
-									data +='To . '+resp;
-									data +='<input type="hidden" id="opponentName" value="'+resp+'">';
+									data +='To . '+reciver;
+									data +='<input type="hidden" id="opponentName" value="'+reciver+'">';
+
 									}
+						
+								
 						$("#reci_Name").html(data);
 					}
-			     });
-	 	   	})
-		})
+			});
+									
+						
+					
+					})
+			})
 			
 			
 	function SendNewChatRoom(){
-		var UserName = document.getElementById("senderName").value;
+		var UserName = '${nickname}';
 		var opponentName = document.getElementById("opponentName").value;
 		var recentMessage =document.getElementById("sendContents").value; 
+		
 		$.ajax({
 			type : "POST"
 			,url : "CreateChatRoom"
@@ -45,7 +54,7 @@
 				
 		})
 		this.close();
-		opener.	location.href = "chattingTemp?UserName=" + UserName + "&opponentName="+ opponentName;
+		opener.location.href ="chattingTemp";
 		
 		}
 		
@@ -65,7 +74,7 @@
 	<hr>
 	<div id="wrapper">
 		<form action="">
-			<input type="hidden" id="senderName" value="${nickname}"> <br>
+			
 			<div id="reci_Name">
 				<span>To</span>
 			</div>

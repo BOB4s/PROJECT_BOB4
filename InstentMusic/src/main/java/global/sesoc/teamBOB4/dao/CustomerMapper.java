@@ -27,4 +27,8 @@ public interface CustomerMapper {
 
 	public List<Customer> getAllList();
 
+	String getCust_photo_saved(String nickname);
+
+	int deleteCustomer(Customer customer);
+
 }

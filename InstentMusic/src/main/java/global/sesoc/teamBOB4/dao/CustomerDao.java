@@ -85,4 +85,17 @@ public class CustomerDao {
 			}
 		return reciver;
 	}
+
+	public String getCust_photo_saved(String nickname) {
+	CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		return mapper.getCust_photo_saved(nickname);
+	}
+	public int withdrawal(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.deleteCustomer(customer);
+		
+		return result; 
+	}
 }

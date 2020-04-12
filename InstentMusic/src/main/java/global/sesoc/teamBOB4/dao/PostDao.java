@@ -42,9 +42,4 @@ public class PostDao {
 		
 		return postList;
 	}
-
-	public void post_save_method(Post post) {
-		PostMapper mapper = session.getMapper(PostMapper.class);
-		mapper.post_save_method(post);
-	}
 }

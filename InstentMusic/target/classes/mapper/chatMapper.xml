@@ -2,11 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="global.sesoc.teamBOB4.dao.ChatMapper">
-
+	
 	<insert id="createChatRoom" parameterType="MessageList">
 
-		insert into
-		MessageList
+		insert into MessageList
 		(
 		messangerRoom
 		,UserName
@@ -16,7 +15,7 @@
 		)
 		values
 		(
-		SEQ_messangerRoom.nextval
+		 SEQ_messangerRoom.nextval
 		,#{UserName}
 		,#{opponentName}
 		,1
@@ -25,36 +24,40 @@
 
 
 	</insert>
-	<select id="getUsersChatRoom" parameterType="String"
-		resultType="MessageList">
-		select * from MessageList
-		where UserName = #{UserName}
+	<select id="getUsersChatRoom" parameterType="String" resultType="MessageList">
+	select * from MessageList
+	where UserName = #{UserName}
+	
+	</select>
+		<select id="getOppsChatRoom" parameterType="String" resultType="MessageList">
+	select * from MessageList
+	where opponentName = #{UserName}
+	
+	</select>
+		<select id="selectmessangerRoom" parameterType="MessageList" resultType="int">
 		
+	select NVL(max(messangerRoom),0)  from MessageList
+	where UserName = #{UserName} and opponentName = #{opponentName}
+
 	</select>
-	<select id="getUsersChatRoom2" parameterType="String"
-		resultType="MessageList">
-		select * from MessageList
-		where opponentName = #{UserName}
+	<select id="selectmessangerRoomDouble" parameterType="MessageList" resultType="int">
 		
+	select NVL(max(messangerRoom),0)  from MessageList
+	where UserName = #{opponentName} and opponentName = #{UserName}
+
 	</select>
-	<select id="selectmessangerRoom" parameterType="MessageList"
-		resultType="int">
-		  (select NVL(max(messangerRoom),0)  from MessageList
-	where UserName =#{UserName} and opponentName =  #{opponentName}) 
-    
-	</select>
-		<select id="selectmessangerRoom2" parameterType="MessageList"
-		resultType="int">
-		  (select NVL(max(messangerRoom),0)  from MessageList
-	where UserName =#{UserName} and opponentName =  #{opponentName}) 
-    
-	</select>
-	<select id="selectMesRoom" parameterType="int"
-		resultType="MessageList">
-				  select *  from MessageList
+	<update id="setRecentMessage" parameterType="MessageList">
+	update MessageList set
+	recentMessage = #{recentMessage}
+	
 	where messangerRoom = #{messangerRoom}
-
-
+		
+	
+	</update>
+	<select id="getUsersByNumber" parameterType="MessageList" resultType="MessageList">
+	
+		select * from MessageList
+	where messangerRoom = #{messangerRoom}
+	
 	</select>
-
 </mapper>

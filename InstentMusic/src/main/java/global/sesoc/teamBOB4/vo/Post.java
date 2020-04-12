@@ -19,5 +19,4 @@ public class Post {
 	private int post_play; // 게시물 음악 재생 횟수
 	private String post_original; // 게시물에 등록한 사진 오리지널 이름
 	private String post_saved; // 게시물에 등록한 사진 저장 이름
-	private String tagsresult;
 }

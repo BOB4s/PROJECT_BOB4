@@ -31,9 +31,7 @@
 			<mapping path="/**"/>
 			
 			<exclude-mapping path="/home"/>
-			<exclude-mapping path="/login"/>
 			<exclude-mapping path="/join"/>
-			<exclude-mapping path="/"/>
 
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>

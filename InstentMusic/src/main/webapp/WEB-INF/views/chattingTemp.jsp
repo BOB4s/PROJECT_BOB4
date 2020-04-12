@@ -1,107 +1,190 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8" />
 <title>WebSocket chat client</title>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	/**
+	 * Executed when the page has finished loading.
+	 */
+	window.onload = function() {
+
+		// Create a reference for the required DOM elements.
+		var nameView = document.getElementById("name-view");
+		var textView = document.getElementById("text-view");
+		var buttonSend = document.getElementById("send-button");
+		var buttonStop = document.getElementById("stop-button");
+		var label = document.getElementById("status-label");
+		var chatArea = document.getElementById("chat-area");
+
+		// Connect to the WebSocket server!
+		var socket = new WebSocket("ws://localhost:8089/teamBOB4/echo.do");
+
+		/**
+		 * WebSocket onopen event.
+		 */
+		socket.onopen = function(event) {
+			label.innerHTML = "Connection open";
+		}
+
+		/**
+		 * WebSocket onmessage event.
+		 */
+
+		socket.onmessage = function(event) {
+			if (typeof event.data === "string") {
+
+				// Create a JSON object.
+				var jsonObject = JSON.parse(event.data);
+
+				// Extract the values for each key.
+				var userName = jsonObject.name;
+				var userMessage = jsonObject.message;
+
+				// Display message.
+				chatArea.innerHTML = chatArea.innerHTML + "<p>" + userName
+						+ " : <strong>" + userMessage + "</strong>" + "</p>";
+
+				// Scroll to bottom.
+				chatArea.scrollTop = chatArea.scrollHeight;
+			}
+
+		}
+
+		/**
+		 * WebSocket onclose event.
+		 */
+		socket.onclose = function(event) {
+			var code = event.code;
+			var reason = event.reason;
+			var wasClean = event.wasClean;
+
+			if (wasClean) {
+				label.innerHTML = "Connection closed normally.";
+			} else {
+				label.innerHTML = "Connection closed with message: " + reason
+						+ " (Code: " + code + ")";
+			}
+		}
+
+		/**
+		 * WebSocket onerror event.
+		 */
+		socket.onerror = function(event) {
+			label.innerHTML = "Error: " + event;
+		}
+
+		/**
+		 * Disconnect and close the connection.
+		 */
+		buttonStop.onclick = function(event) {
+			if (socket.readyState == WebSocket.OPEN) {
+				socket.close();
+			}
+		}
+
+		/**
+		 * Send the message and empty the text field.
+		 */
+		buttonSend.onclick = function(event) {
+			sendText();
+		}
+
+		/**
+		 * Send the message and empty the text field.
+		 */
+		textView.onkeypress = function(event) {
+			if (event.keyCode == 13) {
+				sendText();
+			}
+		}
+
+		/**
+		 * Handle the drop event.
+		 */
+		document.ondrop = function(event) {
+			var file = event.dataTransfer.files[0];
+			socket.send(file);
+
+			return false;
+		}
+
+		/**
+		 * Prevent the default behaviour of the dragover event.
+		 */
+		document.ondragover = function(event) {
+			event.preventDefault();
+		}
+
+		/**
+		 * Send a text message using WebSocket.
+		 */
+		function sendText() {
+			if (socket.readyState == WebSocket.OPEN) {
+
+				$.ajax({
+					//입력한 아이디가 사용가능한지 여부
+					type : 'GET',
+					url : "socketsend",
+					data : {
+						"userName" : nameView.value,
+						"userMessage" : textView.value
+					},
+					success : function(resp) {
+						chatArea.innerHTML = chatArea.innerHTML + "<p><strong>" +resp + "</strong>" + "</p>";
+						
+					}
+				});
+				textView.value = "";
+			}
+		}
+	}
+</script>
 <style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+}
+
 body {
-	font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background: #dcdcdc;
+	font-size: 1em;
 }
 
-a {
-	color: #00B7FF;
+header, article, footer {
+	width: 600px;
+	margin: 0 auto;
 }
 
-.background {
-	background-color: black;
-	padding: 15px;
-	width: 80%;
+h1 {
+	font-family: "Helvetica Neue Light", "Segoe UI Light", sans-serif;
+	font-size: 3em;
+	margin: 50px 0;
+	color: #333;
+	text-shadow: 1px 1px 1px #fff;
 }
 
-.metest {
-	text-align: right;
+#status-label {
+	display: block;x`
+	width: 75%;
+	margin: 10px 0;
+	font-style: italic;
 }
 
-.talk {
-	position: relative;
-	padding: 15px;
-	margin: 1em 0 1em;
-	color: black;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	width: auto;
+#text-view, #name-view {
+	float: left;
+	width: 70%;
+	padding: 5px 10px;
 }
 
-.talk.other {
-	margin-left: 30px;
-	border: 5px solid gainsboro;
-	background: gainsboro;
-	display: inline-block;
-	border-radius: 15px;
-	padding: 7px 15px;
-	margin-bottom: 5px;
-	margin-top: 5px;
-}
-
-.talk.me {
-	margin-right: 30px;
-	border: 5px solid darkgrey;
-	background-color: darkgrey;
-	display: inline-block;
-	border-radius: 15px;
-	padding: 7px 15px;
-	margin-bottom: 5px;
-	margin-top: 5px;
-}
-
-.talk:before {
-	content: "";
-	position: absolute;
-	bottom: -20px;
-	left: 40px;
-	border-width: 20px 20px 0;
-	display: block;
-	width: 0;
-}
-
-.msg {
-	display: inline-block;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857;
-	color: #555555;
-	background-color: #fff;
-	background-image: none;
-	border: 0px solid #ccc;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
-
-.send {
-	background-color: cadetblue;
-	display: inline-block;
-	margin-bottom: 0;
-	font-weight: normal;
-	text-align: center;
-	vertical-align: middle;
-	border: 0px solid transparent;
-	height: 46px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
-}
-
-.msgbox {
-	width: auto;
-	height: 350px;
+#send-button, #stop-button {
+	float: right;
+	width: 20%;
+	padding: 6px 10px;
 }
 
 #chat-area {
@@ -112,6 +195,7 @@ a {
 	border-radius: 20px;
 	border-bottom: 1px solid #aaa;
 	border-right: 1px solid #ccc;
+	box-shadow: 0px 10px 10px #ccc;
 }
 
 #video-button {
@@ -128,222 +212,40 @@ a {
 .clear {
 	clear: both;
 }
-
-div.friends_bar {
-	margin-top: 5%;
-	margin-left: 10%;
-	width: 20%;
-	float: left;
-	box-sizing: border-box;
-	background-color: white;
-	border-right: 3px solid black;
-	background: lightgray;
-}
-
-div.chattings {
-	margin-top: 5%;
-	margin-right: 10%;
-	width: 60%;
-	float: right;
-	box-sizing: border-box;
-	background-color: white;
-}
-
-div.friends_bar_list {
-	margin: 20px 0;
-	height: 450px;
-	padding: 20px;
-	max-height: 450px;
-	overflow-y: auto;
-}
-
-.friends_bar_profile_rooms {
-	background: white;
-	padding: 1px 0px;
-	border-width: 2px;
-	border-style: inset;
-    font-style: italic;
-    text-align: center;
-}
 </style>
 </head>
 <body>
-	<div id="wrapper">
-		<div class="friends_bar">
-
-
-			<div id="friends_bar_profile" class="friends_bar_profile"
-				style="font-size: 20pt; font-family: fantasy; color: white;">대화방
-				리스트</div>
-			<c:forEach var="room" items="${RoomList}">
-					alert("!!!!");
-				<div class="friends_bar_profile_rooms"
-					onclick="init(${room.messangerRoom})" >
-					<div  style="text-align: left;"><img alt="여기?" src="resources/${room.oppsProfile}">${room.opponentName} </div>
-				 <br> <span
-						style="font-size: 10pt; color: red;">${room.howManyChecks}</span>
-					${room.recentMessage} <br>
-				</div>
-
-			</c:forEach>
-			<div class="friends_bar_list"></div>
-
-		</div>
-		<div class="chattings" style="font-size: 10pt; font-weight: bolder;">
-			<div id="Opps_file">
-				<div id="OppsImgs" style="width: 20%">${msList.oppsProfile}</div>
-			</div>
-			<input type="hidden" value="" id="messangerRoom"> <input
-				type="hidden" value="${nickname}" id="cust_nickname">
-			<div class="background">
-				<div class="msgbox" id="chat-area"></div>
-				<form>
-					<input type="text" class="msg" id="Mes_content" autocomplete="off"
-						placeholder="메시지" style="height: 50px; width: 85%;" />
-					<button class="send" style="height: 50px; width: 50px;">Send</button>
-				</form>
-			</div>
-		</div>
-	</div>
-	<script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-	
-	<script type="text/javascript">
-		var $window = $(window);
-		var username = '${nickname}';
-		var socket = io.connect('http://192.168.0.84:4000')
-		var opponentName = '${opponentName}';
+	<header>
+		<h1>HTML5 WebSocket chat</h1>
+	</header>
+	<article>
+		<label id="status-label">Status...</label> 
 		
-	    var chatPage = $('.chattings');
-		var buttonSend = document.getElementById("send-button");
-		var label = document.getElementById("status-label");
-		var chatArea = document.getElementById("chat-area");
-		socket.emit('add user', username);
-
-			chatPage.hide();
-		if(${messangerRoom}!=0){
-			init(${messangerRoom});
-		};
-
-		$('form').submit(function() {
-			socket.emit('chat message', $('#Mes_content').val());
-			sendText();
-			$('#Mes_content').val('');
-			return false;
-		});
-
-		socket.on('chat message', function(data) {
-			if(data.username==username){
-				/* var li = $('<div class  = "metest"><div class = "talk me">').append(span).append(data.message).append('</div></div>'); */
-				var li = '<div class  = "metest"><div class = "talk me" ><span class="nickname">' +data.username + ' :' + data.message+ '</div></div>';
-
-				
-				}else{
-					var span = $('<span class="nickname">').text(data.username).append(' : ');
-					var li = $('<p class = "talk other">').append(span).append(data.message).append('<br>');
-					}
-				
 		
+		<%-- <input type="hidden" value="${opp.Name}"> --%>
+		<div class="inbox_list_fullscrollable_chatrooms">
+			<div class="chatrooms_inner"  style="height:78px;overflow:hidden;width: 267px;padding-right: 30px ">
+			<ul class="chatroomList_lists">
+				<li class="inbox__item">
+					<div tabindex="0" class="inboxItem_picture"></div>
+					<!-- <time class="relativeTime" title="Posted on 27 March 2020 13:42" datetime="sysdate"></time> -->
+				</li>
+			</ul>
 			
-			$('#chat-area').append(li);
-		});
-		Mes_content.onkeypress = function(event) {
-			if (event.keyCode == 13) {
-				/* 	 $('form').submit(); */
-			}
-		}
-		document.ondrop = function(event) {
-			var file = event.dataTransfer.files[0];
-			socket.send(file);
-			return false;
-		}
-
-		/**
-		 * Prevent the default behaviour of the dragover event.
-		 */
-		document.ondragover = function(event) {
-			event.preventDefault();
-		}
-		function sendText() {
-
-			var messangerRoom = document.getElementById("messangerRoom").value;
-			var cust_nickname = '${nickname}';
+			</div>
 		
-
-			$.ajax({
-				//입력한 아이디가 사용가능한지 여부
-				type : 'GET',
-				url : "socketsend",
-				data : {
-					"messangerRoom" : messangerRoom,
-					"cust_nickname" : cust_nickname,
-					"Mes_content" : Mes_content.value
-				},
-				success : function() {
-					chatArea.scrollTop = chatArea.scrollHeight;
-				},
-				error : function(resp) {
-					alert("Error");
-				}
-			});
-
-		}
-
-		function init(messangerRoom) {
-			chatPage.show();
-			$.ajax({
-				method : 'GET',
-				url : 'pastChatGet',
-				data : {
-					"messangerRoom" : messangerRoom
-					
-				},
-				success : getchated,
-				error : function(resp) {
-					alert("Error");
-				}
-			});
-			document.getElementById("messangerRoom").value =messangerRoom;
-			var UserName ='${nickname}';
-			$.ajax({
-				method : 'GET',
-				url : 'getOppsName',
-				data : {
-					"messangerRoom" : messangerRoom,
-					"UserName" : UserName
-				},success :function(msList){
-				 	 /* $('#Opps_file').text();  */
-				 	
-				 	var opData ='<img alt="여기?" src="resources/'+msList.oppsProfile+'"> : '
-				 	 opData +=msList.opponentName;
-					$('#Opps_file').html(opData)
-					},
-					error : function(resp) {
-						alert("Error");
-					}
-
-				});
-		}
-
-		function getchated(resp) {
-			var data = '';
-			
-			$.each(resp, function(index, item) {
-				var chatcontent = decodeURIComponent(item.Mes_content);
-
-				if(username==item.cust_nickname){
-					data += '<div class  = "metest"><div class = "talk me" >' + item.cust_nickname + ' :' + item.mes_content
-					+ '</div></div>';
-					}else{
-						data += '<p class = "talk other">' + item.cust_nickname + ' :' + item.mes_content
-						+ '</p><br>';
-						}
-				
-			})
-			$("#chat-area").html(data);
-			chatArea.scrollTop = chatArea.scrollHeight;
-		}
-	</script>
-
+		</div>
+		
+		<input type="hidden" value="Jaysland">Jaysland
+		
+		
+		<input type="text" id="name-view" placeholder="닉네임" /> 	
+		<div class="clear"></div>
+		<div id="chat-area"></div>
+		
+		<input type="text" id="text-view" placeholder="메시지" />
+		 <input type="button" id="send-button" value="Send!" />
+	</article>
+	<footer></footer>
 </body>
 </html>

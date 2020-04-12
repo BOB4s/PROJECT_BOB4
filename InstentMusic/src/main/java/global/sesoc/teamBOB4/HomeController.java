@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
@@ -54,9 +55,8 @@ public class HomeController {
 		Customer c = custdao.selectOne(customer);
 		
 		if(c != null) {
-			session.setAttribute("login", c.getCust_id());
+			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			session.setAttribute("cust_number", c.getCust_number());
 			return "main";
 		}else {
 			model.addAttribute("Error", "Typed down with wrong ID or Password");
@@ -65,7 +65,7 @@ public class HomeController {
 	}
 	
 	//must be linked with HTTP through the 'value=""'
-	@GetMapping(value="")
+	@GetMapping(value="/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "home";
@@ -98,6 +98,10 @@ public class HomeController {
 	}
 
 
+	@GetMapping("/chatBangCreate")
+	public String chatBangCreate() {
+		return "chatBangCreate";
+	}
 
 	@GetMapping("/profile")
 	public String profile( String cust_nickname,Model model) {
@@ -135,5 +139,25 @@ public class HomeController {
 
 		return "home";
 	}
+	@GetMapping("/deleteView")
+	public String deletePage() {
+		
+		return "customer/withdrawal";
+	}
 
+	@PostMapping("/customerDelete")
+	public String customerDelete(Customer customer,HttpSession session, RedirectAttributes rttr) {
+		
+		String sessionpwd = (String)session.getAttribute("password");
+		
+		String vopwd = customer.getCust_password();
+		
+		if(!(sessionpwd.equals(vopwd))) {
+			rttr.addFlashAttribute("msg",false);
+			return "redirect:/customer/withdrawal";
+		}
+		custdao.withdrawal(customer);
+		session.invalidate();
+		return "redirect:/";
+	}
 }

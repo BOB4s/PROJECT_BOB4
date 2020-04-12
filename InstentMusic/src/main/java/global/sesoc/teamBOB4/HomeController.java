@@ -1,5 +1,7 @@
 package global.sesoc.teamBOB4;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
+import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
 public class HomeController {
@@ -54,6 +57,7 @@ public class HomeController {
 		if(c != null) {
 			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
+			session.setAttribute("cust_number", c.getCust_number());
 			return "main";
 		}else {
 			model.addAttribute("Error", "Typed down with wrong ID or Password");
@@ -62,7 +66,7 @@ public class HomeController {
 	}
 	
 	//must be linked with HTTP through the 'value=""'
-	@GetMapping(value="/logout")
+	@GetMapping(value="logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "home";
@@ -93,42 +97,28 @@ public class HomeController {
 		return "customer/follow";
 	}
 
-	@GetMapping("/chattingTemp")
-	public String chattingTemp() {
-		return "chattingTemp";
-	}
 
-	@RequestMapping(value = "/popup", method = RequestMethod.GET)
-	public String popup() {
-		return "pop";
-	}
-	@GetMapping("/chatBangCreate")
-	public String chatBangCreate() {
-		return "chatBangCreate";
-	}
 
 	@GetMapping("/profile")
-	public String profile(Model model) {
+	public String profile( String cust_nickname,Model model) {
 		// 닉네임으로 원하는값 찾기
 		// profile 에 파라미터로 >>> String cust_nickname, 를넣고 아래의
 		// 회원가입 만들어지면 주석 풀면됩니다.
+		
+		  Customer customersData =custdao.searchOne(cust_nickname); int cust_number
+		  =customersData.getCust_number(); List<Integer>
+		  followersList=custdao.getFollowers(cust_number); int
+		  followers=followersList.size(); List<Integer>
+		  followingList=custdao.getFollowings(cust_number); int
+		  followings=followingList.size(); List<Post> ListAll =
+		  postdao.getAll(cust_number);
+		 
 		/*
-		 * Customer customersData =custdao.searchOne(cust_nickname); int cust_number
-		 * =customersData.getCust_number(); List<Integer>
-		 * followersList=custdao.getFollowers(cust_number); int
-		 * followers=followersList.size(); List<Integer>
-		 * followingList=custdao.getFollowings(cust_number); int
-		 * followings=followingList.size(); List<Post> ListAll =
-		 * postdao.getAll(cust_number);
+		 * Customer customersData = new Customer();
+		 * customersData.setCust_introduce("이지은입니다");
+		 * customersData.setCust_nickname("IU"); customersData.setCust_number(123); int
+		 * followers = 5030; int followings = 150;
 		 */
-
-		Customer customersData = new Customer();
-		customersData.setCust_introduce("이지은입니다");
-		customersData.setCust_nickname("IU");
-		customersData.setCust_number(123);
-		int followers = 5030;
-		int followings = 150;
-
 		model.addAttribute("customersData", customersData);
 		model.addAttribute("followers", followers);
 		model.addAttribute("followings", followings);
@@ -145,17 +135,13 @@ public class HomeController {
 
 		return "home";
 	}
+
 	@GetMapping("/deleteView")
 	public String deletePage() {
 		
 		return "customer/withdrawal";
 	}
-	@RequestMapping(value = "/CreateChatRoom", method = RequestMethod.POST)
-	public String CreateChatRoom(String sendData) {
-		System.out.println("ggg");
-		
-		return "chattingTemp";
-	}
+
 	@PostMapping("/customerDelete")
 	public String customerDelete(Customer customer,HttpSession session, RedirectAttributes rttr) {
 		

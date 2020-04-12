@@ -16,39 +16,36 @@
 				,url : "toSendIsCorrect"
 				,data : {"sendData" : sendData}
 				,success :function (resp) {
-					
 					var data ='';
-						$.each(resp,function(index,item) {
-							var sending =item.split("/")[1];
-						data +='To . '+sending;
-						data +='<input type="hidden" id="sendDatas" value="'+item+'">';
-						});			
+							if(resp==''){
+							data +=sendData+'의 아이디를 확인해주세요'
+								}else{
+									data +='To . '+resp;
+									data +='<input type="hidden" id="opponentName" value="'+resp+'">';
+									}
 						$("#reci_Name").html(data);
 					}
-			});
-									
-						
-					
-					})
-			})
+			     });
+	 	   	})
+		})
 			
 			
 	function SendNewChatRoom(){
-		var senderName = document.getElementById("senderName").value;
-		var sendDatas = document.getElementById("sendDatas").value;
-		var firstcontent =document.getElementById("sendContents").value; 
+		var UserName = document.getElementById("senderName").value;
+		var opponentName = document.getElementById("opponentName").value;
+		var recentMessage =document.getElementById("sendContents").value; 
 		$.ajax({
 			type : "POST"
 			,url : "CreateChatRoom"
-			,data : {"senderName" : senderName,
-					"sendDatas" :sendDatas,
-					"firstcontent":firstcontent }
+			,data : {"UserName" : UserName,
+					"opponentName" :opponentName,
+					"recentMessage":recentMessage }
 			
 			
 				
 		})
 		this.close();
-		opener.location.href ="chattingTemp";
+		opener.	location.href = "chattingTemp?UserName=" + UserName + "&opponentName="+ opponentName;
 		
 		}
 		
@@ -68,7 +65,7 @@
 	<hr>
 	<div id="wrapper">
 		<form action="">
-			<input type="hidden" id="senderName" value="123"> <br>
+			<input type="hidden" id="senderName" value="${nickname}"> <br>
 			<div id="reci_Name">
 				<span>To</span>
 			</div>

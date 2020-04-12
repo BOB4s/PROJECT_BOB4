@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,6 @@ $(function(){
 				data+= "<br><br>"+i
 		   $("#target").html(data);
 	  }
-
 	var sounds = new Array();
 	for(var j=0; j<26; j++){
 		sounds[j] = 'resources/sound/beatbox/bb'+j+'.mp3'
@@ -80,13 +80,11 @@ function loginBlock(){
 function blockClose(){
 	modal.style.display="none";
 }
-
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
 }
-
 //Login section
 function login(){
 	var id = $("#cust_id").val();
@@ -109,12 +107,10 @@ function login(){
 </c:if>
 
 <style type="text/css">
-
 body, html {
   height: 100%;
   line-height: 1.8;
 }
-
 /* Full height image header */
 .bgimg-1 {
 	position: relative;
@@ -139,7 +135,6 @@ body, html {
 .w3-bar .w3-button {
   padding: 16px;
 }
-
 /* menu bar logo */
 .logo{
 	width: 60px;
@@ -150,7 +145,6 @@ body, html {
 	margin-top: 5%;
 	margin-bottom: 5%;
 }
-
 /* Login block */
 body{
 	font-family: Arial, Helvetica, sans-serif;
@@ -430,10 +424,8 @@ function onClick(element) {
   var captionText = document.getElementById("caption");
   captionText.innerHTML = element.alt;
 }
-
 // Toggle between showing and hiding the sidebar when clicking the menu icon
 var mySidebar = document.getElementById("mySidebar");
-
 function w3_open() {
   if (mySidebar.style.display === 'block') {
     mySidebar.style.display = 'none';
@@ -441,12 +433,10 @@ function w3_open() {
     mySidebar.style.display = 'block';
   }
 }
-
 // Close the sidebar with the close button
 function w3_close() {
     mySidebar.style.display = "none";
 }
-
 </script>
 </body>
 </html>

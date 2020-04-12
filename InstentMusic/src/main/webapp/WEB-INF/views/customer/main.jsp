@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
@@ -77,8 +76,6 @@
 		<a href="chattingTemp">채팅연습하러가기</a>
 		<input type="button" value="챗방" onclick="chatOpen()">
 	<input type="button" id="test1"  value="toast" onclick="toasted()">
-		<a href="postWrite"> 글쓰자</a>
-		<a href="logout">로그아웃</a>
-		<a href="deleteView">탈주닌자</a>
+		<a href="chatBangCreate"> 채팅방만들기</a>
 </body>
 </html>

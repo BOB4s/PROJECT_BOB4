@@ -39,4 +39,9 @@ public class MusicDao {
 		MusicMapper mapper = session.getMapper(MusicMapper.class);
 		return mapper.deletelib(sound);
 	}
+
+	public List<Sound_library> searchsound(Map<String, Object> map) {
+		MusicMapper mapper = session.getMapper(MusicMapper.class);
+		return mapper.searchsound(map);
+	}
 }

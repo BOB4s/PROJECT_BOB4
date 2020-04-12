@@ -19,7 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		//세션의 로그인 정보를 알아냄
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute("cust_number") == null) {
+		if(session.getAttribute("login") == null) {
 			//로그인 화면으로 이동함!!!
 			//context path를 뽑아냄
 			String contextPath = request.getContextPath();

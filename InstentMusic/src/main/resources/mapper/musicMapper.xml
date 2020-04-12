@@ -19,6 +19,14 @@ and sou_number = #{sou_number}
 </if>
 </select>
 
+
+<select id="searchsound" parameterType="map" resultType="Sound">
+select *
+from sound_library
+where cust_number != #{cust_number}
+and sou_name like '%'||#{search}||'%'
+</select>
+
 <insert id="insertSound" parameterType="Sound">
 insert into sound_library(
 sou_number

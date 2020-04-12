@@ -17,4 +17,6 @@ public interface MusicMapper {
 
 	int deletelib(Sound_library sound);
 
+	List<Sound_library> searchsound(Map<String, Object> map);
+
 }

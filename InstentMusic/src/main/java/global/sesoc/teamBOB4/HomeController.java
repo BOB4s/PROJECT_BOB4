@@ -74,8 +74,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/main")
-	public String main(Customer customer, HttpSession session) {
-		session.setAttribute("login", customer.getCust_number());
+	public String main() {
 		return "main";
 	}
 

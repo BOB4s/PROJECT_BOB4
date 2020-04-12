@@ -87,7 +87,7 @@ width: 650px;
 height: 120px;
 }
 #bags input{
-width: 150px;
+width: 180px;
 }
 #fronts{
 float:left;
@@ -197,6 +197,21 @@ cursor: pointer;
 	cursor: pointer;
 	border: 0;
 	background: red;
+	color: #FFFFFF;
+	border-radius: 100%;
+	padding: 0;
+}
+.adds {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 10px;
+	width : 15px;
+	height : 15px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0;
+	background: green;
 	color: #FFFFFF;
 	border-radius: 100%;
 	padding: 0;
@@ -315,6 +330,7 @@ $.ajax({
 })
 }
 function gets(soutype){
+	loaded2();
 	$.ajax({
 		method : 'get',
 		url : 'getSounds',
@@ -372,6 +388,41 @@ function gets(soutype){
 		}
 	})
 }
+$(function(){
+	$("#searchbtn").click(function(){
+		var soundsearch = $("#soundsearch").val();
+		$.ajax({
+			method : 'get'
+			,url : 'searchsound'
+			,data : {'search':soundsearch}
+			,success : function(resp){
+				$("#inbox").html('');
+				var cound = 0;
+				$.each(resp,function(index,item) {
+					if(item.sou_name!=null){
+					var data = '';
+					data += '<div class="sounds">';
+					data += '<div class="soundss"><img class="soundimg" alt="'+item.fullPath+'" src="resources/images/sound/sound.png">';
+					data += '<Button class="adds" value="'+item.sou_number+'">+</Button></div>'
+					data += item.sou_name;
+					data += '</div>';
+
+					$("#inbox").append(data);
+					$("#target2").html(soundsearch);
+					cound ++;
+					}
+				})
+				if(cound==0){
+					$("#inbox").append('<br>- empty -');
+				}
+				$('.sounds').click(function() {
+					path = $(this).find('img').attr('alt');
+					setup();
+				});
+				}
+		})
+	})
+})
 $(function() {
 	$("#addfolder").click(function() {
 		var folname = prompt("Create a name for the new sound's folder.");
@@ -500,6 +551,7 @@ function showfile(sfile){
 			$("#addbtn").click(function(){
 				if(fileName==null){
 					alert("Please add Sound's file.");
+					return;
 				}
 				
 				var cum = $("#addcom").val();
@@ -518,7 +570,7 @@ function showfile(sfile){
 				   formData.append("file", $("#addfile")[0].files[0]);
 				   formData.append("sou_type",library)
 				   formData.append("sou_name", cum);
-				 
+				   $("#addfile").val('');
 				$.ajax({
 				    type : "POST",
 				    url : 'sendFile',
@@ -535,7 +587,6 @@ function showfile(sfile){
 							$("#target2").html(libname);
 							$("#addcom").val('');
 							$("#target3").text('');
-							$("#addfile").val('');
 							gets(library);
 				        }else{
 				            alert("Fail");
@@ -637,6 +688,7 @@ $(function(){
 	var img = document.getElementById("addSound");
 	
 		img.onclick = function(){
+			loaded2();
 			  modal.style.display = "block";
 			  newbtn2();
 			  

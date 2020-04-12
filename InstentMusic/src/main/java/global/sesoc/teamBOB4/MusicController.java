@@ -46,6 +46,20 @@ public class MusicController {
 		return result;
 	}
 	
+	@GetMapping("/searchsound")
+	public List<Sound_library> searchsound(String search, HttpSession session){
+		int cust_number = (int)session.getAttribute("login");
+		Map <String, Object> map = new HashMap<>();
+		map.put("search", search);
+		map.put("cust_number", cust_number);
+		List<Sound_library> result = dao.searchsound(map);
+		for(Sound_library s : result) {
+			String fullPath = "resources/"+uploadPath+s.getSou_saved();
+			s.setFullPath(fullPath);
+		}
+		return result;
+	}
+	
 	@PostMapping("/insertSound")
 	public int insertSound(Sound_library sound, HttpSession session) {
 		sound.setCust_number((int)session.getAttribute("login"));

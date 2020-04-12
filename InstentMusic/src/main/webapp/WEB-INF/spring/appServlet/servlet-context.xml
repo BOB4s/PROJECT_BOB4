@@ -30,8 +30,11 @@
 		<interceptor>
 			<mapping path="/**"/>
 			
+			<exclude-mapping path="/"/>
 			<exclude-mapping path="/home"/>
 			<exclude-mapping path="/join"/>
+			<exclude-mapping path="/login"/>
+			<exclude-mapping path="/logout"/>
 
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>

@@ -9,19 +9,16 @@ public interface ChatMapper {
 
 	int createChatRoom(MessageList newList);
 
-	List<MessageList> getUsersChatRoom(String cust_nickname);
+	List<MessageList> getUsersChatRoom(String username);
+	
+	List<MessageList> getUsersChatRoom2(String username);
 
 	int selectmessangerRoom(MessageList newList);
 
-	int selectmessangerRoomDouble(MessageList newList);
+	MessageList selectMesRoom(int messangerRoom);
 
-	void setRecentMessage(MessageList msList);
+	int selectmessangerRoom2(MessageList newList);
 
-	List<MessageList> getOppsChatRoom(String cust_nickname);
-
-	String getOppsName(MessageList msList);
-
-	MessageList getUsersByNumber(MessageList msList);
 
 
 

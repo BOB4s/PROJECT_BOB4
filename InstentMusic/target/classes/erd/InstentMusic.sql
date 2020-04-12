@@ -309,9 +309,9 @@ CREATE TABLE Sound_Library
 	-- 피아노, 드럼, 기타, 사용자 정의 등
 	sou_type varchar2(30) NOT NULL,
 	-- 녹음 소리 원래 이름
-	sou_name varchar2(30),
+	sou_name varchar2(30) NOT NULL,
 	-- 녹음 소리 저장 이름
-	sou_saved varchar2(500),
+	sou_saved varchar2(500) NOT NULL,
 	PRIMARY KEY (sou_number)
 );
 

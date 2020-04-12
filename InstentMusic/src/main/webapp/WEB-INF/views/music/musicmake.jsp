@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,30 +6,42 @@
 <title>MusicMake</title>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
+<script src="resources/js/p5.min.js"></script>
+<script src="resources/js/p5.sound.min.js"></script>
+<script src="resources/js/sketch.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
-#beatbox, #piano{
-width: 1000px;
-height: 80px;
-white-space: nowrap;
-overflow-x:hidden;
-padding: 5px;
+#soundlib {
+	margin: 10px 5px 5px 5px;
+	padding: 5px 5px 5px 5px;
+	width: 1020px;
+	height: 220px;
+	border: 1px solid black;
 }
-.sounds{
-float: left;
-font-size : 10px;
-text-align: center;
-padding: 5px;
+
+#libs, dropdown-menu {
+	float:left;
+	margin-top:10px;
+	width: 200px;
+	height: 100px;
+	white-space: nowrap;
+	overflow-x: hidden;
+	text-align: center;
 }
-.sounds img{
-width: 50px;
+
+#inbox {
+	width: 1000px;
+	height: 85px;
+	white-space: nowrap;
+	overflow-x: hidden;
+	padding: 5px;
+	background-color: #F2F2F2;
+	text-align: center;
 }
+
 .sounds {
 	float: left;
 	font-size: 10px;
@@ -76,7 +87,7 @@ width: 650px;
 height: 120px;
 }
 #bags input{
-width: 150px;
+width: 180px;
 }
 #fronts{
 float:left;
@@ -186,6 +197,21 @@ cursor: pointer;
 	cursor: pointer;
 	border: 0;
 	background: red;
+	color: #FFFFFF;
+	border-radius: 100%;
+	padding: 0;
+}
+.adds {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 10px;
+	width : 15px;
+	height : 15px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0;
+	background: green;
 	color: #FFFFFF;
 	border-radius: 100%;
 	padding: 0;
@@ -304,6 +330,7 @@ $.ajax({
 })
 }
 function gets(soutype){
+	loaded2();
 	$.ajax({
 		method : 'get',
 		url : 'getSounds',
@@ -361,6 +388,44 @@ function gets(soutype){
 		}
 	})
 }
+$(function(){
+	$("#searchbtn").click(function(){
+		var soundsearch = $("#soundsearch").val();
+		$.ajax({
+			method : 'get'
+			,url : 'searchsound'
+			,data : {'search':soundsearch}
+			,success : function(resp){
+				$("#inbox").html('');
+				var cound = 0;
+				$.each(resp,function(index,item) {
+					if(item.sou_name!=null){
+					var data = '';
+					data += '<div class="sounds">';
+					data += '<div class="soundss"><img class="soundimg" alt="'+item.fullPath+'" src="resources/images/sound/sound.png">';
+					data += '<Button class="adds" value="'+item.sou_number+'">+</Button></div>'
+					data += item.sou_name;
+					data += '</div>';
+
+					$("#inbox").append(data);
+					$("#target2").html(soundsearch);
+					cound ++;
+					}
+				})
+				if(cound==0){
+					$("#inbox").append('<br>- empty -');
+				}
+				$('.sounds').click(function() {
+					path = $(this).find('img').attr('alt');
+					setup();
+				});
+				$('.adds').click(function(){
+					
+				})
+			}
+		})
+	})
+})
 $(function() {
 	$("#addfolder").click(function() {
 		var folname = prompt("Create a name for the new sound's folder.");
@@ -370,6 +435,9 @@ $(function() {
 			return;
 		} else if (folname.length > 10) {
 			alert("Too long name!");
+		} else if(folname.trim()=='added'){
+			alert("unavailable name!");
+			return;
 		} else {
 			var data = {
 				'sou_type' : folname
@@ -456,25 +524,21 @@ $(function() {
 	});
 })
 $(function(){
-	var srcs = ''
-	for(var i=0; i<32; i++){
-		srcs = 'resources/sound/beatbox/bb'+i+'.mp3';
-		var data='';
-		data+='<div class="sounds">';
-		data+='<img alt="'+srcs+'" src="resources/images/sound.png"><br>';
-		data+='bb'+i;
-		data+='</div>';
-
-		$("#beatbox").append(data);
-	}
-
-	$('.sounds').click(function(){
-		var img = $(this).find('img').attr('alt');
-		sound = new Howl({
-			src: [img]
-		});
-		sound.play();
-	});
+	$("#addfile").on("change",showfile);
+	$("#addcom").keyup(function(){
+		var com = $("#addcom").val();
+		if(com.length>15){
+			var count = com.substr(0,15);
+			$("#addcom").val(count);
+			}
+		})
+	$("#addbtn").click(function(){
+		var fileCheck = document.getElementById("addfile").value;
+	    if(!fileCheck){
+	        alert("Please add Sound's file.");
+	        return;
+	    }
+	})
 })
 function showfile(sfile){
 	var file = this.files[0];
@@ -493,6 +557,7 @@ function showfile(sfile){
 			$("#addbtn").click(function(){
 				if(fileName==null){
 					alert("Please add Sound's file.");
+					return;
 				}
 				
 				var cum = $("#addcom").val();
@@ -511,7 +576,7 @@ function showfile(sfile){
 				   formData.append("file", $("#addfile")[0].files[0]);
 				   formData.append("sou_type",library)
 				   formData.append("sou_name", cum);
-				 
+				   $("#addfile").val('');
 				$.ajax({
 				    type : "POST",
 				    url : 'sendFile',
@@ -528,7 +593,6 @@ function showfile(sfile){
 							$("#target2").html(libname);
 							$("#addcom").val('');
 							$("#target3").text('');
-							$("#addfile").val('');
 							gets(library);
 				        }else{
 				            alert("Fail");
@@ -566,34 +630,64 @@ function draw() {
 </script>
 </head>
 <body>
-음악 제목 : <span id="target">임시 제목</span>
-<br>
-<button data-toggle="collapse" data-target="#keyboard">키패드 설정</button>
-<button>트랩 추가</button>
-<button>임시 저장</button>
-<button>불러오기</button>
-<button>음악 저장</button>
-<div id="keyboard" class="collapse" style="width: 1000px">
-<div id="tabs">
-	<ul>
-		<li><a href="#new+">create</a></li>
-		<li><a href="#beatbox">beatbox</a></li>
-		<li><a href="#piano">piano</a></li>
-		<li><a href="#search">search</a>
-	</ul>
-<div id="new+">
-new menu : <input type="text" id="newmenu">
-<button>create</button>
-</div>
-<div id="beatbox">
-</div>
-<div id="piano">
-피아노
-</div>
-<div id="search">sound search : <input type="text" id="soundsearch">
-<button>search</button></div>
-</div>
-</div>
+	<div id="wrapper">
+		음악 제목 : <span id="target">임시 제목</span> <br>
+		<button id="slib" data-toggle="collapse" data-target="#soundlib">Sound Library</button>
+		<button data-toggle="collapse" data-target="#keyboard">Keyboard Set</button>
+		<button>트랩 추가</button>
+		<button>임시 저장</button>
+		<button>불러오기</button>
+		<button>음악 저장</button>
+		<br>
+		<div id="soundlib" class="collapse">
+		<div id="fronts">
+			<span style="font-size: 50px;">Sound Library</span>
+			<br>
+			<img alt="soundlibrary" src="resources/images/sound/soundlibrary.png">
+			<span id="target2"></span>
+		</div>
+			<div id="bags">
+				<div id="libs">
+				<ul>
+					<li><button id="added" value="added">Added</button></li>
+					<li><button id="beatbox" value="Beatbox">Beatbox</button></li>
+					<li><button id="piano" value="Piano">Piano</button></li>
+					<span id="newbtn"></span>
+				</ul>
+				</div>
+				<div class="inputbtn">Sound Search : <input type="text" id="soundsearch">
+				<button id="searchbtn">Search</button></div>
+				<div id="icons">
+				<img id="addfolder" alt="libadd" src="resources/images/sound/libadd.png">
+				<img id="addSound" alt="soundadd" src="resources/images/sound/soundadd.png">
+				<img id="addRcd" alt="mic" src="resources/images/sound/mic.png">
+				</div>
+			</div>
+			<div id="inbox">
+				<br>- Empty -
+			</div>
+		</div>
+	</div>
+	<div id="keyboard" class="collapse">자판</div>
+	<br>
+	
+	<div id="addModal" class="modal">
+			<span class="close">&times;</span>
+			<span id="sketch-target"></span><br>
+			<form id="form_upload" enctype="multipart/form-data" action="/file/upload" method="post">
+				<input type="file" id="addfile" accept="audio/*">
+			</form>
+							file : <span id="target4"></span>
+				<div class="dropdown dropright">
+    <button type="button" class="dropdown-toggle" data-toggle="dropdown">Library</button>
+    <span id="target3"></span>
+    <div class="dropdown-menu">
+    	<span id="newbtn2"></span>
+    </div>
+    </div>
+    Sound Name : <input type="text" id="addcom">&nbsp;
+			<input id="addbtn" type="button" value="Add Sound">
+		</div>
 </body>
 <script>
 $(function(){
@@ -601,6 +695,7 @@ $(function(){
 	var img = document.getElementById("addSound");
 	
 		img.onclick = function(){
+			loaded2();
 			  modal.style.display = "block";
 			  newbtn2();
 			  

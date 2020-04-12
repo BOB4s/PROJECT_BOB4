@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import global.sesoc.teamBOB4.dao.MusicDao;
 import global.sesoc.teamBOB4.util.FileService;
-import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Sound_library;
 
 @Controller
@@ -39,6 +38,21 @@ public class MusicController {
 		int cust_number = (int)session.getAttribute("login");
 		sound.setCust_number(cust_number);
 		List<Sound_library> result = dao.getSounds(sound);
+		for(Sound_library s : result) {
+			String fullPath = "resources/"+uploadPath+s.getSou_saved();
+			s.setFullPath(fullPath);
+		}
+		return result;
+	}
+	
+	
+	@GetMapping("/searchsound")
+	public List<Sound_library> searchsound(String search, HttpSession session){
+		int cust_number = (int)session.getAttribute("login");
+		Map <String, Object> map = new HashMap<>();
+		map.put("search", search);
+		map.put("cust_number", cust_number);
+		List<Sound_library> result = dao.searchsound(map);
 		for(Sound_library s : result) {
 			String fullPath = "resources/"+uploadPath+s.getSou_saved();
 			s.setFullPath(fullPath);

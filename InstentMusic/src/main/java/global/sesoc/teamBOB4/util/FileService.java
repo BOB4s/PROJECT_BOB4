@@ -62,7 +62,7 @@ public class FileService {
 		
 		//저장할 전체 경로를 포함한 File 객체
 		File serverFile = null;	
-		serverFile = new File(savePath + filename);
+		serverFile = new File(savePath +"/"+ filename);
 		
 		/*
 		 * //HDD에 저장할 파일명. 같은 이름의 파일이 있는 경우의 처리 while (true) {

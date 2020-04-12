@@ -1,6 +1,7 @@
 package global.sesoc.teamBOB4.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -71,5 +72,45 @@ public class CustomerDao {
 		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
 		
 		return mapper.selectEmail(customer);
+	}
+
+	public String getDataFromDBsendData(String sendData) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		Customer c =mapper.searchOne(sendData);
+		
+		String reciver ="";
+		
+			if(c!=null) {
+				reciver= c.getCust_nickname();
+			}
+		return reciver;
+	}
+	
+	public int withdrawal(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.deleteCustomer(customer);
+		
+		return result; 
+	}
+	public int updateCustomer(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.updateCustomer(customer);
+		
+		return result; 
+	}
+
+	public int changePwd(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.changePwd(customer);
+		
+		return result;
+	}
+	public Customer getNumber(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		return mapper.getNumber(customer);
 	}
 }

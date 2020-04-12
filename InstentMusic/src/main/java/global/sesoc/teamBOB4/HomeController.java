@@ -1,6 +1,8 @@
 package global.sesoc.teamBOB4;
 
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,18 +14,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
+import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
 public class HomeController {
-
+	
 	@Autowired
 	CustomerDao custdao;
 	@Autowired
 	PostDao postdao;
+	final String savePath = "/profile";
 	
 	@GetMapping("temp")
 	public String temp() {
@@ -58,8 +65,12 @@ public class HomeController {
 		Customer c = custdao.selectOne(customer);
 		
 		if(c != null) {
-			session.setAttribute("login", c.getCust_id());
+			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
+			session.setAttribute("password", c.getCust_password());
+			session.setAttribute("email", c.getCust_email());
+			session.setAttribute("introduce", c.getCust_introduce());
+			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";
 		}else {
 			model.addAttribute("Error", "Typed down with wrong ID or Password");
@@ -68,7 +79,7 @@ public class HomeController {
 	}
 	
 	//must be linked with HTTP through the 'value=""'
-	@GetMapping(value="")
+	@GetMapping(value="logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "home";
@@ -80,8 +91,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/main")
-	public String main(Customer customer, HttpSession session) {
-		session.setAttribute("login", customer.getCust_number());
+	public String main() {
 		return "main";
 	}
 
@@ -99,14 +109,8 @@ public class HomeController {
 	public String follow() {
 		return "customer/follow";
 	}
-	@GetMapping("/chattingTemp")
-	public String chattingTemp() {
-		return "chattingTemp";
-	}
-	@GetMapping("/chatBangCreate")
-	public String chatBangCreate() {
-		return "chatBangCreate";
-	}
+
+
 
 	@GetMapping("/profile")
 	public String profile(Model model) {
@@ -138,9 +142,81 @@ public class HomeController {
 		return "customer/profile";
 	}
 	@RequestMapping(value="/join", method = RequestMethod.POST)
-	public String join(Customer customer) {
+	public String join(Customer customer,MultipartFile upload,RedirectAttributes rttr) {
+		
+		String originalFilename = upload.getOriginalFilename();
+		String savedFilename = FileService.saveFile(upload, savePath);
+		customer.setCust_photo_original(originalFilename);
+		customer.setCust_photo_saved(savedFilename);
+		
 		custdao.signup(customer);
 		
-		return "home";
+		return "redirect:home";
+	}
+	@GetMapping("/deleteView")
+	public String deletePage() {
+		
+		return "customer/withdrawal";
+	}
+	
+	@PostMapping("/customerDelete")
+	public String customerDelete(Customer customer,HttpSession session, RedirectAttributes rttr) {
+		
+		String sessionpwd = (String)session.getAttribute("password");
+		
+		String vopwd = customer.getCust_password();
+		
+		if(!(sessionpwd.equals(vopwd))) {
+			rttr.addFlashAttribute("msg",false);
+			return "redirect:/customer/withdrawal";
+		}
+		custdao.withdrawal(customer);
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/goModify")
+	public String goModify() {
+		
+		return "customer/modify";
+	}
+	@RequestMapping(value = "/goModify", method = RequestMethod.POST)
+	public String updateCustomer(Customer customer, RedirectAttributes rttr){
+		
+		custdao.updateCustomer(customer);
+		
+		return "main";
+	}
+	
+	@PostMapping("/change")
+	public String changePwd(Customer customer, HttpSession session) {
+		
+		custdao.changePwd(customer);
+		
+		return "main";
+	}
+	@GetMapping("/protest")
+	public String test() {
+		
+		return "customer/followlist";
+	}
+	
+	@GetMapping("/followers")
+	public String followers(Customer customer, Model model) {
+		Customer c = custdao.selectOne(customer);
+		List<Integer> followersList=custdao.getFollowers(c.getCust_number());
+		
+		model.addAttribute("followersList", followersList);
+		
+		return "customer/followers";
+	}
+	@GetMapping("/followings")
+	public String followings(Customer customer, Model model) {
+		Customer c = custdao.selectOne(customer);
+		List<Integer> followingList=custdao.getFollowings(c.getCust_number());
+		
+		model.addAttribute("followingList", followingList);
+		
+		return "customer/followings";
 	}
 }

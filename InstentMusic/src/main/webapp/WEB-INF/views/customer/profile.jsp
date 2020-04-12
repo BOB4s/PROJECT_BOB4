@@ -23,7 +23,7 @@
 
 	 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="main"> <img src="resources/images/logo.png" />
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -66,9 +66,9 @@
 					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>
 						posts</li>
 					<li class="profile__stat"><span class="stat__number">${followers}</span>
-						followers</li>
+						<a href="followers">followers</a></li>
 					<li class="profile__stat"><span class="stat__number">${followings}</span>
-						following</li>
+						<a href="followings">following</a></li>
 				</ul>
 				<p class="profile__bio">
 					<span class="profile__full-name">${customersData.cust_introduce} </span>

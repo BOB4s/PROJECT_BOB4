@@ -8,7 +8,7 @@
 		insert into Message
 		(
 		Mes_number
-		,sender_number
+		,cust_nickname
 		,Mes_content
 		,Mes_File
 		,mes_checked
@@ -18,7 +18,7 @@
 		values
 		(
 		SEQ_Mes_number.nextval
-		,#{sender_number}
+		,#{cust_nickname}
 		,#{Mes_content}
 		,#{Mes_File}
 		,1

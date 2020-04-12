@@ -11,14 +11,12 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
+<link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script>
 
 </script>
 <style type="text/css">
-.musicList{
-	width: 20px;
-}
 a:link{
 	text-decoration: none;
 }
@@ -57,8 +55,17 @@ a:link{
 		</div>
 	</nav>
 
-<!-- board for main page -->
-
+<!-- grid for main page -->
+<div class="grid-container">
+	<div class="mainGrid">Board
+	<br>
+	Hot tracks
+	<br>
+	New launched sound effects
+	</div>
+	<div class="rightGrid">New tracks from followers
+	</div>
+</div>
 
 </body>
 <script>

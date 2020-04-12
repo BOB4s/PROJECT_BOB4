@@ -63,7 +63,7 @@
 .boxContainer:hover {
 	transform: rotateY(-78deg) translateZ(20px);
 }
-.boxContainer .poster, 
+.boxContainer .frontImgForBoxContainer, 
 .boxContainer .info {
   position: absolute;
   width: 260px;
@@ -71,11 +71,11 @@
   background-color: #fff;
   backface-visibility: hidden;
 }
-.poster img{
+.frontImgForBoxContainer img{
 	width: 260px;
     height: 400px;
 }
-.boxContainer .poster  {
+.boxContainer .frontImgForBoxContainer  {
   transform: translateZ(130px);
   background-size: cover;
   background-repeat: no-repeat;
@@ -134,17 +134,17 @@
   line-height: 1.4em;
   border-top: 10px solid #555;
 }
-.boxContainer .poster,
+.boxContainer .frontImgForBoxContainer,
 .boxContainer .info,
 .boxContainer .info header {
   transition: box-shadow 350ms;
 }
 
-.boxContainer .poster {
+.boxContainer .frontImgForBoxContainer {
   box-shadow: inset 0px 0px 40px rgba(255,255,255,0);
 }
 
-.boxContainer:hover .poster {
+.boxContainer:hover .frontImgForBoxContainer {
   box-shadow: inset 300px 0px 40px rgba(255,255,255,0.8);
 }
 .boxContainer .info, 
@@ -155,27 +155,4 @@
 .boxContainer:hover .info, 
 .boxContainer:hover .info header {
   box-shadow: inset 0px 0px 40px rgba(0,0,0,0);
-}
-.icon:nth-child(1) .boxContainer .poster {
-  background-image: url(../img/poster01.jpg);
-}
-
-.icon:nth-child(2) .poster {
-  background-image: url(../img/poster02.jpg);
-}
-
-.icon:nth-child(3) .poster {
-  background-image: url(../img/poster03.jpg);
-}
-
-.icon:nth-child(1) .info header {
-  background-image: url(../img/still01.jpg);
-}
-
-.icon:nth-child(2) .info header {
-  background-image: url(../img/still02.jpg);
-}
-
-.icon:nth-child(3) .info header {
-  background-image: url(../img/still03.jpg);
 }

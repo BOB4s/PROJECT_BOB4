@@ -61,7 +61,7 @@ body {
 	<ul class="stage">
 	<li class="icon">
 		<div class="boxContainer">
-    		<div class="poster">
+    		<div class="frontImgForBoxContainer">
     			<img alt="manListening" src="resources/images/musiclist/manListening.JPG">
     		</div>
     		<div class="info">
@@ -77,7 +77,7 @@ body {
 	</li>
 	<li class="icon">
 		<div class="boxContainer">
-			<div class="poster">
+			<div class="frontImgForBoxContainer">
 				<img alt="womanListening" src="resources/images/musiclist/womanListening.png">
 			</div>
 			<div class="info">
@@ -93,7 +93,7 @@ body {
     </li>
 	<li class="icon">
 		<div class="boxContainer">
-			<div class="poster">
+			<div class="frontImgForBoxContainer">
 				<img alt="notesKeyboard" src="resources/images/musiclist/notes_keyboard.JPG">
 			</div>
 			<div class="info">

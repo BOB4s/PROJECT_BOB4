@@ -12,4 +12,5 @@ public class MessageList {
 	private int HowManyChecks;
 	private String recentMessage;
 	/* private Message message; */
+	
 }

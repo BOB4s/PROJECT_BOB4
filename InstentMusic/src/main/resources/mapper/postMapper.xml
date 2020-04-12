@@ -20,8 +20,43 @@
 		</choose>
 	like '%'||#{searchWord}||'%'
 	order by post_number desc
-	limit 0, 20
 	</select>
 	
+
+	<insert id="post_save_method" parameterType="Post">
+		insert into Post
+		(
+		post_number
+		,mus_number
+		,cust_number
+		,mus_title
+		,mus_time
+		,post_content
+		,post_nickname
+		,post_url
+		,post_date
+		,tagsresult
+		,post_reply
+		,post_like
+		,post_play
+		)
+		values
+		(
+		SEQ_Post_post_number.nextval
+		,#{mus_number}
+		,#{cust_number}
+		,#{mus_title}
+		,#{mus_time}
+		,#{post_content}
+		,#{post_nickname}
+		,'131235'
+		,sysdate
+		,#{tagsresult}
+		,0
+		,0
+		,0
+		)
+	
+	</insert>
 	
 </mapper>

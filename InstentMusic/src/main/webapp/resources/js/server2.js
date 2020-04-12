@@ -45,11 +45,10 @@ io.on('connection', function(socket) {
 
 		addedUser = true;
 		idList[username] = socket.id;
-		console.log(idList);
 		socket.username = username;
 		userList.push(username);
 		var from = "admin";
-		console.log(username+'is login');
+
 		io.to(idList[username]).emit('chat message', {
 			username : from
 

@@ -104,6 +104,7 @@ a {
 	height: 350px;
 }
 
+/*# sourceMappingURL=style.css.map */
 #chat-area {
 	margin: 20px 0;
 	padding: 20px;
@@ -176,7 +177,7 @@ div.friends_bar_list {
 				style="font-size: 20pt; font-family: fantasy; color: white;">대화방
 				리스트</div>
 			<c:forEach var="room" items="${RoomList}">
-					alert("!!!!");
+
 				<div class="friends_bar_profile_rooms"
 					onclick="init(${room.messangerRoom})" >
 					<div  style="text-align: left;"><img alt="여기?" src="resources/${room.oppsProfile}">${room.opponentName} </div>

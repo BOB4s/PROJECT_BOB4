@@ -12,13 +12,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
-<script src="resources/js/p5.min.js"></script>
-<script src="resources/js/p5.sound.min.js"></script>
-<script src="resources/js/sketch.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
+<script src="https://github.com/dominikhofacker/audiovisualization.git>"></script>
 <script>
-var path, song, i;
 $(function(){
-	i = 0 ;
+	var i = 0 ;
 	 
 	function fname(){
 		   i++;
@@ -26,19 +24,27 @@ $(function(){
 				data+= "<br><br>"+i
 		   $("#target").html(data);
 	  }
+
 	var sounds = new Array();
 	for(var j=0; j<26; j++){
-		sounds[j] = 'resources/sound/beatbox/bb'+j+'.mp3'
+		sounds[j] = new Howl({
+			src: ['resources/sound/beatbox/bb'+j+'.mp3']
+		});
 	}
 	
 	$(document).keydown(function(event){
 		for(var k=0; k<26; k++){
 			var idx = k+65;
 			if(event.keyCode == idx){
-				path = sounds[k];
-				setup();
+				sounds[k].play();
 			}
 		}
+		
+		if(i>30||i==0){
+			Howler.volume(0.0);
+		}else{
+			Howler.volume(1.0);
+			}
 	})
 	/*1초마다 fname 함수 실행*/
 	$(document).keydown(function(event){
@@ -55,22 +61,7 @@ $(function(){
 		}
 	});
 })
-function setup(){
-	song = loadSound(path, loaded);
-	if(i>30||i==0){
-		song.setVolume(0.0);
-	}else{
-		song.setVolume(1.0);
-	}
-}
-function loaded(){
-	song.play();
-}
-function draw(){
-	
-}
-</script>
-<script>
+
 //Login block section
 var modal='';
 function loginBlock(){
@@ -254,7 +245,11 @@ span.forgotPassword{
 </style>
 </head>
 <body>
+<<<<<<< HEAD
+	
+=======
 	<!-- Navbar (sit on top) -->
+>>>>>>> refs/heads/master
 <div class="w3-top">
   <div class="w3-bar w3-white w3-card" id="myNavbar">
     <a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>

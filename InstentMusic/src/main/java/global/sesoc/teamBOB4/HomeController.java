@@ -59,7 +59,7 @@ public class HomeController {
 		Customer c = custdao.selectOne(customer);
 		
 		if(c != null) {
-			session.setAttribute("login", c.getCust_id());
+			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
 			session.setAttribute("password", c.getCust_password());
 			session.setAttribute("email", c.getCust_email());

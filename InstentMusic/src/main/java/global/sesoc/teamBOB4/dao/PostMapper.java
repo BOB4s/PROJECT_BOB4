@@ -11,4 +11,6 @@ public interface PostMapper {
 
 	public List<Post> listAll(Map<String, Object> map);
 
+	void post_save_method(Post post);
+
 }

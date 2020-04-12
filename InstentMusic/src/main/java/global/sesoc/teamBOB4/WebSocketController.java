@@ -59,10 +59,7 @@ public class WebSocketController {
 	 * client.getBasicRemote().sendText(message); } } } }
 	 */
 	 
-	/*
-	 * @OnMessage public void onmessage(String message){
-	 * System.out.println("여깁니다 시발"); }
-	 */
+
 
 	 @GetMapping("/pastChatGet")
 	 public @ResponseBody List<Message> pastChatGet(int messangerRoom){

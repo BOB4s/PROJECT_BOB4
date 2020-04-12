@@ -1,6 +1,7 @@
 package global.sesoc.teamBOB4;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -104,4 +105,13 @@ public class CustomerController {
 		
 		return c;
 	}
+	@RequestMapping(value = "/toSendIsCorrect", method = RequestMethod.GET,produces = "application/text; charset=utf8")
+	public String toSendIsCorrect(String sendData) {
+		String reciver =dao.getDataFromDBsendData(sendData);
+		
+	return reciver;
+		
+	}
+	
+
 }

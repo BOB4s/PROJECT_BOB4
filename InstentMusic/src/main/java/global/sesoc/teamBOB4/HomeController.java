@@ -21,6 +21,7 @@ import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
+import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
 public class HomeController {
@@ -72,7 +73,7 @@ public class HomeController {
 	}
 	
 	//must be linked with HTTP through the 'value=""'
-	@GetMapping(value="")
+	@GetMapping(value="logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "home";
@@ -84,8 +85,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/main")
-	public String main(Customer customer, HttpSession session) {
-		session.setAttribute("login", customer.getCust_number());
+	public String main() {
 		return "main";
 	}
 
@@ -103,14 +103,8 @@ public class HomeController {
 	public String follow() {
 		return "customer/follow";
 	}
-	@GetMapping("/chattingTemp")
-	public String chattingTemp() {
-		return "chattingTemp";
-	}
-	@GetMapping("/chatBangCreate")
-	public String chatBangCreate() {
-		return "chatBangCreate";
-	}
+
+
 
 	@GetMapping("/profile")
 	public String profile(Model model) {

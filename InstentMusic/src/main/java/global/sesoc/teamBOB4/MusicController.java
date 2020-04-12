@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import global.sesoc.teamBOB4.dao.MusicDao;
 import global.sesoc.teamBOB4.util.FileService;
-import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Sound_library;
 
 @Controller
@@ -45,6 +44,7 @@ public class MusicController {
 		}
 		return result;
 	}
+	
 	
 	@GetMapping("/searchsound")
 	public List<Sound_library> searchsound(String search, HttpSession session){

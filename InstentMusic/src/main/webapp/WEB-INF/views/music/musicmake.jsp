@@ -419,7 +419,10 @@ $(function(){
 					path = $(this).find('img').attr('alt');
 					setup();
 				});
-				}
+				$('.adds').click(function(){
+					
+				})
+			}
 		})
 	})
 })
@@ -432,6 +435,9 @@ $(function() {
 			return;
 		} else if (folname.length > 10) {
 			alert("Too long name!");
+		} else if(folname.trim()=='added'){
+			alert("unavailable name!");
+			return;
 		} else {
 			var data = {
 				'sou_type' : folname
@@ -643,6 +649,7 @@ function draw() {
 			<div id="bags">
 				<div id="libs">
 				<ul>
+					<li><button id="added" value="added">Added</button></li>
 					<li><button id="beatbox" value="Beatbox">Beatbox</button></li>
 					<li><button id="piano" value="Piano">Piano</button></li>
 					<span id="newbtn"></span>

@@ -19,7 +19,6 @@ and sou_number = #{sou_number}
 </if>
 </select>
 
-
 <select id="searchsound" parameterType="map" resultType="Sound">
 select *
 from sound_library

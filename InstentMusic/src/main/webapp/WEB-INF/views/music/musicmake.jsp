@@ -435,10 +435,7 @@ $(function() {
 			return;
 		} else if (folname.length > 10) {
 			alert("Too long name!");
-		} else if(folname.trim()=='added'){
-			alert("unavailable name!");
-			return;
-		} else {
+		}else {
 			var data = {
 				'sou_type' : folname
 			};

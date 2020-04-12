@@ -1,6 +1,7 @@
 package global.sesoc.teamBOB4.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,15 @@ public class MusicDao {
 	public List<Sound_library> getSounds(Sound_library sound) {
 		MusicMapper mapper = session.getMapper(MusicMapper.class);
 		return mapper.getSounds(sound);
+	}
+
+	public int editlib(Map<String, Object> map) {
+		MusicMapper mapper = session.getMapper(MusicMapper.class);
+		return mapper.editlib(map);
+	}
+
+	public int deletelib(Sound_library sound) {
+		MusicMapper mapper = session.getMapper(MusicMapper.class);
+		return mapper.deletelib(sound);
 	}
 }

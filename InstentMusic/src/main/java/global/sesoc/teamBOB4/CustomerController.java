@@ -89,4 +89,19 @@ public class CustomerController {
 		}
 		return "fail";
 	}
+	@RequestMapping(value="/followers", method = RequestMethod.GET)
+	public Customer followersList(Customer customer) {
+		
+		Customer c = dao.getNumber(customer);
+		
+		return c;
+	}
+	
+	@RequestMapping(value="/followings", method = RequestMethod.GET)
+	public Customer followingsList(Customer customer) {
+		
+		Customer c = dao.getNumber(customer);
+		
+		return c;
+	}
 }

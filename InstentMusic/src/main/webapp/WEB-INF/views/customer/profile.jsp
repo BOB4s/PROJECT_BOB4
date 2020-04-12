@@ -9,6 +9,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<script src="resources/js/jquery-3.4.1.min.js"></script>
+<script>
+
+</script>
 <title>Profile </title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -54,9 +58,9 @@
 					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>
 						posts</li>
 					<li class="profile__stat"><span class="stat__number">${followers}</span>
-						followers</li>
+						<a href="followers">followers</a></li>
 					<li class="profile__stat"><span class="stat__number">${followings}</span>
-						following</li>
+						<a href="followings">following</a></li>
 				</ul>
 				<p class="profile__bio">
 					<span class="profile__full-name">${customersData.cust_introduce} </span>

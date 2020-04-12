@@ -14,5 +14,7 @@
 		<a href="chattingTemp">채팅연습하러가기</a>
 		<a href="chatBangCreate"> 채팅방만들기</a>
 		<a href="deleteView">탈주닌자</a>
+		<a href="goModify">정보수정수정</a>
+		<a href="protest">실험해보자</a>
 </body>
 </html>

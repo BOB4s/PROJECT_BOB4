@@ -79,4 +79,24 @@ public class CustomerDao {
 		
 		return result; 
 	}
+	public int updateCustomer(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.updateCustomer(customer);
+		
+		return result; 
+	}
+
+	public int changePwd(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		int result = mapper.changePwd(customer);
+		
+		return result;
+	}
+	public Customer getNumber(Customer customer) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		return mapper.getNumber(customer);
+	}
 }

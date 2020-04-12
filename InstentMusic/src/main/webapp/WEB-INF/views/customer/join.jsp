@@ -129,7 +129,7 @@ $(function(){
 <div class="bg">
 <div id="wrapper">
 	<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
-	<form id="join" action="join" method="POST">
+	<form id="join" action="join" method="POST" enctype="multipart/form-data">
 	<table border="1">
 		<tr>
 			<th>ID</th>

@@ -26,5 +26,11 @@ public interface CustomerMapper {
 	public Customer selectEmail(Customer customer);
 
 	int deleteCustomer(Customer customer);
+	
+	int updateCustomer(Customer customer);
+
+	int changePwd(Customer customer);
+
+	Customer getNumber(Customer customer);
 
 }

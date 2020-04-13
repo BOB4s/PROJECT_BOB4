@@ -17,6 +17,7 @@
 	}
 	.img_wrap img{
 		max-width: 100%;
+	}
 	img {
 		width : 60px;
 	}
@@ -24,12 +25,17 @@
 		height: 100%;
 		margin: 0;
 	}
+	input, td{
+		background-color: white;
+	}
 	.bg{
 		background-image: url("resources/images/join/songwriter.jpg");
 		height: 100%;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
 	}
 	th{
 		background-color: white;

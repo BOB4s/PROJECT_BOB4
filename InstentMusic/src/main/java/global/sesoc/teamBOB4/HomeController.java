@@ -32,6 +32,12 @@ public class HomeController {
 	PostDao postdao;
 	final String savePath = "/profile";
 	
+	@GetMapping("temp")
+	public String temp() {
+		return "temp";
+		
+	}
+	
 	@GetMapping("/")
 	public String index() {
 		return "home";
@@ -94,9 +100,9 @@ public class HomeController {
 		return "music/musiclist";
 	}
 
-	@GetMapping("/musicmake")
-	public String musicmake() {
-		return "music/musicmake";
+	@GetMapping("/makingMusic")
+	public String makingMusic() {
+		return "music/makingMusic";
 	}
 
 	@GetMapping("/follow")

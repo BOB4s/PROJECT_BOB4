@@ -375,6 +375,7 @@ function gets(soutype){
 									alert('deleted!');
 									newbtn();
 									gets(soutype);
+									loaded2();
 								}else{
 									alert('delete fail');
 								}
@@ -421,7 +422,18 @@ $(function(){
 					setup();
 				});
 				$('.adds').click(function(){
-					
+					loaded2();
+					$.ajax({
+						method : 'post'
+						,url : 'insertSound'
+						,data : {'sou_type' : 'added','sou_name' : this.value}
+						,success : function(resp){
+								if(resp!=0){
+									loaded2();
+									alert('added!');
+									}
+							}
+						})
 				})
 			}
 		})
@@ -462,6 +474,10 @@ $(function() {
 			})
 		}
 	});
+	$("#added").click(function(){
+		$("#target2").html('added');
+			gets('added');
+		})
 	$("#beatbox").click(function() {
 		$("#target2").text('Beatbox');
 		$("#inbox").html('');
@@ -520,6 +536,11 @@ $(function() {
 			setup();
 		});
 	});
+})
+$(function(){
+	$("#addRcd").click(function(){
+		alert("record");
+		})
 })
 $(function(){
 	$("#addfile").on("change",showfile);

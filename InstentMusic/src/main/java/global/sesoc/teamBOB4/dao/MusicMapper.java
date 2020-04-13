@@ -19,4 +19,5 @@ public interface MusicMapper {
 
 	List<Sound_library> searchsound(Map<String, Object> map);
 
+	List<Sound_library> getorigin(Sound_library added);
 }

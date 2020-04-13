@@ -44,4 +44,9 @@ public class MusicDao {
 		MusicMapper mapper = session.getMapper(MusicMapper.class);
 		return mapper.searchsound(map);
 	}
+
+	public List<Sound_library> getorigin(Sound_library added) {
+		MusicMapper mapper = session.getMapper(MusicMapper.class);
+		return mapper.getorigin(added);
+	}
 }

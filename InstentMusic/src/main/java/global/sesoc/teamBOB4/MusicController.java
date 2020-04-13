@@ -40,6 +40,16 @@ public class MusicController {
 		List<Sound_library> result = dao.getSounds(sound);
 		for(Sound_library s : result) {
 			String fullPath = "resources/"+uploadPath+s.getSou_saved();
+			if(sound.getSou_type().equals("added")) {
+				Sound_library added = new Sound_library();
+				int a = Integer.parseInt(s.getSou_name());
+				added.setSou_number(a);
+				List<Sound_library> original = dao.getorigin(added);
+				for(Sound_library o : original) {
+					fullPath = "resources/"+uploadPath+o.getSou_saved();
+					s.setSou_name(o.getSou_name());
+				}
+			}
 			s.setFullPath(fullPath);
 		}
 		return result;
@@ -77,16 +87,18 @@ public class MusicController {
 	
 	@PostMapping("/deletelib")
 	public int deletelib(Sound_library sound, HttpSession session, HttpServletRequest request) {
-		String rootPath = request.getSession().getServletContext().getRealPath("/") ;//리얼경로
-		String savePath = rootPath + "/resources/"+uploadPath ;
-		
 		sound.setCust_number((int)session.getAttribute("login"));
-		List<Sound_library> result = dao.getSounds(sound);
-		
-		for(Sound_library r : result) {
-			String fullPath = savePath+r.getSou_saved();
+		if(!sound.getSou_type().equals("added")) {
+			String rootPath = request.getSession().getServletContext().getRealPath("/") ;//리얼경로
+			String savePath = rootPath + "/resources/"+uploadPath ;
 			
-			FileService.deleteFile(fullPath);
+			List<Sound_library> result = dao.getSounds(sound);
+			
+			for(Sound_library r : result) {
+				String fullPath = savePath+r.getSou_saved();
+				
+				FileService.deleteFile(fullPath);
+			}
 		}
 		return dao.deletelib(sound);
 	}

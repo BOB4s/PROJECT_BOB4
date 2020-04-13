@@ -19,6 +19,12 @@ and sou_number = #{sou_number}
 </if>
 </select>
 
+<select id="getorigin" parameterType="Sound" resultType="Sound">
+select *
+from sound_library
+where sou_number = #{sou_number}
+</select>
+
 <select id="searchsound" parameterType="map" resultType="Sound">
 select *
 from sound_library
@@ -33,6 +39,8 @@ sou_number
 ,sou_type
 <if test="sou_name!=null">
 ,sou_name
+</if>
+<if test="sou_saved!=null">
 ,sou_saved
 </if>
 )
@@ -42,6 +50,8 @@ SEQ_SOUND_LIBRARY_SOU_NUMBER.nextval
 ,#{sou_type}
 <if test="sou_name!=null">
 ,#{sou_name}
+</if>
+<if test="sou_saved!=null">
 ,#{sou_saved}
 </if>
 )

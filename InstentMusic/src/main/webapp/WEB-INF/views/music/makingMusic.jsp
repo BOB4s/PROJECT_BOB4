@@ -626,7 +626,7 @@ function showfile(sfile){
 			});
 	})
 }
-var state = 0;
+var state = 3;
 $(function(){
 	$("#recordstart").click(function(){
 		$("#recordstart").attr("hidden","hidden");
@@ -645,13 +645,63 @@ $(function(){
 		recordstart();
 	})
 })
+$(function(){
+	var modal = document.getElementById("addModal");
+	var img = document.getElementById("addSound");
+	var img2 = document.getElementById("addRcd");
+	
+		img.onclick = function(){
+			loaded2();
+			$("#addbtn").attr("type","button");
+			$("#rcdbtn").attr("type","hidden");
+			$("#form_upload").removeAttr("hidden");
+			$("#form_upload2").attr("hidden","hidden");
+			$("#hid").removeAttr("hidden");
+			  modal.style.display = "block";
+			  newbtn2();
+			  
+			  var span = document.getElementsByClassName("close")[0];
+				span.onclick = function(){
+					$("#target4").text('');
+					$("#addcom").val('');
+					$("#target3").text('');
+					$("#addfile").val('');
+					loaded2();
+				modal.style.display = "none";
+			  };
+		};
+
+		img2.onclick = function(){
+				loaded2();
+				$("#addbtn").attr("type","hidden");
+				$("#rcdbtn").attr("type","button");
+				$("#form_upload2").removeAttr("hidden");
+				$("#form_upload").attr("hidden","hidden");
+				$("#hid").attr("hidden","hidden");
+				modal.style.display = "block";
+				  newbtn2();
+				  
+				  var span = document.getElementsByClassName("close")[0];
+					span.onclick = function(){
+						$("#target4").text('');
+						$("#addcom").val('');
+						$("#target3").text('');
+						$("#addfile").val('');
+						$("#recordstop").attr("hidden","hidden");
+						$("#recordstart").removeAttr("hidden");
+						state = 1;
+						loaded2();
+					modal.style.display = "none";
+				  };
+			}
+});
 var mic, recorder, soundFile;
 var amp;
 function setup() {
 	var cnv = createCanvas(200, 200);
 	cnv.parent('sketch-target');
 	song = loadSound(path, loaded);
-
+	amp = new p5.Amplitude();
 	 // create an audio in
 	  mic = new p5.AudioIn();
 
@@ -668,7 +718,7 @@ function setup() {
 	  // playback & save the recording
 	  soundFile = new p5.SoundFile();
 
-	  amp = new p5.Amplitude();
+	  
 }
 function recordstart(){
 	userStartAudio();
@@ -690,7 +740,7 @@ function recordstart(){
 
 		  else if (state === 2) {
 		    soundFile.play(); // play the result!
-		   // save(soundFile, 'mySound.wav');
+		   //save(soundFile, 'mySound.wav');
 		    state++;
 		  }
 }
@@ -702,6 +752,13 @@ function loaded2(){
 }
 function draw() {
 	background(0);
+	if(state===0){
+		amp.setInput(mic);
+		}else if(state>2){
+		amp.setInput(song);
+		}else{
+		amp.setInput(recorder);
+		}
 	var vol = amp.getLevel();
 	ellipse(100, 100, 200, vol * 200);
 }
@@ -773,55 +830,4 @@ function draw() {
 			<input id="rcdbtn" type="hidden" value="Add Record">
 		</div>
 </body>
-<script>
-$(function(){
-	var modal = document.getElementById("addModal");
-	var img = document.getElementById("addSound");
-	var img2 = document.getElementById("addRcd");
-	
-		img.onclick = function(){
-			loaded2();
-			$("#addbtn").attr("type","button");
-			$("#rcdbtn").attr("type","hidden");
-			$("#form_upload").removeAttr("hidden");
-			$("#form_upload2").attr("hidden","hidden");
-			$("#hid").removeAttr("hidden");
-			  modal.style.display = "block";
-			  newbtn2();
-			  
-			  var span = document.getElementsByClassName("close")[0];
-				span.onclick = function(){
-					$("#target4").text('');
-					$("#addcom").val('');
-					$("#target3").text('');
-					$("#addfile").val('');
-					loaded2();
-				modal.style.display = "none";
-			  };
-		};
-
-		img2.onclick = function(){
-				loaded2();
-				$("#addbtn").attr("type","hidden");
-				$("#rcdbtn").attr("type","button");
-				$("#form_upload2").removeAttr("hidden");
-				$("#form_upload").attr("hidden","hidden");
-				$("#hid").attr("hidden","hidden");
-				modal.style.display = "block";
-				  newbtn2();
-				  
-				  var span = document.getElementsByClassName("close")[0];
-					span.onclick = function(){
-						$("#target4").text('');
-						$("#addcom").val('');
-						$("#target3").text('');
-						$("#addfile").val('');
-						$("#recordstop").attr("hidden","hidden");
-						$("#recordstart").removeAttr("hidden");
-						loaded2();
-					modal.style.display = "none";
-				  };
-			}
-});
-</script>
 </html>

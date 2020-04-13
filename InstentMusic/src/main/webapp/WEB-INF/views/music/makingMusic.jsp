@@ -695,13 +695,14 @@ $(function(){
 				  };
 			}
 });
-var mic, recorder, soundFile;
+var mic, recorder, soundFile, soundBlob;
 var amp;
 function setup() {
 	var cnv = createCanvas(200, 200);
 	cnv.parent('sketch-target');
 	song = loadSound(path, loaded);
 	amp = new p5.Amplitude();
+	amp.setInput(song);
 	 // create an audio in
 	  mic = new p5.AudioIn();
 
@@ -717,16 +718,15 @@ function setup() {
 	  // this sound file will be used to
 	  // playback & save the recording
 	  soundFile = new p5.SoundFile();
-
-	  
 }
 function recordstart(){
 	userStartAudio();
 
 	  // make sure user enabled the mic
 	  if (state === 0 && mic.enabled) {
-
+		  amp.getLevel(0);
 	    // record to our p5.SoundFile
+	    amp.setInput(mic);
 	    recorder.record(soundFile);
 
 	  }
@@ -740,8 +740,9 @@ function recordstart(){
 
 		  else if (state === 2) {
 		    soundFile.play(); // play the result!
-		   //save(soundFile, 'mySound.wav');
+		    amp.setInput(soundFile);
 		    state++;
+		    soundBlob = soundFile.getBlob();
 		  }
 }
 function loaded() {
@@ -752,16 +753,62 @@ function loaded2(){
 }
 function draw() {
 	background(0);
-	if(state===0){
-		amp.setInput(mic);
-		}else if(state>2){
-		amp.setInput(song);
-		}else{
-		amp.setInput(recorder);
-		}
 	var vol = amp.getLevel();
 	ellipse(100, 100, 200, vol * 200);
 }
+$(function(){
+	$("#rcdbtn").click(function(){
+		if(soundBlob==null){
+			alert("please start Record");
+			return;
+		}
+		var cum = $("#addcom").val();
+		if(cum.trim().length<1){
+			alert("Create a name for the Record.");
+			return;
+			}
+		var library = $("#target3").text();
+		if(library.trim().length<1){
+			alert("Please select library");
+			return;
+			}
+		
+		var formData = new FormData();
+		 
+		   formData.append("file", soundBlob);
+		   formData.append("sou_type",library)
+		   formData.append("sou_name", cum);
+
+		$.ajax({
+			method : 'post'
+			,url : 'sendFile'
+			,data : formData,
+			processData: false,
+		    contentType: false,
+		    success : function(resp) {
+		        if(resp=='success'){
+		            alert("Success!");
+		            newbtn();
+					var libname = library;
+					libname+= '<img alt="'+library+'" src="resources/images/sound/sledit.png" id="editlib">'
+					libname+= '<img alt="'+library+'" src="resources/images/sound/sldelete.png" id="deletelib">'
+					$("#target2").html(libname);
+					$("#addcom").val('');
+					$("#target3").text('');
+					gets(library);
+		        }else{
+		            alert("Fail");
+		        }
+		    }
+		})
+		   
+		   soundFile = new p5.SoundFile();
+		$("#target4").text('');
+		loaded2();
+		var modal = document.getElementById('addModal');
+					modal.style.display = "none";
+	})
+})
 </script>
 </head>
 <body>
@@ -812,13 +859,13 @@ function draw() {
 			<form id="form_upload" enctype="multipart/form-data" action="/file/upload" method="post">
 				<input type="file" id="addfile" accept="audio/*">
 			</form>
-			<form id="form_upload2" enctypei="multipart/form-data" action="/file/upload" method="post">
+			<div id="form_upload2">
 				<img id="recordstart" alt="record" src="resources/images/sound/rcd.png">
 				<img id="recordstop" alt="stop" src="resources/images/sound/stop.png" hidden="hidden">
 				<img id="recordplay" alt="play" src="resources/images/sound/play.png">
-			</form>
+			</div>
 						<span id="hid"> file : <span id="target4"></span></span>
-				<div class="dropdown dropright">
+				<div id = "hid2" class="dropdown dropright">
     <button type="button" class="dropdown-toggle" data-toggle="dropdown">Library</button>
     <span id="target3"></span>
     <div class="dropdown-menu">

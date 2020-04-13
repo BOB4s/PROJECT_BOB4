@@ -413,6 +413,7 @@ $(function(){
 					}
 				})
 				if(cound==0){
+					$("#target2").html(soundsearch);
 					$("#inbox").append('<br>- empty -');
 				}
 				$('.sounds').click(function() {

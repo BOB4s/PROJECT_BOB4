@@ -626,12 +626,73 @@ function showfile(sfile){
 			});
 	})
 }
-var amp, pg;
+var state = 0;
+$(function(){
+	$("#recordstart").click(function(){
+		$("#recordstart").attr("hidden","hidden");
+		$("#recordstop").removeAttr("hidden");
+		state = 0;
+		recordstart();
+	})
+	$("#recordstop").click(function(){
+		$("#recordstop").attr("hidden","hidden");
+		$("#recordstart").removeAttr("hidden");
+		state = 1;
+		recordstart();
+	})
+	$("#recordplay").click(function(){
+		state = 2;
+		recordstart();
+	})
+})
+var mic, recorder, soundFile;
+var amp;
 function setup() {
 	var cnv = createCanvas(200, 200);
 	cnv.parent('sketch-target');
 	song = loadSound(path, loaded);
-	amp = new p5.Amplitude();
+
+	 // create an audio in
+	  mic = new p5.AudioIn();
+
+	  // prompts user to enable their browser mic
+	  mic.start();
+
+	  // create a sound recorder
+	  recorder = new p5.SoundRecorder();
+
+	  // connect the mic to the recorder
+	  recorder.setInput(mic);
+
+	  // this sound file will be used to
+	  // playback & save the recording
+	  soundFile = new p5.SoundFile();
+
+	  amp = new p5.Amplitude();
+}
+function recordstart(){
+	userStartAudio();
+
+	  // make sure user enabled the mic
+	  if (state === 0 && mic.enabled) {
+
+	    // record to our p5.SoundFile
+	    recorder.record(soundFile);
+
+	  }
+	  else if (state === 1) {
+
+		    // stop recorder and
+		    // send result to soundFile
+		    recorder.stop();
+
+		  }
+
+		  else if (state === 2) {
+		    soundFile.play(); // play the result!
+		   // save(soundFile, 'mySound.wav');
+		    state++;
+		  }
 }
 function loaded() {
 	song.play();
@@ -696,7 +757,7 @@ function draw() {
 			</form>
 			<form id="form_upload2" enctypei="multipart/form-data" action="/file/upload" method="post">
 				<img id="recordstart" alt="record" src="resources/images/sound/rcd.png">
-				<img id="recordstop" alt="stop" src="resources/images/sound/stop.png">
+				<img id="recordstop" alt="stop" src="resources/images/sound/stop.png" hidden="hidden">
 				<img id="recordplay" alt="play" src="resources/images/sound/play.png">
 			</form>
 						<span id="hid"> file : <span id="target4"></span></span>
@@ -755,6 +816,8 @@ $(function(){
 						$("#addcom").val('');
 						$("#target3").text('');
 						$("#addfile").val('');
+						$("#recordstop").attr("hidden","hidden");
+						$("#recordstart").removeAttr("hidden");
 						loaded2();
 					modal.style.display = "none";
 				  };

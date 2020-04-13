@@ -4,7 +4,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Main page after login</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="resources/css/navigation.css">
+<link rel="stylesheet" href="resources/css/sideMenuBar.css">
+<link rel="stylesheet" href="resources/css/main.css">
+<script src="resources/js/jquery-3.4.1.min.js"></script>
+<script>
+
+</script>
+<style type="text/css">
+a:link{
+	text-decoration: none;
+}
+</style>
 
 <script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
@@ -70,11 +86,50 @@
 
 </head>
 <body>
-로그인 후 메인 페이지
-<a href="musiclist">MyMusic</a>
-<a href="follow">follow</a>
-		<a href="profile"> 프로필 이예영</a>
-		<a href="chattingTemp">채팅연습하러가기</a>
+	<!-- Top for logo and navibar -->
+	 <nav class="navigation">
+		<div class="navigation__column">
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>
+		</div>
+		<div class="navigation__column">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+		</div>
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="explore.html"
+					class="navigation__link"> <i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"> <i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> 채팅 연습하러 가기</a>
+			  <a href="chatBangCreate"><i class="fa fa-comment-o"></i>채팅방 만들기</a>
+			</div>
+		</div>
+	</nav>
+
+<!-- grid for main page -->
+<div class="grid-container">
+	<div class="mainGrid">Board
+	<br>
+	Hot tracks
+	<br>
+	New launched sound effects
+	</div>
+	<div class="rightGrid">New tracks from followers
+	</div>
+</div>
+
 		<input type="button" value="챗방" onclick="chatOpen()">
 	<input type="button" id="test1"  value="toast" onclick="toasted()">
 		<a href="postWrite"> 글쓰자</a>
@@ -83,4 +138,13 @@
 		<a href="goModify">정보수정수정</a>
 		<a href="protest">실험해보자</a>
 </body>
+<script>
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
+</script>
 </html>

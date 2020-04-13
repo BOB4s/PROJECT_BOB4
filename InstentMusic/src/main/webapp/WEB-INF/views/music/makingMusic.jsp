@@ -116,18 +116,18 @@ width : 65px;
 height : 65px;
 cursor: pointer;
 }
-#addModal {
+#addModal{
 	color: #FFFFFF;
 	font-size: 30px;
 	text-align: center;
 }
-#addcom {
+#addcom{
 	width: 200px;
 	height: 30px;
 	font-size: 20px;
 }
 
-#addbtn, #addModal button {
+#addbtn, #addModal button, #rcdbtn{
 	width: 150px;
 	height: 30px;
 	background-color: #000000;
@@ -215,6 +215,9 @@ cursor: pointer;
 	color: #FFFFFF;
 	border-radius: 100%;
 	padding: 0;
+}
+#form_upload2 img{
+	cursor: pointer;
 }
 </style>
 <script>
@@ -538,11 +541,6 @@ $(function() {
 	});
 })
 $(function(){
-	$("#addRcd").click(function(){
-		alert("record");
-		})
-})
-$(function(){
 	$("#addfile").on("change",showfile);
 	$("#addcom").keyup(function(){
 		var com = $("#addcom").val();
@@ -628,7 +626,7 @@ function showfile(sfile){
 			});
 	})
 }
-var amp;
+var amp, pg;
 function setup() {
 	var cnv = createCanvas(200, 200);
 	cnv.parent('sketch-target');
@@ -696,7 +694,12 @@ function draw() {
 			<form id="form_upload" enctype="multipart/form-data" action="/file/upload" method="post">
 				<input type="file" id="addfile" accept="audio/*">
 			</form>
-							file : <span id="target4"></span>
+			<form id="form_upload2" enctypei="multipart/form-data" action="/file/upload" method="post">
+				<img id="recordstart" alt="record" src="resources/images/sound/rcd.png">
+				<img id="recordstop" alt="stop" src="resources/images/sound/stop.png">
+				<img id="recordplay" alt="play" src="resources/images/sound/play.png">
+			</form>
+						<span id="hid"> file : <span id="target4"></span></span>
 				<div class="dropdown dropright">
     <button type="button" class="dropdown-toggle" data-toggle="dropdown">Library</button>
     <span id="target3"></span>
@@ -706,15 +709,22 @@ function draw() {
     </div>
     Sound Name : <input type="text" id="addcom">&nbsp;
 			<input id="addbtn" type="button" value="Add Sound">
+			<input id="rcdbtn" type="hidden" value="Add Record">
 		</div>
 </body>
 <script>
 $(function(){
 	var modal = document.getElementById("addModal");
 	var img = document.getElementById("addSound");
+	var img2 = document.getElementById("addRcd");
 	
 		img.onclick = function(){
 			loaded2();
+			$("#addbtn").attr("type","button");
+			$("#rcdbtn").attr("type","hidden");
+			$("#form_upload").removeAttr("hidden");
+			$("#form_upload2").attr("hidden","hidden");
+			$("#hid").removeAttr("hidden");
 			  modal.style.display = "block";
 			  newbtn2();
 			  
@@ -728,6 +738,27 @@ $(function(){
 				modal.style.display = "none";
 			  };
 		};
+
+		img2.onclick = function(){
+				loaded2();
+				$("#addbtn").attr("type","hidden");
+				$("#rcdbtn").attr("type","button");
+				$("#form_upload2").removeAttr("hidden");
+				$("#form_upload").attr("hidden","hidden");
+				$("#hid").attr("hidden","hidden");
+				modal.style.display = "block";
+				  newbtn2();
+				  
+				  var span = document.getElementsByClassName("close")[0];
+					span.onclick = function(){
+						$("#target4").text('');
+						$("#addcom").val('');
+						$("#target3").text('');
+						$("#addfile").val('');
+						loaded2();
+					modal.style.display = "none";
+				  };
+			}
 });
 </script>
 </html>

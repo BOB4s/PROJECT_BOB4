@@ -3,16 +3,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusicMake</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="resources/css/navigation.css">
+<link rel="stylesheet" href="resources/css/sideMenuBar.css">
+<link rel="stylesheet" href="resources/css/makingMusic.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
 <script src="resources/js/p5.sound.min.js"></script>
 <script src="resources/js/sketch.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 <style>
 #soundlib {
 	margin: 10px 5px 5px 5px;
@@ -627,6 +634,38 @@ function draw() {
 </script>
 </head>
 <body>
+<!-- Top for logo and navibar -->
+	 <nav class="navigation">
+		<div class="navigation__column">
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>
+		</div>
+		<div class="navigation__column">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+		</div>
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"><i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
+			</div>
+		</div>
+	</nav>
+
 	<div id="wrapper">
 		음악 제목 : <span id="target">임시 제목</span> <br>
 		<button id="slib" data-toggle="collapse" data-target="#soundlib">Sound Library</button>

@@ -14,7 +14,6 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
-<link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 
 </head>

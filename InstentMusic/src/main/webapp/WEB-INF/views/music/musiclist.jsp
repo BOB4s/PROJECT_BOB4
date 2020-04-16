@@ -17,9 +17,7 @@
 body {
     margin: 0px;
 }
-.navigation{
-	margin-bottom: 0px;
-}
+
 </style>
 </head>
 <body>

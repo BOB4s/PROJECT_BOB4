@@ -13,6 +13,7 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
+<link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 
 <title>글쓰기</title>
 
@@ -112,6 +113,14 @@ function go(){
 	
 		<textarea id="post_content" rows="10" cols="50"placeholder="설명을 작성해주세요"></textarea>
 			<br><br>
+	
+	<!-- 3d double roll button for posting -->
+	<div class="button_base btn_3d_double_roll">
+        <div>Posting</div>
+        <div>Posting</div>
+        <div>Posting</div>
+        <div>Posting</div>
+	</div>
 		
 		<input id="subBtn" type="button" value="글 태그 추출" style="float: right; margin-right: 100pt;" onclick="getTags()"/>
 	

@@ -5,10 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link rel="stylesheet" href="resources/css/navigation.css">
+<link rel="stylesheet" href="resources/css/sideMenuBar.css">
 
 <title>글쓰기</title>
 
@@ -62,6 +66,38 @@ function go(){
 
 </head>
 <body >
+	<!-- Top for logo and navibar -->
+	 <nav class="navigation">
+		<div class="navigation__column">
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>
+		</div>
+		<div class="navigation__column">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+		</div>
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"><i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
+			</div>
+		</div>
+	</nav>
+
 <div id="wrapper">
 <%-- <div id = "homereturner">
 			<c:url var="home" value="resources/images/homeimg.png"></c:url>
@@ -118,4 +154,13 @@ function go(){
 <div class="jumbotron" style="margin-bottom: 0">
 </div>
 </body>
+<script>
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
+</script>
 </html>

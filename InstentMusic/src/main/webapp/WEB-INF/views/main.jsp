@@ -142,7 +142,7 @@ body {
 			<div class="info">
 				<header>
 					<h1>My Music List</h1>
-						<a href="#"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
+						<a href="myMusicList"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
 				</header>
 					<p>
 					Click the icon for listening to the music list that built with what you composed music
@@ -174,7 +174,7 @@ body {
 			<div class="info">
 				<header>
 					<h1>Music Board</h1>
-					<a href="#"><img alt="musicBoard" src="resources/images/main/allList.png"></a>
+					<a href="#musicBoard"><img alt="musicBoard" src="resources/images/main/allList.png"></a>
 				</header>
 				<p>
 				Click the icon to see your friends' music and what's the trend
@@ -182,7 +182,10 @@ body {
 			</div>
 		</div>
 	</li>
-</ul> 
+</ul>
+</div>
+<div id="musicBoard">
+	<h1>Music Board</h1>
 </div>
 
 	<input type="button" id="test1"  value="toast" onclick="toasted()">

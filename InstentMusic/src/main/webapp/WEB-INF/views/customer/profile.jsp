@@ -22,7 +22,7 @@
 
 	 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="main"> <img src="resources/images/logo.png" />
+			<a href="home"> <img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg" />
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -44,8 +44,8 @@
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			  <a href="#">About</a>
 			  <a href="#">Services</a>
-			  <a href="#">Clients</a>
-			  <a href="#">Contact</a>
+			  <a href="goModify"><i class="fa fa-id-card-o"></i> Edit profile</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
 			</div>
 		</div>
 	</nav>

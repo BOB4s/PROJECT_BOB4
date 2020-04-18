@@ -133,6 +133,11 @@ public class MusicController {
 		return dao.insertkey(keys);
 	}
 	
+	@PostMapping("/delkey")
+	public int delkey(Key_sound keys) {
+		return dao.delkey(keys);
+	}
+	
 	@GetMapping("/getkeys")
 	public List<Key_sound> getkeys(Key_sound keys, HttpSession session){
 		int cust = (int) session.getAttribute("login");

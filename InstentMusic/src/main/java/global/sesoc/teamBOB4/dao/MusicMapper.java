@@ -25,4 +25,6 @@ public interface MusicMapper {
 	int insertkey(Key_sound keys);
 
 	List<Key_sound> getkeys(Key_sound keys);
+
+	int delkey(Key_sound keys);
 }

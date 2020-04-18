@@ -102,4 +102,10 @@ where
 cust_number = #{cust_number}
 and key_board = #{key_board}
 </select>
+
+<delete id="delkey" parameterType="Keys">
+delete from key_sound
+where
+key_number = #{key_number}
+</delete>
 </mapper>

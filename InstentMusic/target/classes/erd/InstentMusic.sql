@@ -147,7 +147,7 @@ CREATE TABLE Key_Sound
 	-- 소리 저장 경로
 	sou_name varchar2(30) NOT NULL,
 	-- 소리가 매칭되는 키 이름
-	key_name varchar2(2) NOT NULL,
+	key_name varchar2(3) NOT NULL,
 	PRIMARY KEY (key_number)
 );
 

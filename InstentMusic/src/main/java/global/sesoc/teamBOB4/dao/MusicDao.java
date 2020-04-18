@@ -65,4 +65,9 @@ public class MusicDao {
 		MusicMapper mapper = session.getMapper(MusicMapper.class);
 		return mapper.delkey(keys);
 	}
+
+	public int updatekey(Key_sound keys) {
+		MusicMapper mapper = session.getMapper(MusicMapper.class);
+		return mapper.updatekey(keys);
+	}
 }

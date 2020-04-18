@@ -915,9 +915,11 @@ function drop(ev) {
 	var c = ev.dataTransfer.getData("fullpath"); 
 	var d = ev.dataTransfer.getData("name");
 	var tagid = '#'+ev.target.id;
+	var tagcls = tagid+' .keydel';
 	$(tagid).css('background-color','white');
 
 	var sets = $("#newset").text();
+	if($(tagcls).html()==''){
 	var data = {
 				'key_board' : sets
 				,'sou_path' : c
@@ -932,6 +934,23 @@ function drop(ev) {
 				getkeys(sets);
 			}
 	})
+	}else{
+		var btn = tagcls+' .keydels';
+		var vals = $(btn).val();
+		var data = {
+				'sou_path' : c
+				,'sou_name' : d
+				,'key_number' : vals
+		}
+		$.ajax({
+			method : 'post'
+			,url : 'updatekey'
+			,data : data
+			,success : function(resp){
+					getkeys(sets);
+				}
+		})
+	}
 }
 function getkeys(sets){
 	$("#newset").text(sets);

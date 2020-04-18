@@ -108,4 +108,13 @@ delete from key_sound
 where
 key_number = #{key_number}
 </delete>
+
+<update id="updatekey" parameterType="Keys">
+update key_sound
+set
+sou_path = #{sou_path}
+,sou_name = #{sou_name}
+where
+key_number = #{key_number}
+</update>
 </mapper>

@@ -138,6 +138,11 @@ public class MusicController {
 		return dao.delkey(keys);
 	}
 	
+	@PostMapping("/updatekey")
+	public int updatekey(Key_sound keys) {
+		return dao.updatekey(keys);
+	}
+	
 	@GetMapping("/getkeys")
 	public List<Key_sound> getkeys(Key_sound keys, HttpSession session){
 		int cust = (int) session.getAttribute("login");

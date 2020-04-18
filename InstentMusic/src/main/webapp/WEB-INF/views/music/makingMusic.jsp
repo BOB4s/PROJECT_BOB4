@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" buffer="1024kb" autoFlush="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" buffer="4096kb" autoFlush="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +14,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
+body{
+margin : 10px 10px 10px 10px;
+}
 #soundlib, #keyboard{
 	margin: 10px 5px 5px 5px;
 	padding: 5px 5px 5px 5px;
@@ -540,12 +543,31 @@ $(function() {
 		$("#inbox").html('');
 		var srcs = ''
 		for (var i = 0; i < 32; i++) {
-			srcs = 'resources/sound/beatbox/bb' + i
-					+ '.mp3';
+			srcs = 'resources/sound/beatbox/bb' +i+ '.mp3';
 			var data = '';
 			data += '<div class="sounds">';
 			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="bb'+i+'" src="resources/images/sound/sound.png"><br>';
 			data += 'bb' + i;
+			data += '</div>';
+
+			$("#inbox").append(data);
+		}
+
+		$('.sounds').click(function() {
+			path = $(this).find('img').attr('id');
+			setup();
+		});
+	});
+	$("#drum").click(function() {
+		$("#target2").text('Drum');
+		$("#inbox").html('');
+		var srcs = ''
+		for (var i = 0; i < 29; i++) {
+			srcs = 'resources/sound/drum/drum' +i+ '.wav';
+			var data = '';
+			data += '<div class="sounds">';
+			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="drum'+i+'" src="resources/images/sound/sound.png"><br>';
+			data += 'drum' + i;
 			data += '</div>';
 
 			$("#inbox").append(data);
@@ -899,6 +921,8 @@ function drop(ev) {
 	})
 }
 function getkeys(sets){
+	$("#newset").text(sets);
+	$("#keytarget").text(sets);
 	$('.keysou').text('');
 	$('.keys').css('border','1px solid black');
 	$('.keys').css('background-color','white');
@@ -907,7 +931,6 @@ function getkeys(sets){
 		,url : 'getkeys'
 		,data : {'key_board' : sets}
 		,success : function(resp){
-			$("#newset").text(sets);
 			var cound = 0;
 				$.each(resp,function(index,item){
 					var idx = "#"+item.key_name;
@@ -916,13 +939,12 @@ function getkeys(sets){
 					$(idx).css('border','1px solid blue');
 					cound++;
 					$(document).keydown(function(event){
-						$('.keys').css('background-color','white');
-						if(event.keyCode == item.key_name){
-							if($(cls).text()!=''){
-								$(idx).css('background-color', 'red');
-								path = item.sou_path;
-								setup();
-							}
+						if(event.keyCode == item.key_name && $("#keytarget").text()==item.key_board){
+							$(idx).css('background-color', 'red');
+							path = item.sou_path;
+							setup();
+						}else{
+							$(idx).css('background-color','white');
 						}
 					})
 				})
@@ -947,15 +969,17 @@ function leavedrag(ev){
 </head>
 <body>
 	<div id="wrapper">
-		음악 제목 : <span id="target">임시 제목</span> <br>
-		<button id="slib" data-toggle="collapse" data-target="#soundlib">Sound Library</button>
-		<button data-toggle="collapse" data-target="#keyboard">Keyboard Set</button>
+		Music Title : <span id="target">myMusic</span>&nbsp;/&nbsp;
+		Keyboard set : <span id="keytarget">None</span>
+		<br>
+		<button id="slib" data-toggle="collapse" data-target="#setmus">Settind Music</button>
 		<button>트랩 추가</button>
 		<button>임시 저장</button>
 		<button>불러오기</button>
 		<button>음악 저장</button>
 		<br>
-		<div id="soundlib" class="collapse">
+		<div id="setmus" class="collapse">
+		<div id="soundlib">
 		<div class="fronts">
 			<span style="font-size: 50px;">Sound Library</span>
 			<br>
@@ -968,6 +992,7 @@ function leavedrag(ev){
 					<li><button id="added" value="added">Added</button></li>
 					<li><button id="beatbox" value="Beatbox">Beatbox</button></li>
 					<li><button id="piano" value="Piano">Piano</button></li>
+					<li><button id="drum" value="Drum">Drum</button></li>
 					<span id="newbtn"></span>
 				</ul>
 				</div>
@@ -983,8 +1008,7 @@ function leavedrag(ev){
 				<br>- Empty -
 			</div>
 		</div>
-	</div>
-	<div id="keyboard" class="collapse">
+	<div id="keyboard">
 	<div class="fronts">
 		<span style="font-size: 50px;">Key Board</span>
 		<br>
@@ -1052,6 +1076,7 @@ function leavedrag(ev){
 </div>
 </div>
 </div><!-- end #keyboard -->
+</div>
 	<br>
 	
 	<div id="addModal" class="modal">

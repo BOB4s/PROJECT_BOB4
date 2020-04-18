@@ -35,7 +35,6 @@
 		,post_nickname
 		,post_url
 		,post_date
-		,tagsresult
 		,post_reply
 		,post_like
 		,post_play
@@ -51,12 +50,24 @@
 		,#{post_nickname}
 		,'131235'
 		,sysdate
-		,#{tagsresult}
 		,0
 		,0
 		,0
 		)
 	
 	</insert>
+	<select id="getOneByMus_number" parameterType="int" resultType="int">
+	select post_number
+	from Post
+	where mus_number = #{mus_number}
+	
+	
+	
+	</select>
+	
+	<select id="getPostAll"  resultType="Post">
+	select * from post
+	
+	</select>
 	
 </mapper>

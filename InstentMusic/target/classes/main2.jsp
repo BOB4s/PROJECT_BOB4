@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,12 +12,10 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-<link rel="stylesheet" href="resources/css/styles.css">
-<script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
- 
 <script>
 
 </script>
@@ -26,32 +23,28 @@
 a:link{
 	text-decoration: none;
 }
-@-webkit-keyframes moveUp {
-	0% {}
-
-	100% {
-		-webkit-transform: translateY(0);
-		opacity: 1
-	}
-}
-
-@keyframes moveUp {
-	0% {}
-
-	100% {
-		-webkit-transform: translateY(0);
-		transform: translateY(0);
-		opacity: 1
-	}
-}
 </style>
 
 
 <script type="text/javascript">
 
+$(window).on("scroll", function() {
+	var scrollHeight = $(document).height();
+	var scrollPosition = $(window).height() + $(window).scrollTop();		
+
+	$("#scrollHeight").text(scrollHeight);
+	$("#scrollPosition").text(scrollPosition);
+	$("#bottom").text(scrollHeight - scrollPosition);
+
+	if (scrollPosition > scrollHeight - 500) {			
+		//todo
+		$("body").append('<div id="content"></div>');
+	}
+
+
 	/* var cust_number= '${cust_number}'; */
 	var username = '${nickname}';
-	var socket = io.connect('http://192.168.0.84:4000');
+	var socket = io.connect('http://10.10.12.92:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -106,6 +99,16 @@ a:link{
 
 </head>
 <body>
+<div id="container">
+	<div id="log">
+		<span>scrollHeight: <b id="scrollHeight">0</b></span><br>
+		<span>scrollPosition: <b id="scrollPosition">0</b></span><br>
+		<span>from bottom :  <b id="bottom"></b></span><br>
+		<span id="b">scroll < 500px</span>
+	</div>
+</div>
+
+
 	<!-- Top for logo and navibar -->
 	 <nav class="navigation">
 		<div class="navigation__column">
@@ -150,42 +153,13 @@ a:link{
 	</div>
 </div>
 
-		<a href="div"> 글쓰자</a>
+		<input type="button" value="챗방" onclick="chatOpen()">
+	<input type="button" id="test1"  value="toast" onclick="toasted()">
+		<a href="postWrite"> 글쓰자</a>
 		<a href="logout">로그아웃</a>
 		<a href="deleteView">탈주닌자</a>
 		<a href="goModify">정보수정수정</a>
 		<a href="protest">실험해보자</a>
-		<a href="postLists"> list?</a>
-		<a href="infinity"> infinity</a>
-
-<br>
-	<main id="profile">
-	<section class="profile__photos">
-	
- 		<c:forEach var="post" items="${postList[controls]}" varStatus="status">	
- 			<div class="profile__photo">
-				<img src="resources/images/IUfeed.jpg" style="
-	-webkit-transform: translateY(200px);
-	transform: translateY(200px);
-	-webkit-animation: moveUp 0.65s ease forwards;
-	animation: moveUp 0.65s ease forwards;" />
-		${post.post_nickname}${post.mus_title}
-				<%-- <img src="<c:url value='/imgs/${post.post_saved}'/>"/> --%>
-				<div class="profile__photo-overlay">
-					<span class="overlay__item"> <i class="fa fa-heart"></i></span> 
-					<span class="overlay__item"> <i class="fa fa-comment"></i>
-					
-					</span>
-				</div>
-			</div>
-					
- 		
- 					  
- 					<%-- ${post.post_content} --%>
- 				
-				</c:forEach>
-			</section>								
-			</main>
 </body>
 <script>
 function openNav() {

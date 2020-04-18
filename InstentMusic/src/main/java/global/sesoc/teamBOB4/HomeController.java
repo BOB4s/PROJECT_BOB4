@@ -22,6 +22,7 @@ import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Post;
+import lombok.Data;
 
 @Controller
 public class HomeController {
@@ -66,10 +67,13 @@ public class HomeController {
 		
 		if(c != null) {
 			session.setAttribute("login", c.getCust_number());
+			session.setAttribute("cust_number", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			session.setAttribute("password", c.getCust_password());
-			session.setAttribute("email", c.getCust_email());
-			session.setAttribute("introduce", c.getCust_introduce());
+			/*
+			 * session.setAttribute("password", c.getCust_password());
+			 * session.setAttribute("email", c.getCust_email());
+			 */
+			/* session.setAttribute("introduce", c.getCust_introduce()); */
 			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";
 		}else {

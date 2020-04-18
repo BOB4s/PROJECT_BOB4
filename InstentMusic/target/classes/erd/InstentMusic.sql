@@ -143,8 +143,8 @@ CREATE TABLE Key_Sound
 	-- 사용자 정의의 전체 키보드 이름
 	key_board varchar2(30) NOT NULL,
 	-- 등록된 소리의 고유 번호 시퀀스
-	sou_number number NOT NULL,
-	-- 키에 매칭되는 소리 이름
+	sou_path varchar2(500) NOT NULL,
+	-- 소리 저장 경로
 	sou_name varchar2(30) NOT NULL,
 	-- 소리가 매칭되는 키 이름
 	key_name varchar2(2) NOT NULL,
@@ -455,11 +455,6 @@ ALTER TABLE Notification
 ;
 
 
-ALTER TABLE Key_Sound
-	ADD FOREIGN KEY (sou_number)
-	REFERENCES Sound_Library (sou_number)
-;
-
 
 ALTER TABLE Post_tag
 	ADD FOREIGN KEY (tag_number)
@@ -700,7 +695,7 @@ COMMENT ON COLUMN Follow.follow_number IS '팔로우의 회원 번호. member �
 COMMENT ON COLUMN Key_Sound.key_number IS '해당 테이블의 고유 번호';
 COMMENT ON COLUMN Key_Sound.cust_number IS '해당 키를 지정하는 회원 번호';
 COMMENT ON COLUMN Key_Sound.key_board IS '사용자 정의의 전체 키보드 이름';
-COMMENT ON COLUMN Key_Sound.sou_number IS '등록된 소리의 고유 번호 시퀀스';
+COMMENT ON COLUMN Key_Sound.sou_path IS '소리 저장 경로';
 COMMENT ON COLUMN Key_Sound.sou_name IS '키에 매칭되는 소리 이름';
 COMMENT ON COLUMN Key_Sound.key_name IS '소리가 매칭되는 키 이름';
 COMMENT ON COLUMN letter.let_number IS '쪽지의 고유 번호 시퀀스';

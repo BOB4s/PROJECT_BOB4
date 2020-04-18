@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import global.sesoc.teamBOB4.dao.MusicDao;
 import global.sesoc.teamBOB4.util.FileService;
+import global.sesoc.teamBOB4.vo.Key_sound;
 import global.sesoc.teamBOB4.vo.Sound_library;
 
 @Controller
@@ -122,5 +123,21 @@ public class MusicController {
 		} else {
 			return "fail";
 		}
+	}
+	
+	@PostMapping("/insertkey")
+	public int insertkey(Key_sound keys, HttpSession session) {
+		int cust = (int) session.getAttribute("login");
+		keys.setCust_number(cust);
+		
+		return dao.insertkey(keys);
+	}
+	
+	@GetMapping("/getkeys")
+	public List<Key_sound> getkeys(Key_sound keys, HttpSession session){
+		int cust = (int) session.getAttribute("login");
+		keys.setCust_number(cust);
+		
+		return dao.getkeys(keys);
 	}
 }

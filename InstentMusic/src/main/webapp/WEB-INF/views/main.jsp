@@ -5,33 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
 <title>Main page after login</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
+<script src="http://10.10.12.230:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
-<script>
-
-</script>
+<script src="resources/js/toastr.min.js"></script>
+ <link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style type="text/css">
 a:link{
 	text-decoration: none;
 }
 </style>
-
-<script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
-<script src="resources/js/jquery-3.4.1.min.js"></script>
-<script src="resources/js/toastr.min.js"></script>
- <link href="resources/css/toastr.min.css" rel="stylesheet"/>
-
 <script type="text/javascript">
 
 	/* var cust_number= '${cust_number}'; */
 	var username = '${nickname}';
-	var socket = io.connect('http://192.168.0.84:4000');
+	var socket = io.connect('http://10.10.12.230:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,

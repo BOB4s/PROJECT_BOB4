@@ -14,7 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-#soundlib {
+#soundlib{
 	margin: 10px 5px 5px 5px;
 	padding: 5px 5px 5px 5px;
 	width: 1020px;
@@ -218,6 +218,43 @@ cursor: pointer;
 }
 #form_upload2 img{
 	cursor: pointer;
+}
+#keyboard{
+	padding: 5px 5px 5px 5px;
+	width: 1020px;
+	height: 220px;
+	border: 1px solid black;
+}
+.keys{
+	float : left;
+	height : 50px;
+	width : 50px;
+	margin : 1px 1px 1px 1px;
+	border: 1px solid black;
+	padding: 1px 1px 1px 3px;
+}
+#keys{
+	float: right;
+	font-size: 12px;
+	font-weight: bold;
+	width : 800px;
+	height : 220px;
+}
+#key1{
+	float : right;
+	margin-right: 0px;
+}
+#key2{
+	float : right;
+	margin-right: 30px;
+}
+#key3{
+	float : right;
+	margin-right: 60px;
+}
+#key4{
+	float : right;
+	margin-right: 90px;
 }
 </style>
 <script>
@@ -809,6 +846,20 @@ $(function(){
 					modal.style.display = "none";
 	})
 })
+$(function(){
+	$(document).keydown(function(event){
+		for(var k=44; k<220; k++){
+			var idx = '#'+k;
+			$(idx).css('background-color', 'white');
+			if(event.keyCode == k){
+				var data = $(idx).text();
+				if(data!=''){
+					$(idx).css('background-color', 'red');
+				}
+			}
+		}
+	})
+})
 </script>
 </head>
 <body>
@@ -850,7 +901,60 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<div id="keyboard" class="collapse">자판</div>
+	<div id="keyboard" class="collapse">
+	<div id="keys">
+	<div id="key1">
+<div class="keys" id="49">1</div>
+<div class="keys" id="50">2</div>
+<div class="keys" id="51">3</div>
+<div class="keys" id="52">4</div>
+<div class="keys" id="53">5</div>
+<div class="keys" id="54">6</div>
+<div class="keys" id="55">7</div>
+<div class="keys" id="56">8</div>
+<div class="keys" id="57">9</div>
+<div class="keys" id="48">0</div>
+<div class="keys" id="189">-</div>
+<div class="keys" id="187">=</div>
+</div>
+<div id="key2">
+<div class="keys" id="81">Q</div>
+<div class="keys" id="87">W</div>
+<div class="keys" id="69">E</div>
+<div class="keys" id="82">R</div>
+<div class="keys" id="84">T</div>
+<div class="keys" id="89">Y</div>
+<div class="keys" id="85">U</div>
+<div class="keys" id="73">I</div>
+<div class="keys" id="79">O</div>
+<div class="keys" id="80">P</div>
+<div class="keys" id="219">[</div>
+</div>
+<div id="key3">
+<div class="keys" id="65">A</div>
+<div class="keys" id="83">S</div>
+<div class="keys" id="68">D</div>
+<div class="keys" id="70">F</div>
+<div class="keys" id="71">G</div>
+<div class="keys" id="72">H</div>
+<div class="keys" id="74">J</div>
+<div class="keys" id="75">K</div>
+<div class="keys" id="76">L</div>
+<div class="keys" id="186">;</div>
+</div>
+<div id="key4">
+<div class="keys" id="90">Z</div>
+<div class="keys" id="88">X</div>
+<div class="keys" id="67">C</div>
+<div class="keys" id="86">V</div>
+<div class="keys" id="66">B</div>
+<div class="keys" id="78">N</div>
+<div class="keys" id="77">M</div>
+<div class="keys" id="188">,</div>
+<div class="keys" id="190">.</div>
+</div>
+</div>
+</div><!-- end #keyboard -->
 	<br>
 	
 	<div id="addModal" class="modal">

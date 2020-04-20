@@ -272,6 +272,7 @@ $(function(){
 		}else{
 			$("#mixing").text('Music Start');
 			parts.stop();
+			parts.metro.metroTicks = 0;
 		}
 	})
 })

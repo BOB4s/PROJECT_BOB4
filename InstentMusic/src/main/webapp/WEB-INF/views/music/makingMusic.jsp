@@ -466,43 +466,25 @@ function draw() {
 	<div id="wrapper">
 		Title of Music : <span id="target">Temporary title</span> <br>
 		
-		<!-- <button id="slib" data-toggle="collapse" data-target="#soundlib">Sound Library</button> -->
-		<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#soundlib">
-			<div>Sound Library</div>
-			<div>Sound Library</div>
-			<div>Sound Library</div>
-			<div>Sound Library</div>
+		<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
 		</div>
-		<!-- <button data-toggle="collapse" data-target="#keyboard">Keyboard Set</button> -->
-		<div class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#keyboard">
-			<div>Keyboard Set</div>
-			<div>Keyboard Set</div>
-			<div>Keyboard Set</div>
-			<div>Keyboard Set</div>
+		<div id="addpart" class="button_base btn_3d_double_roll">
+			<div>Add Part</div>
+			<div>Add Part</div>
+			<div>Add Part</div>
+			<div>Add Part</div>
 		</div>
-		<!-- <button>트랩 추가</button> -->
-		<div class="button_base btn_3d_double_roll">
-			<div>Add Track</div>
-			<div>Add Track</div>
-			<div>Add Track</div>
-			<div>Add Track</div>
+		<div id="resettemp" class="button_base btn_3d_double_roll">
+			<div>Reset</div>
+			<div>Reset</div>
+			<div>Reset</div>
+			<div>Reset</div>
 		</div>
-		<!-- <button>임시 저장</button> -->
-		<div class="button_base btn_3d_double_roll">
-			<div>Save temporary</div>
-			<div>Save temporary</div>
-			<div>Save temporary</div>
-			<div>Save temporary</div>
-		</div>
-		<!-- <button>불러오기</button> -->
-		<div class="button_base btn_3d_double_roll">
-			<div>Load</div>
-			<div>Load</div>
-			<div>Load</div>
-			<div>Load</div>
-		</div>
-		<!-- <button>음악 저장</button> -->
-		<div class="button_base btn_3d_double_roll">
+		<div id="savemusic" class="button_base btn_3d_double_roll">
 			<div>Save Music</div>
 			<div>Save Music</div>
 			<div>Save Music</div>

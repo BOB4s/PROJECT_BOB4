@@ -21,6 +21,7 @@ import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
+import global.sesoc.teamBOB4.vo.Part_music;
 import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
@@ -218,5 +219,12 @@ public class HomeController {
 		model.addAttribute("followingList", followingList);
 		
 		return "customer/followings";
+	}
+	
+	@GetMapping("/partmake")
+	public String partmake(int part_number, int temp_bpm, Model model) {
+		model.addAttribute("part_number", part_number);
+		model.addAttribute("temp_bpm", temp_bpm);
+		return "music/partmake";
 	}
 }

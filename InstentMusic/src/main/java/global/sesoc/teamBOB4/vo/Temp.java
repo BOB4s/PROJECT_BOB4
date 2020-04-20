@@ -8,5 +8,5 @@ public class Temp {
 	private int temp_number; // 작곡중인 음악 시퀀스 pk
 	private int cust_number; // 작곡중인 회원 세션
 	private String temp_title;
-	private String temp_bpm;
+	private int temp_bpm;
 }

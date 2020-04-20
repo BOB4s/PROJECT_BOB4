@@ -36,4 +36,27 @@ public class MakeController {
 		temp.setCust_number(cust);
 		return dao.inserttemp(temp);
 	}
+	
+	@GetMapping("/gettemp")
+	public Temp gettemp(HttpSession session){
+		int cust = (int) session.getAttribute("login");
+		Temp temp = new Temp();
+		temp.setCust_number(cust);
+		Temp result = dao.gettemp(temp);
+		return result;
+	}
+	
+	@PostMapping("/updatetemp")
+	public int updatetemp(Temp temp, HttpSession session) {
+		int cust = (int) session.getAttribute("login");
+		temp.setCust_number(cust);
+		return dao.updatetemp(temp);
+	}
+	
+	@PostMapping("/deltemp")
+	public int deltemp(Temp temp, HttpSession session) {
+		int cust = (int) session.getAttribute("login");
+		temp.setCust_number(cust);
+		return dao.deltemp(temp);
+	}
 }

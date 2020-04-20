@@ -21,4 +21,19 @@ public class MakeDao {
 		MakeMapper mapper = session.getMapper(MakeMapper.class);
 		return mapper.inserttemp(temp);
 	}
+
+	public Temp gettemp(Temp temp) {
+		MakeMapper mapper = session.getMapper(MakeMapper.class);
+		return mapper.gettemp(temp);
+	}
+
+	public int updatetemp(Temp temp) {
+		MakeMapper mapper = session.getMapper(MakeMapper.class);
+		return mapper.updatetemp(temp);
+	}
+
+	public int deltemp(Temp temp) {
+		MakeMapper mapper = session.getMapper(MakeMapper.class);
+		return mapper.deltemp(temp);
+	}
 }

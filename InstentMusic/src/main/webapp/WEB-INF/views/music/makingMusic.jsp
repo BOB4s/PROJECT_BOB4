@@ -294,6 +294,7 @@ canvas{
 var song, path;
 $(function() {
 	newbtn();
+	gettemp();
 })
 function newbtn2(){
 	var name2 = ''; 
@@ -1058,21 +1059,61 @@ function leavedrag(ev){
 	$(tagid).css('background-color','white');
 }
 $(function(){
-	$("#titlebtn").click(function(){
-		var newname = $("#mustitle").val()+'<img id="editname" src="resources/images/sound/sledit.png">'
-		$("#title").html(newname);
-		var data = {'temp_title' : $("#mustitle").val()
-				,'temp_bpm' : $("#bpmnum").text()}
-		$.ajax({
-			method : 'post'
-			,url : 'inserttemp'
-			,data : data
-			,success : gettemp
-		})
+	$("#resettemp").click(function(){
+		var answer = confirm("Everything you've done so far will disappear. Are you sure you want to reset?")
+		if(answer){
+			$.ajax({
+				method : 'post'
+				,url : 'deltemp'
+				,success : gettemp
+			})
+		}
 	})
 })
 function gettemp(){
-	alert('gettemp');
+	$.ajax({
+		method : 'get'
+		,url : 'gettemp'
+		,success : function(resp){
+				if(resp==''||resp==null||resp.cust_number=='undefined'){
+					var newname = '<input type="text" id="mustitle"><button id="titlebtn">save</button>';
+					$("#title").html(newname);
+					$("#bpmbar").val(80);
+					bpms.setBPM(80);
+					$("#titlebtn").click(function(){
+						var data = {'temp_title' : $("#mustitle").val()
+								,'temp_bpm' : $("#bpmnum").text()}
+						$.ajax({
+							method : 'post'
+							,url : 'inserttemp'
+							,data : data
+							,success : gettemp
+						})
+					})
+				}else{
+					var newname = resp.temp_title+'<img id="editname" src="resources/images/sound/sledit.png">'
+					$("#title").html(newname);
+					$("#bpmnum").text(resp.temp_bpm);
+					$("#bpmbar").val(resp.temp_bpm);
+					bpms.setBPM(resp.temp_bpm);
+
+					$("#editname").click(function(){
+						var editname = '<input type="text" id="mustitle"><button id="titleedit">save</button>';
+						$("#title").html(editname);
+						$("#titleedit").click(function(){
+							var data = {'temp_title' : $("#mustitle").val()
+									,'temp_bpm' : $("#bpmnum").text()}
+							$.ajax({
+								method : 'post'
+								,url : 'updatetemp'
+								,data : data
+								,success : gettemp
+							})
+						})
+					})
+				}
+			}
+	})
 }
 </script>
 </head>
@@ -1084,8 +1125,8 @@ function gettemp(){
 		<button id="savemusic">Save Music</button>
 		<br>
 		<div id="musinfo">
-	Music Title : <span id="title"><input type="text" id="mustitle"><button id="titlebtn">save</button></span>&emsp;/&emsp;
-	BPM : <span id="bpmnum">80&nbsp;</span>&nbsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>
+	Music Title : <span id="title"></span>&emsp;/&emsp;
+	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>
 	</div>
 		<div id="setmus" class="collapse">
 		<div id="soundlib">

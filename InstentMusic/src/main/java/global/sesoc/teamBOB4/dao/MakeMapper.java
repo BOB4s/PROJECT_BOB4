@@ -10,4 +10,10 @@ import global.sesoc.teamBOB4.vo.Temp;
 public interface MakeMapper {
 
 	int inserttemp(Temp temp);
+
+	Temp gettemp(Temp temp);
+
+	int updatetemp(Temp temp);
+
+	int deltemp(Temp temp);
 }

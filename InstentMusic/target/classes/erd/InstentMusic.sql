@@ -244,8 +244,6 @@ CREATE TABLE Part_music
 	make_number number NOT NULL,
 	-- 작곡중인 회원 고유 번호
 	cust_number number NOT NULL,
-	-- 몇번 곡인가
-	trap_number number NOT NULL,
 	-- 해당 곡의 몇번째 파트인가
 	part_number number NOT NULL,
 	-- 몇번째 프레이즈인가
@@ -356,9 +354,6 @@ CREATE TABLE Temp
 	temp_number number NOT NULL,
 	-- 작곡중인 회원 번호
 	cust_number number NOT NULL,
-	-- 회원이 만든 임시곡중에서 몇번째 곡인가.
-	-- 처음 등록할때의 temp 시퀀스를 참조.
-	trap_number number DEFAULT 1 NOT NULL,
 	-- 만들고 있는 곡의 제목 (불러오기용)
 	temp_title varchar2(50),
 	-- bpm

@@ -286,6 +286,9 @@ canvas{
 	white-space: normal;
 	line-height: 1.2;
 }
+#musinfo{
+	margin-top: 10px;
+}
 </style>
 <script>
 var song, path;
@@ -1054,16 +1057,25 @@ function leavedrag(ev){
 	var tagid = '#'+ev.target.id;
 	$(tagid).css('background-color','white');
 }
+$(function(){
+	$("#titlebtn").click(function(){
+		$("#title").html($("#mustitle").val());
+		
+	})
+})
 </script>
 </head>
 <body>
 	<div id="wrapper">
 		<button id="slib" data-toggle="collapse" data-target="#setmus">Setting Music</button>
 		<button id="addpart">Add Part</button>
-		<button>Save Temporary</button>
-		<button>Load Temporary</button>
-		<button>Save Music</button>
+		<button id="resettemp">Reset</button>
+		<button id="savemusic">Save Music</button>
 		<br>
+		<div id="musinfo">
+	Music Title : <span id="title"><input type="text" id="mustitle"><button id="titlebtn">save</button></span>&emsp;/&emsp;
+	BPM : <span id="bpmnum">80&nbsp;</span>&nbsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>
+	</div>
 		<div id="setmus" class="collapse">
 		<div id="soundlib">
 		<div class="fronts">
@@ -1185,11 +1197,6 @@ function leavedrag(ev){
     Sound Name : <input type="text" id="addcom">&nbsp;
 		<input id="addbtn" type="button" value="Add Sound">
 		<input id="rcdbtn" type="hidden" value="Add Record">
-	</div>
-	<div id="musinfo">
-	Music Title : <span id="title">None</span>&emsp;/&emsp;
-	Music Time : <span id="mustime">None</span>
-	&emsp;/&emsp;BPM : <span id="bpmnum">80&nbsp;</span><input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>
 	</div>
 </div>
 </body>

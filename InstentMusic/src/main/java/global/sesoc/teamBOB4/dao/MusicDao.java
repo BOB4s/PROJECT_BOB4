@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import global.sesoc.teamBOB4.vo.Key_sound;
 import global.sesoc.teamBOB4.vo.Sound_library;
+import global.sesoc.teamBOB4.vo.Temp;
 
 @Repository
 public class MusicDao {

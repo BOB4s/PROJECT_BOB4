@@ -18,6 +18,7 @@ import global.sesoc.teamBOB4.dao.MusicDao;
 import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.vo.Key_sound;
 import global.sesoc.teamBOB4.vo.Sound_library;
+import global.sesoc.teamBOB4.vo.Temp;
 
 @Controller
 @RestController
@@ -129,7 +130,6 @@ public class MusicController {
 	public int insertkey(Key_sound keys, HttpSession session) {
 		int cust = (int) session.getAttribute("login");
 		keys.setCust_number(cust);
-		
 		return dao.insertkey(keys);
 	}
 	
@@ -147,7 +147,6 @@ public class MusicController {
 	public List<Key_sound> getkeys(Key_sound keys, HttpSession session){
 		int cust = (int) session.getAttribute("login");
 		keys.setCust_number(cust);
-		
 		return dao.getkeys(keys);
 	}
 }

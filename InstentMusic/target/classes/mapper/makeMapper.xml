@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.MakeMapper">
+
+<insert id="inserttemp" parameterType="Temp">
+insert into temp
+values(
+SEQ_TEMP_TEMP_NUMBER.nextval
+,#{cust_number}
+,#{temp_title}
+,#{temp_bpm}
+)
+</insert>
+
+</mapper>

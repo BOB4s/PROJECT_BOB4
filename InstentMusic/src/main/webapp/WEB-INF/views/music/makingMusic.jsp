@@ -185,7 +185,7 @@ cursor: pointer;
 #target4, #target3{
 font-size : 20px;
 }
-#editlib, #deletelib{
+#editlib, #deletelib, #editname{
 width: 20px;
 height: 20px;
 cursor: pointer;
@@ -1059,10 +1059,21 @@ function leavedrag(ev){
 }
 $(function(){
 	$("#titlebtn").click(function(){
-		$("#title").html($("#mustitle").val());
-		
+		var newname = $("#mustitle").val()+'<img id="editname" src="resources/images/sound/sledit.png">'
+		$("#title").html(newname);
+		var data = {'temp_title' : $("#mustitle").val()
+				,'temp_bpm' : $("#bpmnum").text()}
+		$.ajax({
+			method : 'post'
+			,url : 'inserttemp'
+			,data : data
+			,success : gettemp
+		})
 	})
 })
+function gettemp(){
+	alert('gettemp');
+}
 </script>
 </head>
 <body>

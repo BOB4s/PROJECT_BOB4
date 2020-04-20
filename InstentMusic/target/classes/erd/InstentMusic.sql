@@ -11,6 +11,7 @@ DROP TRIGGER TRI_Like_like_number;
 DROP TRIGGER TRI_Member_mem_number;
 DROP TRIGGER TRI_Music_Library_mus_number;
 DROP TRIGGER TRI_Notification_not_number;
+DROP TRIGGER TRI_Part_music_make_number;
 DROP TRIGGER TRI_Post_post_number;
 DROP TRIGGER TRI_Post_tag_pt_number;
 DROP TRIGGER TRI_recv_letter_let_number;
@@ -33,13 +34,14 @@ DROP TABLE letter CASCADE CONSTRAINTS;
 DROP TABLE like_click CASCADE CONSTRAINTS;
 DROP TABLE Reply CASCADE CONSTRAINTS;
 DROP TABLE Customer CASCADE CONSTRAINTS;
-DROP TABLE Temp CASCADE CONSTRAINTS;
 DROP TABLE Key_Sound CASCADE CONSTRAINTS;
 DROP TABLE Post_tag CASCADE CONSTRAINTS;
 DROP TABLE Post CASCADE CONSTRAINTS;
 DROP TABLE Music_Library CASCADE CONSTRAINTS;
+DROP TABLE Part_music CASCADE CONSTRAINTS;
 DROP TABLE Sound_Library CASCADE CONSTRAINTS;
 DROP TABLE Tag CASCADE CONSTRAINTS;
+DROP TABLE Temp CASCADE CONSTRAINTS;
 
 
 
@@ -55,6 +57,7 @@ DROP SEQUENCE SEQ_Like_like_number;
 DROP SEQUENCE SEQ_Member_mem_number;
 DROP SEQUENCE SEQ_Music_Library_mus_number;
 DROP SEQUENCE SEQ_Notification_not_number;
+DROP SEQUENCE SEQ_Part_music_make_number;
 DROP SEQUENCE SEQ_Post_post_number;
 DROP SEQUENCE SEQ_Post_tag_pt_number;
 DROP SEQUENCE SEQ_recv_letter_let_number;
@@ -82,6 +85,7 @@ CREATE SEQUENCE SEQ_Like_like_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Member_mem_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Music_Library_mus_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Notification_not_number INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_Part_music_make_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Post_post_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Post_tag_pt_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_recv_letter_let_number INCREMENT BY 1 START WITH 1;
@@ -139,15 +143,15 @@ CREATE TABLE Key_Sound
 	-- 해당 테이블의 고유 번호
 	key_number number NOT NULL,
 	-- 해당 키를 지정하는 회원 번호
-	cust_number number,
+	cust_number number NOT NULL,
 	-- 사용자 정의의 전체 키보드 이름
 	key_board varchar2(30) NOT NULL,
-	-- 등록된 소리의 고유 번호 시퀀스
-	sou_path varchar2(500) NOT NULL,
-	-- 소리 저장 경로
+	-- 키에 매칭되는 소리 이름
 	sou_name varchar2(30) NOT NULL,
 	-- 소리가 매칭되는 키 이름
 	key_name varchar2(3) NOT NULL,
+	-- 소리 저장 경로
+	sou_path varchar2(500) NOT NULL,
 	PRIMARY KEY (key_number)
 );
 
@@ -231,6 +235,26 @@ CREATE TABLE Notification
 	-- 알림을 확인했는지 여부
 	not_check nchar DEFAULT '0',
 	PRIMARY KEY (not_number)
+);
+
+
+CREATE TABLE Part_music
+(
+	-- 파트 메이크 고유 번호
+	make_number number NOT NULL,
+	-- 작곡중인 회원 고유 번호
+	cust_number number NOT NULL,
+	-- 몇번 곡인가
+	trap_number number NOT NULL,
+	-- 해당 곡의 몇번째 파트인가
+	part_number number NOT NULL,
+	-- 몇번째 프레이즈인가
+	phrase_number number NOT NULL,
+	-- 프레이즈에 해당하는 키세트 이름
+	key_board varchar2(30),
+	-- 프레이즈에 연주한 부분 파일로 저장
+	phrase_saved varchar2(500),
+	PRIMARY KEY (make_number)
 );
 
 
@@ -332,14 +356,13 @@ CREATE TABLE Temp
 	temp_number number NOT NULL,
 	-- 작곡중인 회원 번호
 	cust_number number NOT NULL,
-	-- 전체 곡 중에서 몇 번째 트랩인지를 나타내주는 번호
+	-- 회원이 만든 임시곡중에서 몇번째 곡인가.
+	-- 처음 등록할때의 temp 시퀀스를 참조.
 	trap_number number DEFAULT 1 NOT NULL,
-	-- 해당 테이블의 고유 번호
-	key_number number NOT NULL,
-	-- 현재 트랩에서 어떠한 키-소리 타입을 이용하는지
-	key_board varchar2(30),
 	-- 만들고 있는 곡의 제목 (불러오기용)
-	temp_title varchar2(50) NOT NULL,
+	temp_title varchar2(50),
+	-- bpm
+	temp_bpm number NOT NULL,
 	PRIMARY KEY (temp_number)
 );
 
@@ -360,19 +383,13 @@ ALTER TABLE Follow
 
 
 ALTER TABLE letter
-	ADD FOREIGN KEY (send_number)
-	REFERENCES Customer (cust_number)
-;
-
-
-ALTER TABLE letter
 	ADD FOREIGN KEY (recv_number)
 	REFERENCES Customer (cust_number)
 ;
 
 
-ALTER TABLE like_click
-	ADD FOREIGN KEY (cust_number)
+ALTER TABLE letter
+	ADD FOREIGN KEY (send_number)
 	REFERENCES Customer (cust_number)
 ;
 
@@ -383,14 +400,20 @@ ALTER TABLE like_click
 ;
 
 
-ALTER TABLE Notification
-	ADD FOREIGN KEY (send_number)
+ALTER TABLE like_click
+	ADD FOREIGN KEY (cust_number)
 	REFERENCES Customer (cust_number)
 ;
 
 
 ALTER TABLE Notification
 	ADD FOREIGN KEY (recv_number)
+	REFERENCES Customer (cust_number)
+;
+
+
+ALTER TABLE Notification
+	ADD FOREIGN KEY (send_number)
 	REFERENCES Customer (cust_number)
 ;
 
@@ -404,12 +427,6 @@ ALTER TABLE Reply
 ALTER TABLE Notification
 	ADD FOREIGN KEY (fol_number)
 	REFERENCES Follow (fol_number)
-;
-
-
-ALTER TABLE Temp
-	ADD FOREIGN KEY (key_number)
-	REFERENCES Key_Sound (key_number)
 ;
 
 
@@ -453,7 +470,6 @@ ALTER TABLE Notification
 	ADD FOREIGN KEY (rep_number)
 	REFERENCES Reply (rep_number)
 ;
-
 
 
 ALTER TABLE Post_tag
@@ -560,6 +576,16 @@ FOR EACH ROW
 BEGIN
 	SELECT SEQ_Notification_not_number.nextval
 	INTO :new.not_number
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_Part_music_make_number BEFORE INSERT ON Part_music
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_Part_music_make_number.nextval
+	INTO :new.make_number
 	FROM dual;
 END;
 
@@ -695,9 +721,9 @@ COMMENT ON COLUMN Follow.follow_number IS '팔로우의 회원 번호. member �
 COMMENT ON COLUMN Key_Sound.key_number IS '해당 테이블의 고유 번호';
 COMMENT ON COLUMN Key_Sound.cust_number IS '해당 키를 지정하는 회원 번호';
 COMMENT ON COLUMN Key_Sound.key_board IS '사용자 정의의 전체 키보드 이름';
-COMMENT ON COLUMN Key_Sound.sou_path IS '소리 저장 경로';
 COMMENT ON COLUMN Key_Sound.sou_name IS '키에 매칭되는 소리 이름';
 COMMENT ON COLUMN Key_Sound.key_name IS '소리가 매칭되는 키 이름';
+COMMENT ON COLUMN Key_Sound.sou_path IS '소리 저장 경로';
 COMMENT ON COLUMN letter.let_number IS '쪽지의 고유 번호 시퀀스';
 COMMENT ON COLUMN letter.send_number IS '쪽지를 보낸 회원 번호. member 참조';
 COMMENT ON COLUMN letter.recv_number IS '쪽지를 받은 회원 번호. member 참조';
@@ -727,6 +753,13 @@ COMMENT ON COLUMN Notification.not_type IS 'comment, letter, like, follow 등의
 COMMENT ON COLUMN Notification.not_url IS '알림 클릭시 이동할 링크 주소';
 COMMENT ON COLUMN Notification.not_time IS '알림 발생한 일시';
 COMMENT ON COLUMN Notification.not_check IS '알림을 확인했는지 여부';
+COMMENT ON COLUMN Part_music.make_number IS '파트 메이크 고유 번호';
+COMMENT ON COLUMN Part_music.cust_number IS '작곡중인 회원 고유 번호';
+COMMENT ON COLUMN Part_music.trap_number IS '몇번 곡인가';
+COMMENT ON COLUMN Part_music.part_number IS '해당 곡의 몇번째 파트인가';
+COMMENT ON COLUMN Part_music.phrase_number IS '몇번째 프레이즈인가';
+COMMENT ON COLUMN Part_music.key_board IS '프레이즈에 해당하는 키세트 이름';
+COMMENT ON COLUMN Part_music.phrase_saved IS '프레이즈에 연주한 부분 파일로 저장';
 COMMENT ON COLUMN Post.post_number IS '게시판의 고유 번호 시퀀스';
 COMMENT ON COLUMN Post.mus_number IS '게시물에 올라가는 음악의 고유 번호';
 COMMENT ON COLUMN Post.cust_number IS '게시물을 작성한 회원의 회원 번호. 세션으로 등록';
@@ -760,10 +793,10 @@ COMMENT ON COLUMN Tag.tag_number IS '태그 고유번호 시퀀스';
 COMMENT ON COLUMN Tag.tag_name IS '태그 이름';
 COMMENT ON COLUMN Temp.temp_number IS 'temp 고유 번호';
 COMMENT ON COLUMN Temp.cust_number IS '작곡중인 회원 번호';
-COMMENT ON COLUMN Temp.trap_number IS '전체 곡 중에서 몇 번째 트랩인지를 나타내주는 번호';
-COMMENT ON COLUMN Temp.key_number IS '해당 테이블의 고유 번호';
-COMMENT ON COLUMN Temp.key_board IS '현재 트랩에서 어떠한 키-소리 타입을 이용하는지';
+COMMENT ON COLUMN Temp.trap_number IS '회원이 만든 임시곡중에서 몇번째 곡인가.
+처음 등록할때의 temp 시퀀스를 참조.';
 COMMENT ON COLUMN Temp.temp_title IS '만들고 있는 곡의 제목 (불러오기용)';
+COMMENT ON COLUMN Temp.temp_bpm IS 'bpm';
 
 
 

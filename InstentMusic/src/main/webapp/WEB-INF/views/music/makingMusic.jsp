@@ -244,6 +244,9 @@ cursor: pointer;
 	border: 1px solid black;
 	padding: 1px 1px 1px 3px;
 }
+canvas{
+	background-color: black;
+}
 #keys{
 	float: right;
 	font-size: 10px;
@@ -285,7 +288,7 @@ cursor: pointer;
 }
 </style>
 <script>
-var path, song;
+var song, path;
 $(function() {
 	newbtn();
 })
@@ -784,12 +787,51 @@ $(function(){
 				  };
 			}
 });
+var btnc=0;
+$(function(){
+	var cnv = document.getElementById("myCanvas");
+	var ctx = cnv.getContext('2d');
+	ctx.stroke();
+	$("#bpmplay").click(function(){
+		var txt = $("#bpmplay").text();
+		if(txt=='play'){
+			$("#bpmplay").text('stop');
+			btnc++;
+			loadbpm();
+		}else{
+			$("#bpmplay").text('play');
+			btnc=0;
+			loaded2();
+		}
+	})
+})
 var mic, recorder, soundFile, soundBlob;
-var amp;
+var amp, bpmsong, bpms, bpmprs, bpmCrtl;
+var bpmpat;
 function setup() {
-	var cnv = createCanvas(200, 200);
-	cnv.parent('sketch-target');
-	song = loadSound(path, loaded);
+	$("#defaultCanvas0").remove();
+	bpmsong = loadSound('resources/sound/drum/drum7.wav',() => {
+			if(btnc==0){
+				bpms.stop();
+				bpmsong.stop();
+			}else{
+				bpms.loop();
+			}
+		});
+	bpmpat = [1, 1, 1, 1];
+	bpmprs = new p5.Phrase('bpmsong',(time) => {
+		bpmsong.play(time);
+	}, bpmpat);
+
+	bpms = new p5.Part();
+	bpms.addPhrase(bpmprs);
+	bpms.setBPM('80');
+	$("#bpmbar").on('input',function(){
+		bpmCtrl = $(this).val();
+		bpms.setBPM(bpmCtrl);
+		$("#bpmnum").text(bpmCtrl);
+	})
+	song = loadSound(path,loaded);
 	amp = new p5.Amplitude();
 	amp.setInput(song);
 	 // create an audio in
@@ -807,6 +849,10 @@ function setup() {
 	  // this sound file will be used to
 	  // playback & save the recording
 	  soundFile = new p5.SoundFile();
+}
+function loadbpm(){
+	bpmsong.play();
+	bpms.loop();
 }
 function recordstart(){
 	userStartAudio();
@@ -834,16 +880,14 @@ function recordstart(){
 		    soundBlob = soundFile.getBlob();
 		  }
 }
+var vol;
 function loaded() {
+	vol = amp.getLevel();
 	song.play();
 }
 function loaded2(){
 	song.stop();
-}
-function draw() {
-	background(0);
-	var vol = amp.getLevel();
-	ellipse(100, 100, 200, vol * 200);
+	bpms.stop();
 }
 $(function(){
 	$("#rcdbtn").click(function(){
@@ -1015,10 +1059,10 @@ function leavedrag(ev){
 <body>
 	<div id="wrapper">
 		<button id="slib" data-toggle="collapse" data-target="#setmus">Setting Music</button>
-		<button>트랩 추가</button>
-		<button>임시 저장</button>
-		<button>불러오기</button>
-		<button>음악 저장</button>
+		<button id="addpart">Add Part</button>
+		<button>Save Temporary</button>
+		<button>Load Temporary</button>
+		<button>Save Music</button>
 		<br>
 		<div id="setmus" class="collapse">
 		<div id="soundlib">
@@ -1121,7 +1165,7 @@ function leavedrag(ev){
 </div>
 	<div id="addModal" class="modal">
 			<span class="close">&times;</span>
-			<span id="sketch-target"></span><br>
+			<span id="sketch-target"><canvas id="myCanvas" width="256" height="256"></canvas></span><br>
 			<form id="form_upload" enctype="multipart/form-data" action="/file/upload" method="post">
 				<input type="file" id="addfile" accept="audio/*">
 			</form>
@@ -1143,9 +1187,9 @@ function leavedrag(ev){
 		<input id="rcdbtn" type="hidden" value="Add Record">
 	</div>
 	<div id="musinfo">
-	Music Title : <span id="target">myMusic</span><br>
-	Keyboard set : <span id="keytarget">None</span><br>
-	beat : <span id="beatmus">None</span><br>
+	Music Title : <span id="title">None</span>&emsp;/&emsp;
+	Music Time : <span id="mustime">None</span>
+	&emsp;/&emsp;BPM : <span id="bpmnum">80&nbsp;</span><input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>
 	</div>
 </div>
 </body>

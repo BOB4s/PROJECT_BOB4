@@ -245,9 +245,6 @@ cursor: pointer;
 	border: 1px solid black;
 	padding: 1px 1px 1px 3px;
 }
-canvas{
-	background-color: black;
-}
 #keys{
 	float: right;
 	font-size: 10px;
@@ -837,9 +834,6 @@ $(function(){
 });
 var btnc=0;
 $(function(){
-	var cnv = document.getElementById("myCanvas");
-	var ctx = cnv.getContext('2d');
-	ctx.stroke();
 	$("#bpmplay").click(function(){
 		var txt = $("#bpmplay").text();
 		if(txt=='play'){
@@ -854,10 +848,13 @@ $(function(){
 	})
 })
 var mic, recorder, soundFile, soundBlob;
-var amp, bpmsong, bpms, bpmprs, bpmCrtl;
-var bpmpat;
+var fft, bpmsong, bpms, bpmprs, bpmCrtl;
+var bpmpat, w;
 function setup() {
-	$("#defaultCanvas0").remove();
+	var cvs = createCanvas(256,256);
+	cvs.parent('sketch-target');
+	colorMode(HSB);
+	angleMode(DEGREES);
 	bpmsong = loadSound('resources/sound/drum/drum7.wav',() => {
 			if(btnc==0){
 				bpms.stop();
@@ -880,8 +877,9 @@ function setup() {
 		$("#bpmnum").text(bpmCtrl);
 	})
 	song = loadSound(path,loaded);
-	amp = new p5.Amplitude();
-	amp.setInput(song);
+	fft = new p5.FFT(0.8, 128);
+	w = width / 64;
+	  fft.setInput(song);
 	 // create an audio in
 	  mic = new p5.AudioIn();
 
@@ -898,6 +896,27 @@ function setup() {
 	  // playback & save the recording
 	  soundFile = new p5.SoundFile();
 }
+function draw() {
+	  background(0);
+	  var spectrum = fft.analyze();
+	  noStroke();
+	  translate(width/2, height/2);
+	 // beginShape();
+	  for (var i = 0; i < spectrum.length; i++) {
+		var angle = map(i,0,spectrum.length,0,360);
+		var amp = spectrum[i];
+		var r = map(amp, 0, 256, 20, 100);
+		//fill(i, 255, 255);
+		var x = r * cos(angle);
+		var y = r * sin(angle);
+		stroke(i,255,255);
+		line(0,0,x,y);
+		//vertex(x,y);
+		//var y = map(amp, 0, 256, height, 0);
+		//rect(i*w, y, w-2, height - y);
+	  }
+	  //endShape();
+	}
 function loadbpm(){
 	bpmsong.play();
 	bpms.loop();
@@ -907,9 +926,9 @@ function recordstart(){
 
 	  // make sure user enabled the mic
 	  if (state === 0 && mic.enabled) {
-		  amp.getLevel(0);
+		  fft.analyze();
 	    // record to our p5.SoundFile
-	    amp.setInput(mic);
+	    fft.setInput(mic);
 	    recorder.record(soundFile);
 
 	  }
@@ -923,14 +942,14 @@ function recordstart(){
 
 		  else if (state === 2) {
 		    soundFile.play(); // play the result!
-		    amp.setInput(soundFile);
+		    fft.setInput(soundFile);
 		    state++;
 		    soundBlob = soundFile.getBlob();
 		  }
 }
 var vol;
 function loaded() {
-	vol = amp.getLevel();
+	vol = fft.analyze();
 	song.play();
 }
 function loaded2(){
@@ -1315,7 +1334,7 @@ $(function(){
 </div>
 	<div id="addModal" class="modal">
 			<span class="close">&times;</span>
-			<span id="sketch-target"><canvas id="myCanvas" width="256" height="256"></canvas></span><br>
+			<span id="sketch-target"></span><br>
 			<form id="form_upload" enctype="multipart/form-data" action="/file/upload" method="post">
 				<input type="file" id="addfile" accept="audio/*">
 			</form>

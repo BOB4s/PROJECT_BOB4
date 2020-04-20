@@ -169,6 +169,64 @@ $(function(){
 		recordstart();
 	})
 })
+$(function(){
+	for(var k=1; k<5; k++){
+		var idx = "#Set"+k;
+		$(idx).click(function(){
+			getkeys("#"+this.value);
+		})
+	}
+})
+var premusic;
+function getkeys(sets){
+	$("#newset").text(sets);
+	$('.keysou').text('');
+	$('.keys').css('border','1px solid black');
+	$('.keys').css('background-color','white');
+	$('.keydel').text('');
+	$.ajax({
+		method : 'get'
+		,url : 'getkeys'
+		,data : {'key_board' : sets}
+		,success : function(resp){
+				premusic = {};
+				$.each(resp,function(index,item){
+					var songname = 'song'+index;
+					var songpath = item.sou_path;
+
+					premusic[songname] = songpath;
+					
+					var idx = "#"+item.key_name;
+					var cls = idx+' .keysou';
+					var dels = idx+' .keydel';
+					var datadel = '<Button class="keydels" value="'+item.key_number+'">X</Button>'
+					$(cls).text(item.sou_name);
+					$(idx).css('border','1px solid blue');
+					$(dels).html(datadel);
+					$(document).keydown(function(event){
+						if(event.keyCode == item.key_name && $("#newset").text()==item.key_board){
+							$(idx).css('background-color', 'red');
+							path = item.sou_path;
+							setup();
+						}else{
+							$(idx).css('background-color','white');
+						}
+					})
+					$('.keydels').click(function(){
+						$.ajax({
+							method : 'post'
+							,url : 'delkey'
+							,data : {'key_number':this.value}
+							,success : function(resp){
+								getkeys(sets);
+								}
+						})
+					})
+				})
+					$("#newment").text('Press the keys!');
+			}
+	})
+}
 var path1 = 'resources/sound/drum/drum7.wav';
 var path2 = 'resources/sound/drum/drum4.wav';
 var path3 = 'resources/sound/drum/drum3.wav';
@@ -178,7 +236,16 @@ var amp, bpmsong, bpms, bpmprs, bpmCrtl;
 var p1pat, p2pat, p3pat, p4pat, bpmpat;
 var p1song, p2song, p3song, p4song;
 var phrase1, phrase2, phrase3, phrase4, parts;
+function preload(){
+	for(var key in premusic){
+		key = loadSound(premusic[key]);
+	}
+}
 function setup() {
+	for(var key in premusic){
+		key.play;
+	}
+	
 	p1song = loadSound(path1,() => {});
 	p2song = loadSound(path2,() => {});
 	p3song = loadSound(path3,() => {});
@@ -332,57 +399,6 @@ $(function(){
 		})
 		   soundFile = new p5.SoundFile(); */
 })
-$(function(){
-	for(var k=1; k<5; k++){
-		var idx = "#Set"+k;
-		$(idx).click(function(){
-			getkeys("#"+this.value);
-		})
-	}
-})
-function getkeys(sets){
-	$("#newset").text(sets);
-	$('.keysou').text('');
-	$('.keys').css('border','1px solid black');
-	$('.keys').css('background-color','white');
-	$('.keydel').text('');
-	$.ajax({
-		method : 'get'
-		,url : 'getkeys'
-		,data : {'key_board' : sets}
-		,success : function(resp){
-				$.each(resp,function(index,item){
-					var idx = "#"+item.key_name;
-					var cls = idx+' .keysou';
-					var dels = idx+' .keydel';
-					var datadel = '<Button class="keydels" value="'+item.key_number+'">X</Button>'
-					$(cls).text(item.sou_name);
-					$(idx).css('border','1px solid blue');
-					$(dels).html(datadel);
-					$(document).keydown(function(event){
-						if(event.keyCode == item.key_name && $("#newset").text()==item.key_board){
-							$(idx).css('background-color', 'red');
-							path = item.sou_path;
-							setup();
-						}else{
-							$(idx).css('background-color','white');
-						}
-					})
-					$('.keydels').click(function(){
-						$.ajax({
-							method : 'post'
-							,url : 'delkey'
-							,data : {'key_number':this.value}
-							,success : function(resp){
-								getkeys(sets);
-								}
-						})
-					})
-				})
-					$("#newment").text('Press the keys!');
-			}
-	})
-}
 $(function(){
 	for(var i=1; i<5; i++){
 		var prs = "#phrase"+i;

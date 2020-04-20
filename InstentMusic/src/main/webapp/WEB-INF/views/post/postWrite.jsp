@@ -121,13 +121,17 @@ function go(){
         <div>Posting</div>
         <div>Posting</div>
 	</div>
-		
-		<input id="subBtn" type="button" value="글 태그 추출" style="float: right; margin-right: 100pt;" onclick="getTags()"/>
-	
+
+		<!-- <input id="subBtn" type="button" value="글 태그 추출" style="float: right; margin-right: 100pt;" onclick="getTags()"/> -->
+	<div id="subBtn" class="button_base btn_3d_double_roll" onclick="getTags()">
+		<div>Get Tags</div>
+		<div>Get Tags</div>
+		<div>Get Tags</div>
+		<div>Get Tags</div>
 	</div>
+	</div>
+	
 	<div id="checkForm">
-	
-	
 	
 	<input type="hidden" name="tagsresult" value="">
 
@@ -153,9 +157,7 @@ function go(){
 	 <br>
 	
 	</form>
-	
-	
-	
+
 	<input type="button" value="저장" onclick="go()">
 	</div>
 </div>

@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/makingMusic.css">
+<link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
@@ -20,210 +21,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<style>
-#soundlib {
-	margin: 10px 5px 5px 5px;
-	padding: 5px 5px 5px 5px;
-	width: 1020px;
-	height: 220px;
-	border: 1px solid black;
-}
-
-#libs, dropdown-menu {
-	float:left;
-	margin-top:10px;
-	width: 200px;
-	height: 100px;
-	white-space: nowrap;
-	overflow-x: hidden;
-	text-align: center;
-}
-
-#inbox {
-	width: 1000px;
-	height: 85px;
-	white-space: nowrap;
-	overflow-x: hidden;
-	padding: 5px;
-	background-color: #F2F2F2;
-	text-align: center;
-}
-
-.sounds {
-	float: left;
-	font-size: 10px;
-	text-align: center;
-	padding: 5px;
-}
-
-.soundimg {
-	width: 50px;
-	height: 50px;
-}
-
-.soundss{
-position: relative;
-width: 50px;
-height: 50px;
-}
-
-input {
-	width: 200px;
-}
-
-.inputbtn {
-	margin-top:5px;
-	margin-left:50px;
-	float:left;
-	font-size: 15px;
-	width: 350px;
-	height : 40px;
-}
-
-#libs button {
-	height: 25px;
-	width:150px;
-	background-color: #FFFFFF;
-	color: black;
-	font-size: 15px;
-	border: 0px;
-}
-#bags{
-float:right;
-width: 650px;
-height: 120px;
-}
-#bags input{
-width: 180px;
-}
-#fronts{
-float:left;
-width: 350px;
-height: 120px;
-}
-canvas {
-margin-top: 10px;
-margin-left: 10px;
-}
-#target2{
-margin-left: 10px;
-font-size : 30px;
-text-decoration: underline;
-}
-#fronts img{
-margin-left:5px;
-margin-bottom:12px;
-width: 30px;
-height: 30px;
-}
-#bags img{
-margin-left:60px;
-margin-bottom:20px;
-width : 65px;
-height : 65px;
-cursor: pointer;
-}
-#addModal {
-	color: #FFFFFF;
-	font-size: 30px;
-	text-align: center;
-}
-#addcom {
-	width: 200px;
-	height: 30px;
-	font-size: 20px;
-}
-
-#addbtn, #addModal button {
-	width: 150px;
-	height: 30px;
-	background-color: #000000;
-	background-color: rgba(255, 255, 255, 0.5);
-	font-size: 20px;
-	color: black;
-	border: 1px;
-	border-color: #FFFFFF;
-	font-weight: bold;
-}
-
-#addfile {
-	margin-top:10px;
-	width: 100px;
-	height: 30px;
-	background: 00ff0000;
-	border: 0;
-	font-size: 20px;
-}
-/* The Modal (background) */
-.modal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
-}
-
-/* The Close Button */
-.close {
-	position: absolute;
-	top: 15px;
-	right: 35px;
-	color: #f1f1f1;
-	font-size: 40px;
-	font-weight: bold;
-	transition: 0.3s;
-}
-
-.close:hover, .close:focus {
-	color: #bbb;
-	text-decoration: none;
-	cursor: pointer;
-}
-#target4, #target3{
-font-size : 20px;
-}
-#editlib, #deletelib{
-width: 20px;
-height: 20px;
-cursor: pointer;
-}
-.del {
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-	font-size: 10px;
-	width : 15px;
-	height : 15px;
-	font-weight: bold;
-	cursor: pointer;
-	border: 0;
-	background: red;
-	color: #FFFFFF;
-	border-radius: 100%;
-	padding: 0;
-}
-.adds {
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-	font-size: 10px;
-	width : 15px;
-	height : 15px;
-	font-weight: bold;
-	cursor: pointer;
-	border: 0;
-	background: green;
-	color: #FFFFFF;
-	border-radius: 100%;
-	padding: 0;
-}
-</style>
 <script>
 var path, song;
 $(function() {
@@ -667,13 +464,50 @@ function draw() {
 	</nav>
 
 	<div id="wrapper">
-		음악 제목 : <span id="target">임시 제목</span> <br>
-		<button id="slib" data-toggle="collapse" data-target="#soundlib">Sound Library</button>
-		<button data-toggle="collapse" data-target="#keyboard">Keyboard Set</button>
-		<button>트랩 추가</button>
-		<button>임시 저장</button>
-		<button>불러오기</button>
-		<button>음악 저장</button>
+		Title of Music : <span id="target">Temporary title</span> <br>
+		
+		<!-- <button id="slib" data-toggle="collapse" data-target="#soundlib">Sound Library</button> -->
+		<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#soundlib">
+			<div>Sound Library</div>
+			<div>Sound Library</div>
+			<div>Sound Library</div>
+			<div>Sound Library</div>
+		</div>
+		<!-- <button data-toggle="collapse" data-target="#keyboard">Keyboard Set</button> -->
+		<div class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#keyboard">
+			<div>Keyboard Set</div>
+			<div>Keyboard Set</div>
+			<div>Keyboard Set</div>
+			<div>Keyboard Set</div>
+		</div>
+		<!-- <button>트랩 추가</button> -->
+		<div class="button_base btn_3d_double_roll">
+			<div>Add Track</div>
+			<div>Add Track</div>
+			<div>Add Track</div>
+			<div>Add Track</div>
+		</div>
+		<!-- <button>임시 저장</button> -->
+		<div class="button_base btn_3d_double_roll">
+			<div>Save temporary</div>
+			<div>Save temporary</div>
+			<div>Save temporary</div>
+			<div>Save temporary</div>
+		</div>
+		<!-- <button>불러오기</button> -->
+		<div class="button_base btn_3d_double_roll">
+			<div>Load</div>
+			<div>Load</div>
+			<div>Load</div>
+			<div>Load</div>
+		</div>
+		<!-- <button>음악 저장</button> -->
+		<div class="button_base btn_3d_double_roll">
+			<div>Save Music</div>
+			<div>Save Music</div>
+			<div>Save Music</div>
+			<div>Save Music</div>
+		</div>
 		<br>
 		<div id="soundlib" class="collapse">
 		<div id="fronts">
@@ -746,5 +580,12 @@ $(function(){
 			  };
 		};
 });
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
 </script>
 </html>

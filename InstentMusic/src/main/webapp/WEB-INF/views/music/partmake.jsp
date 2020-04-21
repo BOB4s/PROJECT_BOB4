@@ -123,18 +123,22 @@ height: 120px;
 #p2, #p3, #p4{
 	float : left;
 	height : 50px;
-	width : 100px;
+	width : 150px;
 	border: 1px solid black;
 	margin : 5px 5px 5px 40px;
 	font-size : 15px;
+	padding : 5px;
+	padding-top: 10px;
 }
 #p1{
 	float : left;
 	height : 50px;
-	width : 100px;
+	width : 150px;
 	border: 1px solid black;
 	margin : 11px 5px 5px 40px;
 	font-size : 15px;
+	padding : 5px;
+	padding-top: 10px;
 }
 #phrases{
 	margin : 0 auto;
@@ -144,6 +148,20 @@ height: 120px;
 	border: 1px solid black;
 	width : 60px;
 	float : left;
+}
+.rcdmusic{
+	fload : right;
+	height : 30px;
+	width : 30px;
+	cursor : pointer;
+	margin-left: 10px;
+}
+.rcdplay{
+	fload : right;
+	height : 30px;
+	width : 30px;
+	cursor : pointer;
+	margin-left: 10px;
 }
 </style>
 <script>
@@ -199,10 +217,8 @@ function getkeys(sets){
 					var idx = "#"+item.key_name;
 					var cls = idx+' .keysou';
 					var dels = idx+' .keydel';
-					var datadel = '<Button class="keydels" value="'+item.key_number+'">X</Button>'
 					$(cls).text(item.sou_name);
 					$(idx).css('border','1px solid blue');
-					$(dels).html(datadel);
 					$(document).keydown(function(event){
 						if(event.keyCode == item.key_name && $("#newset").text()==item.key_board){
 							$(idx).css('background-color', 'red');
@@ -212,25 +228,15 @@ function getkeys(sets){
 							$(idx).css('background-color','white');
 						}
 					})
-					$('.keydels').click(function(){
-						$.ajax({
-							method : 'post'
-							,url : 'delkey'
-							,data : {'key_number':this.value}
-							,success : function(resp){
-								getkeys(sets);
-								}
-						})
-					})
 				})
 					$("#newment").text('Press the keys!');
 			}
 	})
 }
-var path1 = 'resources/sound/drum/drum7.wav';
-var path2 = 'resources/sound/drum/drum4.wav';
-var path3 = 'resources/sound/drum/drum3.wav';
-var path4 = 'resources/sound/drum/drum1.wav';
+var path1 = 'resources/sound/drum/drum0.wav';
+var path2 = 'resources/sound/drum/drum1.wav';
+var path3 = 'resources/sound/drum/drum2.wav';
+var path4 = 'resources/sound/drum/drum3.wav';
 var mic, recorder, soundFile, soundBlob;
 var amp, bpmsong, bpms, bpmprs, bpmCrtl;
 var p1pat, p2pat, p3pat, p4pat, bpmpat;
@@ -242,6 +248,8 @@ function preload(){
 	}
 }
 function setup() {
+	//var cps = new p5.Compressor()
+	//cps.set(0.2, 30, 13, -15, 0);
 	for(var key in premusic){
 		key.play;
 	}
@@ -251,10 +259,10 @@ function setup() {
 	p3song = loadSound(path3,() => {});
 	p4song = loadSound(path4,() => {});
 
-	p1pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	p2pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	p3pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	p4pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	p1pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	p2pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	p3pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	p4pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	bpmpat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 	phrase1 = new p5.Phrase('p1song',playp1, p1pat);
@@ -268,7 +276,32 @@ function setup() {
 	parts.addPhrase(phrase3);
 	parts.addPhrase(phrase4);
 	parts.addPhrase('seq',sequence,bpmpat);
+
+	bpms = new p5.Part();
+	bpms.addPhrase('seq',sequence,bpmpat);
+
+	p1 = new p5.Part();
+	p2 = new p5.Part();
+	p3 = new p5.Part();
+	p4 = new p5.Part();
+
+	p1.setBPM(${temp_bpm});
+	p1.addPhrase(phrase1);
+	p1.addPhrase('seq',rcdcss,bpmpat);
 	
+	p2.setBPM(${temp_bpm});
+	p2.addPhrase(phrase2);
+	p2.addPhrase('seq',rcdcss,bpmpat);
+	
+	p3.setBPM(${temp_bpm});
+	p3.addPhrase(phrase3);
+	p3.addPhrase('seq',rcdcss,bpmpat);
+	
+	p4.setBPM(${temp_bpm});
+	p4.addPhrase(phrase4);
+	p4.addPhrase('seq',rcdcss,bpmpat);
+	
+	bpms.setBPM(${temp_bpm});
 	parts.setBPM(${temp_bpm});
 
 	song = loadSound(path,loaded);
@@ -316,7 +349,99 @@ function drawmatrix(){
 	$(c2).css('border','1px solid black');
 	$(c3).css('border','1px solid black');
 	$(c4).css('border','1px solid black');
+	$(c1).css('background-color','white');
+	$(c2).css('background-color','white');
+	$(c3).css('background-color','white');
+	$(c4).css('background-color','white');
 }
+var targetp;
+$(function(){
+	$("#mixing").click(function(){
+		userStartAudio();
+		if(!bpms.isPlaying){
+			$("#mixing").text('BPM Stop');
+			bpms.loop();
+			parts.stop();
+		}else{
+			$("#mixing").text('BPM Start');
+			bpms.stop();
+			bpms.metro.metroTicks = 0;
+		}
+	})
+	$("#musicall").click(function(){
+		userStartAudio();
+		if(!parts.isPlaying){
+			$("#musicall").text('Music Stop');
+			parts.loop();
+			p4.stop();
+			p1.stop();
+			p2.stop();
+			p3.stop();
+			bpms.stop();
+		}else{
+			$("#musicall").text('Music Start');
+			parts.stop();
+			parts.metro.metroTicks = 0;
+		}
+	})
+	$(".rcdplay").click(function(){
+		userStartAudio();
+		targetp = $(this).parent().attr('id');
+
+		if(targetp == 'p1'){
+			if(!p1.isPlaying){
+				p1.loop();
+				p2.stop();
+				p3.stop();
+				p4.stop();
+				bpms.stop();
+				parts.stop();
+			}else{
+				p1.stop();
+				p1.metro.metroTicks = 0;
+			}
+		}
+		if(targetp == 'p2'){
+			if(!p2.isPlaying){
+				p2.loop();
+				p3.stop();
+				p4.stop();
+				p1.stop();
+				bpms.stop();
+				parts.stop();
+			}else{
+				p2.stop();
+				p2.metro.metroTicks = 0;
+			}
+		}
+		if(targetp == 'p3'){
+			if(!p3.isPlaying){
+				p3.loop();
+				p1.stop();
+				p2.stop();
+				p4.stop();
+				bpms.stop();
+				parts.stop();
+			}else{
+				p3.stop();
+				p3.metro.metroTicks = 0;
+			}
+		}
+		if(targetp == 'p4'){
+			if(!p4.isPlaying){
+				p4.loop();
+				p1.stop();
+				p2.stop();
+				p3.stop();
+				bpms.stop();
+				parts.stop();
+			}else{
+				p4.stop();
+				p4.metro.metroTicks = 0;
+			}
+		}
+	})
+})
 function sequence(time, beatIndex){
 	drawmatrix();
 	
@@ -329,20 +454,29 @@ function sequence(time, beatIndex){
 	$(two).css('border','1px solid red');
 	$(three).css('border','1px solid red');
 	$(four).css('border','1px solid red');
+	$(one).css('background-color','#F5BCA9')
+	$(two).css('background-color','#F5BCA9')
+	$(three).css('background-color','#F5BCA9')
+	$(four).css('background-color','#F5BCA9')
 }
-$(function(){
-	$("#mixing").click(function(){
-		userStartAudio();
-		if(!parts.isPlaying){
-			$("#mixing").text('Music Stop');
-			parts.loop();
-		}else{
-			$("#mixing").text('Music Start');
-			parts.stop();
-			parts.metro.metroTicks = 0;
-		}
-	})
-})
+function rcdcss(time, beatIndex){
+	drawmatrix();
+	var target;
+	if(targetp == 'p1'){
+		target = '#1-'+beatIndex;
+	}
+	if(targetp == 'p2'){
+		target = '#2-'+beatIndex;
+	}
+	if(targetp == 'p3'){
+		target = '#3-'+beatIndex;
+	}
+	if(targetp == 'p4'){
+		target = '#4-'+beatIndex;
+	}
+	$(target).css('border','1px solid red');
+	$(target).css('background-color','#F5BCA9')
+}
 function recordstart(){
 	userStartAudio();
 
@@ -421,7 +555,8 @@ $(function(){
 		<div id="musinfo">
 	Part Number : <span id="partnumber">${part_number}</span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">${temp_bpm}</span>&emsp;/&emsp;
-	<button id="mixing">Music Start</button>
+	<button id="mixing">BPM Start</button>&emsp;/&emsp;
+	<button id="musicall">Music Start</button>
 	</div>
 	<div id="keyboard">
 	<div class="fronts">
@@ -492,10 +627,10 @@ $(function(){
 </div>
 </div><!-- end #keyboard -->
 <div id="phrases">
-<div id="p1">Phrase1</div><div id="phrase1"></div>
-<div id="p2">Phrase2</div><div id="phrase2"></div>
-<div id="p3">Phrase3</div><div id="phrase3"></div>
-<div id="p4">Phrase4</div><div id="phrase4"></div>
+<div id="p1"><span>Phrase1</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase1"></div>
+<div id="p2"><span>Phrase2</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase2"></div>
+<div id="p3"><span>Phrase3</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase3"></div>
+<div id="p4"><span>Phrase4</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase4"></div>
 </div>
 </div> 
 </body>

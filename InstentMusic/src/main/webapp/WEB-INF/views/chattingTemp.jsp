@@ -211,6 +211,7 @@ div.friends_bar_list {
 	<script type="text/javascript">
 		var $window = $(window);
 		var username = '${nickname}';
+								//Need to change IP address**
 		var socket = io.connect('http://10.10.12.230:4000')
 		var opponentName = '${opponentName}';
 		

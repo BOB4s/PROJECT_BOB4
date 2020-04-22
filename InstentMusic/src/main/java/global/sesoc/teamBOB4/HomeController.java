@@ -68,8 +68,6 @@ public class HomeController {
 		if(c != null) {
 			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			session.setAttribute("password", c.getCust_password());
-			session.setAttribute("email", c.getCust_email());
 			session.setAttribute("introduce", c.getCust_introduce());
 			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";

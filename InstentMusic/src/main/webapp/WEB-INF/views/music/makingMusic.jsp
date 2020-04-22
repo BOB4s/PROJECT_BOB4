@@ -3,13 +3,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusicMake</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="resources/css/navigation.css">
+<link rel="stylesheet" href="resources/css/sideMenuBar.css">
+<link rel="stylesheet" href="resources/css/makingMusic.css">
+<link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
 <script src="resources/js/p5.sound.min.js"></script>
 <script src="resources/js/sketch.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -25,7 +32,6 @@ margin : 10px 10px 10px 10px;
 	height: 220px;
 	border: 1px solid black;
 }
-
 .libs, dropdown-menu {
 	float:left;
 	margin-top:10px;
@@ -1257,12 +1263,64 @@ $(function(){
 </script>
 </head>
 <body>
+<!-- Top for logo and navibar -->
+	 <nav class="navigation">
+		<div class="navigation__column">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>
+		</div>
+		<div class="navigation__column">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+		</div>
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"><i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
+			</div>
+		</div>
+	</nav>
+
 	<div id="wrapper">
-		<button id="slib" data-toggle="collapse" data-target="#setmus">Setting Music</button>
-		<button id="addpart">Add Part</button>
-		<button id="resettemp">Reset</button>
-		<button id="savemusic">Save Music</button>
-		<br>
+		<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+		</div>
+		<div id="addpart" class="button_base btn_3d_double_roll">
+			<div>Add Part</div>
+			<div>Add Part</div>
+			<div>Add Part</div>
+			<div>Add Part</div>
+		</div>
+		<div id="resettemp" class="button_base btn_3d_double_roll">
+			<div>Reset</div>
+			<div>Reset</div>
+			<div>Reset</div>
+			<div>Reset</div>
+		</div>
+		<div id="savemusic" class="button_base btn_3d_double_roll">
+			<div>Save Music</div>
+			<div>Save Music</div>
+			<div>Save Music</div>
+			<div>Save Music</div>
+		</div>
+		<br><br>
 		<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>&emsp;/&emsp;
@@ -1394,4 +1452,13 @@ $(function(){
 	</div>
 </div>
 </body>
+<script>
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
+</script>
 </html>

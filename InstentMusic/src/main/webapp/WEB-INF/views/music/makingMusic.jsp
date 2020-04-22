@@ -1320,11 +1320,7 @@ $(function(){
 			<div>Save Music</div>
 			<div>Save Music</div>
 		</div>
-		<button id="slib" data-toggle="collapse" data-target="#setmus">Setting Music</button>
-		<button id="addpart">Add Part</button>
-		<button id="resettemp">Reset</button>
-		<button id="savemusic">Save Music</button>
-		<br>
+		<br><br>
 		<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>&emsp;/&emsp;

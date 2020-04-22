@@ -19,6 +19,12 @@ and sou_number = #{sou_number}
 </if>
 </select>
 
+<select id="getorigin" parameterType="Sound" resultType="Sound">
+select *
+from sound_library
+where sou_number = #{sou_number}
+</select>
+
 <select id="searchsound" parameterType="map" resultType="Sound">
 select *
 from sound_library
@@ -33,6 +39,8 @@ sou_number
 ,sou_type
 <if test="sou_name!=null">
 ,sou_name
+</if>
+<if test="sou_saved!=null">
 ,sou_saved
 </if>
 )
@@ -42,6 +50,8 @@ SEQ_SOUND_LIBRARY_SOU_NUMBER.nextval
 ,#{sou_type}
 <if test="sou_name!=null">
 ,#{sou_name}
+</if>
+<if test="sou_saved!=null">
 ,#{sou_saved}
 </if>
 )
@@ -65,4 +75,46 @@ and sou_type = #{sou_type}
 and sou_number = #{sou_number}
 </if>
 </delete>
+
+<insert id="insertkey" parameterType="Keys">
+insert into key_sound(
+key_number
+,cust_number
+,key_board
+,sou_path
+,sou_name
+,key_name
+)
+values(
+SEQ_Key_Sound_key_number.nextval
+,#{cust_number}
+,#{key_board}
+,#{sou_path}
+,#{sou_name}
+,#{key_name}
+)
+</insert>
+
+<select id="getkeys" parameterType="Keys" resultType="Keys">
+select *
+from key_sound
+where
+cust_number = #{cust_number}
+and key_board = #{key_board}
+</select>
+
+<delete id="delkey" parameterType="Keys">
+delete from key_sound
+where
+key_number = #{key_number}
+</delete>
+
+<update id="updatekey" parameterType="Keys">
+update key_sound
+set
+sou_path = #{sou_path}
+,sou_name = #{sou_name}
+where
+key_number = #{key_number}
+</update>
 </mapper>

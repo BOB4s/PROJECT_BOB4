@@ -11,27 +11,20 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-
-<!-- Need to change IP address -->
-<script src="http://10.10.12.124:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.12.230:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
-<link href="resources/css/toastr.min.css" rel="stylesheet"/>
-<script>
-
-</script>
+ <link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style type="text/css">
 body {
     margin: 0px;
 }
 </style>
-
 <script type="text/javascript">
 
 	/* var cust_number= '${cust_number}'; */
 	var username = '${nickname}';
-							//need to change IP address
-	var socket = io.connect('http://10.10.12.124:4000');
+	var socket = io.connect('http://10.10.12.230:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,

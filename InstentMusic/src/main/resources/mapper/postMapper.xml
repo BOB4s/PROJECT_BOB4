@@ -48,7 +48,7 @@
 		,#{mus_time}
 		,#{post_content}
 		,#{post_nickname}
-		,'131235'
+		,'asdas'
 		,sysdate
 		,0
 		,0
@@ -67,7 +67,12 @@
 	
 	<select id="getPostAll"  resultType="Post">
 	select * from post
+	order by post_number desc
 	
 	</select>
-	
+	<select id="getPostByPostNum" parameterType="int" resultType="Post">
+	select *
+	from Post
+	where post_number = #{post_number}
+	</select>
 </mapper>

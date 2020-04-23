@@ -17,4 +17,6 @@ public interface PostMapper {
 
 	List<Post> getPostAll();
 
+	Post getPostByPostNum(int post_number);
+
 }

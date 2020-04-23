@@ -19,6 +19,12 @@
 		)
 	
 </insert>
+<select id="GetlinkedTags" parameterType="int" resultType="int">
+select tag_number from Post_tag
 
+where post_number = #{post_number}
+
+
+</select>
 	
 </mapper>

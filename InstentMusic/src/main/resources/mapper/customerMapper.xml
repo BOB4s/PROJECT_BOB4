@@ -19,6 +19,14 @@
 
 	</insert>
 
+<update id="GetKey" parameterType="Map">
+update Customer set cust_key = #{cust_key} where cust_id =#{cust_id}
+
+</update>
+<update id="alter_userKey" parameterType="Map">
+	update Customer set cust_key ='Y' where cust_id =#{param1} and cust_key =#{param2}
+</update>
+
 	<select id="checkfollow" parameterType="Follow" resultType="int">
 		select count(*)
 		from Follow

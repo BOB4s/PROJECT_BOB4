@@ -12,6 +12,7 @@
 		<typeAlias type="global.sesoc.teamBOB4.vo.Tag" alias="Tag"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Sound_library" alias="Sound"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Post_tag" alias="Post_tag"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Reply" alias="Reply"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />
@@ -21,5 +22,6 @@
 		<mapper resource="mapper/tagMapper.xml" />
 		<mapper resource="mapper/musicMapper.xml" />
 		<mapper resource="mapper/post_tagMapper.xml" />
+		<mapper resource="mapper/replyMapper.xml" />
 	</mappers>
 </configuration>

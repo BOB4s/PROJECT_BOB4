@@ -1,16 +1,13 @@
 package global.sesoc.teamBOB4.dao;
 
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import global.sesoc.teamBOB4.vo.Follow;
-import global.sesoc.teamBOB4.vo.Post;
 import global.sesoc.teamBOB4.vo.Post_tag;
 
 @Repository
@@ -34,6 +31,14 @@ public class Post_tagDao {
 		temp.setTag_number(tag_number);
 		mapper.linkedTags(temp);
 		
+	}
+
+
+	public List<Integer> GetlinkedTags(int post_number) {
+		Post_tagMapper mapper= session.getMapper(Post_tagMapper.class);
+		List<Integer> tagList = new ArrayList<>();
+		tagList= mapper.GetlinkedTags(post_number);
+		return tagList;
 	}
 
 	

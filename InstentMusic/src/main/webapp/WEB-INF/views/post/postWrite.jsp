@@ -13,12 +13,21 @@
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-
+<script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
 <title>글쓰기</title>
 
 
 
-<script>
+<script  type="text/javascript">
+
+var username = '${nickname}';
+var socket = io.connect('http://192.168.0.84:4000');
+
+
+$(function(){
+	socket.emit('add user', username);
+
+});
 function getTags() {
 	
 	
@@ -30,6 +39,7 @@ function getTags() {
 		  var post_nickname = document.getElementById("post_nickname").value;
 		  var post_content = document.getElementById("post_content").value;
 		  var post_url = document.getElementById("post_url").value;
+		  mus_number= 43;
 						$.ajax({
 							type : "POST"
 							,url : "post_write_save"
@@ -50,7 +60,9 @@ function getTags() {
 									  post_content = post_content.replace(/#[^#\s,;]+/gm, function(post_content) {
 										  tags_List.push(post_content);
 									  });
-									
+									if(tags_List.length==0){
+										postnotice(mus_title);
+										}
 							for(var i in tags_List){	
 								$.ajax({
 									type : "GET"
@@ -59,8 +71,12 @@ function getTags() {
 										"resp" :resp
 									 	,"text" : tags_List[i] 
 								,success : function(resp){
+									
 								if(i==(tags_List.length-1)){
-									location.href = "main"
+
+
+									postnotice(mus_title);
+									
 									}
 									}
 									}
@@ -74,6 +90,20 @@ function getTags() {
 
 						
 					};
+
+	function postnotice(mus_title){
+		var followerList = new Array();
+		$.each(${followerList},function(index, item) {
+		
+			followerList[index] = item;
+				});
+		
+		 
+		console.log(followerList);
+		 socket.emit('postWrite',followerList,username,mus_title);
+
+		  location.href = "main" 
+		}
 						</script>
 
 
@@ -94,7 +124,7 @@ function getTags() {
 				<form id="frm" method="post" action="post_write_save">
 
 					<%-- 		<input type="hidden" id="mus_number" name="mus_number" value="${mus_number}"><!-- 음악 숫자  --> --%>
-					<input type="hidden" id="mus_number" name="mus_number" value=55>
+					<input type="hidden" id="mus_number" name="mus_number" value=989>
 					<!-- 음악 숫자  -->
 					<input type="hidden" id="cust_number" name="cust_number"
 						value="${cust_number}">

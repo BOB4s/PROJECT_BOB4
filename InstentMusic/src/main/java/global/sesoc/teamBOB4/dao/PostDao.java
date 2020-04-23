@@ -54,51 +54,45 @@ public class PostDao {
 		return mapper.getOneByMus_number(mus_number);
 	}
 
-	public Map<String,List<Post>> getPostAll(String searchWord) {
+	public List<Post> getPostAll(List<Integer> follwedList) {
 		PostMapper mapper = session.getMapper(PostMapper.class);
 		List<Post> tempList =new ArrayList<>();
-		Map <String, List<Post>> resultMap = new HashMap<>();
+		/* Map <String, List<Post>> resultMap = new HashMap<>(); */
 		tempList =  mapper.getPostAll();
-		
-		for (Post post:tempList) {
-			if(post.getPost_nickname().contains(searchWord)) {
-				List<Post> MapsList = resultMap.get("nickname");
-				if(MapsList != null) {
-					MapsList.add(post);
-					resultMap.put("nickname", MapsList);
-				}else {
-					List<Post> tempLists = new ArrayList<>();
-					tempLists.add(post);
-					resultMap.put("nickname", tempLists);
-				}
-				
-				
-			}
-			if(post.getPost_content().contains(searchWord)){
-				List<Post> MapsList = resultMap.get("content");
-				if(MapsList != null) {
-					MapsList.add(post);
-					resultMap.put("content", MapsList);
-				}else {
-					List<Post> tempLists = new ArrayList<>();
-					tempLists.add(post);
-					resultMap.put("content", tempLists);
-				}
-			}
-			if(post.getMus_title().contains(searchWord)) {
-				List<Post> MapsList = resultMap.get("title");
-				if(MapsList != null) {
-					MapsList.add(post);
-					resultMap.put("title", MapsList);
-				}else {
-					List<Post> tempLists = new ArrayList<>();
-					tempLists.add(post);
-					resultMap.put("title", tempLists);
-				}
-			}
-			
+		List<Post> resultList =new ArrayList<>();
+		for(Post post :tempList) {
+			for(int cust_number:follwedList) {
+				if(post.getCust_number()==cust_number) 
+					resultList.add(post);
+			}	
 		}
 		
-		return resultMap;
+		
+		/*  이것은 검색을 위한 것입니다
+		 * for (Post post:tempList) { if(post.getPost_nickname().contains(searchWord)) {
+		 * List<Post> MapsList = resultMap.get("nickname"); if(MapsList != null) {
+		 * MapsList.add(post); resultMap.put("nickname", MapsList); }else { List<Post>
+		 * tempLists = new ArrayList<>(); tempLists.add(post); resultMap.put("nickname",
+		 * tempLists); }
+		 * 
+		 * 
+		 * } if(post.getPost_content().contains(searchWord)){ List<Post> MapsList =
+		 * resultMap.get("content"); if(MapsList != null) { MapsList.add(post);
+		 * resultMap.put("content", MapsList); }else { List<Post> tempLists = new
+		 * ArrayList<>(); tempLists.add(post); resultMap.put("content", tempLists); } }
+		 * if(post.getMus_title().contains(searchWord)) { List<Post> MapsList =
+		 * resultMap.get("title"); if(MapsList != null) { MapsList.add(post);
+		 * resultMap.put("title", MapsList); }else { List<Post> tempLists = new
+		 * ArrayList<>(); tempLists.add(post); resultMap.put("title", tempLists); } }
+		 * 
+		 * }
+		 */
+		
+		return resultList;
+	}
+
+	public Post getPostByPostNum(int post_number) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		return mapper.getPostByPostNum(post_number);
 	}
 }

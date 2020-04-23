@@ -61,6 +61,11 @@ function formCheck(){
 			document.getElementById("cust_email").select();
 			return ;
 		}
+		
+		var welcomeForm = document.getElementById("join");
+		welcomeForm.submit();
+		alert("이메일 인증 후에 로그인 하실수 있습니다!");
+		
 }
 
 var sel_file;
@@ -135,7 +140,7 @@ $(function(){
 <div class="bg">
 <div id="wrapper">
 	<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
-	<form id="join" action="join" method="POST" enctype="multipart/form-data">
+	<form id="join" action="cust_join_byemail" method="POST" enctype="multipart/form-data">
 	<table border="1">
 		<tr>
 			<th>ID</th>

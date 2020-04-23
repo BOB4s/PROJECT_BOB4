@@ -45,7 +45,24 @@ overflow-y: hidden;
 	font-size: 15px;
 	border: 0px;
 }
-
+.del{
+	width : 10px;
+	height : 10px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0;
+	background: red;
+	color: #FFFFFF;
+	border-radius: 100%;
+	padding: 0;
+	font-size: 5px;
+}
+.delreset{
+	position: absolute;
+	bottom: 2px;
+	left: 2px;
+	font-size: 8px;
+}
 .fronts{
 float:left;
 width: 350px;
@@ -121,22 +138,27 @@ height: 120px;
 	margin : 5px 5px 5px 5px;
 }
 #p2, #p3, #p4{
+	position: relative;
 	float : left;
 	height : 50px;
 	width : 150px;
 	border: 1px solid black;
 	margin : 5px 5px 5px 40px;
-	font-size : 15px;
+	font-size : 8px;
 	padding : 5px;
 	padding-top: 10px;
 }
+.pnames{
+	font-size : 15px;
+}
 #p1{
+	position: relative;
 	float : left;
 	height : 50px;
 	width : 150px;
 	border: 1px solid black;
 	margin : 11px 5px 5px 40px;
-	font-size : 15px;
+	font-size : 8px;
 	padding : 5px;
 	padding-top: 10px;
 }
@@ -242,6 +264,7 @@ var amp, bpmsong, bpms, bpmprs, bpmCrtl;
 var p1pat, p2pat, p3pat, p4pat, bpmpat;
 var p1song, p2song, p3song, p4song;
 var phrase1, phrase2, phrase3, phrase4, parts;
+var beat = 0;
 function preload(){
 	for(var key in premusic){
 		key = loadSound(premusic[key]);
@@ -259,11 +282,12 @@ function setup() {
 	p3song = loadSound(path3,() => {});
 	p4song = loadSound(path4,() => {});
 
-	p1pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	p2pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	p3pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	p4pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	bpmpat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+	p1pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	p2pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	p3pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	p4pat = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	bpmpat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+	bpmpat2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 	phrase1 = new p5.Phrase('p1song',playp1, p1pat);
 	phrase2 = new p5.Phrase('p2song',playp2, p2pat);
@@ -278,7 +302,7 @@ function setup() {
 	parts.addPhrase('seq',sequence,bpmpat);
 
 	bpms = new p5.Part();
-	bpms.addPhrase('seq',sequence,bpmpat);
+	bpms.addPhrase('seq',sequence,bpmpat2);
 
 	p1 = new p5.Part();
 	p2 = new p5.Part();
@@ -365,6 +389,7 @@ $(function(){
 		}else{
 			$("#mixing").text('BPM Start');
 			bpms.stop();
+			drawmatrix();
 			bpms.metro.metroTicks = 0;
 		}
 	})
@@ -372,77 +397,103 @@ $(function(){
 		userStartAudio();
 		if(!parts.isPlaying){
 			$("#musicall").text('Music Stop');
-			parts.loop();
+			parts.start();
 			p4.stop();
 			p1.stop();
 			p2.stop();
 			p3.stop();
 			bpms.stop();
+
 		}else{
 			$("#musicall").text('Music Start');
 			parts.stop();
+			drawmatrix();
 			parts.metro.metroTicks = 0;
+		}
+	})
+	$(".rcdmusic").click(function(){
+		targetm = $(this).parent().attr('id');
+		var ment1 = ['Press','the','space','bar','to','start','recording'];
+		if(targetp == 'p1'){
+			for(var i=0; i<7; i++){
+				var cls = '1-'+(i+1);
+				$(cls).text(ment1[i]);			
+			}
 		}
 	})
 	$(".rcdplay").click(function(){
 		userStartAudio();
 		targetp = $(this).parent().attr('id');
-
 		if(targetp == 'p1'){
 			if(!p1.isPlaying){
-				p1.loop();
+				$(this).attr('src','resources/images/sound/stop.png');
+				p1.start();
 				p2.stop();
 				p3.stop();
 				p4.stop();
 				bpms.stop();
 				parts.stop();
 			}else{
+				$(this).attr('src','resources/images/sound/play.png');
 				p1.stop();
+				drawmatrix();
 				p1.metro.metroTicks = 0;
 			}
 		}
 		if(targetp == 'p2'){
 			if(!p2.isPlaying){
-				p2.loop();
+				$(this).attr('src','resources/images/sound/stop.png');
+				p2.start();
 				p3.stop();
 				p4.stop();
 				p1.stop();
 				bpms.stop();
 				parts.stop();
 			}else{
+				$(this).attr('src','resources/images/sound/play.png');
 				p2.stop();
+				drawmatrix();
 				p2.metro.metroTicks = 0;
 			}
 		}
 		if(targetp == 'p3'){
 			if(!p3.isPlaying){
-				p3.loop();
+				$(this).attr('src','resources/images/sound/stop.png');
+				p3.start();
 				p1.stop();
 				p2.stop();
 				p4.stop();
 				bpms.stop();
 				parts.stop();
 			}else{
+				$(this).attr('src','resources/images/sound/play.png');
 				p3.stop();
+				drawmatrix();
 				p3.metro.metroTicks = 0;
 			}
 		}
 		if(targetp == 'p4'){
 			if(!p4.isPlaying){
-				p4.loop();
+				$(this).attr('src','resources/images/sound/stop.png');
+				p4.start();
 				p1.stop();
 				p2.stop();
 				p3.stop();
 				bpms.stop();
 				parts.stop();
 			}else{
+				$(this).attr('src','resources/images/sound/play.png');
 				p4.stop();
+				drawmatrix();
 				p4.metro.metroTicks = 0;
 			}
 		}
 	})
 })
 function sequence(time, beatIndex){
+	if(beatIndex==17){
+		$("#musicall").text('Music Start');
+	}
 	drawmatrix();
 	
 	var one = '#1-'+beatIndex;
@@ -460,6 +511,9 @@ function sequence(time, beatIndex){
 	$(four).css('background-color','#F5BCA9')
 }
 function rcdcss(time, beatIndex){
+	if(beatIndex==17){
+		$(".rcdplay").attr('src','resources/images/sound/play.png');
+	}
 	drawmatrix();
 	var target;
 	if(targetp == 'p1'){
@@ -539,7 +593,7 @@ $(function(){
 		var data = '';
 		for(var j=1; j<17; j++){
 			var ids = i+"-"+j;
-			data += '<div class="phrase'+i+'"id="'+ids+'" style=""></div>'
+			data += '<div class="phrase'+i+'"id="'+ids+'"></div>'
 		}
 
 		$(prs).html(data);
@@ -627,10 +681,10 @@ $(function(){
 </div>
 </div><!-- end #keyboard -->
 <div id="phrases">
-<div id="p1"><span>Phrase1</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase1"></div>
-<div id="p2"><span>Phrase2</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase2"></div>
-<div id="p3"><span>Phrase3</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase3"></div>
-<div id="p4"><span>Phrase4</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"></div><div id="phrase4"></div>
+<div id="p1"><span class="pnames">Phrase1</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p1'">X</Button>reset</span></div><div id="phrase1"></div>
+<div id="p2"><span class="pnames">Phrase2</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p2'">X</Button>reset</span></div><div id="phrase2"></div>
+<div id="p3"><span class="pnames">Phrase3</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p3'">X</Button>reset</span></div><div id="phrase3"></div>
+<div id="p4"><span class="pnames">Phrase4</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p4'">X</Button>reset</span></div><div id="phrase4"></div>
 </div>
 </div> 
 </body>

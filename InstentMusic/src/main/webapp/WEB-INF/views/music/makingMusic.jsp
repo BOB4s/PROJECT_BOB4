@@ -291,6 +291,10 @@ cursor: pointer;
 	line-height: 1.2;
 }
 #musinfo{
+	text-align: center;
+	margin : 0 auto;
+	width: 1100px;
+	height : 30px;
 	margin-top: 10px;
 }
 #parts{
@@ -335,6 +339,9 @@ float : left;
 	border : 0px;
 	color : white;
 	font-weight: bold;
+}
+#slib, #addpart, #resettemp, #savemusic{
+	width : 170px;
 }
 </style>
 <script>
@@ -864,12 +871,12 @@ var btnc=0;
 $(function(){
 	$("#bpmplay").click(function(){
 		var txt = $("#bpmplay").text();
-		if(txt=='play'){
+		if(txt=='test'){
 			$("#bpmplay").text('stop');
 			btnc++;
 			loadbpm();
 		}else{
-			$("#bpmplay").text('play');
+			$("#bpmplay").text('test');
 			btnc=0;
 			loaded2();
 		}
@@ -1270,33 +1277,7 @@ $(function(){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
-		</div>
-		<div class="navigation__column">
-			<div class="navigations__links">
-				<div class="navigation__list-item"><a href="#"
-					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
-				</a></div>
-				<div class="navigation__list-item"><a href="#"
-					class="navigation__link"><i class="fa fa-bell-o"></i>
-				</a></div>
-				<div class="navigation__list-item">
-					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
-				</div>
-			</div>
-			<div id="mySidenav" class="sidenav">
-			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
-			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
-			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
-			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
-			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
-			</div>
-		</div>
-	</nav>
-
-	<div id="wrapper">
-		<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
+			<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
 			<div>Setting Music</div>
 			<div>Setting Music</div>
 			<div>Setting Music</div>
@@ -1320,10 +1301,33 @@ $(function(){
 			<div>Save Music</div>
 			<div>Save Music</div>
 		</div>
-		<br><br>
+		</div>
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"><i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
+			</div>
+		</div>
+	</nav>
+	<div id="wrapper">
 		<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
-	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>&emsp;/&emsp;
+	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">test</button>&emsp;/&emsp;
 	<button id="mixing">All in One Mixing</button>
 	</div>
 		<div id="setmus" class="collapse">

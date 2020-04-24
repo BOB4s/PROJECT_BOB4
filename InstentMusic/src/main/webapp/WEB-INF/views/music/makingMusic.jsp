@@ -291,7 +291,13 @@ cursor: pointer;
 	line-height: 1.2;
 }
 #musinfo{
+	text-align: center;
+	margin : 0 auto;
+	width: 1100px;
+	height : 30px;
 	margin-top: 10px;
+	text-align : center;
+	width: 1200px;
 }
 #parts{
 	margin: 0 auto;
@@ -335,6 +341,9 @@ float : left;
 	border : 0px;
 	color : white;
 	font-weight: bold;
+}
+#slib, #addpart, #resettemp, #savemusic{
+	width : 170px;
 }
 </style>
 <script>
@@ -468,12 +477,7 @@ function gets(soutype){
 		success : function(resp) {
 			$("#inbox").html('');
 			var cound = 0;
-			premusic = {};
 			$.each(resp,function(index,item){
-				var songname = 'song'+index;
-				var songpath = item.fullPath;
-
-				premusic[songname] = songpath;
 				if(item.sou_name!=null){
 				var data = '';
 				data += '<div class="sounds">';
@@ -532,11 +536,7 @@ $(function(){
 			,success : function(resp){
 				$("#inbox").html('');
 				var cound = 0;
-				premusic = {};
 				$.each(resp,function(index,item){
-					var songname = 'song'+index;
-					var songpath = item.fullPath;
-					premusic[songname] = songpath;
 					if(item.sou_name!=null){
 					var data = '';
 					data += '<div class="sounds">';
@@ -619,12 +619,8 @@ $(function() {
 		$("#target2").text('Beatbox');
 		$("#inbox").html('');
 		var srcs = ''
-			premusic = {};
 		for (var i = 0; i < 32; i++) {
 			srcs = 'resources/sound/beatbox/bb' +i+ '.mp3';
-			var songname = 'bb'+i;
-			var songpath = srcs;
-			premusic[songname] = songpath;
 			var data = '';
 			data += '<div class="sounds">';
 			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="bb'+i+'" src="resources/images/sound/sound.png"><br>';
@@ -643,12 +639,8 @@ $(function() {
 		$("#target2").text('Drum');
 		$("#inbox").html('');
 		var srcs = ''
-			premusic = {};
 		for (var i = 0; i < 29; i++) {
 			srcs = 'resources/sound/drum/drum' +i+ '.wav';
-			var songname = 'drum'+i;
-			var songpath = srcs;
-			premusic[songname] = songpath;
 			var data = '';
 			data += '<div class="sounds">';
 			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="drum'+i+'" src="resources/images/sound/sound.png"><br>';
@@ -679,16 +671,12 @@ $(function() {
 			{'code' : 'a','num' : 8},
 			{'code' : 'bb','num' : 7},
 			{'code' : 'b','num' : 7}]
-		premusic = {};
 		for (var i = 1; i < 9; i++) {
 			for (var j = 0; j < 12; j++) {
 				if (codes[j].num < i) {
 					continue;
 				}
 				srcs = 'resources/sound/piano/'+ codes[j].code + i + '.mp3';
-				var songname = codes[j].code + i;
-				var songpath = srcs;
-				premusic[songname] = songpath;
 				var data = '';
 				data += '<div class="sounds">';
 				data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="'+codes[j].code + i+'" src="resources/images/sound/sound.png"><br>';
@@ -864,12 +852,12 @@ var btnc=0;
 $(function(){
 	$("#bpmplay").click(function(){
 		var txt = $("#bpmplay").text();
-		if(txt=='play'){
+		if(txt=='test'){
 			$("#bpmplay").text('stop');
 			btnc++;
 			loadbpm();
 		}else{
-			$("#bpmplay").text('play');
+			$("#bpmplay").text('test');
 			btnc=0;
 			loaded2();
 		}
@@ -878,17 +866,7 @@ $(function(){
 var mic, recorder, soundFile, soundBlob;
 var fft, bpmsong, bpms, bpmprs, bpmCrtl;
 var bpmpat, w;
-function preload(){
-	for(var key in premusic){
-		key = loadSound(premusic[key]);
-	}
-}
 function setup() {
-	var cps = new p5.Compressor()
-		cps.set(0.7, 35, 15, -40, 0.1);
-	for(var key in premusic){
-		key.play;
-	}
 	var cvs = createCanvas(256,256);
 	cvs.parent('sketch-target');
 	colorMode(HSB);
@@ -1270,33 +1248,7 @@ $(function(){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
-		</div>
-		<div class="navigation__column">
-			<div class="navigations__links">
-				<div class="navigation__list-item"><a href="#"
-					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
-				</a></div>
-				<div class="navigation__list-item"><a href="#"
-					class="navigation__link"><i class="fa fa-bell-o"></i>
-				</a></div>
-				<div class="navigation__list-item">
-					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
-				</div>
-			</div>
-			<div id="mySidenav" class="sidenav">
-			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
-			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
-			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
-			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
-			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
-			</div>
-		</div>
-	</nav>
-
-	<div id="wrapper">
-		<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
+			<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
 			<div>Setting Music</div>
 			<div>Setting Music</div>
 			<div>Setting Music</div>
@@ -1320,10 +1272,33 @@ $(function(){
 			<div>Save Music</div>
 			<div>Save Music</div>
 		</div>
-		<br><br>
+		</div>
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"><i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
+			</div>
+		</div>
+	</nav>
+	<div id="wrapper">
 		<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
-	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>&emsp;/&emsp;
+	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">test</button>&emsp;/&emsp;
 	<button id="mixing">All in One Mixing</button>
 	</div>
 		<div id="setmus" class="collapse">

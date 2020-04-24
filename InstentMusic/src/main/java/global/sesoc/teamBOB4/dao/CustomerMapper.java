@@ -1,6 +1,7 @@
 package global.sesoc.teamBOB4.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Follow;
@@ -33,6 +34,14 @@ public interface CustomerMapper {
 
 	int changePwd(Customer customer);
 
-	Customer getNumber(Customer customer);
+	Customer getNumber(int cust_number);
+
+	List<Customer> searchList(Customer customer);
+
+	List<Customer> searchpf(String search);
+
+	int alter_userKey(String cust_id, String cust_key);
+
+	int GetKey(Map<String, Object> map);
 
 }

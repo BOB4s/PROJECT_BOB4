@@ -158,3 +158,35 @@
   font-size: 130%;
   margin-right: 5px;
 }
+
+/* CSS for profile picture */
+.pro{
+	width: 200px;
+	height: 200px;
+}
+#profileSetting{
+	cursor: pointer;
+}
+#myUL{
+	list-style-type:none;
+	padding:0;
+	margin:0;
+}
+#myUL li a{
+	border: 1px solid #ddd;
+	margin-top:-1px;
+	background-color:#f6f6f6;
+	padding:12px;
+	text-decoration:none;
+	font-size:18px;
+	color:black;
+	display:block;
+}
+#myUL li a:hover:not(.header){
+	background-color: #eee;
+}
+.sp{
+	width: 30px;
+	height: 30px;
+	border-radius:15px;
+}

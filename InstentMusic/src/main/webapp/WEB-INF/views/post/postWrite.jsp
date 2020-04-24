@@ -1,69 +1,113 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
-
 <title>글쓰기</title>
 
-<script>
+
+
+<script  type="text/javascript">
+
+var username = '${nickname}';
+var socket = io.connect('http://192.168.0.84:4000');
+
+
 $(function(){
-$("#checkForm").hide();
+	socket.emit('add user', username);
+
 });
 function getTags() {
-	var post_content = document.getElementById("post_content").value;
-	  var post_content = $("#post_content").val();
-	  $("#result_content").text(post_content);
-		  var tags_List = [];
-		  post_content = post_content.replace(/#[^#\s,;]+/gm, function(post_content) {
-			  tags_List.push(post_content);
-		  });
-		
-				  for(var i in tags_List){
-					  var tag_name= tags_List[i];
-						$.ajax({
-							
-							type : "GET"
-							,url : "tagsSaved"
-							,data : {"tag_name" : tags_List[i]}
-							,success :function (resp) {
-						
-									$("#tagsresult").append(resp);
-							}
-						     });
-					     
-			  }
-				  
 	
-				  document.getElementById("post_content").value='';
-				  $("#writeForm").hide();
-				  $("#checkForm").show();
-				  
-				
-	}
+	
+		
+		  var mus_number = document.getElementById("mus_number").value;
+		  var cust_number = document.getElementById("cust_number").value;
+		  var mus_title = document.getElementById("mus_title").value;
+		  var mus_time = document.getElementById("mus_time").value;
+		  var post_nickname = document.getElementById("post_nickname").value;
+		  var post_content = document.getElementById("post_content").value;
+		  var post_url = document.getElementById("post_url").value;
+		  mus_number= 43;
+						$.ajax({
+							type : "POST"
+							,url : "post_write_save"
+							,data : {
+								"mus_number":mus_number
+								,"cust_number":cust_number
+								,"mus_title":mus_title				
+								,"mus_time":mus_time
+								,"post_content":post_content
+								,"post_nickname":post_nickname
+								,"post_url":post_url
+							}
+							,success : function(resp){
+							var post_content = document.getElementById("post_content").value;
+							  var post_content = $("#post_content").val();
+								 $("#result_content").text(post_content);
+							  var tags_List = [];
+									  post_content = post_content.replace(/#[^#\s,;]+/gm, function(post_content) {
+										  tags_List.push(post_content);
+									  });
+									if(tags_List.length==0){
+										postnotice(mus_title);
+										}
+							for(var i in tags_List){	
+								$.ajax({
+									type : "GET"
+									,url : "tag_write_save"
+									,data : {
+										"resp" :resp
+									 	,"text" : tags_List[i] 
+								,success : function(resp){
+									
+								if(i==(tags_List.length-1)){
 
 
-function go(){
+									postnotice(mus_title);
+									
+									}
+									}
+									}
+								});
+								
+							}
+							
+							
+						}
+					})
 
-	var tagsresult = $("#tagsresult").html();
+						
+					};
 
-	 $("#content_here").val($("#result_content").html()); 
-	$("#tag_here").val(tagsresult);
+	function postnotice(mus_title){
+		var followerList = new Array();
+		$.each(${followerList},function(index, item) {
+		
+			followerList[index] = item;
+				});
+		
+		 
+		console.log(followerList);
+		 socket.emit('postWrite',followerList,username,mus_title);
 
-	frm.submit(); 
-}
-</script>	
+		  location.href = "main" 
+		}
+						</script>
+
+
+
 
 </head>
 <body >
@@ -106,7 +150,6 @@ function go(){
 			<a href="${root}"><img src="${home}" width="30px"></a>
 			</div> --%>
 <h2 style="text-align: center; color: white;">글 작성</h2><br><br><br>
-
 <div style="width: 60%; text-align: center; margin: auto;">
  <span style="color: white;">제목을 입력해주세요</span>
  <div id="writeForm">
@@ -153,16 +196,13 @@ function go(){
 		 
 			<span id="result_content"></span>
 		<br>
-				<div id="tagsresult"></div>
-	 <br>
 	
 	</form>
 
 	<input type="button" value="저장" onclick="go()">
 	</div>
+	<div class="jumbotron" style="margin-bottom: 0"></div>
 </div>
-</div>
-<div class="jumbotron" style="margin-bottom: 0">
 </div>
 </body>
 <script>

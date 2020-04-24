@@ -1,32 +1,132 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
 <title>Profile</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
-<link rel="stylesheet" href="resources/css/sideMenuBar.css">
-<script src="resources/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
+<script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
+<link rel="stylesheet" href="resources/css/main.css">
+ <script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
+<script>
+$(function(){
+$("#profileSetting").click(function(){
+	location.href="goModify"
+	})
+	$("#searchpf").keyup(function(){
+		var data = {'search':$("#searchpf").val()};
+		$.ajax({
+			method : 'get'
+			,url : 'searchpf'
+			,data : data
+			,success : function(resp){
+				var d = '';
+					if($("#searchpf").val()==''){
+					$("#myUL").html('');
+					}else{
+					$.each(resp,function(index,item){
+// 						d+= '<span class="sepf">'+item.cust_nickname+'</span><br/>'
+						d+= '<li>'+'<a href="proDetail?cust_number='+item.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
+						+item.cust_photo_saved+'"/>"/>'+item.cust_nickname+'</a>'+'</li>';
+					})
+					$("#myUL").html(d);
+					}
+				}
+		})
+	})
+})
 
+	var username = '${nickname}';
+	var socket = io.connect('http://192.168.0.84:4000');
+	$(function() {
+
+		socket.emit('add user', username);
+
+		
+		var follower_number = '${cust_number}';
+	/* 	var follow_number = '${customersData.cust_number}'; */
+		var follow_number = 66 ; 
+		$.ajax({
+			method : 'GET',
+			url : 'followchecking',
+			data : {
+				"follower_number" : follower_number,
+				"follow_number" : follow_number
+			},
+			success : function(resp) {
+				if (resp == 'unfollowed')
+					$("#following_button").text("follow")
+				if (resp == 'followed')
+					$("#following_button").text("unfollow")
+			}
+		})
+
+		$("#following_button").on("click", function() {
+			$.ajax({
+				method : 'GET',
+				url : 'following',
+				data : {
+					"follower_number" : follower_number,
+					"follow_number" : follow_number
+				},
+				success : function(resp) {
+					if (resp == 'unfollowed')
+						$("#following_button").text("follow")
+					if (resp == 'followed')
+						$("#following_button").text("unfollow")
+						
+					 socket.emit('newFollow',follow_number,username );
+					
+
+				}
+
+			})
+
+		});
+		$("#followList").on("click", function() {
+			$.ajax({
+				method : 'GET',
+				url : 'getFollowers',
+				data : {
+					"follow_number" : follow_number
+				},
+				success :	function followersList(resp) {
+					var data = '';
+					$.each(resp,function(index, item) {
+						data += '<a>'+item+'</a>';				
+									})
+					
+
+					$("#followlists").html(data);
+
+				}
+			})
+
+		});
+	
+		//끝
+	});
+</script>
 </head>
-
 <body>
-
 	 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="home"> <img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg" />
+			<a href="main"> <img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg" />
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+			<i class="fa fa-search"></i> <input id="searchpf" type="text" placeholder="Search">
+		<div id="myUL1">
+			<ul id="myUL"></ul>
+		</div>
 		</div>
 		<div class="navigation__column">
 			<div class="navigations__links">
@@ -53,12 +153,17 @@
 	<main id="profile">
 		<header class="profile__header">
 			<div class="profile__column">
-				<img src="resources/images/IU.jpg" />
+				<c:if test="${image == null}">
+				<img class="img-responsive center-block" id=m_photo name="m_photo" src="resources/images/profile.png">
+				</c:if>
+				<c:if test="${image != null}">
+				<img class="pro" src="<spring:url value='/image/${image}'/>"/>	
+				</c:if>
 			</div>
 			<div class="profile__column">
 				<div class="profile__title">
 					<h3 class="profile__username">${customersData.cust_nickname}</h3>
-					<a href="edit-profile.html">Edit profile(수정하러가기)</a> <i
+					<a id="following_button" >following</a> <i
 						class="fa fa-cog fa-lg"></i>
 				</div>
 				<ul class="profile__stats">
@@ -70,7 +175,7 @@
 						<a href="followings">following</a></li>
 				</ul>
 				<p class="profile__bio">
-					<span class="profile__full-name">${customersData.cust_introduce} </span>
+					<span class="profile__full-name">${introduce} </span>
 				</p>
 			</div>
 		</header>

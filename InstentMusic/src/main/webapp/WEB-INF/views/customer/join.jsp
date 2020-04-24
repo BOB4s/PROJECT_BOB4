@@ -128,6 +128,11 @@ function formCheck(){
 			document.getElementById("cust_email").select();
 			return ;
 		}
+		
+		var welcomeForm = document.getElementById("join");
+		welcomeForm.submit();
+		alert("이메일 인증 후에 로그인 하실수 있습니다!");
+		
 }
 
 var sel_file;

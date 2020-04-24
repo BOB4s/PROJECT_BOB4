@@ -1,7 +1,5 @@
 package global.sesoc.teamBOB4.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -48,10 +46,10 @@ public class CustomerDao {
 		
 	}
 
-	public List<Integer> getFollowings(int custId) {
+	public List<Integer> getFollowings(int cust_number) {
 		CustomerMapper mapper= session.getMapper(CustomerMapper.class);
 		List<Integer> tempList = null;
-		tempList= mapper.getFollowings(custId);
+		tempList= mapper.getFollowings(cust_number);
 		return tempList;
 	}
 	

@@ -11,6 +11,12 @@ public interface PostMapper {
 
 	public List<Post> listAll(Map<String, Object> map);
 
-	void post_save_method(Post post);
+	int post_save_method(Post post);
+
+	int getOneByMus_number(int mus_number);
+
+	List<Post> getPostAll();
+
+	Post getPostByPostNum(int post_number);
 
 }

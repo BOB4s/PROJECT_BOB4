@@ -475,12 +475,7 @@ function gets(soutype){
 		success : function(resp) {
 			$("#inbox").html('');
 			var cound = 0;
-			premusic = {};
 			$.each(resp,function(index,item){
-				var songname = 'song'+index;
-				var songpath = item.fullPath;
-
-				premusic[songname] = songpath;
 				if(item.sou_name!=null){
 				var data = '';
 				data += '<div class="sounds">';
@@ -539,11 +534,7 @@ $(function(){
 			,success : function(resp){
 				$("#inbox").html('');
 				var cound = 0;
-				premusic = {};
 				$.each(resp,function(index,item){
-					var songname = 'song'+index;
-					var songpath = item.fullPath;
-					premusic[songname] = songpath;
 					if(item.sou_name!=null){
 					var data = '';
 					data += '<div class="sounds">';
@@ -626,12 +617,8 @@ $(function() {
 		$("#target2").text('Beatbox');
 		$("#inbox").html('');
 		var srcs = ''
-			premusic = {};
 		for (var i = 0; i < 32; i++) {
 			srcs = 'resources/sound/beatbox/bb' +i+ '.mp3';
-			var songname = 'bb'+i;
-			var songpath = srcs;
-			premusic[songname] = songpath;
 			var data = '';
 			data += '<div class="sounds">';
 			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="bb'+i+'" src="resources/images/sound/sound.png"><br>';
@@ -650,12 +637,8 @@ $(function() {
 		$("#target2").text('Drum');
 		$("#inbox").html('');
 		var srcs = ''
-			premusic = {};
 		for (var i = 0; i < 29; i++) {
 			srcs = 'resources/sound/drum/drum' +i+ '.wav';
-			var songname = 'drum'+i;
-			var songpath = srcs;
-			premusic[songname] = songpath;
 			var data = '';
 			data += '<div class="sounds">';
 			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="drum'+i+'" src="resources/images/sound/sound.png"><br>';
@@ -686,16 +669,12 @@ $(function() {
 			{'code' : 'a','num' : 8},
 			{'code' : 'bb','num' : 7},
 			{'code' : 'b','num' : 7}]
-		premusic = {};
 		for (var i = 1; i < 9; i++) {
 			for (var j = 0; j < 12; j++) {
 				if (codes[j].num < i) {
 					continue;
 				}
 				srcs = 'resources/sound/piano/'+ codes[j].code + i + '.mp3';
-				var songname = codes[j].code + i;
-				var songpath = srcs;
-				premusic[songname] = songpath;
 				var data = '';
 				data += '<div class="sounds">';
 				data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="'+codes[j].code + i+'" src="resources/images/sound/sound.png"><br>';
@@ -885,17 +864,7 @@ $(function(){
 var mic, recorder, soundFile, soundBlob;
 var fft, bpmsong, bpms, bpmprs, bpmCrtl;
 var bpmpat, w;
-function preload(){
-	for(var key in premusic){
-		key = loadSound(premusic[key]);
-	}
-}
 function setup() {
-	var cps = new p5.Compressor()
-		cps.set(0.7, 35, 15, -40, 0.1);
-	for(var key in premusic){
-		key.play;
-	}
 	var cvs = createCanvas(256,256);
 	cvs.parent('sketch-target');
 	colorMode(HSB);

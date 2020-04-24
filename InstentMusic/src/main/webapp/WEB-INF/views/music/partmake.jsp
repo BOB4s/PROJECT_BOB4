@@ -170,6 +170,9 @@ height: 120px;
 	border: 1px solid black;
 	width : 60px;
 	float : left;
+	text-align: center;
+	color : red;
+	padding-top: 10px;
 }
 .rcdmusic{
 	fload : right;
@@ -187,28 +190,12 @@ height: 120px;
 }
 </style>
 <script>
-var song, path;
-$(function() {
-})
-var state = 3;
-$(function(){
-	$("#recordstart").click(function(){
-		$("#recordstart").attr("hidden","hidden");
-		$("#recordstop").removeAttr("hidden");
-		state = 0;
-		recordstart();
-	})
-	$("#recordstop").click(function(){
-		$("#recordstop").attr("hidden","hidden");
-		$("#recordstart").removeAttr("hidden");
-		state = 1;
-		recordstart();
-	})
-	$("#recordplay").click(function(){
-		state = 2;
-		recordstart();
-	})
-})
+var list = [];
+var songs = [];
+var path1 = 'resources/sound/drum/drum0.wav';
+var path2 = 'resources/sound/drum/drum1.wav';
+var path3 = 'resources/sound/drum/drum2.wav';
+var path4 = 'resources/sound/drum/drum3.wav';
 $(function(){
 	for(var k=1; k<5; k++){
 		var idx = "#Set"+k;
@@ -217,7 +204,6 @@ $(function(){
 		})
 	}
 })
-var premusic;
 function getkeys(sets){
 	$("#newset").text(sets);
 	$('.keysou').text('');
@@ -229,54 +215,48 @@ function getkeys(sets){
 		,url : 'getkeys'
 		,data : {'key_board' : sets}
 		,success : function(resp){
-				premusic = {};
 				$.each(resp,function(index,item){
-					var songname = 'song'+index;
-					var songpath = item.sou_path;
-
-					premusic[songname] = songpath;
-					
+					list[index] = {'keyname':item.key_name,'soupath':item.sou_path};
 					var idx = "#"+item.key_name;
 					var cls = idx+' .keysou';
 					var dels = idx+' .keydel';
 					$(cls).text(item.sou_name);
-					$(idx).css('border','1px solid blue');
 					$(document).keydown(function(event){
 						if(event.keyCode == item.key_name && $("#newset").text()==item.key_board){
 							$(idx).css('background-color', 'red');
-							path = item.sou_path;
 							setup();
 						}else{
 							$(idx).css('background-color','white');
 						}
 					})
+					$(idx).css('border','1px solid blue');
 				})
 					$("#newment").text('Press the keys!');
 			}
 	})
 }
-var path1 = 'resources/sound/drum/drum0.wav';
-var path2 = 'resources/sound/drum/drum1.wav';
-var path3 = 'resources/sound/drum/drum2.wav';
-var path4 = 'resources/sound/drum/drum3.wav';
 var mic, recorder, soundFile, soundBlob;
 var amp, bpmsong, bpms, bpmprs, bpmCrtl;
 var p1pat, p2pat, p3pat, p4pat, bpmpat;
 var p1song, p2song, p3song, p4song;
 var phrase1, phrase2, phrase3, phrase4, parts;
-var beat = 0;
-function preload(){
-	for(var key in premusic){
-		key = loadSound(premusic[key]);
-	}
-}
+var masterGain, sound1Gain, sound2Gain, sound3Gain, sound4Gain;
+var state = 0;
+var osc, ac, dest, chunks;
 function setup() {
-	//var cps = new p5.Compressor()
-	//cps.set(0.2, 30, 13, -15, 0);
-	for(var key in premusic){
-		key.play;
+	userStartAudio();
+	for (i=0; i<list.length; i++) {
+		if(list[i]!=null){
+			$(document).keydown(function(event){
+				if(event.keyCode == list[i].keyname){
+					$(idx).css('background-color', 'red');
+					songs[i] = loadSound(list[i].soupath, loaded);
+				}else{
+					$(idx).css('background-color','white');
+				}
+			})
+		}
 	}
-	
 	p1song = loadSound(path1,() => {});
 	p2song = loadSound(path2,() => {});
 	p3song = loadSound(path3,() => {});
@@ -324,28 +304,23 @@ function setup() {
 	p4.setBPM(${temp_bpm});
 	p4.addPhrase(phrase4);
 	p4.addPhrase('seq',rcdcss,bpmpat);
-	
 	bpms.setBPM(${temp_bpm});
 	parts.setBPM(${temp_bpm});
+	
+	masterGain = new p5.Gain();
+	masterGain.connect();
+	var Gains = [];
+	for(var i=48; i<220; i++){
+		if(songs[i]!=null){
+		Gains[i] = new p5.Gain();
+		Gains[i].setInput(songs[i]);
+		Gains[i].connect(masterGain);
+		}
+	}
+	
+	recorder = new p5.SoundRecorder(masterGain);
+	soundFile = new p5.SoundFile();
 
-	song = loadSound(path,loaded);
-	amp = new p5.Amplitude();
-	amp.setInput(song);
-	 // create an audio in
-	  mic = new p5.AudioIn();
-
-	  // prompts user to enable their browser mic
-	  mic.start();
-
-	  // create a sound recorder
-	  recorder = new p5.SoundRecorder();
-
-	  // connect the mic to the recorder
-	  recorder.setInput(mic);
-
-	  // this sound file will be used to
-	  // playback & save the recording
-	  soundFile = new p5.SoundFile();
 }
 function playp1(time, playbackRate) {
 	  p1song.rate(playbackRate);
@@ -411,23 +386,76 @@ $(function(){
 			parts.metro.metroTicks = 0;
 		}
 	})
-	$(".rcdmusic").click(function(){
-		targetm = $(this).parent().attr('id');
-		var ment1 = ['Press','the','space','bar','to','start','recording'];
+	$(".rcdmusic").on("click", function(){
+		targetp = $(this).parent().attr('id');
+		var ment1 = ['','Press','','the','','space','bar','','to','','start','','record','ing'];
 		if(targetp == 'p1'){
-			for(var i=0; i<7; i++){
-				var cls = '1-'+(i+1);
+			for(var i=0; i<ment1.length; i++){
+				var cls = '#1-'+(i+1);
+				$(cls).text(ment1[i]);		
+			}
+			$(document).keydown(function(event){
+				if(event.keyCode == 32){
+					$('.phrase1').text('');
+					p1.start();
+					state = 0;
+					recordstart();
+				}
+			})
+		}
+		if(targetp == 'p2'){
+			for(var i=0; i<ment1.length; i++){
+				var cls = '#2-'+(i+1);
 				$(cls).text(ment1[i]);			
 			}
+			$(document).keydown(function(event){
+				if(event.keyCode == 32){
+					$('.phrase2').text('');
+					p2.start();
+					state = 0;
+					recordstart();
+				}
+			})
+		}
+		if(targetp == 'p3'){
+			for(var i=0; i<ment1.length; i++){
+				var cls = '#3-'+(i+1);
+				$(cls).text(ment1[i]);			
+			}
+			$(document).keydown(function(event){
+				if(event.keyCode == 32){
+					$('.phrase3').text('');
+					p3.start();
+					state = 0;
+					recordstart();
+				}
+			})
+		}
+		if(targetp == 'p4'){
+			for(var i=0; i<ment1.length; i++){
+				var cls = '#4-'+(i+1);
+				$(cls).text(ment1[i]);			
+			}
+			$(document).keydown(function(event){
+				if(event.keyCode == 32){
+					$('.phrase4').text('');
+					p4.start();
+					state = 0;
+					recordstart();
+				}
+			})
 		}
 	})
+	
 	$(".rcdplay").click(function(){
 		userStartAudio();
 		targetp = $(this).parent().attr('id');
 		if(targetp == 'p1'){
 			if(!p1.isPlaying){
 				$(this).attr('src','resources/images/sound/stop.png');
-				p1.start();
+				//p1.start();
+				state = 2;
+				recordstart();
 				p2.stop();
 				p3.stop();
 				p4.stop();
@@ -444,6 +472,8 @@ $(function(){
 			if(!p2.isPlaying){
 				$(this).attr('src','resources/images/sound/stop.png');
 				p2.start();
+				state = 2;
+				recordstart();
 				p3.stop();
 				p4.stop();
 				p1.stop();
@@ -460,6 +490,8 @@ $(function(){
 			if(!p3.isPlaying){
 				$(this).attr('src','resources/images/sound/stop.png');
 				p3.start();
+				state = 2;
+				recordstart();
 				p1.stop();
 				p2.stop();
 				p4.stop();
@@ -476,6 +508,8 @@ $(function(){
 			if(!p4.isPlaying){
 				$(this).attr('src','resources/images/sound/stop.png');
 				p4.start();
+				state = 2;
+				recordstart();
 				p1.stop();
 				p2.stop();
 				p3.stop();
@@ -490,6 +524,17 @@ $(function(){
 		}
 	})
 })
+function recordstart(){
+	userStartAudio();
+        if(state===0){
+        	recorder.record(soundFile);
+        }else if(state===1){
+          recorder.stop();
+        }else if(state===2){
+        	soundFile.play();
+        	soundBlob = soundFile.getBlob();
+        }
+}
 function sequence(time, beatIndex){
 	if(beatIndex==17){
 		$("#musicall").text('Music Start');
@@ -513,6 +558,8 @@ function sequence(time, beatIndex){
 function rcdcss(time, beatIndex){
 	if(beatIndex==17){
 		$(".rcdplay").attr('src','resources/images/sound/play.png');
+		state = 1;
+		recordstart();
 	}
 	drawmatrix();
 	var target;
@@ -531,36 +578,8 @@ function rcdcss(time, beatIndex){
 	$(target).css('border','1px solid red');
 	$(target).css('background-color','#F5BCA9')
 }
-function recordstart(){
-	userStartAudio();
-
-	  // make sure user enabled the mic
-	  if (state === 0 && mic.enabled) {
-		  amp.getLevel(0);
-	    // record to our p5.SoundFile
-	    amp.setInput(mic);
-	    recorder.record(soundFile);
-
-	  }
-	  else if (state === 1) {
-
-		    // stop recorder and
-		    // send result to soundFile
-		    recorder.stop();
-
-		  }
-
-		  else if (state === 2) {
-		    soundFile.play(); // play the result!
-		    amp.setInput(soundFile);
-		    state++;
-		    soundBlob = soundFile.getBlob();
-		  }
-}
-var vol;
-function loaded() {
-	vol = amp.getLevel();
-	song.play();
+function loaded(index) {
+	songs[index].play();
 }
 function loaded2(){
 	song.stop();

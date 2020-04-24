@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.Post_tagMapper">
+
+
+<insert id="linkedTags" parameterType="Post_tag" >
+	insert into Post_tag
+		(
+		pt_number
+		,tag_number
+		,post_number
+		)
+		values
+		(
+		SEQ_Post_tag_pt_number.nextval
+		,#{tag_number}
+		,#{post_number}
+		)
+	
+</insert>
+<select id="GetlinkedTags" parameterType="int" resultType="int">
+select tag_number from Post_tag
+
+where post_number = #{post_number}
+
+
+</select>
+	
+</mapper>

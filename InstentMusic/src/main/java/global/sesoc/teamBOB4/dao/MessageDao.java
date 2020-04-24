@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import global.sesoc.teamBOB4.vo.Message;
-import global.sesoc.teamBOB4.vo.MessageList;
 
 @Repository
 public class MessageDao {

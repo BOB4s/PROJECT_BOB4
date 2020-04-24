@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +35,32 @@
 			$("#pwForm").submit();
 		});
 	}) */
+	var sel_file;
+	$(document).ready(function(){
+		$("#input_img").on("change",handleImgFileSelect);
+	});
+		function handleImgFileSelect(e){
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+
+		filesArr.forEach(function(f){
+			if(!f.type.match("image.*")){
+				alert("이미지 파일을 업로드 해주세요.");
+				return;
+			}
+			sel_file=f;
+			var reader = new FileReader();
+			reader.onload = function(e){
+				$("#proimg").attr("src",e.target.result);
+			}
+			reader.readAsDataURL(f);	
+			});
+	}
+	function withdrawal(){
+			location.href="deleteView"
+		}
+	
+	
 	function joinBtn(){
 		if($("#pw").val() !== $("#pw2").val()){
 			alert("暗証番号が違います。");
@@ -67,6 +95,13 @@
 // 		})
 </script>
 <title>Crystal</title>
+<style>
+img{
+	width:100px;
+	height:100px;
+	border-radius:50px;
+}
+</style>
 </head>
 <body>
 	<div class="w3-content w3-container w3-margin-top">
@@ -75,14 +110,23 @@
 				<h3>My Page</h3>
 			</div>
 			<div>
-				<form id="myForm" action="goModify" method="post">
+				<form id="myForm" action="goModify" method="post" enctype="multipart/form-data">
+				<input type="hidden" value="${login}" name="cust_number"/>
 					<p>
-						<label>ID</label> 
-						<input class="w3-input" type="text" id="cust_id" name="cust_id" readonly value="${login}"> 
+						<label>ProfileImage</label>
+						<div class="profile__column">
+						<c:if test="${image == null}">
+						<img class="img-responsive center-block" id=proimg name="m_photo" src="resources/images/profile.png">
+						</c:if>
+						<c:if test="${image != null}">
+						<img class="pro" id="proimg" src="<spring:url value='/image/${image}'/>"/>
+						</c:if>
+						</div>
+						<input class="w3-input" type="file" id="input_img" name="upload"> 
 					</p>
 					<p>
-						<label>ProfileImage</label><!-- 요기는 수정해야합니당다라당당닫ㅇ당 --> 
-						<input class="w3-input" type="file" id="cust_img"> 
+						<label>ID</label> 
+						<input class="w3-input" type="text" id="cust_id" name="cust_id" readonly value="${id}"> 
 					</p>
 					<p>
 						<label>Nickname</label> 
@@ -115,6 +159,7 @@
 					<!--id="joinBtn"  -->
 <!-- 					<input type="button" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round" value="new" onclick="joinBtn()"> -->
 						<button  onclick="joinBtn()"  class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">비밀번호 변경</button>
+						<button  onclick="withdrawal()"  class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">회원 탈퇴</button>
 					</p>
 				</form>
 			</div>

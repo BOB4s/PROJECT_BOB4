@@ -296,6 +296,8 @@ cursor: pointer;
 	width: 1100px;
 	height : 30px;
 	margin-top: 10px;
+	text-align : center;
+	width: 1200px;
 }
 #parts{
 	margin: 0 auto;

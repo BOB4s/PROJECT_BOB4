@@ -35,7 +35,7 @@
 			<form action="customerDelete" method="post">
 				<div class="form-group has-feedback">
 					<label class="control-label" for="cust_id">아이디</label>
-					<input class="form-control" type="text" id="cust_id" name="cust_id" value="${login}" readonly="readonly"/>
+					<input class="form-control" type="text" id="cust_id" name="cust_id" value="${id}" readonly="readonly"/>
 				</div>
 				<div class="form-group has-feedback">
 					<label class="control-label" for="cust_password">패스워드</label>

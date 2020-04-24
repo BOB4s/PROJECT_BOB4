@@ -99,5 +99,11 @@ public class CustomerController {
 		
 	}
 	
+	@GetMapping("/searchpf")
+	public List<Customer> searchpf(String search){
+		
+		return dao.searchpf(search);
+	}
+	
 
 }

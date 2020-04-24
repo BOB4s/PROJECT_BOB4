@@ -1,6 +1,7 @@
 package global.sesoc.teamBOB4;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -21,7 +22,6 @@ import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.vo.Customer;
-import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
 public class HomeController {
@@ -66,6 +66,7 @@ public class HomeController {
 		
 		if(c != null) {
 			session.setAttribute("login", c.getCust_number());
+			session.setAttribute("id", c.getCust_id());
 			session.setAttribute("nickname", c.getCust_nickname());
 			session.setAttribute("password", c.getCust_password());
 			session.setAttribute("email", c.getCust_email());
@@ -113,7 +114,7 @@ public class HomeController {
 
 
 	@GetMapping("/profile")
-	public String profile(Model model) {
+	public String profile(Model model,Customer customer) {
 		//닉네임으로 원하는값 찾기
 		// profile 에 파라미터로  >>> String cust_nickname, 를넣고 아래의
 		// 회원가입 만들어지면 주석 풀면됩니다.
@@ -131,10 +132,12 @@ public class HomeController {
 		customersData.setCust_number(123);
 		int followers= 5030;
 		int followings =150;
+		List<Customer>list = custdao.searchList(customer);
 		
 		model.addAttribute("customersData", customersData);
 		model.addAttribute("followers", followers);
 		model.addAttribute("followings", followings);
+		model.addAttribute("searchList", list);
 		/* model.addAttribute("ListAll", ListAll); */
 		// 이름, 이사람의 작성글 전체, 글로인한 숫자, 팔로워수 가져와기,필로잉수, 인트로
 		// 글마다 좋아요나 재생수같은것도 가져와야함
@@ -181,11 +184,23 @@ public class HomeController {
 		return "customer/modify";
 	}
 	@RequestMapping(value = "/goModify", method = RequestMethod.POST)
-	public String updateCustomer(Customer customer, RedirectAttributes rttr){
+	public String updateCustomer(Customer customer,int cust_number, RedirectAttributes rttr, MultipartFile upload){
+		
+		Customer oldc = custdao.getNumber(cust_number);
+		String savedfilename = oldc.getCust_photo_saved();
+		if(savedfilename != null) {
+			FileService.deleteFile(savePath+"/"+savedfilename);
+		}
+		String original = upload.getOriginalFilename();
+		
+		customer.setCust_photo_original(original);
+		
+		savedfilename = FileService.saveFile(upload, savePath);
+		customer.setCust_photo_saved(savedfilename);
 		
 		custdao.updateCustomer(customer);
 		
-		return "main";
+		return "redirect:/main";
 	}
 	
 	@PostMapping("/change")
@@ -218,5 +233,27 @@ public class HomeController {
 		model.addAttribute("followingList", followingList);
 		
 		return "customer/followings";
+	}
+	@GetMapping("/test1")
+	public String tesst1(Customer customer, Model model) {
+		
+		List<Customer>list = custdao.searchList(customer);
+		String arr[] = new String[list.size()]; 
+		for(int i=0; i<list.size();i++) {
+			arr[i]=list.get(i).getCust_id();
+		}
+		model.addAttribute("arr", arr);
+		model.addAttribute("search",list);
+		
+		return "test1";
+	}
+	@RequestMapping(value = "proDetail", method = RequestMethod.GET)
+	public String proDetail(int cust_number, Model model) {
+		// DB cust_number에대한 프로필 내용을 가져옴.
+		Customer customer = custdao.getNumber(cust_number);
+		
+		model.addAttribute("pd", customer);
+		
+		return "customer/proDetail";
 	}
 }

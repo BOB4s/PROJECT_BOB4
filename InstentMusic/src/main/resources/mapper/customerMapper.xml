@@ -3,6 +3,13 @@
 
 <mapper namespace="global.sesoc.teamBOB4.dao.CustomerMapper">
 
+	<select id="searchpf" parameterType="string" resultType="Customer">
+		select *
+		from customer
+		where
+		cust_nickname like '%'||#{search}||'%'
+	</select>
+
 	<insert id="following" parameterType="Follow">
 		insert into Follow
 		(
@@ -104,7 +111,7 @@
 		and cust_password=#{cust_password}
 		</if>
 	</select>
-	<select id="getNumber" parameterType="Customer" resultType="Customer">
+	<select id="getNumber" parameterType="int" resultType="Customer">
 		select * from customer where cust_number=#{cust_number}
 	</select>
 	<select id="selectEmail" parameterType="Customer" resultType="Customer">
@@ -125,6 +132,11 @@
 		update customer set 
 			cust_nickname = #{cust_nickname},
 			cust_introduce = #{cust_introduce}
+			<if test="cust_photo_original != null">
+			,
+			cust_photo_original = #{cust_photo_original},
+			cust_photo_saved = #{cust_photo_saved}
+			</if>
 			where cust_id = #{cust_id}
 	</update>
 	<update id="changePwd" parameterType="Customer">
@@ -132,4 +144,7 @@
 			cust_password = #{cust_password}
 			where cust_id = #{cust_id}
 	</update>
+	<select id="searchList" parameterType="Customer" resultType="Customer">
+		select cust_id from customer
+	</select>
 </mapper>

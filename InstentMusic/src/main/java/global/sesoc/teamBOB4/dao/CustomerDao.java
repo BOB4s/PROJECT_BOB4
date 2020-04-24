@@ -108,9 +108,22 @@ public class CustomerDao {
 		
 		return result;
 	}
-	public Customer getNumber(Customer customer) {
+	public Customer getNumber(int cust_number) {
 		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
 		
-		return mapper.getNumber(customer);
+		return mapper.getNumber(cust_number);
+	}
+	
+	public List<Customer> searchList(Customer customer){
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		
+		List<Customer>list = mapper.searchList(customer);
+		
+		return list;
+	}
+
+	public List<Customer> searchpf(String search) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		return mapper.searchpf(search);
 	}
 }

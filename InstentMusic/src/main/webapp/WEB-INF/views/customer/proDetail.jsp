@@ -18,10 +18,10 @@
 <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
 <script>
 $(function(){
-$("#profileSetting").click(function(){
-	location.href="goModify"
-	})
-
+	$("#profileSetting").click(function(){
+		location.href="goModify"
+		})
+	
 	$("#searchpf").keyup(function(){
 		var data = {'search':$("#searchpf").val()};
 		$.ajax({
@@ -54,9 +54,7 @@ $("#profileSetting").click(function(){
 		</div>
 		<div class="navigation__column">
 			<i class="fa fa-search"></i> <input id="searchpf" type="text" placeholder="Search">
-		<div id="myUL1">
 			<ul id="myUL"></ul>
-		</div>
 		</div>
 		<div class="navigation__column">
 			<div class="navigations__links">
@@ -83,18 +81,20 @@ $("#profileSetting").click(function(){
 	<main id="profile">
 		<header class="profile__header">
 			<div class="profile__column">
-				<c:if test="${image == null}">
+				<c:if test="${pd.cust_photo_saved == null}">
 				<img class="img-responsive center-block" id=m_photo name="m_photo" src="resources/images/profile.png">
 				</c:if>
-				<c:if test="${image != null}">
-				<img class="pro" src="<spring:url value='/image/${image}'/>"/>	
+				<c:if test="${pd.cust_photo_saved != null}">
+				<img class="pro" src="<spring:url value='/image/${pd.cust_photo_saved}'/>"/>	
 				</c:if>
 			</div>
 			<div class="profile__column">
 				<div class="profile__title">
-					<h3 class="profile__username">${nickname}</h3>
+					<h3 class="profile__username">${pd.cust_nickname}</h3>
 <!-- 					<a href="edit-profile.html"></a> -->
+					<c:if test="${pd.cust_id == id}">
 					<i id="profileSetting" class="fa fa-cog fa-lg"></i>
+					</c:if>
 				</div>
 				<ul class="profile__stats">
 					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>
@@ -105,7 +105,7 @@ $("#profileSetting").click(function(){
 						<a href="followings">following</a></li>
 				</ul>
 				<p class="profile__bio">
-					<span class="profile__full-name">${introduce} </span>
+					<span class="profile__full-name">${pd.cust_introduce} </span>
 				</p>
 			</div>
 		</header>

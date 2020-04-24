@@ -33,6 +33,10 @@ public interface CustomerMapper {
 
 	int changePwd(Customer customer);
 
-	Customer getNumber(Customer customer);
+	Customer getNumber(int cust_number);
+
+	List<Customer> searchList(Customer customer);
+
+	List<Customer> searchpf(String search);
 
 }

@@ -44,7 +44,6 @@ $("#profileSetting").click(function(){
 	})
 })
 
-<script type="text/javascript">
 	var username = '${nickname}';
 	var socket = io.connect('http://192.168.0.84:4000');
 	$(function() {

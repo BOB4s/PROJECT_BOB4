@@ -68,11 +68,7 @@ public class HomeController {
 			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("cust_number", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			/*
-			 * session.setAttribute("password", c.getCust_password());
-			 * session.setAttribute("email", c.getCust_email());
-			 */
-			/* session.setAttribute("introduce", c.getCust_introduce()); */
+			session.setAttribute("introduce", c.getCust_introduce());
 			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";
 			}else {
@@ -227,5 +223,12 @@ public class HomeController {
 		model.addAttribute("followingList", followingList);
 		
 		return "customer/followings";
+	}
+	
+	@GetMapping("/partmake")
+	public String partmake(int part_number, int temp_bpm, Model model) {
+		model.addAttribute("part_number", part_number);
+		model.addAttribute("temp_bpm", temp_bpm);
+		return "music/partmake";
 	}
 }

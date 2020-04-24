@@ -65,7 +65,7 @@ animation: moveUp 3.65s ease forwards;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-	var socket = io.connect('http://192.168.0.84:4000');
+	var socket = io.connect('http://172.30.1.16:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -234,8 +234,7 @@ animation: moveUp 3.65s ease forwards;
 
 		}
 	
-	</script>
-
+</script>
 </head>
 <body>
 	<!-- Top for logo and navibar -->
@@ -250,11 +249,11 @@ animation: moveUp 3.65s ease forwards;
 	
 		<div class="navigation__column">
 			<div class="navigations__links">
-				<div class="navigation__list-item"><a href="explore.html"
-					class="navigation__link"> <i class="fa fa-send-o"></i>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
 				</a></div>
 				<div class="navigation__list-item"><a href="#"
-					class="navigation__link"> <i class="fa fa-bell-o"></i>
+					class="navigation__link"><i class="fa fa-bell-o"></i>
 				</a></div>
 				<div class="navigation__list-item"  >
 					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
@@ -265,26 +264,87 @@ animation: moveUp 3.65s ease forwards;
 			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
 			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
 			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
-			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> 채팅 연습하러 가기</a>
-			  <a href="chatBangCreate"><i class="fa fa-comment-o"></i>채팅방 만들기</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
 			</div>
 		</div>
 	</nav>
 
-<!-- grid for main page -->
-<div class="grid-container">
-	<div class="mainGrid">Board
-	<br>
-	Hot tracks
-	<br>
-	New launched sound effects
-	</div>
-	<div class="rightGrid">New tracks from followers
-	</div>
+<div class="wrapper">
+<img class="imgContainer" alt="produce" src="resources/images/musiclist/produce.png">
+	<ul class="stage">
+	<li class="icon">
+		<div class="boxContainer">
+    		<div class="frontImgForBoxContainer">
+    			<img alt="posting" src="resources/images/main/posting.png">
+    		</div>
+    		<div class="info">
+				<header>
+					<h1>Posting</h1>
+						<a href="postWrite"><img alt="posting" src="resources/images/main/posting_icon.png"></a>
+				</header>
+					<p>
+					Click the icon for posting or sharing what you made it!
+					</p>
+			</div>
+		</div>
+	</li>
+	<li class="icon">
+		<div class="boxContainer">
+			<div class="frontImgForBoxContainer">
+				<img alt="manListening" src="resources/images/main/manListening.JPG">
+			</div>
+			<div class="info">
+				<header>
+					<h1>My Music List</h1>
+						<a href="myMusicList"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
+				</header>
+					<p>
+					Click the icon for listening to the music list that built with what you composed music
+					</p>
+			</div>
+		</div>
+    </li>
+	<li class="icon">
+		<div class="boxContainer">
+			<div class="frontImgForBoxContainer">
+				<img alt="notesKeyboard" src="resources/images/musiclist/notes_keyboard.JPG">
+			</div>
+			<div class="info">
+				<header>
+					<h1>Producing</h1>
+					<a href="makingMusic"><img alt="producing" src="resources/images/main/producing_icon.png"></a>
+				</header>
+				<p>
+				Click the icon for composing and producing your new music
+				</p>
+			</div>
+		</div>
+	</li>
+	<li class="icon">
+		<div class="boxContainer">
+			<div class="frontImgForBoxContainer">
+				<img alt="womanListening" src="resources/images/main/womanListening.png">
+			</div>
+			<div class="info">
+				<header>
+					<h1>Music Board</h1>
+					<a href="#musicBoard"><img alt="musicBoard" src="resources/images/main/allList.png"></a>
+				</header>
+				<p>
+				Click the icon to see your friends' music and what's the trend
+				</p>
+			</div>
+		</div>
+	</li>
+</ul>
 </div>
-		
+<div id="musicBoard">
+	<h1>Music Board</h1>
+</div>
 		<a href="postWrite"> 글쓰자</a>
 		<a href="logout">로그아웃</a>
+	<input type="button" id="test1"  value="toast" onclick="toasted()">
 		<a href="deleteView">탈주닌자</a>
 		<a href="goModify">정보수정수정</a>
 		<a href="protest">실험해보자</a>
@@ -296,6 +356,14 @@ animation: moveUp 3.65s ease forwards;
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>
 			
+<!-- grid for main page (holding) -->
+<!-- <div class="grid-container">
+	<div class="mainGrid">
+	
+	</div>
+	<div class="rightGrid">New tracks from followers
+	</div>
+</div> -->
 </body>
 <script>
 function openNav() {

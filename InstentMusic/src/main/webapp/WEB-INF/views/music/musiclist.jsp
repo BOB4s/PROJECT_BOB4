@@ -5,23 +5,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="resources/css/temp.css">
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/musiclist.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
-
+<script>
+/* $(function(){
+	$("#makingMusic").click(function(){
+		var musicname = prompt("Create a name for the new Music.");
+		if (musicname.trim().length < 1) {
+			alert("You didn't write anything.");
+			return;
+		} else if (musicname.length > 10) {
+			alert("Too long name!");
+		}else {
+			var data = {
+				'temp_title' : musicname
+			};
+			 $.ajax({
+				method : 'get'
+				,url : ''
+				})
+		}
+	})
+}) */
+</script>
 <style type="text/css">
 body {
     margin: 0px;
 }
-.navigation{
-	margin-bottom: 0px;
-}
+
 </style>
 </head>
 <body>
@@ -99,7 +115,7 @@ body {
 			<div class="info">
 				<header>
 					<h1>Making Music</h1>
-					<a href="makingMusic"><img alt="makingMusic" src="resources/images/musiclist/makingMusic.png"></a>
+					<a href="makingMusic"><img id="makingMusic" alt="makingMusic" src="resources/images/musiclist/makingMusic.png"></a>
 				</header>
 				<p>
 				Click the icon for composing your new music

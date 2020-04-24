@@ -364,7 +364,6 @@ animation: moveUp 3.65s ease forwards;
 		<a href="test1">프로필실험</a>
 =======
 </div> -->
->>>>>>> branch 'master' of https://github.com/BOB4s/PROJECT_BOB4.git
 </body>
 <script>
 function openNav() {

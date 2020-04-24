@@ -40,9 +40,9 @@ public class CustomerDao {
 		return tempList;
 	}
 
-	public Customer searchOne(String cust_nickname) {
+	public Customer searchOne(Customer customer) {
 		CustomerMapper mapper= session.getMapper(CustomerMapper.class);
-		return  mapper.searchOne(cust_nickname);
+		return  mapper.searchOne(customer);
 		
 	}
 
@@ -74,7 +74,7 @@ public class CustomerDao {
 
 	public String getDataFromDBsendData(String sendData) {
 		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
-		Customer c =mapper.searchOne(sendData);
+		Customer c =mapper.getDataFromDBsendData(sendData);
 		
 		String reciver ="";
 		

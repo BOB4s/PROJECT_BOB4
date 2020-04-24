@@ -44,7 +44,12 @@ update Customer set cust_key = #{cust_key} where cust_id =#{cust_id}
 
 
 	</select>
-
+	<select id="getDataFromDBsendData" parameterType="string" resultType="Customer">
+		select *
+		from Customer
+		where
+		cust_nickname =#{sendData}
+	</select>
 	<delete id="unfollowing" parameterType="Follow">
 		delete from Follow
 		where
@@ -72,12 +77,12 @@ update Customer set cust_key = #{cust_key} where cust_id =#{cust_id}
 
 
 	</select>
-	<select id="searchOne" parameterType="String"
+	<select id="searchOne" parameterType="Customer"
 		resultType="Customer">
 		select *
 		from Customer
 		where
-		cust_nickname =#{cust_nickname}
+		cust_number =#{cust_number}
 	</select>
 	<!-- 회원가입 -->
 	<insert id="signup" parameterType="Customer">

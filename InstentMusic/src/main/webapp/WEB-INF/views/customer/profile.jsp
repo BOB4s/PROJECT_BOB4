@@ -52,8 +52,7 @@ $("#profileSetting").click(function(){
 
 		
 		var follower_number = '${cust_number}';
-	/* 	var follow_number = '${customersData.cust_number}'; */
-		var follow_number = 66 ; 
+	 	var follow_number = '${customersData.cust_number}'; 
 		$.ajax({
 			method : 'GET',
 			url : 'followchecking',

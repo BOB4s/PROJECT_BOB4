@@ -120,26 +120,19 @@ public class HomeController {
 
 
 	@GetMapping("/profile")
-	public String profile(Model model,Customer customer) {
+	public String profile(Model model, Customer customer, HttpSession session) {
 		//닉네임으로 원하는값 찾기
 		// profile 에 파라미터로  >>> String cust_nickname, 를넣고 아래의
 		// 회원가입 만들어지면 주석 풀면됩니다.
-		/*Customer customersData =custdao.searchOne(cust_nickname);
-		int cust_number =customersData.getCust_number();
+		/*List<Post> ListAll =  postdao.getAll(cust_number);*/
+		int cust_number = (int) session.getAttribute("login");
+		customer.setCust_number(cust_number);
+		Customer customersData = custdao.searchOne(customer);
+		List<Customer>list = custdao.searchList(customer);
 		List<Integer> followersList=custdao.getFollowers(cust_number);
 		int followers=followersList.size();
 		List<Integer> followingList=custdao.getFollowings(cust_number);
 		int followings=followingList.size();
-		List<Post> ListAll =  postdao.getAll(cust_number);*/
-		
-		Customer customersData = new Customer();
-		customersData.setCust_introduce("이지은입니다");
-		customersData.setCust_nickname("IU");
-		customersData.setCust_number(24);
-		int followers= 5030;
-		int followings =150;
-		List<Customer>list = custdao.searchList(customer);
-		
 		model.addAttribute("customersData", customersData);
 		model.addAttribute("followers", followers);
 		model.addAttribute("followings", followings);

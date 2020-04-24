@@ -18,13 +18,6 @@
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
- 
- 
-
- 
-<script>
-
-</script>
 <style type="text/css">
 a:link{
 	text-decoration: none;
@@ -347,7 +340,6 @@ animation: moveUp 3.65s ease forwards;
 	<input type="button" id="test1"  value="toast" onclick="toasted()">
 		<a href="deleteView">탈주닌자</a>
 		<a href="goModify">정보수정수정</a>
-		<a href="protest">실험해보자</a>
 		<a href="popup">popup</a>
 		<input type="button" value="popup" onclick="chatOpen()">
 		<a href="infinity"> infinity</a>

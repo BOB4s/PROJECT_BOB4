@@ -292,6 +292,8 @@ cursor: pointer;
 }
 #musinfo{
 	margin-top: 10px;
+	text-align : center;
+	width: 1200px;
 }
 #parts{
 	margin: 0 auto;
@@ -1270,7 +1272,31 @@ $(function(){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+			<i class="fa fa-search"></i>
+			<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+		</div>
+		<div id="addpart" class="button_base btn_3d_double_roll">
+			<div>Add Part</div>
+			<div>Add Part</div>
+			<div>Add Part</div>
+			<div>Add Part</div>
+		</div>
+		<div id="resettemp" class="button_base btn_3d_double_roll">
+			<div>Reset</div>
+			<div>Reset</div>
+			<div>Reset</div>
+			<div>Reset</div>
+		</div>
+		<div id="savemusic" class="button_base btn_3d_double_roll">
+			<div>Save Music</div>
+			<div>Save Music</div>
+			<div>Save Music</div>
+			<div>Save Music</div>
+		</div>
 		</div>
 		<div class="navigation__column">
 			<div class="navigations__links">
@@ -1296,31 +1322,6 @@ $(function(){
 	</nav>
 
 	<div id="wrapper">
-		<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-		</div>
-		<div id="addpart" class="button_base btn_3d_double_roll">
-			<div>Add Part</div>
-			<div>Add Part</div>
-			<div>Add Part</div>
-			<div>Add Part</div>
-		</div>
-		<div id="resettemp" class="button_base btn_3d_double_roll">
-			<div>Reset</div>
-			<div>Reset</div>
-			<div>Reset</div>
-			<div>Reset</div>
-		</div>
-		<div id="savemusic" class="button_base btn_3d_double_roll">
-			<div>Save Music</div>
-			<div>Save Music</div>
-			<div>Save Music</div>
-			<div>Save Music</div>
-		</div>
-		<br><br>
 		<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">play</button>&emsp;/&emsp;

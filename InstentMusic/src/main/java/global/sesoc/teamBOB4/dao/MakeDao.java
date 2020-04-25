@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import global.sesoc.teamBOB4.vo.Key_sound;
+import global.sesoc.teamBOB4.vo.Part_music;
 import global.sesoc.teamBOB4.vo.Sound_library;
 import global.sesoc.teamBOB4.vo.Temp;
 
@@ -35,5 +36,10 @@ public class MakeDao {
 	public int deltemp(Temp temp) {
 		MakeMapper mapper = session.getMapper(MakeMapper.class);
 		return mapper.deltemp(temp);
+	}
+
+	public int sendpart(Part_music parts) {
+		MakeMapper mapper = session.getMapper(MakeMapper.class);
+		return mapper.sendpart(parts);
 	}
 }

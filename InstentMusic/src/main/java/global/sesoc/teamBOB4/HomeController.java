@@ -263,4 +263,9 @@ public class HomeController {
 		model.addAttribute("temp_bpm", temp_bpm);
 		return "music/partmake";
 	}
+	
+	@GetMapping("/makingmusic2")
+	public String makingmusic2() {
+		return "music/makingMusic2";
+	}
 }

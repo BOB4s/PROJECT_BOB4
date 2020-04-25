@@ -188,14 +188,18 @@ height: 120px;
 	cursor : pointer;
 	margin-left: 10px;
 }
+.keyp{
+	width : 30px;
+	height : 30px;
+}
 </style>
 <script>
 var list = [];
-var songs = [];
 var path1 = 'resources/sound/drum/drum0.wav';
 var path2 = 'resources/sound/drum/drum1.wav';
 var path3 = 'resources/sound/drum/drum2.wav';
 var path4 = 'resources/sound/drum/drum3.wav';
+var saves = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 $(function(){
 	for(var k=1; k<5; k++){
 		var idx = "#Set"+k;
@@ -205,6 +209,7 @@ $(function(){
 	}
 })
 function getkeys(sets){
+	list = [];
 	$("#newset").text(sets);
 	$('.keysou').text('');
 	$('.keys').css('border','1px solid black');
@@ -216,7 +221,8 @@ function getkeys(sets){
 		,data : {'key_board' : sets}
 		,success : function(resp){
 				$.each(resp,function(index,item){
-					list[index] = {'keyname':item.key_name,'soupath':item.sou_path};
+					var datas = {'keyname':item.key_name,'soupath':item.sou_path};
+					list.push(datas);
 					var idx = "#"+item.key_name;
 					var cls = idx+' .keysou';
 					var dels = idx+' .keydel';
@@ -224,7 +230,6 @@ function getkeys(sets){
 					$(document).keydown(function(event){
 						if(event.keyCode == item.key_name && $("#newset").text()==item.key_board){
 							$(idx).css('background-color', 'red');
-							setup();
 						}else{
 							$(idx).css('background-color','white');
 						}
@@ -232,6 +237,7 @@ function getkeys(sets){
 					$(idx).css('border','1px solid blue');
 				})
 					$("#newment").text('Press the keys!');
+				setup();
 			}
 	})
 }
@@ -240,23 +246,114 @@ var amp, bpmsong, bpms, bpmprs, bpmCrtl;
 var p1pat, p2pat, p3pat, p4pat, bpmpat;
 var p1song, p2song, p3song, p4song;
 var phrase1, phrase2, phrase3, phrase4, parts;
-var masterGain, sound1Gain, sound2Gain, sound3Gain, sound4Gain;
+var masterGain;
 var state = 0;
-var osc, ac, dest, chunks;
+var s48, s49, s50, s51, s52, s53, s54, s55, s56, s57;
+var s65, s66, s67, s68, s69, s70, s71, s72, s73, s74, s75, s76, s77, s78, s79;
+var s80, s81, s82, s83, s84, s85, s86, s87, s88, s89, s90;
+var s186, s187, s188, s189, s190, s219;
 function setup() {
 	userStartAudio();
-	for (i=0; i<list.length; i++) {
-		if(list[i]!=null){
-			$(document).keydown(function(event){
-				if(event.keyCode == list[i].keyname){
-					$(idx).css('background-color', 'red');
-					songs[i] = loadSound(list[i].soupath, loaded);
-				}else{
-					$(idx).css('background-color','white');
-				}
-			})
+	masterGain = new p5.Gain();
+	masterGain.connect();
+	var g48 = new p5.Gain();var g49 = new p5.Gain();var g50 = new p5.Gain();
+	var g51 = new p5.Gain();var g52 = new p5.Gain();var g53 = new p5.Gain();
+	var g54 = new p5.Gain();var g55 = new p5.Gain();var g56 = new p5.Gain();
+	var g57 = new p5.Gain();var g65 = new p5.Gain();var g66 = new p5.Gain();
+	var g67 = new p5.Gain();var g68 = new p5.Gain();var g69 = new p5.Gain();
+	var g70 = new p5.Gain();var g71 = new p5.Gain();var g72 = new p5.Gain();
+	var g73 = new p5.Gain();var g74 = new p5.Gain();var g75 = new p5.Gain();
+	var g76 = new p5.Gain();var g77 = new p5.Gain();var g78 = new p5.Gain();
+	var g79 = new p5.Gain();var g80 = new p5.Gain();var g81 = new p5.Gain();
+	var g82 = new p5.Gain();var g83 = new p5.Gain();var g84 = new p5.Gain();
+	var g85 = new p5.Gain();var g86 = new p5.Gain();var g87 = new p5.Gain();
+	var g88 = new p5.Gain();var g89 = new p5.Gain();var g90 = new p5.Gain();
+	var g186 = new p5.Gain();var g187 = new p5.Gain();var g188 = new p5.Gain();
+	var g189 = new p5.Gain();var g190 = new p5.Gain();var g219 = new p5.Gain();
+	
+	$.each(list,function(index,item){
+		if(item.keyname==48){s48 = loadSound(item.soupath);g48.setInput(s48);
+		}else if(item.keyname==49){s49 = loadSound(item.soupath);g49.setInput(s49);
+		}else if(item.keyname==50){s50 = loadSound(item.soupath);g50.setInput(s50);
+		}else if(item.keyname==51){s51 = loadSound(item.soupath);g51.setInput(s51);
+		}else if(item.keyname==52){s52 = loadSound(item.soupath);g52.setInput(s52);
+		}else if(item.keyname==53){s53 = loadSound(item.soupath);g53.setInput(s53);
+		}else if(item.keyname==54){s54 = loadSound(item.soupath);g54.setInput(s54);
+		}else if(item.keyname==55){s55 = loadSound(item.soupath);g55.setInput(s55);
+		}else if(item.keyname==56){s56 = loadSound(item.soupath);g56.setInput(s56);
+		}else if(item.keyname==57){s57 = loadSound(item.soupath);g57.setInput(s57);
+		}else if(item.keyname==65){s65 = loadSound(item.soupath);g65.setInput(s65);
+		}else if(item.keyname==66){s66 = loadSound(item.soupath);g66.setInput(s66);
+		}else if(item.keyname==67){s67 = loadSound(item.soupath);g67.setInput(s67);
+		}else if(item.keyname==68){s68 = loadSound(item.soupath);g68.setInput(s68);
+		}else if(item.keyname==69){s69 = loadSound(item.soupath);g69.setInput(s69);
+		}else if(item.keyname==70){s70 = loadSound(item.soupath);g70.setInput(s70);
+		}else if(item.keyname==71){s71 = loadSound(item.soupath);g71.setInput(s71);
+		}else if(item.keyname==72){s72 = loadSound(item.soupath);g72.setInput(s72);
+		}else if(item.keyname==73){s73 = loadSound(item.soupath);g73.setInput(s73);
+		}else if(item.keyname==74){s74 = loadSound(item.soupath);g74.setInput(s74);
+		}else if(item.keyname==75){s75 = loadSound(item.soupath);g75.setInput(s75);
+		}else if(item.keyname==76){s76 = loadSound(item.soupath);g76.setInput(s76);
+		}else if(item.keyname==77){s77 = loadSound(item.soupath);g77.setInput(s77);
+		}else if(item.keyname==78){s78 = loadSound(item.soupath);g78.setInput(s78);
+		}else if(item.keyname==79){s79 = loadSound(item.soupath);g79.setInput(s79);
+		}else if(item.keyname==80){s80 = loadSound(item.soupath);g80.setInput(s80);
+		}else if(item.keyname==81){s81 = loadSound(item.soupath);g81.setInput(s81);
+		}else if(item.keyname==82){s82 = loadSound(item.soupath);g82.setInput(s82);
+		}else if(item.keyname==83){s83 = loadSound(item.soupath);g83.setInput(s83);
+		}else if(item.keyname==84){s84 = loadSound(item.soupath);g84.setInput(s84);
+		}else if(item.keyname==85){s85 = loadSound(item.soupath);g85.setInput(s85);
+		}else if(item.keyname==86){s86 = loadSound(item.soupath);g86.setInput(s86);
+		}else if(item.keyname==87){s87 = loadSound(item.soupath);g87.setInput(s87);
+		}else if(item.keyname==88){s88 = loadSound(item.soupath);g88.setInput(s88);
+		}else if(item.keyname==89){s89 = loadSound(item.soupath);g89.setInput(s89);
+		}else if(item.keyname==90){s90 = loadSound(item.soupath);g90.setInput(s90);
+		}else if(item.keyname==186){s186 = loadSound(item.soupath);g186.setInput(s186);
+		}else if(item.keyname==187){s187 = loadSound(item.soupath);g187.setInput(s187);
+		}else if(item.keyname==188){s188 = loadSound(item.soupath);g188.setInput(s188);
+		}else if(item.keyname==189){s189 = loadSound(item.soupath);g189.setInput(s189);
+		}else if(item.keyname==190){s190 = loadSound(item.soupath);g190.setInput(s190);
+		}else if(item.keyname==219){s219 = loadSound(item.soupath);g219.setInput(s219);
 		}
-	}
+	})
+	$(document).keydown(function(event){
+		if(event.keyCode == 48){s48.play();}if(event.keyCode == 49){s49.play();}
+		if(event.keyCode == 50){s50.play();}if(event.keyCode == 51){s51.play();}
+		if(event.keyCode == 52){s52.play();}if(event.keyCode == 53){s53.play();}
+		if(event.keyCode == 54){s54.play();}if(event.keyCode == 55){s55.play();}
+		if(event.keyCode == 56){s56.play();}if(event.keyCode == 57){s57.play();}
+		if(event.keyCode == 65){s65.play();}if(event.keyCode == 66){s66.play();}
+		if(event.keyCode == 67){s67.play();}if(event.keyCode == 68){s68.play();}
+		if(event.keyCode == 69){s69.play();}if(event.keyCode == 70){s70.play();}
+		if(event.keyCode == 71){s71.play();}if(event.keyCode == 72){s72.play();}
+		if(event.keyCode == 73){s73.play();}if(event.keyCode == 74){s74.play();}
+		if(event.keyCode == 75){s75.play();}if(event.keyCode == 76){s76.play();}
+		if(event.keyCode == 77){s77.play();}if(event.keyCode == 78){s78.play();}
+		if(event.keyCode == 79){s79.play();}if(event.keyCode == 80){s80.play();}
+		if(event.keyCode == 81){s81.play();}if(event.keyCode == 82){s82.play();}
+		if(event.keyCode == 83){s83.play();}if(event.keyCode == 84){s84.play();}
+		if(event.keyCode == 85){s85.play();}if(event.keyCode == 86){s86.play();}
+		if(event.keyCode == 87){s87.play();}if(event.keyCode == 88){s88.play();}
+		if(event.keyCode == 89){s89.play();}if(event.keyCode == 90){s90.play();}
+		if(event.keyCode == 186){s186.play();}if(event.keyCode == 187){s187.play();}
+		if(event.keyCode == 188){s188.play();}if(event.keyCode == 189){s189.play();}
+		if(event.keyCode == 190){s190.play();}if(event.keyCode == 219){s219.play();}
+	})
+	g48.connect(masterGain);g49.connect(masterGain);g50.connect(masterGain);
+	g51.connect(masterGain);g52.connect(masterGain);g53.connect(masterGain);
+	g54.connect(masterGain);g55.connect(masterGain);g56.connect(masterGain);
+	g57.connect(masterGain);g65.connect(masterGain);g66.connect(masterGain);
+	g67.connect(masterGain);g68.connect(masterGain);g69.connect(masterGain);
+	g70.connect(masterGain);g71.connect(masterGain);g72.connect(masterGain);
+	g73.connect(masterGain);g74.connect(masterGain);g75.connect(masterGain);
+	g76.connect(masterGain);g77.connect(masterGain);g78.connect(masterGain);
+	g79.connect(masterGain);g80.connect(masterGain);g81.connect(masterGain);
+	g82.connect(masterGain);g83.connect(masterGain);g84.connect(masterGain);
+	g85.connect(masterGain);g86.connect(masterGain);g87.connect(masterGain);
+	g88.connect(masterGain);g89.connect(masterGain);g90.connect(masterGain);
+	g186.connect(masterGain);g187.connect(masterGain);g188.connect(masterGain);
+	g189.connect(masterGain);g190.connect(masterGain);g219.connect(masterGain);
+	
 	p1song = loadSound(path1,() => {});
 	p2song = loadSound(path2,() => {});
 	p3song = loadSound(path3,() => {});
@@ -284,10 +381,7 @@ function setup() {
 	bpms = new p5.Part();
 	bpms.addPhrase('seq',sequence,bpmpat2);
 
-	p1 = new p5.Part();
-	p2 = new p5.Part();
-	p3 = new p5.Part();
-	p4 = new p5.Part();
+	p1 = new p5.Part();p2 = new p5.Part();p3 = new p5.Part();p4 = new p5.Part();
 
 	p1.setBPM(${temp_bpm});
 	p1.addPhrase(phrase1);
@@ -306,17 +400,6 @@ function setup() {
 	p4.addPhrase('seq',rcdcss,bpmpat);
 	bpms.setBPM(${temp_bpm});
 	parts.setBPM(${temp_bpm});
-	
-	masterGain = new p5.Gain();
-	masterGain.connect();
-	var Gains = [];
-	for(var i=48; i<220; i++){
-		if(songs[i]!=null){
-		Gains[i] = new p5.Gain();
-		Gains[i].setInput(songs[i]);
-		Gains[i].connect(masterGain);
-		}
-	}
 	
 	recorder = new p5.SoundRecorder(masterGain);
 	soundFile = new p5.SoundFile();
@@ -339,10 +422,7 @@ function playp4(time, playbackRate) {
 	  p4song.play(time);
 	}
 function drawmatrix(){
-	var c1 = '.phrase1';
-	var c2 = '.phrase2';
-	var c3 = '.phrase3';
-	var c4 = '.phrase4';
+	var c1 = '.phrase1';var c2 = '.phrase2';var c3 = '.phrase3';var c4 = '.phrase4';
 
 	$(c1).css('border','1px solid black');
 	$(c2).css('border','1px solid black');
@@ -373,11 +453,7 @@ $(function(){
 		if(!parts.isPlaying){
 			$("#musicall").text('Music Stop');
 			parts.start();
-			p4.stop();
-			p1.stop();
-			p2.stop();
-			p3.stop();
-			bpms.stop();
+			p4.stop();p1.stop();p2.stop();p3.stop();bpms.stop();
 
 		}else{
 			$("#musicall").text('Music Start');
@@ -387,9 +463,14 @@ $(function(){
 		}
 	})
 	$(".rcdmusic").on("click", function(){
+		if($("#newset").text()==''){
+			alert('select keyboard set');
+			return;
+        }
 		targetp = $(this).parent().attr('id');
 		var ment1 = ['','Press','','the','','space','bar','','to','','start','','record','ing'];
 		if(targetp == 'p1'){
+			$('.phrase1').html('');
 			for(var i=0; i<ment1.length; i++){
 				var cls = '#1-'+(i+1);
 				$(cls).text(ment1[i]);		
@@ -456,11 +537,7 @@ $(function(){
 				//p1.start();
 				state = 2;
 				recordstart();
-				p2.stop();
-				p3.stop();
-				p4.stop();
-				bpms.stop();
-				parts.stop();
+				p2.stop();p3.stop();p4.stop();bpms.stop();parts.stop();
 			}else{
 				$(this).attr('src','resources/images/sound/play.png');
 				p1.stop();
@@ -474,11 +551,7 @@ $(function(){
 				p2.start();
 				state = 2;
 				recordstart();
-				p3.stop();
-				p4.stop();
-				p1.stop();
-				bpms.stop();
-				parts.stop();
+				p3.stop();p4.stop();p1.stop();bpms.stop();parts.stop();
 			}else{
 				$(this).attr('src','resources/images/sound/play.png');
 				p2.stop();
@@ -492,11 +565,7 @@ $(function(){
 				p3.start();
 				state = 2;
 				recordstart();
-				p1.stop();
-				p2.stop();
-				p4.stop();
-				bpms.stop();
-				parts.stop();
+				p1.stop();p2.stop();p4.stop();bpms.stop();parts.stop();
 			}else{
 				$(this).attr('src','resources/images/sound/play.png');
 				p3.stop();
@@ -510,11 +579,7 @@ $(function(){
 				p4.start();
 				state = 2;
 				recordstart();
-				p1.stop();
-				p2.stop();
-				p3.stop();
-				bpms.stop();
-				parts.stop();
+				p1.stop();p2.stop();p3.stop();bpms.stop();parts.stop();
 			}else{
 				$(this).attr('src','resources/images/sound/play.png');
 				p4.stop();
@@ -528,12 +593,21 @@ function recordstart(){
 	userStartAudio();
         if(state===0){
         	recorder.record(soundFile);
+        	$(document).keydown(function(event){
+        		count = 1;
+        		pressimg();
+        	})
         }else if(state===1){
           recorder.stop();
         }else if(state===2){
         	soundFile.play();
+        	soundFile.onended(changes);
         	soundBlob = soundFile.getBlob();
+            sendfile();
         }
+}
+function changes(){
+	$('.rcdplay').attr('src','resources/images/sound/play.png');
 }
 function sequence(time, beatIndex){
 	if(beatIndex==17){
@@ -555,44 +629,59 @@ function sequence(time, beatIndex){
 	$(three).css('background-color','#F5BCA9')
 	$(four).css('background-color','#F5BCA9')
 }
+var target;
 function rcdcss(time, beatIndex){
+	count = 0;
 	if(beatIndex==17){
 		$(".rcdplay").attr('src','resources/images/sound/play.png');
 		state = 1;
 		recordstart();
 	}
 	drawmatrix();
-	var target;
 	if(targetp == 'p1'){
 		target = '#1-'+beatIndex;
-	}
-	if(targetp == 'p2'){
+	}else if(targetp == 'p2'){
 		target = '#2-'+beatIndex;
-	}
-	if(targetp == 'p3'){
+	}else if(targetp == 'p3'){
 		target = '#3-'+beatIndex;
-	}
-	if(targetp == 'p4'){
+	}else if(targetp == 'p4'){
 		target = '#4-'+beatIndex;
 	}
 	$(target).css('border','1px solid red');
 	$(target).css('background-color','#F5BCA9')
 }
+function pressimg(){
+	if(count==1){
+		var a = target.substr(1,1);
+		var b = target.substr(3,3)-1;
+		img = '<img src="resources/images/sound/note'+a+'.png" alt="'+target+'" class="keyp">';
+		$(target).html(img);
+		saves[b] = 1;
+	}
+}
 function loaded(index) {
-	songs[index].play();
+	if(('s'+index)=='s83'){
+		s83.play();
+	}
+	if(('s'+index)=='s84'){
+		s84.play();
+	}
 }
 function loaded2(){
 	song.stop();
 	bpms.stop();
 }
-$(function(){
-		/* var formData = new FormData();
+function sendfile(){
+		var formData = new FormData();
 		 
 		   formData.append("file", soundBlob);
+		   formData.append("key_board", saves);
+		   formData.append("part_number", ${part_number});
+		   formData.append("phrase_number", targetp);
 
 		$.ajax({
 			method : 'post'
-			,url : 'sendFile'
+			,url : 'sendpart'
 			,data : formData,
 			processData: false,
 		    contentType: false,
@@ -604,8 +693,8 @@ $(function(){
 		        }
 		    }
 		})
-		   soundFile = new p5.SoundFile(); */
-})
+		   soundFile = new p5.SoundFile();
+}
 $(function(){
 	for(var i=1; i<5; i++){
 		var prs = "#phrase"+i;
@@ -622,7 +711,7 @@ $(function(){
 </head>
 <body>
 	<div id="wrapper">
-	<a href="makingMusic"><button id="backto">Return Back</button></a>
+	<a href="makingmusic2"><button id="backto">Return Back</button></a>
 		<button id="resetpart">Reset</button>
 		<button id="savepart">Save Part</button><br>
 		<div id="musinfo">

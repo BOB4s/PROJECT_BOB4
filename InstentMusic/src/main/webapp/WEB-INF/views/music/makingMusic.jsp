@@ -26,7 +26,7 @@ margin : 10px 10px 10px 10px;
 }
 #soundlib, #keyboard{
 	margin: 0 auto;
-	margin-top : 10px;
+	margin-top : 20px;
 	padding: 5px 5px 5px 5px;
 	width: 1020px;
 	height: 220px;
@@ -290,59 +290,7 @@ cursor: pointer;
 	white-space: normal;
 	line-height: 1.2;
 }
-#musinfo{
-	text-align: center;
-	margin : 0 auto;
-	width: 1100px;
-	height : 30px;
-	margin-top: 10px;
-	text-align : center;
-	width: 1200px;
-}
-#parts{
-	margin: 0 auto;
-	width:1100px;
-}
-.part{
-	margin : 10px 10px 10px 10px;
-	float: left;
-	width: 200px;
-	height: 150px;
-	border: 1px solid black;
-}
-.phrase1, .phrase2, .phrase3, .phrase4, .partbtn{
-	width : 200px;
-	height : 30px;
-	text-align: center;
-}
-.gotomake{
-	float : left;
-	height : 28px;
-	width : 140px;
-	background-color: #8181F7;
-	border : 0px;
-	color : white;
-	font-weight : bold;
-}
-.delpart{
-	float : left;
-	height : 28px;
-	width : 29px;
-	background-color: red;
-	border : 0px;
-	color : white;
-	font-weight: bold;
-}
-.playpart{
-float : left;
-	height : 28px;
-	width : 29px;
-	background-color: green;
-	border : 0px;
-	color : white;
-	font-weight: bold;
-}
-#slib, #addpart, #resettemp, #savemusic{
+#slib, #makingmusic{
 	width : 170px;
 }
 </style>
@@ -848,50 +796,13 @@ $(function(){
 				  };
 			}
 });
-var btnc=0;
-$(function(){
-	$("#bpmplay").click(function(){
-		var txt = $("#bpmplay").text();
-		if(txt=='test'){
-			$("#bpmplay").text('stop');
-			btnc++;
-			loadbpm();
-		}else{
-			$("#bpmplay").text('test');
-			btnc=0;
-			loaded2();
-		}
-	})
-})
 var mic, recorder, soundFile, soundBlob;
-var fft, bpmsong, bpms, bpmprs, bpmCrtl;
-var bpmpat, w;
+var fft, w;
 function setup() {
 	var cvs = createCanvas(256,256);
 	cvs.parent('sketch-target');
 	colorMode(HSB);
 	angleMode(DEGREES);
-	bpmsong = loadSound('resources/sound/drum/drum7.wav',() => {
-			if(btnc==0){
-				bpms.stop();
-				bpmsong.stop();
-			}else{
-				bpms.loop();
-			}
-		});
-	bpmpat = [1, 1, 1, 1];
-	bpmprs = new p5.Phrase('bpmsong',(time) => {
-		bpmsong.play(time);
-	}, bpmpat);
-
-	bpms = new p5.Part();
-	bpms.addPhrase(bpmprs);
-	bpms.setBPM('80');
-	$("#bpmbar").on('input',function(){
-		bpmCtrl = $(this).val();
-		bpms.setBPM(bpmCtrl);
-		$("#bpmnum").text(bpmCtrl);
-	})
 	song = loadSound(path,loaded);
 	fft = new p5.FFT(0.8, 128);
 	w = width / 64;
@@ -933,10 +844,6 @@ function draw() {
 	  }
 	  //endShape();
 	}
-function loadbpm(){
-	bpmsong.play();
-	bpms.loop();
-}
 function recordstart(){
 	userStartAudio();
 
@@ -970,7 +877,6 @@ function loaded() {
 }
 function loaded2(){
 	song.stop();
-	bpms.stop();
 }
 $(function(){
 	$("#rcdbtn").click(function(){
@@ -1143,99 +1049,8 @@ function leavedrag(ev){
 	$(tagid).css('background-color','white');
 }
 $(function(){
-	$("#resettemp").click(function(){
-		var answer = confirm("Everything you've done so far will disappear. Are you sure you want to reset?")
-		if(answer){
-			$.ajax({
-				method : 'post'
-				,url : 'deltemp'
-				,success : gettemp
-			})
-		}
-	})
-	$("#bpmbar").change(function(){
-		var data = {'temp_title' : $("#title").text()
-				,'temp_bpm' : $("#bpmnum").text()}
-		$.ajax({
-			method : 'post'
-			,url : 'updatetemp'
-			,data : data
-			,success : gettemp
-		})
-	})
-})
-function gettemp(){
-	$.ajax({
-		method : 'get'
-		,url : 'gettemp'
-		,success : function(resp){
-				if(resp==''||resp==null||resp.cust_number=='undefined'){
-					var newname = '<input type="text" id="mustitle"><button id="titlebtn">save</button>';
-					$("#title").html(newname);
-					$("#bpmbar").val(80);
-					bpms.setBPM(80);
-					$("#titlebtn").click(function(){
-						var data = {'temp_title' : $("#mustitle").val()
-								,'temp_bpm' : $("#bpmnum").text()}
-						$.ajax({
-							method : 'post'
-							,url : 'inserttemp'
-							,data : data
-							,success : gettemp
-						})
-					})
-				}else{
-					var newname = resp.temp_title+'<img id="editname" src="resources/images/sound/sledit.png">'
-					$("#title").html(newname);
-					$("#bpmnum").text(resp.temp_bpm);
-					$("#bpmbar").val(resp.temp_bpm);
-
-					$("#editname").click(function(){
-						var editname = '<input type="text" id="mustitle"><button id="titleedit">save</button>';
-						$("#title").html(editname);
-						$("#titleedit").click(function(){
-							var data = {'temp_title' : $("#mustitle").val()
-									,'temp_bpm' : $("#bpmnum").text()}
-							$.ajax({
-								method : 'post'
-								,url : 'updatetemp'
-								,data : data
-								,success : gettemp
-							})
-						})
-					})
-				}
-			}
-	})
-}
-$(function(){
-	var idx = 0;
-	$("#addpart").click(function(){
-		idx++;
-		var divs = '<div class="part" id="part'+idx+'">'
-			divs+= '<div class="phrase1"></div>'
-			divs+= '<div class="phrase2"></div>'
-			divs+= '<div class="phrase3">No Phrase</div>'
-			divs+= '<div class="phrase4"></div>'
-			divs+= '<div class="partbtn"><button class="delpart" value="'+idx+'">X</button><button class="gotomake" value="'+idx+'">Make Music</button>'
-			divs+= '<button class="playpart" value="'+idx+'">▷</button></div>'
-			divs+= '</div>'
-		$("#parts").append(divs);
-		var ids = "#part"+idx;
-
-		$(".delpart").on('click',function(){
-			alert($(this).val());
-			var delid = "#part"+$(this).val();
-			$(delid).remove();
-		})
-
-		$(".playpart").on('click',function(){
-			alert($(this).val());
-		})
-
-		$(".gotomake").click(function(){
-			location.href="partmake?part_number="+$(this).val()+"&&temp_bpm="+$('#bpmnum').text();
-		})
+	$("#makingmusic").click(function(){
+		location.href="makingmusic2";
 	})
 })
 </script>
@@ -1248,29 +1063,17 @@ $(function(){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<div id="slib" class="button_base btn_3d_double_roll" data-toggle="collapse" data-target="#setmus">
+			<div id="slib" class="button_base btn_3d_double_roll">
 			<div>Setting Music</div>
 			<div>Setting Music</div>
 			<div>Setting Music</div>
 			<div>Setting Music</div>
 		</div>
-		<div id="addpart" class="button_base btn_3d_double_roll">
-			<div>Add Part</div>
-			<div>Add Part</div>
-			<div>Add Part</div>
-			<div>Add Part</div>
-		</div>
-		<div id="resettemp" class="button_base btn_3d_double_roll">
-			<div>Reset</div>
-			<div>Reset</div>
-			<div>Reset</div>
-			<div>Reset</div>
-		</div>
-		<div id="savemusic" class="button_base btn_3d_double_roll">
-			<div>Save Music</div>
-			<div>Save Music</div>
-			<div>Save Music</div>
-			<div>Save Music</div>
+		<div id="makingmusic" class="button_base btn_3d_double_roll">
+			<div>Making Music</div>
+			<div>Making Music</div>
+			<div>Making Music</div>
+			<div>Making Music</div>
 		</div>
 		</div>
 		<div class="navigation__column">
@@ -1296,12 +1099,6 @@ $(function(){
 		</div>
 	</nav>
 	<div id="wrapper">
-		<div id="musinfo">
-	Music Title : <span id="title"></span>&emsp;/&emsp;
-	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">test</button>&emsp;/&emsp;
-	<button id="mixing">All in One Mixing</button>
-	</div>
-		<div id="setmus" class="collapse">
 		<div id="soundlib">
 		<div class="fronts">
 			<span style="font-size: 50px;">Sound Library</span>
@@ -1399,9 +1196,6 @@ $(function(){
 </div>
 </div>
 </div><!-- end #keyboard -->
-</div>
-<div id="parts">
-</div>
 	<div id="addModal" class="modal">
 			<span class="close">&times;</span>
 			<span id="sketch-target"></span><br>

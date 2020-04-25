@@ -267,6 +267,7 @@ div.friends_bar_list {
 				리스트</div>
 				<div class="friends_bar_list">
 			<c:forEach var="room" items="${RoomList}">
+			 
 				<div class="friends_bar_profile_rooms"
 					onclick="init(${room.messangerRoom})" >
 					<div id="opps_profile_imgs" style=" width: 30%;">
@@ -278,19 +279,19 @@ div.friends_bar_list {
 					</div>
 					<div  style="text-align: right; width: 90%;">
 					<span style="border: thick;font-size: 12pt;font-weight: bold;">${room.opponentName} </span>
-					
 				 <br> <span
 						style="font-size: 10pt; color: red;">${room.howManyChecks}</span>
 					${room.recentMessage} <br>
 					</div>
 				</div>	
-
+		
 			</c:forEach>
 			
 </div>
 		</div>
 			<div id="Opps_file"  class= "opps_profile" >
 				<div id="OppsImgs" style="width: 20%">${msList.oppsProfile}</div>
+				
 			</div>
 		<div id="chattings" class="chattings" style="font-size: 10pt; font-weight: bolder;">
 		
@@ -335,14 +336,15 @@ div.friends_bar_list {
 	</footer>
 		</div>
 	</div>
-	<script src="http://10.10.12.230:4000/socket.io/socket.io.js"></script>
+	<script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	
 	<script type="text/javascript">
 		var $window = $(window);
 		var username = '${nickname}';
 								//Need to change IP address**
-		var socket = io.connect('http://10.10.12.230:4000')
+	var socket = io.connect('http://192.168.0.2:4000');
+
 		var opponentName = '${opponentName}';
 		
 	    var chatPage = $('.chattings');
@@ -418,6 +420,8 @@ div.friends_bar_list {
 				},
 				success : function() {
 					document.getElementById('chattings').scrollTop = document.getElementById('chattings').scrollHeight;
+
+					noti_save();
 				},
 				error : function(resp) {
 					alert("Error");
@@ -458,6 +462,8 @@ div.friends_bar_list {
 				 	var opData ='<img class = "opps_orifile_img" alt="???" src="resources/images/IU.jpg">  '
 				 	 opData +=msList.opponentName;
 					$('#Opps_file').html(opData);
+					
+					/* $('#Opps_file').append('<input type="button" onclick="messages_delete_before_confirm()"  value="delete" style="width: 80px" ><input type="hidden" name="messangerRoom" id="messangerRoom" value="messangerRoom">'); */
 					opponentName =msList.opponentName;
 					},
 					error : function(resp) {
@@ -496,7 +502,14 @@ div.friends_bar_list {
 		function closeNav() {
 			  document.getElementById("mySidenav").style.width = "0";
 			}
-	
+		function noti_save(){
+			alert()
+
+			}
+	/* 	function messages_delete_before_confirm(){
+			
+			alert(messangerRoom);
+			} */
 	</script>
 
 </body>

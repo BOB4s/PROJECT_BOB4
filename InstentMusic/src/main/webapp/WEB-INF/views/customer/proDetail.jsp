@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
 <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
+ <script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
 <script>
 $(function(){
 	$("#profileSetting").click(function(){
@@ -44,6 +45,103 @@ $(function(){
 		})
 	})
 })
+
+$(function(){
+$("#profileSetting").click(function(){
+	location.href="goModify"
+	})
+	$("#searchpf").keyup(function(){
+		var data = {'search':$("#searchpf").val()};
+		$.ajax({
+			method : 'get'
+			,url : 'searchpf'
+			,data : data
+			,success : function(resp){
+				var d = '';
+					if($("#searchpf").val()==''){
+					$("#myUL").html('');
+					}else{
+					$.each(resp,function(index,item){
+// 						d+= '<span class="sepf">'+item.cust_nickname+'</span><br/>'
+						d+= '<li>'+'<a href="proDetail?cust_number='+item.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
+						+item.cust_photo_saved+'"/>"/>'+item.cust_nickname+'</a>'+'</li>';
+					})
+					$("#myUL").html(d);
+					}
+				}
+		})
+	})
+})
+
+	var username = '${nickname}';
+	var socket = io.connect('http://192.168.0.2:4000');
+	$(function() {
+
+		socket.emit('add user', username);
+
+		
+		var follower_number = '${cust_number}';
+	 	var follow_number = '${customersData.cust_number}'; 
+		$.ajax({
+			method : 'GET',
+			url : 'followchecking',
+			data : {
+				"follower_number" : follower_number,
+				"follow_number" : follow_number
+			},
+			success : function(resp) {
+				if (resp == 'unfollowed')
+					$("#following_button").text("follow")
+				if (resp == 'followed')
+					$("#following_button").text("unfollow")
+			}
+		})
+
+		$("#following_button").on("click", function() {
+			$.ajax({
+				method : 'GET',
+				url : 'following',
+				data : {
+					"follower_number" : follower_number,
+					"follow_number" : follow_number
+				},
+				success : function(resp) {
+					if (resp == 'unfollowed')
+						$("#following_button").text("follow")
+					if (resp == 'followed')
+						$("#following_button").text("unfollow")
+						
+					 socket.emit('newFollow',follow_number,username );
+					
+
+				}
+
+			})
+
+		});
+		$("#followList").on("click", function() {
+			$.ajax({
+				method : 'GET',
+				url : 'getFollowers',
+				data : {
+					"follow_number" : follow_number
+				},
+				success :	function followersList(resp) {
+					var data = '';
+					$.each(resp,function(index, item) {
+						data += '<a>'+item+'</a>';				
+									})
+					
+
+					$("#followlists").html(data);
+
+				}
+			})
+
+		});
+	
+		//끝
+	});
 </script>
 </head>
 <body>
@@ -91,7 +189,8 @@ $(function(){
 			<div class="profile__column">
 				<div class="profile__title">
 					<h3 class="profile__username">${pd.cust_nickname}</h3>
-<!-- 					<a href="edit-profile.html"></a> -->
+					<a id="following_button" >following</a> <i class="fa fa-cog fa-lg"></i>
+					
 					<c:if test="${pd.cust_id == id}">
 					<i id="profileSetting" class="fa fa-cog fa-lg"></i>
 					</c:if>

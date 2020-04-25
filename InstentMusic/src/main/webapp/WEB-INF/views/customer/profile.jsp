@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
 <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
 <link rel="stylesheet" href="resources/css/main.css">
- <script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
+ <script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
 <script>
 $(function(){
 $("#profileSetting").click(function(){
@@ -45,7 +45,7 @@ $("#profileSetting").click(function(){
 })
 
 	var username = '${nickname}';
-	var socket = io.connect('http://192.168.0.84:4000');
+	var socket = io.connect('http://192.168.0.2:4000');
 	$(function() {
 
 		socket.emit('add user', username);

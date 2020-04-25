@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 <script  type="text/javascript">
 
 var username = '${nickname}';
-var socket = io.connect('http://192.168.0.84:4000');
+var socket = io.connect('http://192.168.0.2:4000');
 
 
 $(function(){
@@ -39,7 +39,7 @@ function getTags() {
 		  var post_nickname = document.getElementById("post_nickname").value;
 		  var post_content = document.getElementById("post_content").value;
 		  var post_url = document.getElementById("post_url").value;
-		  mus_number= 43;
+		  mus_number= 45;
 						$.ajax({
 							type : "POST"
 							,url : "post_write_save"

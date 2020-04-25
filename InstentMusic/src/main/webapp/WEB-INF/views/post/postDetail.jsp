@@ -11,10 +11,10 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
 <script type="text/javascript">
 var username = '${nickname}';
-var socket = io.connect('http://192.168.0.84:4000');
+var socket = io.connect('http://192.168.0.2:4000');
 
 
 

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/styles.css">
-<script src="http://172.30.1.16:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.2:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -57,7 +57,7 @@ animation: moveUp 3.65s ease forwards;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-	var socket = io.connect('http://172.30.1.16:4000');
+	var socket = io.connect('http://192.168.0.2:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -90,8 +90,8 @@ animation: moveUp 3.65s ease forwards;
 	$(function(){
 	
 		socket.emit('add user', username);
-		getPage_data(cust_number);
-		
+		getPage_data();
+		 getfollwedList(); 
 			
 		$(window).scroll(function() {
 		    var scrolltop = $(document).scrollTop();
@@ -158,7 +158,7 @@ animation: moveUp 3.65s ease forwards;
 
 
 });
-	function getPage_data(cust_number){
+	function getPage_data(){
 		if($("#profile")[0].className=='stop'){
 			$("#profile")[0].className='';
 			$('#endDan').html('');
@@ -197,7 +197,8 @@ animation: moveUp 3.65s ease forwards;
 				var rannum =  Math.floor(Math.random() * 3)+0.65;/* 0.65 */
 
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
-						
+
+					//사진
 				 	data += "<img src='resources/images/IUfeed.jpg' />"
 				 		
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
@@ -225,7 +226,22 @@ animation: moveUp 3.65s ease forwards;
 		location.href = "postGetOne?post_number=" + post_number;
 
 		}
-	
+	function getfollwedList(){
+		var data = "<table border='1' style='font-size: 15pt'>";
+		console.log(${followed_Profiles_List})
+		$.each(${followed_Profiles_List},
+				
+				function(index, item) {
+			console.log(item)
+			data +="<tr>";
+			data += "<td>"+item.cust_nickname+"</td>";
+			data += "<td>"+item.cust_number+"</td>";
+			data += "<td>"+item.cust_photo_saved+"</td>";
+			data += "</tr>";
+				});
+		data +="</table>";
+		$('#followerList_Profiles').html(data);
+		}
 </script>
 </head>
 <body>
@@ -344,6 +360,7 @@ animation: moveUp 3.65s ease forwards;
 		<a href="infinity"> infinity</a>
 		
 <br>
+<div id="followerList_Profiles"> </div>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>
 			

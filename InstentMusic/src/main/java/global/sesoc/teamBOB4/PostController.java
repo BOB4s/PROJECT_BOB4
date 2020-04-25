@@ -97,6 +97,7 @@ public class PostController {
 		 Model model) {
 		List <Integer> follwedList =custdao.getFollowings(cust_number);
 		List<Post> post_All_List_byFollow = postdao.getPostAll(follwedList);
+		
 		List<Post> postList =new ArrayList<>();
 		int page_control_int=3;
 		if(start_Page==0) 

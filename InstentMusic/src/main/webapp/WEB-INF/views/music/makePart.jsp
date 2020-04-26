@@ -224,6 +224,7 @@ function getparts(){
 				}
 			}
 	})
+	setup();
 }
 $(function(){
 	for(var k=1; k<5; k++){
@@ -282,8 +283,6 @@ function setup() {
 	userStartAudio();
 	masterGain = new p5.Gain();
 	masterGain.connect();
-	allGain = new p5.Gain();
-	allGain.connect();
 	var pg1 = new p5.Gain();var pg2 = new p5.Gain();var pg3 = new p5.Gain();var pg4 = new p5.Gain();
 	var g48 = new p5.Gain();var g49 = new p5.Gain();var g50 = new p5.Gain();
 	var g51 = new p5.Gain();var g52 = new p5.Gain();var g53 = new p5.Gain();
@@ -300,10 +299,10 @@ function setup() {
 	var g186 = new p5.Gain();var g187 = new p5.Gain();var g188 = new p5.Gain();
 	var g189 = new p5.Gain();var g190 = new p5.Gain();var g219 = new p5.Gain();
 	$.each(paths,function(index,item){
-		if(item.phrase_number==1){ps1 = loadSound(item.phrase_saved);pg1.setInput(ps1);pg1.connect(allGain);}
-		if(item.phrase_number==2){ps2 = loadSound(item.phrase_saved);pg2.setInput(ps2);pg2.connect(allGain);}
-		if(item.phrase_number==3){ps3 = loadSound(item.phrase_saved);pg3.setInput(ps3);pg3.connect(allGain);}
-		if(item.phrase_number==4){ps4 = loadSound(item.phrase_saved);pg4.setInput(ps4);pg4.connect(allGain);}
+		if(item.phrase_number==1){ps1 = loadSound(item.phrase_saved);ps1.disconnect();pg1.setInput(ps1);pg1.connect(masterGain);}
+		if(item.phrase_number==2){ps2 = loadSound(item.phrase_saved);ps2.disconnect();pg2.setInput(ps2);pg2.connect(masterGain);}
+		if(item.phrase_number==3){ps3 = loadSound(item.phrase_saved);ps3.disconnect();pg3.setInput(ps3);pg3.connect(masterGain);}
+		if(item.phrase_number==4){ps4 = loadSound(item.phrase_saved);ps4.disconnect();pg4.setInput(ps4);pg4.connect(masterGain);}
 	})
 	$.each(list,function(index,item){
 		if(item.keyname==48){s48 = loadSound(item.soupath);g48.setInput(s48);g48.connect(masterGain);
@@ -391,8 +390,6 @@ function setup() {
 
 	recorder = new p5.SoundRecorder();
 	recorder.setInput(masterGain);
-	recorder2 = new p5.SoundRecorder();
-	recorder2.setInput(allGain);
 	soundFile = new p5.SoundFile();
 
 }
@@ -425,17 +422,21 @@ $(function(){
 	})
 	$("#musicall").click(function(){
 		userStartAudio();
-		if(!parts.isPlaying){
-			$("#musicall").text('Music Stop');
+		if(paths==null){
+			alert('please recording phrases!');
+			return;
+		}
+		if($("#musicall").val()=='mixing'){
+			state=0;
 			parts.start();
-			ps1.play();ps2.play();ps3.play();ps4.play();
 			ps.stop();bpms.stop();
 			recordstart2();
 		}else{
-			$("#musicall").text('Music Start');
-			parts.stop();
-			drawmatrix();
-			parts.metro.metroTicks = 0;
+			parts.start();
+			state=2;
+			recordstart2();
+			$("#musicall").val('mixing');
+			$("#musicall").text('Music Mixing');
 		}
 	})
 	$(".rcdmusic").on("click", function(){
@@ -510,17 +511,17 @@ function recordstart2(){
 	userStartAudio();
     if(state===0){
     	recorder.record(soundFile);
-    	$(document).keydown(function(event){
-    		count = 1;
-    		pressimg();
-    	})
+    	ps1.play();ps2.play();ps3.play();ps4.play();
     }else if(state===1){
       recorder.stop();
-      changes();
+      $("#musicall").val('play');
+		$("#musicall").text('Play Mixed');
     }else if(state===2){
-		soundFile.play();
-	    soundBlob = soundFile.getBlob();
-	    sendfile();
+	  soundFile.play();
+	  soundFile.onended(function(){
+		  soundBlob = soundFile.getBlob();
+		  sendfile2();
+		  })
     }
 }
 function changes(){
@@ -528,7 +529,8 @@ function changes(){
 }
 function sequence(time, beatIndex){
 	if(beatIndex==17){
-		$("#musicall").text('Music Start');
+		state = 1;
+		recordstart2();
 	}
 	drawmatrix();
 	
@@ -576,7 +578,6 @@ function sendfile(){
 		   for(var i=0; i<saves.length; i++){
 				data+=saves[i];
 			   }
-		   var keypt = data;
 		   var formData = new FormData();
 		 
 		   formData.append("file", soundBlob);
@@ -596,6 +597,32 @@ function sendfile(){
 				   getparts();
 				}
 		   })
+}
+function sendfile2(){
+	   var data = '';
+	   for(var i=0; i<paths.length; i++){
+		   	data += paths[i].phrase_number + ','
+		   }
+	   var formData = new FormData();
+	 
+	   formData.append("file", soundBlob);
+	   formData.append("key_board", data);
+	   formData.append("part_number", ${sessionScope.part_num});
+	   formData.append("phrase_number", 5);
+	   console.log(formData);
+
+	   $.ajax({
+	    type: "post",
+     url: "sendPart",
+     data: formData,
+     processData: false,
+     contentType: false,
+		success : function(resp){
+				soundFile = new p5.SoundFile();
+				alert("Mixing Complete!");
+			   getparts();
+			}
+	   })
 }
 $(function(){
 	for(var i=1; i<5; i++){
@@ -620,7 +647,7 @@ $(function(){
 	Part Number : <span id="partnumber">${sessionScope.part_num}</span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">${sessionScope.temp_bpm}</span>&emsp;/&emsp;
 	<button id="mixing">BPM Start</button>&emsp;/&emsp;
-	<button id="musicall">Music Mixing</button>
+	<button id="musicall" value="mixing">Music Mixing</button>
 	</div>
 	<div id="keyboard">
 	<div class="fronts">

@@ -35,7 +35,6 @@ public class HomeController {
 	@GetMapping("temp")
 	public String temp() {
 		return "temp";
-		
 	}
 	
 	@GetMapping("/")

@@ -352,11 +352,11 @@ var partnum = 0;
 var btnc=0;
 var paths =[];
 $(function() {
-	gettemp();
-	getall();
 	$("#slib").click(function(){
 		location.href="makingMusic";
 	})
+	gettemp();
+	getall();
 })
 function getall(){
 	$.ajax({
@@ -365,7 +365,8 @@ function getall(){
 		,success : function(resp){
 				if(resp!=null){
 					$.each(resp,function(index,item){
-						var datas = {'phrase_number':item.phrase_number,'phrase_saved':item.fullPath};
+						var datas = {'phrase_number':item.phrase_number,'phrase_saved':item.fullPath
+									,'part_number':item.part_number,'key_board':item.key_board};
 						paths.push(datas);
 						if(partnum<item.part_number){
 							partnum = item.part_number;
@@ -375,9 +376,28 @@ function getall(){
 				}
 			}
 	})
+	setup();
 }
 var bpmpat, bpmsong, bpms, bpmprs, bpmCrtl;
+var s1,s2,s3,s4,s5,s6;
+var recorder, soundFile, soundBlob;
+var masterGain;
 function setup(){
+	userStartAudio();
+	masterGain = new p5.Gain();
+	masterGain.connect();
+	var p1 = new p5.Gain();var p2 = new p5.Gain();var p3 = new p5.Gain();
+	var p4 = new p5.Gain();var p5 = new p5.Gain();var p6 = new p5.Gain();
+	$.each(paths,function(index,item){
+		if(item.phrase_number==5){
+		if(item.part_number==1){s1 = loadSound(item.phrase_saved);p1.setInput(s1);p1.connect(masterGain);}
+		if(item.part_number==2){s2 = loadSound(item.phrase_saved);p2.setInput(s2);p2.connect(masterGain);}
+		if(item.part_number==3){s3 = loadSound(item.phrase_saved);p3.setInput(s3);p3.connect(masterGain);}
+		if(item.part_number==4){s4 = loadSound(item.phrase_saved);p4.setInput(s4);p4.connect(masterGain);}
+		if(item.part_number==5){s5 = loadSound(item.phrase_saved);p5.setInput(s5);p5.connect(masterGain);}
+		if(item.part_number==6){s6 = loadSound(item.phrase_saved);p6.setInput(s6);p6.connect(masterGain);}
+		}
+	})
 	bpmsong = loadSound('resources/sound/drum/drum7.wav',() => {
 		if(btnc==0){
 			bpms.stop();
@@ -506,7 +526,7 @@ $(".delpart").on('click',function(){
 })
 
 $(".playpart").on('click',function(){
-	alert($(this).val());
+	if($(this).val()==1){s1.play();}
 })
 
 $(".gotomake").click(function(){

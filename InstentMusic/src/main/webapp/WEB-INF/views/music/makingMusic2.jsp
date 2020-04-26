@@ -348,14 +348,34 @@ float : left;
 </style>
 <script>
 var song, path;
-var premusic;
+var partnum = 0;
 var btnc=0;
+var paths =[];
 $(function() {
 	gettemp();
+	getall();
 	$("#slib").click(function(){
 		location.href="makingMusic";
 	})
 })
+function getall(){
+	$.ajax({
+		method : 'get'
+		,url : 'getall'
+		,success : function(resp){
+				if(resp!=null){
+					$.each(resp,function(index,item){
+						var datas = {'phrase_number':item.phrase_number,'phrase_saved':item.fullPath};
+						paths.push(datas);
+						if(partnum<item.part_number){
+							partnum = item.part_number;
+							addpart(partnum);
+						}
+					})
+				}
+			}
+	})
+}
 var bpmpat, bpmsong, bpms, bpmprs, bpmCrtl;
 function setup(){
 	bpmsong = loadSound('resources/sound/drum/drum7.wav',() => {
@@ -467,34 +487,43 @@ function gettemp(){
 			}
 	})
 }
+function addpart(partnums){
+	var divs = '<div class="part" id="part'+partnums+'">'
+	divs+= '<div class="phrase1"></div>'
+	divs+= '<div class="phrase2"></div>'
+	divs+= '<div class="phrase3">No Phrase</div>'
+	divs+= '<div class="phrase4"></div>'
+	divs+= '<div class="partbtn"><button class="delpart" value="'+partnums+'">X</button><button class="gotomake" value="'+partnums+'">Make Music</button>'
+	divs+= '<button class="playpart" value="'+partnums+'">▷</button></div>'
+	divs+= '</div>'
+$("#parts").append(divs);
+var ids = "#part"+partnums;
+
+$(".delpart").on('click',function(){
+	alert($(this).val());
+	var delid = "#part"+$(this).val();
+	$(delid).remove();
+})
+
+$(".playpart").on('click',function(){
+	alert($(this).val());
+})
+
+$(".gotomake").click(function(){
+	$.ajax({
+		type : 'get'
+		,url : 'saveinfo'
+		,data : {'part_num':$(this).val(),'temp_bpm':$("#bpmnum").text()}
+		,success : function(resp){
+				location.href='partmake'
+			}
+	})
+})
+}
 $(function(){
-	var idx = 0;
 	$("#addpart").click(function(){
-		idx++;
-		var divs = '<div class="part" id="part'+idx+'">'
-			divs+= '<div class="phrase1"></div>'
-			divs+= '<div class="phrase2"></div>'
-			divs+= '<div class="phrase3">No Phrase</div>'
-			divs+= '<div class="phrase4"></div>'
-			divs+= '<div class="partbtn"><button class="delpart" value="'+idx+'">X</button><button class="gotomake" value="'+idx+'">Make Music</button>'
-			divs+= '<button class="playpart" value="'+idx+'">▷</button></div>'
-			divs+= '</div>'
-		$("#parts").append(divs);
-		var ids = "#part"+idx;
-
-		$(".delpart").on('click',function(){
-			alert($(this).val());
-			var delid = "#part"+$(this).val();
-			$(delid).remove();
-		})
-
-		$(".playpart").on('click',function(){
-			alert($(this).val());
-		})
-
-		$(".gotomake").click(function(){
-			location.href="partmake?part_number="+$(this).val()+"&&temp_bpm="+$('#bpmnum').text();
-		})
+		partnum++;
+		addpart(partnum);
 	})
 })
 </script>

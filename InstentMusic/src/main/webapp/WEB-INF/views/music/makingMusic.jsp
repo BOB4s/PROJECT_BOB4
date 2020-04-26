@@ -299,7 +299,6 @@ var song, path;
 var premusic;
 $(function() {
 	newbtn();
-	gettemp();
 })
 function newbtn2(){
 	var name2 = ''; 
@@ -901,6 +900,7 @@ $(function(){
 		   formData.append("sou_type",library)
 		   formData.append("sou_name", cum);
 
+			console.log(formData);
 		$.ajax({
 			method : 'post'
 			,url : 'sendFile'

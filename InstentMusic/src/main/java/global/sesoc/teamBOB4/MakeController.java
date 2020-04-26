@@ -24,8 +24,8 @@ import global.sesoc.teamBOB4.vo.Part_music;
 import global.sesoc.teamBOB4.vo.Sound_library;
 import global.sesoc.teamBOB4.vo.Temp;
 
-@Controller
 @RestController
+@Controller
 public class MakeController {
 	
 	@Autowired
@@ -63,10 +63,15 @@ public class MakeController {
 		return dao.deltemp(temp);
 	}
 	
-	@RequestMapping(value = "/sendpart", method = RequestMethod.POST)
-	public String sendpart(Part_music parts, MultipartFile file, HttpSession session, HttpServletRequest request) {
-		System.out.println("ddd");
-		
+	@GetMapping("/saveinfo")
+	public int saveinfo(int part_num, int temp_bpm, HttpSession session) {
+		session.setAttribute("part_num", part_num);
+		session.setAttribute("temp_bpm", temp_bpm);
+		return 1;
+	}
+	
+	@PostMapping("/sendPart")
+	public int send(Part_music parts, HttpSession session, MultipartFile file, HttpServletRequest request) {
 		String rootPath = request.getSession().getServletContext().getRealPath("/") ;//리얼경로
 		String savePath = rootPath + "/resources/"+uploadPath ;
 		
@@ -76,11 +81,31 @@ public class MakeController {
 		String savedFilename = FileService.saveFile(file, savePath);
 		parts.setPhrase_saved(savedFilename);
 
-		int result = dao.sendpart(parts);
-		if (result == 1) {
-			return "success";
-		} else {
-			return "fail";
+		return dao.sendpart(parts);
+	}
+	
+	@GetMapping("/getparts")
+	public List<Part_music> getparts(Part_music parts, HttpSession session){
+		int cust = (int) session.getAttribute("login");
+		parts.setCust_number(cust);
+		List<Part_music> result = dao.getparts(parts);
+		for(Part_music s : result) {
+			String fullPath = "resources/"+uploadPath+s.getPhrase_saved();
+			s.setFullPath(fullPath);
 		}
+		return result;
+	}
+	
+	@GetMapping("/getall")
+	public List<Part_music> getall(HttpSession session){
+		Part_music parts = new Part_music();
+		int cust = (int) session.getAttribute("login");
+		parts.setCust_number(cust);
+		List<Part_music> result = dao.getall(parts);
+		for(Part_music s : result) {
+			String fullPath = "resources/"+uploadPath+s.getPhrase_saved();
+			s.setFullPath(fullPath);
+		}
+		return result;
 	}
 }

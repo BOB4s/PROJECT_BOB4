@@ -19,4 +19,8 @@ public interface MakeMapper {
 	int deltemp(Temp temp);
 
 	int sendpart(Part_music parts);
+
+	List<Part_music> getparts(Part_music parts);
+
+	List<Part_music> getall(Part_music parts);
 }

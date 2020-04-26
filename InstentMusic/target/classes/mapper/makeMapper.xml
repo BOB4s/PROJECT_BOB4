@@ -45,4 +45,17 @@ SEQ_Part_music_make_number.nextval
 ,#{phrase_saved}
 )
 </insert>
+
+<select id="getparts" parameterType="Parts" resultType="Parts">
+select *
+from part_music
+where cust_number = #{cust_number}
+and part_number = #{part_number}
+</select>
+
+<select id="getall" parameterType="Parts" resultType="Parts">
+select *
+from part_music
+where cust_number = #{cust_number}
+</select>
 </mapper>

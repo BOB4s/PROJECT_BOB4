@@ -258,10 +258,8 @@ public class HomeController {
 		return "customer/proDetail";
 	}
 	@GetMapping("/partmake")
-	public String partmake(int part_number, int temp_bpm, Model model) {
-		model.addAttribute("part_number", part_number);
-		model.addAttribute("temp_bpm", temp_bpm);
-		return "music/partmake";
+	public String partmake() {
+		return "music/makePart";
 	}
 	
 	@GetMapping("/makingmusic2")

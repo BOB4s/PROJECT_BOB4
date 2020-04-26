@@ -4,10 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <title>MusicMake</title>
-<script src="resources/js/jquery-3.4.1.min.js"></script>
-<script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
 <script src="resources/js/p5.sound.min.js"></script>
+<script src="resources/js/jquery-3.4.1.min.js"></script>
+<script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/sketch.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

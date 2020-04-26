@@ -58,4 +58,10 @@ select *
 from part_music
 where cust_number = #{cust_number}
 </select>
+
+<delete id="delparts" parameterType="Parts">
+delete from part_music
+where
+cust_number = #{cust_number}
+</delete>
 </mapper>

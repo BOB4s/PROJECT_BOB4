@@ -57,10 +57,25 @@ public class MakeController {
 	}
 	
 	@PostMapping("/deltemp")
-	public int deltemp(Temp temp, HttpSession session) {
+	public int deltemp(Temp temp, Part_music parts, HttpSession session, HttpServletRequest request) {
 		int cust = (int) session.getAttribute("login");
 		temp.setCust_number(cust);
-		return dao.deltemp(temp);
+		parts.setCust_number(cust);
+		
+		String rootPath = request.getSession().getServletContext().getRealPath("/") ;//리얼경로
+		String savePath = rootPath + "/resources/"+uploadPath ;
+		
+		List<Part_music> result = dao.getall(parts);
+		
+		for(Part_music r : result) {
+			String fullPath = savePath+r.getPhrase_saved();
+			
+			FileService.deleteFile(fullPath);
+		}
+		
+		 int result2 = dao.deltemp(temp);
+		 int result3 = dao.delparts(parts);
+		 return 1;
 	}
 	
 	@GetMapping("/saveinfo")

@@ -4,15 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <title>MusicMake</title>
-<script src="resources/js/p5.min.js"></script>
-<script src="resources/js/p5.sound.min.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/sketch.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="resources/js/p5.min.js"></script>
+<script src="resources/js/p5.sound.min.js"></script>
 <style>
 body{
 margin : 10px 10px 10px 10px;
@@ -199,7 +198,7 @@ height: 120px;
 var list = [];
 var paths = [];
 var saves = ['N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N'];
-$(function(){
+$(document).ready(function(){
 	getparts();
 })
 function getparts(){
@@ -279,6 +278,9 @@ var s65, s66, s67, s68, s69, s70, s71, s72, s73, s74, s75, s76, s77, s78, s79;
 var s80, s81, s82, s83, s84, s85, s86, s87, s88, s89, s90;
 var s186, s187, s188, s189, s190, s219;
 var ps1, ps2, ps3, ps4;
+function touchStarted() {
+	  getAudioContext().resume()
+	}
 function setup() {
 	userStartAudio();
 	masterGain = new p5.Gain();
@@ -503,8 +505,10 @@ function recordstart(){
       changes();
     }else if(state===2){
 		soundFile.play();
-	    soundBlob = soundFile.getBlob();
-	    sendfile();
+		soundFile.onended(function(){
+		  soundBlob = soundFile.getBlob();
+		  sendfile();
+		 })
     }
 }
 function recordstart2(){
@@ -519,9 +523,9 @@ function recordstart2(){
     }else if(state===2){
 	  soundFile.play();
 	  soundFile.onended(function(){
-		  soundBlob = soundFile.getBlob();
-		  sendfile2();
-		  })
+	 	soundBlob = soundFile.getBlob();
+	  	sendfile2();
+	  })
     }
 }
 function changes(){
@@ -594,7 +598,7 @@ function sendfile(){
 	        contentType: false,
 			success : function(resp){
 					soundFile = new p5.SoundFile();
-				   getparts();
+					location.reload();
 				}
 		   })
 }
@@ -620,7 +624,7 @@ function sendfile2(){
 		success : function(resp){
 				soundFile = new p5.SoundFile();
 				alert("Mixing Complete!");
-			   getparts();
+				location.reload();
 			}
 	   })
 }

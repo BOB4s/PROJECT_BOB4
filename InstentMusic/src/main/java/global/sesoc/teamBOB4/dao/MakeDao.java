@@ -52,4 +52,9 @@ public class MakeDao {
 		MakeMapper mapper = session.getMapper(MakeMapper.class);
 		return mapper.getall(parts);
 	}
+
+	public int delparts(Part_music parts) {
+		MakeMapper mapper = session.getMapper(MakeMapper.class);
+		return mapper.delparts(parts);
+	}
 }

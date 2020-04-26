@@ -5,295 +5,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusicMake</title>
+<script src="resources/js/jquery-3.4.1.min.js"></script>
+<script src="resources/js/p5.min.js"></script>
+<script src="resources/js/p5.sound.min.js"></script>
+<script src="resources/js/jquery-ui.min.js"></script>
+<script src="resources/js/sketch.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
-<script src="resources/js/jquery-3.4.1.min.js"></script>
-<script src="resources/js/jquery-ui.min.js"></script>
-<script src="resources/js/p5.min.js"></script>
-<script src="resources/js/p5.sound.min.js"></script>
-<script src="resources/js/sketch.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
 body{
 margin : 10px 10px 10px 10px;
 }
-#soundlib, #keyboard{
-	margin: 0 auto;
-	margin-top : 10px;
-	padding: 5px 5px 5px 5px;
-	width: 1020px;
-	height: 220px;
-	border: 1px solid black;
-}
-.libs, dropdown-menu {
-	float:left;
-	margin-top:10px;
-	width: 200px;
-	height: 100px;
-	white-space: nowrap;
-	overflow-x: hidden;
-	text-align: center;
-}
-
-#inbox {
-	width: 1000px;
-	height: 85px;
-	white-space: nowrap;
-	overflow-x: hidden;
-	padding: 5px;
-	background-color: #F2F2F2;
-	text-align: center;
-}
-
-.sounds {
-	float: left;
-	font-size: 10px;
-	text-align: center;
-	padding: 5px;
-}
-
-.soundimg {
-	width: 50px;
-	height: 50px;
-}
-
-.soundss{
-position: relative;
-width: 50px;
-height: 50px;
-margin : 0 auto;
-}
-
-input {
-	width: 200px;
-}
-
-.inputbtn {
-	margin-top:5px;
-	margin-left:50px;
-	float:left;
-	font-size: 15px;
-	width: 350px;
-	height : 40px;
-}
-
-.libs button {
-	height: 25px;
-	width:150px;
-	background-color: #FFFFFF;
-	color: black;
-	font-size: 15px;
-	border: 0px;
-}
-#bags{
-float:right;
-width: 650px;
-height: 120px;
-}
-#bags input{
-width: 180px;
-}
-.fronts{
-float:left;
-width: 350px;
-height: 120px;
-}
-canvas {
-margin-top: 10px;
-margin-left: 10px;
-}
-#target2{
-margin-left: 10px;
-font-size : 30px;
-text-decoration: underline;
-}
-.fronts img{
-margin-left:5px;
-margin-bottom:12px;
-width: 30px;
-height: 30px;
-}
-#bags img{
-margin-left:60px;
-margin-bottom:20px;
-width : 65px;
-height : 65px;
-cursor: pointer;
-}
-#addModal{
-	color: #FFFFFF;
-	font-size: 30px;
-	text-align: center;
-}
-#addcom{
-	width: 200px;
-	height: 30px;
-	font-size: 20px;
-}
-
-#addbtn, #addModal button, #rcdbtn{
-	width: 150px;
-	height: 30px;
-	background-color: #000000;
-	background-color: rgba(255, 255, 255, 0.5);
-	font-size: 20px;
-	color: black;
-	border: 1px;
-	border-color: #FFFFFF;
-	font-weight: bold;
-}
-
-#addfile {
-	margin-top:10px;
-	width: 100px;
-	height: 30px;
-	background: 00ff0000;
-	border: 0;
-	font-size: 20px;
-}
-/* The Modal (background) */
-.modal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
-}
-
-/* The Close Button */
-.close {
-	position: absolute;
-	top: 15px;
-	right: 35px;
-	color: #f1f1f1;
-	font-size: 40px;
-	font-weight: bold;
-	transition: 0.3s;
-}
-
-.close:hover, .close:focus {
-	color: #bbb;
-	text-decoration: none;
-	cursor: pointer;
-}
-#target4, #target3{
-font-size : 20px;
-}
-#editlib, #deletelib, #editname{
-width: 20px;
-height: 20px;
-cursor: pointer;
-}
-.del{
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-	font-size: 10px;
-	width : 15px;
-	height : 15px;
-	font-weight: bold;
-	cursor: pointer;
-	border: 0;
-	background: red;
-	color: #FFFFFF;
-	border-radius: 100%;
-	padding: 0;
-}
-.keydels {
-	float:right;
-	font-size: 8px;
-	width : 12px;
-	height : 12px;
-	font-weight: bold;
-	cursor: pointer;
-	border: 0;
-	background: red;
-	color: #FFFFFF;
-	border-radius: 100%;
-	padding: 0;
-}
-.adds {
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-	font-size: 10px;
-	width : 15px;
-	height : 15px;
-	font-weight: bold;
-	cursor: pointer;
-	border: 0;
-	background: green;
-	color: #FFFFFF;
-	border-radius: 100%;
-	padding: 0;
-}
-#form_upload2 img{
-	cursor: pointer;
-}
-.keys{
-	float : left;
-	height : 50px;
-	width : 50px;
-	margin : 1px 1px 1px 1px;
-	border: 1px solid black;
-	padding: 1px 1px 1px 3px;
-}
-#keys{
-	float: right;
-	font-size: 10px;
-	font-weight: bold;
-	width : 650px;
-	height : 220px;
-}
-#key1{
-	float : right;
-	margin-right: 0px;
-}
-#key2{
-	float : right;
-	margin-right: 30px;
-}
-#key3{
-	float : right;
-	margin-right: 60px;
-}
-#key4{
-	float : right;
-	margin-right: 90px;
-}
-#newset{
-	font-size: 30px;
-	text-decoration: underline;
-}
-#newment{
-	font-size: 15px;
-	color: red;
-}
-.keysou{
-	padding:0px;
-	font-size : 9px;
-	text-align: center;
-	color : blue;
-	white-space: normal;
-	line-height: 1.2;
-}
 #musinfo{
 	text-align: center;
 	margin : 0 auto;
-	width: 1100px;
 	height : 30px;
 	margin-top: 10px;
 	text-align : center;
@@ -345,11 +76,23 @@ float : left;
 #slib, #addpart, #resettemp, #savemusic{
 	width : 170px;
 }
+#editname{
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+#addment{
+	color : red;
+	position : absolute;
+	left : 600px;
+	top : 400px;
+	font-size : 30px;
+}
 </style>
 <script>
 var song, path;
 var partnum = 0;
-var btnc=0;
 var paths =[];
 $(function() {
 	$("#slib").click(function(){
@@ -359,6 +102,9 @@ $(function() {
 	getall();
 })
 function getall(){
+	var addment = '<span id="addment">Please add some Parts</span>'
+	$("#parts").html(addment);
+	partnum = 0;
 	$.ajax({
 		method : 'get'
 		,url : 'getall'
@@ -398,14 +144,8 @@ function setup(){
 		if(item.part_number==6){s6 = loadSound(item.phrase_saved);p6.setInput(s6);p6.connect(masterGain);}
 		}
 	})
-	bpmsong = loadSound('resources/sound/drum/drum7.wav',() => {
-		if(btnc==0){
-			bpms.stop();
-			bpmsong.stop();
-		}else{
-			bpms.loop();
-		}
-	});
+	
+	bpmsong = loadSound('resources/sound/drum/drum7.wav');
 	bpmpat = [1, 1, 1, 1];
 	bpmprs = new p5.Phrase('bpmsong',(time) => {
 		bpmsong.play(time);
@@ -419,28 +159,24 @@ function setup(){
 		bpms.setBPM(bpmCtrl);
 		$("#bpmnum").text(bpmCtrl);
 	})
+
+	recorder = new p5.SoundRecorder();
+	recorder.setInput(masterGain);
+	soundFile = new p5.SoundFile();
 }
 $(function(){
-	$("#bpmplay").click(function(){
+	userStartAudio();
+	$("#bpmplay").on('click',function(){
 		var txt = $("#bpmplay").text();
 		if(txt=='test'){
 			$("#bpmplay").text('stop');
-			btnc++;
-			loadbpm();
+			bpms.loop();
 		}else{
 			$("#bpmplay").text('test');
-			btnc=0;
-			loaded2();
+			bpms.stop();
 		}
 	})
 })
-function loadbpm(){
-	bpmsong.play();
-	bpms.loop();
-}
-function loaded2(){
-	bpms.stop();
-}
 $(function(){
 	$("#resettemp").click(function(){
 		var answer = confirm("Everything you've done so far will disappear. Are you sure you want to reset?")
@@ -448,7 +184,10 @@ $(function(){
 			$.ajax({
 				method : 'post'
 				,url : 'deltemp'
-				,success : gettemp
+				,success : function(resp){
+						gettemp();
+						getall();
+					}
 			})
 		}
 	})
@@ -473,7 +212,7 @@ function gettemp(){
 					$("#title").html(newname);
 					$("#bpmbar").val(80);
 					bpms.setBPM(80);
-					$("#titlebtn").click(function(){
+					$("#titlebtn").on('click',function(){
 						var data = {'temp_title' : $("#mustitle").val()
 								,'temp_bpm' : $("#bpmnum").text()}
 						$.ajax({
@@ -508,6 +247,7 @@ function gettemp(){
 	})
 }
 function addpart(partnums){
+	userStartAudio();
 	var divs = '<div class="part" id="part'+partnums+'">'
 	divs+= '<div class="phrase1"></div>'
 	divs+= '<div class="phrase2"></div>'
@@ -527,6 +267,11 @@ $(".delpart").on('click',function(){
 
 $(".playpart").on('click',function(){
 	if($(this).val()==1){s1.play();}
+	if($(this).val()==2){s2.play();}
+	if($(this).val()==3){s3.play();}
+	if($(this).val()==4){s4.play();}
+	if($(this).val()==5){s5.play();}
+	if($(this).val()==6){s6.play();}
 })
 
 $(".gotomake").click(function(){

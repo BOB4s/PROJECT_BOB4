@@ -192,7 +192,7 @@ cursor: pointer;
 #target4, #target3{
 font-size : 20px;
 }
-#editlib, #deletelib, #editname{
+#editlib, #deletelib{
 width: 20px;
 height: 20px;
 cursor: pointer;
@@ -290,8 +290,8 @@ cursor: pointer;
 	white-space: normal;
 	line-height: 1.2;
 }
-#slib, #makingmusic{
-	width : 170px;
+#makingmusic{
+	width : 200px;
 }
 </style>
 <script>
@@ -1063,17 +1063,11 @@ $(function(){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<div id="slib" class="button_base btn_3d_double_roll">
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-		</div>
 		<div id="makingmusic" class="button_base btn_3d_double_roll">
-			<div>Making Music</div>
-			<div>Making Music</div>
-			<div>Making Music</div>
-			<div>Making Music</div>
+			<div>Go to making Music</div>
+			<div>Go to making Music</div>
+			<div>Go to making Music</div>
+			<div>Go to making Music</div>
 		</div>
 		</div>
 		<div class="navigation__column">

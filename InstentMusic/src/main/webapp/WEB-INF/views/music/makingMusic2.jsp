@@ -82,16 +82,27 @@ float : left;
 	cursor: pointer;
 	margin-bottom: 10px;
 }
-#addment{
+#makingstart{
 	color : red;
 	position : absolute;
-	left : 600px;
-	top : 400px;
+	left : 35%;
+	top : 50%;
 	font-size : 30px;
+	background-color : #FFFFFF;
+	border: 0px;
+}
+#addpart{
+	background-color : #FFFFFF;
+	width : 200px;
+	height : 150px;
+	border: 0px;
+	color : skyblue;
+	font-size : 70px;
+	margin : 10px 10px 10px 10px;
 }
 </style>
 <script>
-var song, path;
+var song, path, stt;
 var partnum = 0;
 var paths =[];
 $(function() {
@@ -99,11 +110,14 @@ $(function() {
 		location.href="makingMusic";
 	})
 	gettemp();
-	getall();
+	$("#makingstart").click(function(){
+		userStartAudio();
+		stt.play();
+		getall();
+	})
 })
 function getall(){
-	var addment = '<span id="addment">Please add some Parts</span>'
-	$("#parts").html(addment);
+	userStartAudio();
 	partnum = 0;
 	$.ajax({
 		method : 'get'
@@ -122,28 +136,25 @@ function getall(){
 				}
 			}
 	})
+	var addment = '<div id="parta"><button id="addpart">+</button></div>'
+	$("#parts").html('');
+	$("#parts").append(addment);
+
+	$("#addpart").click(function(){
+		partnum++;
+		addpart(partnum);
+	})
 	setup();
 }
 var bpmpat, bpmsong, bpms, bpmprs, bpmCrtl;
 var s1,s2,s3,s4,s5,s6;
 var recorder, soundFile, soundBlob;
 var masterGain;
+function preload(){
+	stt = loadSound("resources/sound/beatbox/bb17.mp3");
+}
 function setup(){
 	userStartAudio();
-	masterGain = new p5.Gain();
-	masterGain.connect();
-	var p1 = new p5.Gain();var p2 = new p5.Gain();var p3 = new p5.Gain();
-	var p4 = new p5.Gain();var p5 = new p5.Gain();var p6 = new p5.Gain();
-	$.each(paths,function(index,item){
-		if(item.phrase_number==5){
-		if(item.part_number==1){s1 = loadSound(item.phrase_saved);p1.setInput(s1);p1.connect(masterGain);}
-		if(item.part_number==2){s2 = loadSound(item.phrase_saved);p2.setInput(s2);p2.connect(masterGain);}
-		if(item.part_number==3){s3 = loadSound(item.phrase_saved);p3.setInput(s3);p3.connect(masterGain);}
-		if(item.part_number==4){s4 = loadSound(item.phrase_saved);p4.setInput(s4);p4.connect(masterGain);}
-		if(item.part_number==5){s5 = loadSound(item.phrase_saved);p5.setInput(s5);p5.connect(masterGain);}
-		if(item.part_number==6){s6 = loadSound(item.phrase_saved);p6.setInput(s6);p6.connect(masterGain);}
-		}
-	})
 	
 	bpmsong = loadSound('resources/sound/drum/drum7.wav');
 	bpmpat = [1, 1, 1, 1];
@@ -159,7 +170,16 @@ function setup(){
 		bpms.setBPM(bpmCtrl);
 		$("#bpmnum").text(bpmCtrl);
 	})
-
+	masterGain = new p5.Gain();
+	masterGain.connect(); 
+	var p1 = new p5.Gain(); var p2 = new p5.Gain();var p3 = new p5.Gain();
+	$.each(paths,function(index,item){
+		if(item.phrase_number==5){
+		if(item.part_number==1){s1 = loadSound(item.phrase_saved);p1.setInput(s1);p1.connect(masterGain);}
+		if(item.part_number==2){s2 = loadSound(item.phrase_saved);p2.setInput(s2);p2.connect(masterGain);}
+		if(item.part_number==3){s3 = loadSound(item.phrase_saved);p3.setInput(s3);p3.connect(masterGain);}
+		} 
+	})
 	recorder = new p5.SoundRecorder();
 	recorder.setInput(masterGain);
 	soundFile = new p5.SoundFile();
@@ -248,6 +268,7 @@ function gettemp(){
 }
 function addpart(partnums){
 	userStartAudio();
+
 	var divs = '<div class="part" id="part'+partnums+'">'
 	divs+= '<div class="phrase1"></div>'
 	divs+= '<div class="phrase2"></div>'
@@ -256,7 +277,7 @@ function addpart(partnums){
 	divs+= '<div class="partbtn"><button class="delpart" value="'+partnums+'">X</button><button class="gotomake" value="'+partnums+'">Make Music</button>'
 	divs+= '<button class="playpart" value="'+partnums+'">▷</button></div>'
 	divs+= '</div>'
-$("#parts").append(divs);
+$("#parta").before(divs);
 var ids = "#part"+partnums;
 
 $(".delpart").on('click',function(){
@@ -265,7 +286,7 @@ $(".delpart").on('click',function(){
 	$(delid).remove();
 })
 
-$(".playpart").on('click',function(){
+$(".playpart").click(function(){
 	if($(this).val()==1){s1.play();}
 	if($(this).val()==2){s2.play();}
 	if($(this).val()==3){s3.play();}
@@ -285,12 +306,6 @@ $(".gotomake").click(function(){
 	})
 })
 }
-$(function(){
-	$("#addpart").click(function(){
-		partnum++;
-		addpart(partnum);
-	})
-})
 </script>
 </head>
 <body>
@@ -306,12 +321,6 @@ $(function(){
 			<div>Setting Music</div>
 			<div>Setting Music</div>
 			<div>Setting Music</div>
-		</div>
-		<div id="addpart" class="button_base btn_3d_double_roll">
-			<div>Add Part</div>
-			<div>Add Part</div>
-			<div>Add Part</div>
-			<div>Add Part</div>
 		</div>
 		<div id="resettemp" class="button_base btn_3d_double_roll">
 			<div>Reset</div>
@@ -351,9 +360,11 @@ $(function(){
 	<div id="wrapper">
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
-	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">test</button>
+	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">test</button>&emsp;/&emsp;
+	<button id="mixing">Mixing Music</button>
 	</div>
 <div id="parts">
+<button id="makingstart">Click to start making music!</button>
 </div>
 </div>
 </body>

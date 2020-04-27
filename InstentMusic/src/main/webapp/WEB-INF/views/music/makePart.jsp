@@ -301,10 +301,10 @@ function setup() {
 	var g186 = new p5.Gain();var g187 = new p5.Gain();var g188 = new p5.Gain();
 	var g189 = new p5.Gain();var g190 = new p5.Gain();var g219 = new p5.Gain();
 	$.each(paths,function(index,item){
-		if(item.phrase_number==1){ps1 = loadSound(item.phrase_saved);ps1.disconnect();pg1.setInput(ps1);pg1.connect(masterGain);}
-		if(item.phrase_number==2){ps2 = loadSound(item.phrase_saved);ps2.disconnect();pg2.setInput(ps2);pg2.connect(masterGain);}
-		if(item.phrase_number==3){ps3 = loadSound(item.phrase_saved);ps3.disconnect();pg3.setInput(ps3);pg3.connect(masterGain);}
-		if(item.phrase_number==4){ps4 = loadSound(item.phrase_saved);ps4.disconnect();pg4.setInput(ps4);pg4.connect(masterGain);}
+		if(item.phrase_number==1){ps1 = loadSound(item.phrase_saved);pg1.setInput(ps1);pg1.connect(masterGain);}
+		if(item.phrase_number==2){ps2 = loadSound(item.phrase_saved);pg2.setInput(ps2);pg2.connect(masterGain);}
+		if(item.phrase_number==3){ps3 = loadSound(item.phrase_saved);pg3.setInput(ps3);pg3.connect(masterGain);}
+		if(item.phrase_number==4){ps4 = loadSound(item.phrase_saved);pg4.setInput(ps4);pg4.connect(masterGain);}
 	})
 	$.each(list,function(index,item){
 		if(item.keyname==48){s48 = loadSound(item.soupath);g48.setInput(s48);g48.connect(masterGain);
@@ -473,15 +473,13 @@ $(function(){
 		if(state===1){
 			state=2;
 			recordstart();
-		}else if(targetp=='p1'){ps1.play();}
-		else if(targetp=='p2'){ps2.play();}
-		else if(targetp=='p3'){ps3.play();}
-		else if(targetp=='p4'){ps4.play();}
+		}else if(targetp=='p1'){ps1.play();ps.start();}
+		else if(targetp=='p2'){ps2.play();ps.start();}
+		else if(targetp=='p3'){ps3.play();ps.start();}
+		else if(targetp=='p4'){ps4.play();ps.start();}
 		if($(this).attr('alt')=='play'){
 			$(this).attr('src','resources/images/sound/stop.png');
 			$(this).attr('alt','stop');
-			ps.start();
-			state = 2;
 			bpms.stop();parts.stop();
 		}else{
 			$(this).attr('src','resources/images/sound/play.png');
@@ -505,10 +503,8 @@ function recordstart(){
       changes();
     }else if(state===2){
 		soundFile.play();
-		soundFile.onended(function(){
 		  soundBlob = soundFile.getBlob();
 		  sendfile();
-		 })
     }
 }
 function recordstart2(){
@@ -522,10 +518,8 @@ function recordstart2(){
 		$("#musicall").text('Play Mixed');
     }else if(state===2){
 	  soundFile.play();
-	  soundFile.onended(function(){
 	 	soundBlob = soundFile.getBlob();
 	  	sendfile2();
-	  })
     }
 }
 function changes(){

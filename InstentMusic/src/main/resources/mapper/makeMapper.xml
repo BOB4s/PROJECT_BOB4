@@ -63,5 +63,7 @@ where cust_number = #{cust_number}
 delete from part_music
 where
 cust_number = #{cust_number}
+order by part_number
+and phrase_number
 </delete>
 </mapper>

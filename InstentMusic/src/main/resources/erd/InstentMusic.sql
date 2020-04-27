@@ -200,8 +200,6 @@ CREATE TABLE Music_Library
 	cust_number number NOT NULL,
 	-- 음악 이름
 	mus_title varchar2(50) NOT NULL,
-	-- 음악의 총 시간
-	mus_time varchar2(10) NOT NULL,
 	-- 해당 음악의 저장 이름
 	mus_saved varchar2(500) NOT NULL,
 	-- 작곡한 일시
@@ -358,6 +356,8 @@ CREATE TABLE Temp
 	temp_title varchar2(50),
 	-- bpm
 	temp_bpm number NOT NULL,
+	-- 임시 믹싱한 곡 저장
+	temp_saved varchar2(500),
 	PRIMARY KEY (temp_number)
 );
 
@@ -366,19 +366,13 @@ CREATE TABLE Temp
 /* Create Foreign Keys */
 
 ALTER TABLE Follow
-	ADD FOREIGN KEY (follower_number)
-	REFERENCES Customer (cust_number)
-;
-
-
-ALTER TABLE Follow
 	ADD FOREIGN KEY (follow_number)
 	REFERENCES Customer (cust_number)
 ;
 
 
-ALTER TABLE letter
-	ADD FOREIGN KEY (recv_number)
+ALTER TABLE Follow
+	ADD FOREIGN KEY (follower_number)
 	REFERENCES Customer (cust_number)
 ;
 
@@ -389,14 +383,20 @@ ALTER TABLE letter
 ;
 
 
-ALTER TABLE like_click
-	ADD FOREIGN KEY (target_number)
+ALTER TABLE letter
+	ADD FOREIGN KEY (recv_number)
 	REFERENCES Customer (cust_number)
 ;
 
 
 ALTER TABLE like_click
 	ADD FOREIGN KEY (cust_number)
+	REFERENCES Customer (cust_number)
+;
+
+
+ALTER TABLE like_click
+	ADD FOREIGN KEY (target_number)
 	REFERENCES Customer (cust_number)
 ;
 
@@ -734,7 +734,6 @@ COMMENT ON COLUMN like_click.likt_type IS '0. 좋아요 안함, 1.좋아요 누�
 COMMENT ON COLUMN Music_Library.mus_number IS '음악의 고유 번호 시퀀스';
 COMMENT ON COLUMN Music_Library.cust_number IS '작곡한 회원의 고유번호. 세션';
 COMMENT ON COLUMN Music_Library.mus_title IS '음악 이름';
-COMMENT ON COLUMN Music_Library.mus_time IS '음악의 총 시간';
 COMMENT ON COLUMN Music_Library.mus_saved IS '해당 음악의 저장 이름';
 COMMENT ON COLUMN Music_Library.mus_date IS '작곡한 일시';
 COMMENT ON COLUMN Notification.not_number IS '알림 고유 번호 시퀀스';
@@ -750,7 +749,6 @@ COMMENT ON COLUMN Notification.not_time IS '알림 발생한 일시';
 COMMENT ON COLUMN Notification.not_check IS '알림을 확인했는지 여부';
 COMMENT ON COLUMN Part_music.make_number IS '파트 메이크 고유 번호';
 COMMENT ON COLUMN Part_music.cust_number IS '작곡중인 회원 고유 번호';
-COMMENT ON COLUMN Part_music.trap_number IS '몇번 곡인가';
 COMMENT ON COLUMN Part_music.part_number IS '해당 곡의 몇번째 파트인가';
 COMMENT ON COLUMN Part_music.phrase_number IS '몇번째 프레이즈인가';
 COMMENT ON COLUMN Part_music.key_board IS '프레이즈에 해당하는 키세트 이름';
@@ -788,10 +786,9 @@ COMMENT ON COLUMN Tag.tag_number IS '태그 고유번호 시퀀스';
 COMMENT ON COLUMN Tag.tag_name IS '태그 이름';
 COMMENT ON COLUMN Temp.temp_number IS 'temp 고유 번호';
 COMMENT ON COLUMN Temp.cust_number IS '작곡중인 회원 번호';
-COMMENT ON COLUMN Temp.trap_number IS '회원이 만든 임시곡중에서 몇번째 곡인가.
-처음 등록할때의 temp 시퀀스를 참조.';
 COMMENT ON COLUMN Temp.temp_title IS '만들고 있는 곡의 제목 (불러오기용)';
 COMMENT ON COLUMN Temp.temp_bpm IS 'bpm';
+COMMENT ON COLUMN Temp.temp_saved IS '임시 믹싱한 곡 저장';
 
 
 

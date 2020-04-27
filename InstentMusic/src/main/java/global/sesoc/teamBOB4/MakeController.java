@@ -20,6 +20,7 @@ import global.sesoc.teamBOB4.dao.MakeDao;
 import global.sesoc.teamBOB4.dao.MusicDao;
 import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.vo.Key_sound;
+import global.sesoc.teamBOB4.vo.Music_library;
 import global.sesoc.teamBOB4.vo.Part_music;
 import global.sesoc.teamBOB4.vo.Sound_library;
 import global.sesoc.teamBOB4.vo.Temp;
@@ -46,6 +47,8 @@ public class MakeController {
 		Temp temp = new Temp();
 		temp.setCust_number(cust);
 		Temp result = dao.gettemp(temp);
+			String fullPath = "resources/"+uploadPath+result.getTemp_saved();
+			result.setFullPath(fullPath);
 		return result;
 	}
 	
@@ -73,8 +76,14 @@ public class MakeController {
 			FileService.deleteFile(fullPath);
 		}
 		
-		 int result2 = dao.deltemp(temp);
-		 int result3 = dao.delparts(parts);
+		Temp result2 = dao.gettemp(temp);
+		
+		String fullPath = savePath+result2.getTemp_saved();
+		
+		FileService.deleteFile(fullPath);
+		
+		 dao.deltemp(temp);
+		 dao.delparts(parts);
 		 return 1;
 	}
 	
@@ -122,5 +131,53 @@ public class MakeController {
 			s.setFullPath(fullPath);
 		}
 		return result;
+	}
+	
+	@PostMapping("/uploadtemp")
+	public int uploadtemp(HttpSession session, MultipartFile file, HttpServletRequest request) {
+		String rootPath = request.getSession().getServletContext().getRealPath("/") ;//리얼경로
+		String savePath = rootPath + "/resources/"+uploadPath ;
+		
+		Temp temp = new Temp();
+		
+		int cust = (int) session.getAttribute("login");
+		temp.setCust_number(cust);
+
+		String savedFilename = FileService.saveFile(file, savePath);
+		temp.setTemp_saved(savedFilename);
+
+		return dao.uploadtemp(temp);
+	} 
+	
+	@PostMapping("/savemusic")
+	public int savemusic(HttpSession session, MultipartFile file, HttpServletRequest request) {
+		String rootPath = request.getSession().getServletContext().getRealPath("/") ;//리얼경로
+		String savePath = rootPath + "/resources/"+uploadPath ;
+		
+		int cust = (int) session.getAttribute("login");
+		Music_library music = new Music_library();
+		Temp temp = new Temp();
+		Part_music parts = new Part_music();
+		
+		music.setCust_number(cust);
+		temp.setCust_number(cust);
+		parts.setCust_number(cust);
+		
+		Temp result2 = dao.gettemp(temp);
+		music.setMus_saved(result2.getTemp_saved());
+		music.setMus_time(result2.getTemp_title());
+		int result3 = dao.savemusic(music);
+		
+		List<Part_music> result = dao.getall(parts);
+		for(Part_music r : result) {
+			String fullPath = savePath+r.getPhrase_saved();
+			
+			FileService.deleteFile(fullPath);
+		}
+		
+		dao.deltemp(temp);
+		dao.delparts(parts);
+		
+		return 1;
 	}
 }

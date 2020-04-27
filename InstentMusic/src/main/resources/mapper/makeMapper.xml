@@ -3,12 +3,23 @@
 
 <mapper namespace="global.sesoc.teamBOB4.dao.MakeMapper">
 <insert id="inserttemp" parameterType="Temp">
-insert into temp
+insert into temp(
+temp_number
+,cust_number
+,temp_title
+,temp_bpm
+<if test="temp_saved!=null">
+,temp_saved
+</if>
+)
 values(
 SEQ_TEMP_TEMP_NUMBER.nextval
 ,#{cust_number}
 ,#{temp_title}
 ,#{temp_bpm}
+<if test="temp_saved!=null">
+,#{temp_saved}
+</if>
 )
 </insert>
 
@@ -57,13 +68,32 @@ and part_number = #{part_number}
 select *
 from part_music
 where cust_number = #{cust_number}
+order by part_number
+,phrase_number
 </select>
 
 <delete id="delparts" parameterType="Parts">
 delete from part_music
 where
 cust_number = #{cust_number}
-order by part_number
-and phrase_number
 </delete>
+
+<update id="uploadtemp" parameterType="Temp">
+update temp
+set
+temp_saved = #{temp_saved}
+where
+cust_number = #{cust_number}
+</update>
+
+<insert id="savemusic" parameterType="Music">
+insert into music_library
+values(
+SEQ_Music_Library_mus_number.nextval
+,#{cust_number}
+,#{mus_title}
+,#{mus_saved}
+,sysdate
+)
+</insert>
 </mapper>

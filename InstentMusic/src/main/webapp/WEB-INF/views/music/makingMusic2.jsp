@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 <script>
-var song, path, stt;
+var song, path, stt, mastersong, master;
 var partnum = 0;
 var paths =[];
 $(function() {
@@ -33,6 +33,51 @@ $(function() {
 		getall();
 	})
 })
+function gettemp(){
+	$.ajax({
+		method : 'get'
+		,url : 'gettemp'
+		,success : function(resp){
+				if(resp==''||resp==null||resp.cust_number=='undefined'){
+					var newname = '<input type="text" id="mustitle"><button id="titlebtn">save</button>';
+					$("#title").html(newname);
+					$("#bpmbar").val(80);
+					$("#titlebtn").on('click',function(){
+						var data = {'temp_title' : $("#mustitle").val()
+								,'temp_bpm' : $("#bpmnum").text()}
+						$.ajax({
+							method : 'post'
+							,url : 'inserttemp'
+							,data : data
+							,success : gettemp
+						})
+					})
+				}else{
+					master = resp.fullPath;
+					var newname = resp.temp_title+'<img id="editname" src="resources/images/sound/sledit.png">'
+					$("#title").html(newname);
+					$("#bpmnum").text(resp.temp_bpm);
+					$("#bpmbar").val(resp.temp_bpm);
+
+					$("#editname").click(function(){
+						var editname = '<input type="text" id="mustitle"><button id="titleedit">save</button>';
+						$("#title").html(editname);
+						$("#titleedit").click(function(){
+							var data = {'temp_title' : $("#mustitle").val()
+									,'temp_bpm' : $("#bpmnum").text()}
+							$.ajax({
+								method : 'post'
+								,url : 'updatetemp'
+								,data : data
+								,success : gettemp
+							})
+						})
+					})
+				}
+				setup();
+			}
+	})
+}
 function getall(){
 	userStartAudio();
 	partnum = 0;
@@ -74,6 +119,7 @@ function setup(){
 	userStartAudio();
 	
 	bpmsong = loadSound('resources/sound/drum/drum7.wav');
+	mastersong = loadSound(master);
 	bpmpat = [1, 1, 1, 1];
 	bpmprs = new p5.Phrase('bpmsong',(time) => {
 		bpmsong.play(time);
@@ -138,51 +184,21 @@ $(function(){
 			,success : gettemp
 		})
 	})
-})
-function gettemp(){
+	$("#savemusic").click(function(){
 	$.ajax({
-		method : 'get'
-		,url : 'gettemp'
+		type : 'post'
+		,url : 'savemusic'
 		,success : function(resp){
-				if(resp==''||resp==null||resp.cust_number=='undefined'){
-					var newname = '<input type="text" id="mustitle"><button id="titlebtn">save</button>';
-					$("#title").html(newname);
-					$("#bpmbar").val(80);
-					bpms.setBPM(80);
-					$("#titlebtn").on('click',function(){
-						var data = {'temp_title' : $("#mustitle").val()
-								,'temp_bpm' : $("#bpmnum").text()}
-						$.ajax({
-							method : 'post'
-							,url : 'inserttemp'
-							,data : data
-							,success : gettemp
-						})
-					})
-				}else{
-					var newname = resp.temp_title+'<img id="editname" src="resources/images/sound/sledit.png">'
-					$("#title").html(newname);
-					$("#bpmnum").text(resp.temp_bpm);
-					$("#bpmbar").val(resp.temp_bpm);
-
-					$("#editname").click(function(){
-						var editname = '<input type="text" id="mustitle"><button id="titleedit">save</button>';
-						$("#title").html(editname);
-						$("#titleedit").click(function(){
-							var data = {'temp_title' : $("#mustitle").val()
-									,'temp_bpm' : $("#bpmnum").text()}
-							$.ajax({
-								method : 'post'
-								,url : 'updatetemp'
-								,data : data
-								,success : gettemp
-							})
-						})
-					})
-				}
+				alert("Save Complete!");
+				location.href = "musiclist";
 			}
 	})
-}
+
+	$("#playall").click(function(){
+		mastersong.play();
+	})
+})
+})
 function addpart(partnums){
 	userStartAudio();
 
@@ -223,6 +239,60 @@ $(".gotomake").click(function(){
 			}
 	})
 })
+$("#mixing").click(function(){
+		userStartAudio();
+		if(paths==null){
+			alert('please recording phrases!');
+			return;
+		}
+		if($("#mixing").val()=='mixing'){
+			state=0;
+			recordstart();
+		}else{
+			state=2;
+			recordstart();
+			$("#mixing").val('mixing');
+			$("#mixing").text('Mixing Music');
+		}
+	})
+}
+function recordstart(){
+	userStartAudio();
+    if(state===0){
+    	recorder.record(soundFile);
+    	s1.play();
+		s1.onended(function(){s2.play();});
+		s2.onended(function(){s3.play();});
+		s3.onended(function(){state=1;recordstart();});
+    }else if(state===1){
+      recorder.stop();
+      $("#mixing").val('play');
+		$("#mixing").text('Play Mixed');
+    }else if(state===2){
+	  soundFile.play();
+	  soundFile.onended(function(){
+			soundBlob = soundFile.getBlob();
+			  sendfile();
+			})
+    }
+}
+function sendfile(){
+	   var formData = new FormData();
+	 
+	   formData.append("file", soundBlob);
+
+	   $.ajax({
+	    type: "post",
+ 		 url: "uploadtemp",
+  		data: formData,
+  		processData: false,
+  		contentType: false,
+		success : function(resp){
+				soundFile = new p5.SoundFile();
+				alert("Mixing Complete!");
+				location.reload();
+			}
+	   })
 }
 </script>
 <style>
@@ -362,7 +432,8 @@ float : left;
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">test</button>&emsp;/&emsp;
-	<button id="mixing">Mixing Music</button>
+	<button id="mixing" value="mixing">Mixing Music</button>&emsp;/&emsp;
+	<button id="playall" value="play">Music Play</button>
 	</div>
 <div id="parts">
 <button id="makingstart">Click here to start making music!</button>

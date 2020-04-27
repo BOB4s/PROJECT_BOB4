@@ -438,7 +438,7 @@ $(function(){
 			state=2;
 			recordstart2();
 			$("#musicall").val('mixing');
-			$("#musicall").text('Music Mixing');
+			$("#musicall").text('Mixing Music');
 		}
 	})
 	$(".rcdmusic").on("click", function(){
@@ -503,8 +503,10 @@ function recordstart(){
       changes();
     }else if(state===2){
 		soundFile.play();
-		  soundBlob = soundFile.getBlob();
-		  sendfile();
+		soundFile.onended(function(){
+			soundBlob = soundFile.getBlob();
+			  sendfile();
+			})
     }
 }
 function recordstart2(){
@@ -518,8 +520,10 @@ function recordstart2(){
 		$("#musicall").text('Play Mixed');
     }else if(state===2){
 	  soundFile.play();
-	 	soundBlob = soundFile.getBlob();
-	  	sendfile2();
+	  soundFile.onended(function(){
+			soundBlob = soundFile.getBlob();
+			  sendfile2();
+			})
     }
 }
 function changes(){
@@ -592,6 +596,7 @@ function sendfile(){
 	        contentType: false,
 			success : function(resp){
 					soundFile = new p5.SoundFile();
+					alert("Recording Complete!");
 					location.reload();
 				}
 		   })
@@ -645,7 +650,7 @@ $(function(){
 	Part Number : <span id="partnumber">${sessionScope.part_num}</span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">${sessionScope.temp_bpm}</span>&emsp;/&emsp;
 	<button id="mixing">BPM Start</button>&emsp;/&emsp;
-	<button id="musicall" value="mixing">Music Mixing</button>
+	<button id="musicall" value="mixing">Mixing Music</button>
 	</div>
 	<div id="keyboard">
 	<div class="fronts">

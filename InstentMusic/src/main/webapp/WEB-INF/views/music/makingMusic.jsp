@@ -1107,6 +1107,10 @@ $(function(){
 	</nav>
 	
 	<div id="backgroundLeft">
+		<img alt="BL" src="resources/images/makingMusic/background_left.png">
+	</div>
+	<div id="backgroundRight">
+		<img alt="BR" src="resources/images/makingMusic/background_right.png">
 	</div>
 	<div id="wrapper">
 		<div id="soundlib">

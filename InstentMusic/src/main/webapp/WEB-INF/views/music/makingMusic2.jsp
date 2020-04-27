@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
+<link rel="stylesheet" href="resources/css/background_left_right.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
@@ -554,6 +555,10 @@ $(function(){
 			</div>
 		</div>
 	</nav>
+	
+	<div id="backgroundLeft">
+		<img alt="composing" src="resources/images/makingMusic/composing3.jpg">
+	</div>
 	<div id="wrapper">
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;

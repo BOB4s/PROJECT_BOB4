@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
+<link rel="stylesheet" href="resources/css/background_left_right.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>

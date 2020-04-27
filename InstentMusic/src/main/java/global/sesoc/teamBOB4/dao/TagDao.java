@@ -11,7 +11,8 @@ public class TagDao {
 	@Autowired
 	SqlSession session;
 
-	public int selectTagLink(String tag_name) {
+	public int selectTagLink(String text) {
+		String tag_name =  text;
 		TagMapper mapper =session.getMapper(TagMapper.class);
 	 int resultLink=0;
 	 resultLink =mapper.selectTagLink(tag_name);

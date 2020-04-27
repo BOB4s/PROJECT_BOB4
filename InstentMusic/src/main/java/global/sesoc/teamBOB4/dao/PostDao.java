@@ -95,4 +95,6 @@ public class PostDao {
 		PostMapper mapper = session.getMapper(PostMapper.class);
 		return mapper.getPostByPostNum(post_number);
 	}
+
+
 }

@@ -17,10 +17,9 @@
 		)
 		values
 		(
-		SEQ_Tag_tag_number
+		SEQ_Tag_tag_number.nextval
 		,#{tag_name}
 		)
-	"src/main/resources/mapper/postMapper.xml"
 </insert>
 <select id="selectTagnameByTagnum" parameterType="int" resultType="String">
 

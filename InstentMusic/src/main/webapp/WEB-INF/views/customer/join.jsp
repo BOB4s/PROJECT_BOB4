@@ -210,7 +210,7 @@ $(function(){
 <div class="bg">
 <div id="wrapper">
 	<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
-	<form id="join" action="join" method="POST" enctype="multipart/form-data">
+	<form id="join" action="cust_join_byemail" method="POST" enctype="multipart/form-data">
 	<div class="container">
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>

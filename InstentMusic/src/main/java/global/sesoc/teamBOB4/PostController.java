@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +83,7 @@ public class PostController {
 		System.out.println(post_number);
 
 		int tag_number = tagdao.selectTagLink(text);
+		System.out.println(tag_number);
 		post_tagdao.linkedTags(post_number, tag_number);
 		return "success";
 
@@ -128,9 +128,13 @@ public class PostController {
 	}
 	
 	@GetMapping("/postGetOne")
-	public String postGetOne(int post_number,Model model) {
+	public String postGetOne(
+			@RequestParam(value = "post_number", defaultValue = "0") int post_number,
+			@RequestParam(value = "mus_number", defaultValue = "0") int mus_number,Model model) {
 
-	
+	if(post_number==0&&mus_number!=0) {
+		 post_number = postdao.getOneByMus_number(mus_number);
+	}
 		List <String> tagList = new ArrayList<>();
 		List<Integer> tagnumList=post_tagdao.GetlinkedTags(post_number);
 		

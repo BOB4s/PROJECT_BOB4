@@ -57,10 +57,8 @@
 	
 	</insert>
 	<select id="getOneByMus_number" parameterType="int" resultType="int">
-	select post_number
-	from Post
-	where mus_number = #{mus_number}
-	
+	 (select NVL(max(post_number),0)  from Post
+	where mus_number =#{mus_number}) 
 	
 	
 	</select>

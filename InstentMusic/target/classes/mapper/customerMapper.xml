@@ -3,11 +3,17 @@
 
 <mapper namespace="global.sesoc.teamBOB4.dao.CustomerMapper">
 
-	<select id="searchpf" parameterType="string" resultType="Customer">
+	<select id="searchpf" parameterType="String" resultType="Customer">
 		select *
 		from customer
 		where
 		cust_nickname like '%'||#{search}||'%'
+	</select>
+	
+	<select id="get_cust_number_by_nickname" parameterType="String" resultType="int">
+	 (select NVL(max(cust_number),0)  from Customer
+	where cust_nickname =#{cust_nickname}) 
+	
 	</select>
 
 	<insert id="following" parameterType="Follow">

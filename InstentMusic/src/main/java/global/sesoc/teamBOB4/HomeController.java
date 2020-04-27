@@ -100,6 +100,14 @@ public class HomeController {
 		}
 	}
 
+	@GetMapping(value="logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		
+		return "home";
+	}
+	
 	@GetMapping("/join")
 	public String join() {
 		return "customer/join";

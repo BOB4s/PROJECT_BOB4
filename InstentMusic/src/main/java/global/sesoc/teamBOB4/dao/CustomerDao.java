@@ -134,4 +134,9 @@ public class CustomerDao {
 		int cust_number = cust_number1;
 		return mapper.searchOne_ByCustnumber_getProfile(cust_number);
 	}
+
+	public int get_cust_number_by_nickname(String cust_nickname) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		return mapper.get_cust_number_by_nickname(cust_nickname);
+	}
 }

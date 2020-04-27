@@ -231,7 +231,7 @@ div.friends_bar_list {
 	<div id="wrapper" >
 	<nav class="navigation">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">

@@ -31,13 +31,11 @@
 		background-color: white;
 	}
 	.bg{
-		background-image: url("resources/images/join/songwriter.jpg");
+		background-image: url("resources/images/join/songwriter.png");
 		height: 100%;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
-		-webkit-filter: grayscale(100%);
-		filter: grayscale(100%);
 	}
 	th{
 		background-color: white;
@@ -107,8 +105,12 @@ a {
   text-align: center;
 }
 
-	
-	
+.logoDiv img{
+	position: absolute;
+	top: 5%;
+	left: 15%;
+}
+
 </style>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script>
@@ -209,11 +211,13 @@ $(function(){
 <body>
 <div class="bg">
 <div id="wrapper">
-	<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
+	<div class="logoDiv">
+		<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
+	</div>
 	<form id="join" action="join" method="POST" enctype="multipart/form-data">
 	<div class="container">
     <h1>Register</h1>
-    <p>Please fill in this form to create an account.</p>
+    <p>Please full-fill the blanks in this form to create an account.</p>
     <hr>
     <div class="col-xs-6 profileplace">
 		<label for="profile"><b>Image</b></label>

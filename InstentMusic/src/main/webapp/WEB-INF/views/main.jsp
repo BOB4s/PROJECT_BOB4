@@ -14,10 +14,11 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/styles.css">
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="resources/css/followBar.css">
+<script src="http://192.168.43.28:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
- <link href="resources/css/toastr.min.css" rel="stylesheet"/>
+<link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style type="text/css">
 a:link{
 	text-decoration: none;
@@ -57,7 +58,7 @@ animation: moveUp 3.65s ease forwards;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-	var socket = io.connect('http://172.30.1.18:4000');
+	var socket = io.connect('http://192.168.0.198:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -91,7 +92,7 @@ animation: moveUp 3.65s ease forwards;
 	
 		socket.emit('add user', username);
 		getPage_data(cust_number);
-		
+		getfollwedList();
 			
 		$(window).scroll(function() {
 		    var scrolltop = $(document).scrollTop();
@@ -224,15 +225,42 @@ animation: moveUp 3.65s ease forwards;
 		console.log(post_number);
 		location.href = "postGetOne?post_number=" + post_number;
 
-		}
+	}
 	
+	function getfollwedList(){
+		var photoData = "";
+		console.log(${followed_Profiles_List})
+		$.each(${followed_Profiles_List},
+				
+		function(index, item){
+			console.log(item)
+			photoData += "<li><div class='iniPhoto'><a href=''>"+item.cust_photo_saved;
+			});
+			photoData += "</a></div></li>";
+
+			$('#photoDataBar').html(photoData);
+			
+		var data = "";
+		console.log(${followed_Profiles_List})
+		$.each(${followed_Profiles_List},
+
+		function(index, item) {
+			console.log(item)
+			data += "<li><div>"+item.cust_photo_saved+"</div></li>";
+			data += "<li><div>"+item.cust_nickname+"</div></li>";
+			data +=	"<li><div>"+item.cust_number;
+			});
+			data +="</div></li>";
+
+			$('#followerList_Profiles').html(data);
+}
 </script>
 </head>
 <body>
 	<!-- Top for logo and navibar -->
 	 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -346,7 +374,23 @@ animation: moveUp 3.65s ease forwards;
 <br>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>
-			
+
+<!-- follow list -->
+<article id="follower_tool" style="font-size: 15pt">
+	<div id="followBar">
+		<div class="follower_viewall">
+			<a href="#">View all</a>
+		</div>
+		<div id="initialPhoto">
+			<ul id="photoDataBar"></ul>
+		</div>
+		<div>
+			<ul id="followerList_Profiles"></ul>
+		</div>
+	</div>
+</article>
+
+
 <!-- grid for main page (holding) -->
 <!-- <div class="grid-container">
 	<div class="mainGrid">

@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
+<link rel="stylesheet" href="resources/css/background_left_right.css">
 <script>
 var song, path, stt, mastersong, master;
 var partnum = 0;
@@ -294,17 +295,21 @@ margin : 10px 10px 10px 10px;
 #musinfo{
 	text-align: center;
 	margin : 0 auto;
+	width: 1100px;
 	height : 30px;
 	margin-top: 10px;
 	text-align : center;
 	width: 1200px;
 }
 #parts{
-	margin: 0 auto;
-	width:1100px;
+	margin-left: 8%;
+	margin-right: 8%;
+	margin-top: 0;
+	margin-bottom: 0;
+	width:1050px;
 }
 .part{
-	margin : 10px 10px 10px 10px;
+	margin : 10px 10px 10px 42px;
 	float: left;
 	width: 200px;
 	height: 150px;
@@ -420,6 +425,13 @@ float : left;
 			</div>
 		</div>
 	</nav>
+	
+	<div id="backgroundLeft">
+		<img alt="composing" src="resources/images/makingMusic/backgroundLeft-1.png">
+	</div>
+	<div id="backgroundRight">
+		<img alt="composing" src="resources/images/makingMusic/backgroundRight-1.png">
+	</div>
 	<div id="wrapper">
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;

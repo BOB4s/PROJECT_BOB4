@@ -346,7 +346,7 @@ $.ajax({
 				if(item.sou_type=='added'){
 					return true;
 				}
-				name += '<li><button class="userbtn" value="'+item.sou_type+'">'+ item.sou_type+ '</button></li>'
+				name += '<li><button class="userbtn w3-btn w3-grey w3-round" value="'+item.sou_type+'">'+ item.sou_type+ '</button></li>'
 			})
 			$("#newbtn").html(name);
 			$(".userbtn").click(function() {

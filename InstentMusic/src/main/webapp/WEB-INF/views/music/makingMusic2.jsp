@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 <link rel="stylesheet" href="resources/css/background_left_right.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script>
 var song, path, stt, mastersong, master;
 var partnum = 0;
@@ -41,7 +42,7 @@ function gettemp(){
 		,url : 'gettemp'
 		,success : function(resp){
 				if(resp==''||resp==null||resp.cust_number=='undefined'){
-					var newname = '<input type="text" id="mustitle"><button id="titlebtn">save</button>';
+					var newname = '<input type="text" id="mustitle"><button id="titlebtn" class="w3-btn w3-grey w3-round">save</button>';
 					$("#title").html(newname);
 					$("#bpmbar").val(80);
 					bpms.setBPM('80');
@@ -102,7 +103,7 @@ function getall(){
 				}
 			}
 	})
-	var addment = '<div id="parta"><button id="addpart">+</button></div>'
+	var addment = '<div id="parta"><button id="addpart" class="part">+</button></div>'
 	$("#parts").html('');
 	$("#parts").append(addment);
 
@@ -372,7 +373,6 @@ float : left;
 	border: 0px;
 	color : skyblue;
 	font-size : 70px;
-	margin : 10px 10px 10px 10px;
 }
 </style>
 </head>
@@ -436,8 +436,8 @@ float : left;
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&emsp;/&emsp;
-	<button id="mixing" value="mixing">Mixing Music</button>&emsp;/&emsp;
-	<button id="playall" value="play">Music Play</button>
+	<button id="mixing" value="mixing" class="w3-btn w3-grey w3-round">Mixing Music</button>&emsp;/&emsp;
+	<button id="playall" value="play" class="w3-btn w3-grey w3-round">Music Play</button>
 	</div>
 <div id="parts">
 <button id="makingstart">Click here to start making music!</button>

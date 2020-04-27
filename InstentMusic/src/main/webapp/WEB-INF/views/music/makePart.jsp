@@ -217,9 +217,6 @@ var paths = [];
 var saves = ['N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N'];
 $(document).ready(function(){
 	getparts();
-	$("#backto").click(function(){
-		location.href="makingmusic2";
-	})
 })
 function getparts(){
 	$.ajax({
@@ -658,6 +655,10 @@ $(function(){
 
 		$(prs).html(data);
 	}
+
+	$("#backto").click(function(){
+		location.href="makingmusic2";
+	})
 })
 </script>
 </head>

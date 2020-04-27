@@ -165,7 +165,7 @@ public class MakeController {
 		
 		Temp result2 = dao.gettemp(temp);
 		music.setMus_saved(result2.getTemp_saved());
-		music.setMus_time(result2.getTemp_title());
+		music.setMus_title(result2.getTemp_title());
 		int result3 = dao.savemusic(music);
 		
 		List<Part_music> result = dao.getall(parts);

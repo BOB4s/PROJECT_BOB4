@@ -159,6 +159,9 @@ $(function(){
 			bpms.stop();
 		}
 	})
+	$("#playall").on('click',function(){
+		mastersong.play();
+	})
 })
 $(function(){
 	$("#resettemp").click(function(){
@@ -192,10 +195,6 @@ $(function(){
 				alert("Save Complete!");
 				location.href = "musiclist";
 			}
-	})
-
-	$("#playall").click(function(){
-		mastersong.play();
 	})
 })
 })

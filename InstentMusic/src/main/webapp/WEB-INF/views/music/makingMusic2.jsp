@@ -301,7 +301,10 @@ cursor: pointer;
 	width: 1200px;
 }
 #parts{
-	margin: 0 auto;
+	margin-left: 8%;
+	margin-right: 8%;
+	margin-top: 0;
+	margin-bottom: 0;
 	width:1100px;
 }
 .part{
@@ -557,7 +560,10 @@ $(function(){
 	</nav>
 	
 	<div id="backgroundLeft">
-		<img alt="composing" src="resources/images/makingMusic/composing3.jpg">
+		<img alt="composing" src="resources/images/makingMusic/backgroundLeft-1.jpg">
+	</div>
+	<div id="backgroudRight">
+		<img alt="composing" src="">
 	</div>
 	<div id="wrapper">
 	<div id="musinfo">

@@ -46,4 +46,6 @@ public interface CustomerMapper {
 
 	Customer getDataFromDBsendData(String sendData);
 
+	Customer searchOne_ByCustnumber_getProfile(int cust_number);
+
 }

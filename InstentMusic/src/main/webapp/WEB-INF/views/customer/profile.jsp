@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
 <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
 <link rel="stylesheet" href="resources/css/main.css">
- <script src="http://192.168.0.84:4000/socket.io/socket.io.js"></script>
+ <script src="http://172.30.1.41:4000/socket.io/socket.io.js"></script>
 <script>
 $(function(){
 $("#profileSetting").click(function(){
@@ -53,6 +53,7 @@ $("#profileSetting").click(function(){
 		
 		var follower_number = '${cust_number}';
 	 	var follow_number = '${customersData.cust_number}'; 
+		
 		$.ajax({
 			method : 'GET',
 			url : 'followchecking',
@@ -69,6 +70,7 @@ $("#profileSetting").click(function(){
 		})
 
 		$("#following_button").on("click", function() {
+			
 			$.ajax({
 				method : 'GET',
 				url : 'following',

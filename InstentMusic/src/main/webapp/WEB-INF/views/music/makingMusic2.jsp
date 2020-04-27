@@ -305,10 +305,10 @@ cursor: pointer;
 	margin-right: 8%;
 	margin-top: 0;
 	margin-bottom: 0;
-	width:1100px;
+	width:1050px;
 }
 .part{
-	margin : 10px 10px 10px 10px;
+	margin : 10px 10px 10px 42px;
 	float: left;
 	width: 200px;
 	height: 150px;
@@ -349,6 +349,7 @@ float : left;
 #slib, #addpart, #resettemp, #savemusic{
 	width : 170px;
 }
+
 </style>
 <script>
 var song, path;
@@ -560,10 +561,10 @@ $(function(){
 	</nav>
 	
 	<div id="backgroundLeft">
-		<img alt="composing" src="resources/images/makingMusic/backgroundLeft-1.jpg">
+		<img alt="composing" src="resources/images/makingMusic/backgroundLeft-1.png">
 	</div>
-	<div id="backgroudRight">
-		<img alt="composing" src="">
+	<div id="backgroundRight">
+		<img alt="composing" src="resources/images/makingMusic/backgroundRight-1.png">
 	</div>
 	<div id="wrapper">
 	<div id="musinfo">

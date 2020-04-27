@@ -28,5 +28,6 @@
 		<mapper resource="mapper/post_tagMapper.xml" />
 		<mapper resource="mapper/replyMapper.xml" />
 		<mapper resource="mapper/makeMapper.xml" />
+		<mapper resource="mapper/listMapper.xml" />
 	</mappers>
 </configuration>

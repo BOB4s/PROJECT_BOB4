@@ -22,6 +22,7 @@
 var song, path, stt, mastersong, master;
 var partnum = 0;
 var paths =[];
+var bpmpat, bpmsong, bpms, bpmprs, bpmCrtl;
 $(function() {
 	$("#slib").click(function(){
 		location.href="makingMusic";
@@ -42,6 +43,7 @@ function gettemp(){
 					var newname = '<input type="text" id="mustitle"><button id="titlebtn">save</button>';
 					$("#title").html(newname);
 					$("#bpmbar").val(80);
+					bpms.setBPM('80');
 					$("#titlebtn").on('click',function(){
 						var data = {'temp_title' : $("#mustitle").val()
 								,'temp_bpm' : $("#bpmnum").text()}
@@ -58,7 +60,7 @@ function gettemp(){
 					$("#title").html(newname);
 					$("#bpmnum").text(resp.temp_bpm);
 					$("#bpmbar").val(resp.temp_bpm);
-
+					bpms.setBPM(resp.temp_bpm);
 					$("#editname").click(function(){
 						var editname = '<input type="text" id="mustitle"><button id="titleedit">save</button>';
 						$("#title").html(editname);
@@ -108,7 +110,6 @@ function getall(){
 		addpart(partnum);
 	})
 }
-var bpmpat, bpmsong, bpms, bpmprs, bpmCrtl;
 var s1,s2,s3,s4,s5,s6;
 var recorder, soundFile, soundBlob;
 var masterGain;
@@ -127,8 +128,8 @@ function setup(){
 	
 	bpms = new p5.Part();
 	bpms.addPhrase(bpmprs);
-	bpms.setBPM('80');
 	$("#bpmbar").on('input',function(){
+		bpms.loop();
 		bpmCtrl = $(this).val();
 		bpms.setBPM(bpmCtrl);
 		$("#bpmnum").text(bpmCtrl);
@@ -149,16 +150,6 @@ function setup(){
 }
 $(function(){
 	userStartAudio();
-	$("#bpmplay").on('click',function(){
-		var txt = $("#bpmplay").text();
-		if(txt=='test'){
-			$("#bpmplay").text('stop');
-			bpms.loop();
-		}else{
-			$("#bpmplay").text('test');
-			bpms.stop();
-		}
-	})
 	$("#playall").on('click',function(){
 		mastersong.play();
 	})
@@ -186,6 +177,8 @@ $(function(){
 			,data : data
 			,success : gettemp
 		})
+		bpms.setBPM($("#bpmnum").text());
+		bpms.stop();
 	})
 	$("#savemusic").click(function(){
 	$.ajax({
@@ -430,7 +423,7 @@ float : left;
 	<div id="wrapper">
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;
-	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&nbsp;<button id="bpmplay">test</button>&emsp;/&emsp;
+	BPM : <span id="bpmnum">80</span>&emsp;<input id="bpmbar" type="range" value="80" min="30" max="200">&emsp;/&emsp;
 	<button id="mixing" value="mixing">Mixing Music</button>&emsp;/&emsp;
 	<button id="playall" value="play">Music Play</button>
 	</div>

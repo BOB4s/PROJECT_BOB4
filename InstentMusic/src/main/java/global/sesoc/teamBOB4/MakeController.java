@@ -47,8 +47,9 @@ public class MakeController {
 		Temp temp = new Temp();
 		temp.setCust_number(cust);
 		Temp result = dao.gettemp(temp);
+		if(result!=null) {
 			String fullPath = "resources/"+uploadPath+result.getTemp_saved();
-			result.setFullPath(fullPath);
+			result.setFullPath(fullPath);}
 		return result;
 	}
 	

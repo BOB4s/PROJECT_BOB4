@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/styles.css">
-<script src="http://192.168.0.199:4000/socket.io/socket.io.js"></script>
+<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -57,7 +57,7 @@ animation: moveUp 3.65s ease forwards;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-	var socket = io.connect('http://192.168.0.199:4000');
+	var socket = io.connect('http://172.30.1.18:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -289,7 +289,7 @@ animation: moveUp 3.65s ease forwards;
 			<div class="info">
 				<header>
 					<h1>My Music List</h1>
-						<a href="myMusicList"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
+						<a href="musiclist"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
 				</header>
 					<p>
 					Click the icon for listening to the music list that built with what you composed music

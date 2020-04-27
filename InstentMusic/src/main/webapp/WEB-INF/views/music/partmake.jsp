@@ -3,26 +3,37 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusicMake</title>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
 <script src="resources/js/p5.sound.min.js"></script>
 <script src="resources/js/sketch.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/navigation.css">
+<link rel="stylesheet" href="resources/css/sideMenuBar.css">
+<link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
+html{
+	margin-left: 2%;
+}
 body{
 margin : 10px 10px 10px 10px;
 overflow-y: hidden;
 }
 #keyboard{
-	margin : 0 auto;
+	margin-left: 40px;
+	margin-top : 0;
 	margin-top : 10px;
 	padding: 5px 5px 5px 5px;
-	width: 1020px;
+	width: 1120px;
 	height: 220px;
 	border: 1px solid black;
 }
@@ -44,6 +55,8 @@ overflow-y: hidden;
 	color: black;
 	font-size: 15px;
 	border: 0px;
+	margin-bottom: 2px;
+	padding-top: 2px;
 }
 .del{
 	width : 10px;
@@ -129,6 +142,7 @@ height: 120px;
 	line-height: 1.2;
 }
 #musinfo{
+	text-align: center;
 	margin-top: 10px;
 }
 #phrase1, #phrase2, #phrase3, #phrase4{
@@ -145,8 +159,10 @@ height: 120px;
 	border: 1px solid black;
 	margin : 5px 5px 5px 40px;
 	font-size : 8px;
-	padding : 5px;
 	padding-top: 10px;
+	padding-right: 0px;
+	padding-bottom: 5px;
+	padding-left: 5px;
 }
 .pnames{
 	font-size : 15px;
@@ -159,8 +175,10 @@ height: 120px;
 	border: 1px solid black;
 	margin : 11px 5px 5px 40px;
 	font-size : 8px;
-	padding : 5px;
 	padding-top: 10px;
+	padding-right: 0px;
+	padding-bottom: 5px;
+	padding-left: 5px;
 }
 #phrases{
 	margin : 0 auto;
@@ -191,6 +209,10 @@ height: 120px;
 .keyp{
 	width : 30px;
 	height : 30px;
+}
+#KB{
+	font-style: italic;
+	font-family: "Times New Roman", Times, serif;
 }
 </style>
 <script>
@@ -707,29 +729,83 @@ $(function(){
 		$(prs).html(data);
 	}
 })
+function makingmusic2(){
+	location.href="makingmusic2";
+}
 </script>
 </head>
 <body>
+<!-- Top for logo and navibar -->
+	 <nav class="navigation">
+		<div class="navigation__column">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>
+		</div>
+		<div class="">
+			<div id="backto" class="button_base btn_3d_double_roll" onclick="makingmusic2()">
+				<div>Return Back</div>
+				<div>Return Back</div>
+				<div>Return Back</div>
+				<div>Return Back</div>
+			</div>
+			<div id="resetpart" class="button_base btn_3d_double_roll">
+				<div>Reset</div>
+				<div>Reset</div>
+				<div>Reset</div>
+				<div>Reset</div>
+			</div>
+			<div id="savepart" class="button_base btn_3d_double_roll">
+				<div>Save Part</div>
+				<div>Save Part</div>
+				<div>Save Part</div>
+				<div>Save Part</div>
+			</div>
+			<br>
+		</div>
+	
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"><i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item"  >
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
+			</div>
+		</div>
+	</nav>
+
 	<div id="wrapper">
-	<a href="makingmusic2"><button id="backto">Return Back</button></a>
+	<!-- <a href="makingmusic2"><button id="backto">Return Back</button></a>
 		<button id="resetpart">Reset</button>
-		<button id="savepart">Save Part</button><br>
+		<button id="savepart">Save Part</button><br> -->
 		<div id="musinfo">
 	Part Number : <span id="partnumber">${part_number}</span>&emsp;/&emsp;
 	BPM : <span id="bpmnum">${temp_bpm}</span>&emsp;/&emsp;
-	<button id="mixing">BPM Start</button>&emsp;/&emsp;
-	<button id="musicall">Music Start</button>
+	<button id="mixing" type="button" class="btn btn-secondary">BPM Start</button>&emsp;/&emsp;
+	<button id="musicall" type="button" class="btn btn-secondary">Music Start</button>
 	</div>
 	<div id="keyboard">
 	<div class="fronts">
-		<span style="font-size: 50px;">Key Board</span>
+		<span id="KB" style="font-size: 60px;">Key Board</span>
 		<br>
 		<div class="libs" style="height:130px;">
 			<ul>
-				<li><button id="Set1" value="Set1">Set1</button></li>
-				<li><button id="Set2" value="Set2">Set2</button></li>
-				<li><button id="Set3" value="Set3">Set3</button></li>
-				<li><button id="Set4" value="Set4">Set4</button></li>			
+				<li><button id="Set1" class="w3-btn w3-grey w3-round" value="Set1">Set1</button></li>
+				<li><button id="Set2" class="w3-btn w3-grey w3-round" value="Set2">Set2</button></li>
+				<li><button id="Set3" class="w3-btn w3-grey w3-round" value="Set3">Set3</button></li>
+				<li><button id="Set4" class="w3-btn w3-grey w3-round" value="Set4">Set4</button></li>			
 			</ul>
 		</div>
 		<span id="newset"></span><br>
@@ -796,4 +872,13 @@ $(function(){
 </div>
 </div> 
 </body>
+<script>
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
+</script>
 </html>

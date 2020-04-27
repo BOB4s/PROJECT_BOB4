@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
-<script src="http://172.30.1.41:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.43.28:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -260,7 +260,7 @@ animation: moveUp 3.65s ease forwards;
 	<!-- Top for logo and navibar -->
 	 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">

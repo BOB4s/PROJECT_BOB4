@@ -317,7 +317,7 @@ animation: moveUp 3.65s ease forwards;
 			<div class="info">
 				<header>
 					<h1>My Music List</h1>
-						<a href="myMusicList"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
+						<a href="musiclist"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
 				</header>
 					<p>
 					Click the icon for listening to the music list that built with what you composed music

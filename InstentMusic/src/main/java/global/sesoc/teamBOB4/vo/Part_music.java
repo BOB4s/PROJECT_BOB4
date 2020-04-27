@@ -11,4 +11,5 @@ public class Part_music {
 	private int phrase_number;
 	private String key_board;
 	private String phrase_saved;
+	private String fullPath;
 }

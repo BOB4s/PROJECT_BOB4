@@ -18,89 +18,6 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
-<style>
-body{
-margin : 10px 10px 10px 10px;
-}
-#musinfo{
-	text-align: center;
-	margin : 0 auto;
-	height : 30px;
-	margin-top: 10px;
-	text-align : center;
-	width: 1200px;
-}
-#parts{
-	margin: 0 auto;
-	width:1100px;
-}
-.part{
-	margin : 10px 10px 10px 10px;
-	float: left;
-	width: 200px;
-	height: 150px;
-	border: 1px solid black;
-}
-.phrase1, .phrase2, .phrase3, .phrase4, .partbtn{
-	width : 200px;
-	height : 30px;
-	text-align: center;
-}
-.gotomake{
-	float : left;
-	height : 28px;
-	width : 140px;
-	background-color: #8181F7;
-	border : 0px;
-	color : white;
-	font-weight : bold;
-}
-.delpart{
-	float : left;
-	height : 28px;
-	width : 29px;
-	background-color: red;
-	border : 0px;
-	color : white;
-	font-weight: bold;
-}
-.playpart{
-float : left;
-	height : 28px;
-	width : 29px;
-	background-color: green;
-	border : 0px;
-	color : white;
-	font-weight: bold;
-}
-#slib, #addpart, #resettemp, #savemusic{
-	width : 170px;
-}
-#editname{
-	width: 25px;
-	height: 25px;
-	cursor: pointer;
-	margin-bottom: 10px;
-}
-#makingstart{
-	color : red;
-	position : absolute;
-	left : 35%;
-	top : 50%;
-	font-size : 30px;
-	background-color : #FFFFFF;
-	border: 0px;
-}
-#addpart{
-	background-color : #FFFFFF;
-	width : 200px;
-	height : 150px;
-	border: 0px;
-	color : skyblue;
-	font-size : 70px;
-	margin : 10px 10px 10px 10px;
-}
-</style>
 <script>
 var song, path, stt;
 var partnum = 0;
@@ -133,6 +50,7 @@ function getall(){
 							addpart(partnum);
 						}
 					})
+					setup();
 				}
 			}
 	})
@@ -144,7 +62,6 @@ function getall(){
 		partnum++;
 		addpart(partnum);
 	})
-	setup();
 }
 var bpmpat, bpmsong, bpms, bpmprs, bpmCrtl;
 var s1,s2,s3,s4,s5,s6;
@@ -287,6 +204,7 @@ $(".delpart").on('click',function(){
 })
 
 $(".playpart").click(function(){
+	userStartAudio();
 	if($(this).val()==1){s1.play();}
 	if($(this).val()==2){s2.play();}
 	if($(this).val()==3){s3.play();}
@@ -307,6 +225,89 @@ $(".gotomake").click(function(){
 })
 }
 </script>
+<style>
+body{
+margin : 10px 10px 10px 10px;
+}
+#musinfo{
+	text-align: center;
+	margin : 0 auto;
+	height : 30px;
+	margin-top: 10px;
+	text-align : center;
+	width: 1200px;
+}
+#parts{
+	margin: 0 auto;
+	width:1100px;
+}
+.part{
+	margin : 10px 10px 10px 10px;
+	float: left;
+	width: 200px;
+	height: 150px;
+	border: 1px solid black;
+}
+.phrase1, .phrase2, .phrase3, .phrase4, .partbtn{
+	width : 200px;
+	height : 30px;
+	text-align: center;
+}
+.gotomake{
+	float : left;
+	height : 28px;
+	width : 140px;
+	background-color: #8181F7;
+	border : 0px;
+	color : white;
+	font-weight : bold;
+}
+.delpart{
+	float : left;
+	height : 28px;
+	width : 29px;
+	background-color: red;
+	border : 0px;
+	color : white;
+	font-weight: bold;
+}
+.playpart{
+float : left;
+	height : 28px;
+	width : 29px;
+	background-color: green;
+	border : 0px;
+	color : white;
+	font-weight: bold;
+}
+#slib, #addpart, #resettemp, #savemusic{
+	width : 170px;
+}
+#editname{
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+#makingstart{
+	color : red;
+	position : absolute;
+	left : 35%;
+	top : 50%;
+	font-size : 30px;
+	background-color : #FFFFFF;
+	border: 0px;
+}
+#addpart{
+	background-color : #FFFFFF;
+	width : 200px;
+	height : 150px;
+	border: 0px;
+	color : skyblue;
+	font-size : 70px;
+	margin : 10px 10px 10px 10px;
+}
+</style>
 </head>
 <body>
 <!-- Top for logo and navibar -->
@@ -364,7 +365,7 @@ $(".gotomake").click(function(){
 	<button id="mixing">Mixing Music</button>
 	</div>
 <div id="parts">
-<button id="makingstart">Click to start making music!</button>
+<button id="makingstart">Click here to start making music!</button>
 </div>
 </div>
 </body>

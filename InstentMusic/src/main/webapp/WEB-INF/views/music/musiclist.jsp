@@ -74,11 +74,13 @@
 .playsong{
 	witdh : 25px;
 	height : 25px;
+	cursor: pointer;
 }
 .writesong{
 	margin-left : 5px;
 	witdh : 28px;
 	height : 28px;
+	cursor: pointer;
 }
 .indexlist{
 	width : 30px;
@@ -88,6 +90,7 @@
 }
 </style>
 <script>
+var path;
 $(function(){
 	getmusics();
 	$("#slib").click(function(){
@@ -110,12 +113,19 @@ function getmusics(){
 					data+='<td class="indexlist">'+index+'</td>';
 					data+='<td class="titlelist">'+item.mus_title+'</td>'
 					data+='<td class="datelist">'+item.mus_date+'</td>'
-					data+='<td class="images"><img class="playsong" alt="'+item.mus_number+'" src="resources/images/sound/playlist.png">'
-					data+='<img class="writesong" alt="'+item.mus_number+'" src="resources/images/sound/writelist.png"></td>'
+					data+='<td class="images"><img class="playsong" alt="'+item.fullPath+'" src="resources/images/sound/playlist.png">'
+					data+='<img class="writesong" alt="'+item.mus_saved+'" src="resources/images/sound/writelist.png"></td>'
 					data+='</tr>';
 				})
 				data+='</table>'
 				$("#lists").append(data);
+
+				setup();
+				
+				$(".playsong").click(function(){
+					path = $(this).attr('alt');
+					song.play();
+				})
 			}
 		}
 	})
@@ -125,10 +135,10 @@ function setup() {
 	cvs.parent('sketch-target');
 	colorMode(HSB);
 	angleMode(DEGREES);
-	//song = loadSound(path,loaded);
+	song = loadSound(path);
 	fft = new p5.FFT(0.8, 128);
 	w = width / 64;
-	//fft.setInput(song);
+	fft.setInput(song);
 }
 function draw() {
 	  background(0);

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import global.sesoc.teamBOB4.dao.ListDao;
 import global.sesoc.teamBOB4.vo.Music_library;
+import global.sesoc.teamBOB4.vo.Part_music;
+import global.sesoc.teamBOB4.vo.Temp;
 
 @Controller
 @RestController
@@ -19,11 +21,18 @@ public class ListController {
 	@Autowired
 	ListDao dao;
 	
+	final String uploadPath = "uploadPath/";
+	
 	@GetMapping("/getmusics")
 	public List<Music_library> getmusics(HttpSession session){
 		Music_library music = new Music_library();
 		int cust_number = (int)session.getAttribute("login");
 		music.setCust_number(cust_number);
-		return dao.getmusics(music);
+		List<Music_library> result = dao.getmusics(music);
+		for(Music_library s : result) {
+			String fullPath = "resources/"+uploadPath+s.getMus_saved();
+			s.setFullPath(fullPath);
+		}
+		return result;
 	}
 }

@@ -11,4 +11,5 @@ public class Music_library {
 	private String mus_time; // 음악 총 길이
 	private String mus_saved; // 음악 파일 저장 이름
 	private String mus_date; // 음악 작곡한 일시
+	private String fullPath;
 }

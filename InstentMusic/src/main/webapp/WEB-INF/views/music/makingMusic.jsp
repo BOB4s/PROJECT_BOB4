@@ -1098,10 +1098,10 @@ $(function(){
 	</nav>
 	
 	<div id="backgroundLeft">
-		<img alt="BL" src="">
+		<img alt="BL" src="resources/images/makingMusic/backgroundLeft1.png">
 	</div>
 	<div id="backgroundRight">
-		<img alt="BR" src="">
+		<img alt="BR" src="resources/images/makingMusic/backgroundRight1.png">
 	</div>
 	<div id="wrapper">
 		<div id="soundlib">

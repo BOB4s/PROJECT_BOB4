@@ -426,7 +426,12 @@ float : left;
 		</div>
 	</nav>
 	
-	
+	<div id="backgroundLeft">
+		<img alt="BL" src="resources/images/makingMusic/backgroundLeft2.png">
+	</div>
+	<div id="backgroundRight">
+		<img alt="BR" src="resources/images/makingMusic/backgroundRight2.png">
+	</div>
 	<div id="wrapper">
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;

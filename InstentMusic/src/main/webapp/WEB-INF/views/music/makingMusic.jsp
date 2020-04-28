@@ -1,28 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" buffer="4096kb" autoFlush="true"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MusicMake</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="resources/css/navigation.css">
+<link rel="stylesheet" href="resources/css/sideMenuBar.css">
+<link rel="stylesheet" href="resources/css/makingMusic.css">
+<link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
 <script src="resources/js/p5.sound.min.js"></script>
 <script src="resources/js/sketch.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-#soundlib {
-	margin: 10px 5px 5px 5px;
+body{
+margin : 10px 10px 10px 10px;
+}
+#soundlib, #keyboard{
+	margin: 0 auto;
+	margin-top : 20px;
 	padding: 5px 5px 5px 5px;
 	width: 1020px;
 	height: 220px;
 	border: 1px solid black;
 }
-
-#libs, dropdown-menu {
+.libs, dropdown-menu {
 	float:left;
 	margin-top:10px;
 	width: 200px;
@@ -58,6 +68,7 @@
 position: relative;
 width: 50px;
 height: 50px;
+margin : 0 auto;
 }
 
 input {
@@ -73,7 +84,7 @@ input {
 	height : 40px;
 }
 
-#libs button {
+.libs button {
 	height: 25px;
 	width:150px;
 	background-color: #FFFFFF;
@@ -89,7 +100,7 @@ height: 120px;
 #bags input{
 width: 180px;
 }
-#fronts{
+.fronts{
 float:left;
 width: 350px;
 height: 120px;
@@ -103,7 +114,7 @@ margin-left: 10px;
 font-size : 30px;
 text-decoration: underline;
 }
-#fronts img{
+.fronts img{
 margin-left:5px;
 margin-bottom:12px;
 width: 30px;
@@ -181,18 +192,31 @@ cursor: pointer;
 #target4, #target3{
 font-size : 20px;
 }
-#editlib, #deletelib{
+#editlib, #deletelib, #editname{
 width: 20px;
 height: 20px;
 cursor: pointer;
 }
-.del {
+.del{
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
 	font-size: 10px;
 	width : 15px;
 	height : 15px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0;
+	background: red;
+	color: #FFFFFF;
+	border-radius: 100%;
+	padding: 0;
+}
+.keydels {
+	float:right;
+	font-size: 8px;
+	width : 12px;
+	height : 12px;
 	font-weight: bold;
 	cursor: pointer;
 	border: 0;
@@ -219,11 +243,63 @@ cursor: pointer;
 #form_upload2 img{
 	cursor: pointer;
 }
+.keys{
+	float : left;
+	height : 50px;
+	width : 50px;
+	margin : 1px 1px 1px 1px;
+	border: 1px solid black;
+	padding: 1px 1px 1px 3px;
+}
+#keys{
+	float: right;
+	font-size: 10px;
+	font-weight: bold;
+	width : 650px;
+	height : 220px;
+}
+#key1{
+	float : right;
+	margin-right: 0px;
+}
+#key2{
+	float : right;
+	margin-right: 30px;
+}
+#key3{
+	float : right;
+	margin-right: 60px;
+}
+#key4{
+	float : right;
+	margin-right: 90px;
+}
+#newset{
+	font-size: 30px;
+	text-decoration: underline;
+}
+#newment{
+	font-size: 15px;
+	color: red;
+}
+.keysou{
+	padding:0px;
+	font-size : 9px;
+	text-align: center;
+	color : blue;
+	white-space: normal;
+	line-height: 1.2;
+}
+#slib, #makingmusic{
+	width : 170px;
+}
 </style>
 <script>
-var path, song;
+var song, path;
+var premusic;
 $(function() {
 	newbtn();
+	gettemp();
 })
 function newbtn2(){
 	var name2 = ''; 
@@ -234,6 +310,9 @@ function newbtn2(){
 				if (resp != null) {
 					name2+='<ul>'
 					$.each(resp,function(index, item) {
+						if(item.sou_type=='added'){
+							return true;
+						}
 						name2 += '<li><button class="dropdown-item" value="'+item.sou_type+'">'+ item.sou_type+ '</button></li>'
 					})
 					name2+='</ul>'
@@ -257,6 +336,9 @@ $.ajax({
 	success : function(resp) {
 		if (resp != null) {
 			$.each(resp,function(index, item) {
+				if(item.sou_type=='added'){
+					return true;
+				}
 				name += '<li><button class="userbtn" value="'+item.sou_type+'">'+ item.sou_type+ '</button></li>'
 			})
 			$("#newbtn").html(name);
@@ -343,11 +425,11 @@ function gets(soutype){
 		success : function(resp) {
 			$("#inbox").html('');
 			var cound = 0;
-			$.each(resp,function(index,item) {
+			$.each(resp,function(index,item){
 				if(item.sou_name!=null){
 				var data = '';
 				data += '<div class="sounds">';
-				data += '<div class="soundss"><img class="soundimg" alt="'+item.fullPath+'" src="resources/images/sound/sound.png">';
+				data += '<div class="soundss"><img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+item.fullPath+'" alt="'+item.sou_name+'" src="resources/images/sound/sound.png">';
 				data += '<Button class="del" value="'+item.sou_number+'">X</Button></div>'
 				data += item.sou_name;
 				data += '</div>';
@@ -360,7 +442,7 @@ function gets(soutype){
 				$("#inbox").append('<br>- empty -');
 			}
 			$('.sounds').click(function() {
-				path = $(this).find('img').attr('alt');
+				path = $(this).find('img').attr('id');
 				setup();
 			});
 			$('.del').click(function(){
@@ -402,11 +484,11 @@ $(function(){
 			,success : function(resp){
 				$("#inbox").html('');
 				var cound = 0;
-				$.each(resp,function(index,item) {
+				$.each(resp,function(index,item){
 					if(item.sou_name!=null){
 					var data = '';
 					data += '<div class="sounds">';
-					data += '<div class="soundss"><img class="soundimg" alt="'+item.fullPath+'" src="resources/images/sound/sound.png">';
+					data += '<div class="soundss"><img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+item.fullPath+'" alt="'+item.sou_name+'" src="resources/images/sound/sound.png">';
 					data += '<Button class="adds" value="'+item.sou_number+'">+</Button></div>'
 					data += item.sou_name;
 					data += '</div>';
@@ -421,7 +503,7 @@ $(function(){
 					$("#inbox").append('<br>- empty -');
 				}
 				$('.sounds').click(function() {
-					path = $(this).find('img').attr('alt');
+					path = $(this).find('img').attr('id');
 					setup();
 				});
 				$('.adds').click(function(){
@@ -478,7 +560,7 @@ $(function() {
 		}
 	});
 	$("#added").click(function(){
-		$("#target2").html('added');
+		$("#target2").html('Added');
 			gets('added');
 		})
 	$("#beatbox").click(function() {
@@ -486,11 +568,10 @@ $(function() {
 		$("#inbox").html('');
 		var srcs = ''
 		for (var i = 0; i < 32; i++) {
-			srcs = 'resources/sound/beatbox/bb' + i
-					+ '.mp3';
+			srcs = 'resources/sound/beatbox/bb' +i+ '.mp3';
 			var data = '';
 			data += '<div class="sounds">';
-			data += '<img class="soundimg" alt="'+srcs+'" src="resources/images/sound/sound.png"><br>';
+			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="bb'+i+'" src="resources/images/sound/sound.png"><br>';
 			data += 'bb' + i;
 			data += '</div>';
 
@@ -498,7 +579,27 @@ $(function() {
 		}
 
 		$('.sounds').click(function() {
-			path = $(this).find('img').attr('alt');
+			path = $(this).find('img').attr('id');
+			setup();
+		});
+	});
+	$("#drum").click(function() {
+		$("#target2").text('Drum');
+		$("#inbox").html('');
+		var srcs = ''
+		for (var i = 0; i < 29; i++) {
+			srcs = 'resources/sound/drum/drum' +i+ '.wav';
+			var data = '';
+			data += '<div class="sounds">';
+			data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="drum'+i+'" src="resources/images/sound/sound.png"><br>';
+			data += 'drum' + i;
+			data += '</div>';
+
+			$("#inbox").append(data);
+		}
+
+		$('.sounds').click(function() {
+			path = $(this).find('img').attr('id');
 			setup();
 		});
 	});
@@ -526,7 +627,7 @@ $(function() {
 				srcs = 'resources/sound/piano/'+ codes[j].code + i + '.mp3';
 				var data = '';
 				data += '<div class="sounds">';
-				data += '<img class="soundimg" alt="'+srcs+'" src="resources/images/sound/sound.png"><br>';
+				data += '<img class="soundimg" draggable="true" ondragstart="drag(event)" id="'+srcs+'" alt="'+codes[j].code + i+'" src="resources/images/sound/sound.png"><br>';
 				data += codes[j].code + i;
 				data += '</div>';
 
@@ -535,7 +636,7 @@ $(function() {
 		}
 
 		$('.sounds').click(function() {
-			path = $(this).find('img').attr('alt');
+			path = $(this).find('img').attr('id');
 			setup();
 		});
 	});
@@ -544,8 +645,8 @@ $(function(){
 	$("#addfile").on("change",showfile);
 	$("#addcom").keyup(function(){
 		var com = $("#addcom").val();
-		if(com.length>15){
-			var count = com.substr(0,15);
+		if(com.length>10){
+			var count = com.substr(0,10);
 			$("#addcom").val(count);
 			}
 		})
@@ -696,13 +797,16 @@ $(function(){
 			}
 });
 var mic, recorder, soundFile, soundBlob;
-var amp;
+var fft, w;
 function setup() {
-	var cnv = createCanvas(200, 200);
-	cnv.parent('sketch-target');
-	song = loadSound(path, loaded);
-	amp = new p5.Amplitude();
-	amp.setInput(song);
+	var cvs = createCanvas(256,256);
+	cvs.parent('sketch-target');
+	colorMode(HSB);
+	angleMode(DEGREES);
+	song = loadSound(path,loaded);
+	fft = new p5.FFT(0.8, 128);
+	w = width / 64;
+	  fft.setInput(song);
 	 // create an audio in
 	  mic = new p5.AudioIn();
 
@@ -719,14 +823,35 @@ function setup() {
 	  // playback & save the recording
 	  soundFile = new p5.SoundFile();
 }
+function draw() {
+	  background(0);
+	  var spectrum = fft.analyze();
+	  noStroke();
+	  translate(width/2, height/2);
+	 // beginShape();
+	  for (var i = 0; i < spectrum.length; i++) {
+		var angle = map(i,0,spectrum.length,0,360);
+		var amp = spectrum[i];
+		var r = map(amp, 0, 256, 20, 100);
+		//fill(i, 255, 255);
+		var x = r * cos(angle);
+		var y = r * sin(angle);
+		stroke(i,255,255);
+		line(0,0,x,y);
+		//vertex(x,y);
+		//var y = map(amp, 0, 256, height, 0);
+		//rect(i*w, y, w-2, height - y);
+	  }
+	  //endShape();
+	}
 function recordstart(){
 	userStartAudio();
 
 	  // make sure user enabled the mic
 	  if (state === 0 && mic.enabled) {
-		  amp.getLevel(0);
+		  fft.analyze();
 	    // record to our p5.SoundFile
-	    amp.setInput(mic);
+	    fft.setInput(mic);
 	    recorder.record(soundFile);
 
 	  }
@@ -740,21 +865,18 @@ function recordstart(){
 
 		  else if (state === 2) {
 		    soundFile.play(); // play the result!
-		    amp.setInput(soundFile);
+		    fft.setInput(soundFile);
 		    state++;
 		    soundBlob = soundFile.getBlob();
 		  }
 }
+var vol;
 function loaded() {
+	vol = fft.analyze();
 	song.play();
 }
 function loaded2(){
 	song.stop();
-}
-function draw() {
-	background(0);
-	var vol = amp.getLevel();
-	ellipse(100, 100, 200, vol * 200);
 }
 $(function(){
 	$("#rcdbtn").click(function(){
@@ -809,31 +931,188 @@ $(function(){
 					modal.style.display = "none";
 	})
 })
+$(function(){
+	for(var k=1; k<5; k++){
+		var idx = "#Set"+k;
+		$(idx).click(function(){
+			getkeys("#"+this.value);
+		})
+	}
+})
+function drag(ev) { 
+	ev.dataTransfer.setData("fullpath", ev.target.id);
+	ev.dataTransfer.setData("name", ev.target.alt);
+}
+function drop(ev) {
+	ev.preventDefault(); 
+	var c = ev.dataTransfer.getData("fullpath"); 
+	var d = ev.dataTransfer.getData("name");
+	var tagid = '#'+ev.target.id;
+	var tagcls = tagid+' .keydel';
+	$(tagid).css('background-color','white');
+
+	var sets = $("#newset").text();
+	if($(tagcls).html()==''){
+	var data = {
+				'key_board' : sets
+				,'sou_path' : c
+				,'sou_name' : d
+				,'key_name' : ev.target.id
+			}
+	$.ajax({
+		method : 'post'
+		,url : 'insertkey'
+		,data : data
+		,success : function(resp){
+				getkeys(sets);
+			}
+	})
+	}else{
+		var btn = tagcls+' .keydels';
+		var vals = $(btn).val();
+		var data = {
+				'sou_path' : c
+				,'sou_name' : d
+				,'key_number' : vals
+		}
+		$.ajax({
+			method : 'post'
+			,url : 'updatekey'
+			,data : data
+			,success : function(resp){
+					getkeys(sets);
+				}
+		})
+	}
+}
+function getkeys(sets){
+	$("#newset").text(sets);
+	$('.keysou').text('');
+	$('.keys').css('border','1px solid black');
+	$('.keys').css('background-color','white');
+	$('.keydel').text('');
+	$.ajax({
+		method : 'get'
+		,url : 'getkeys'
+		,data : {'key_board' : sets}
+		,success : function(resp){
+			var cound = 0;
+				premusic = {};
+				$.each(resp,function(index,item){
+					var songname = 'song'+index;
+					var songpath = item.sou_path;
+	
+					premusic[songname] = songpath;
+					var idx = "#"+item.key_name;
+					var cls = idx+' .keysou';
+					var dels = idx+' .keydel';
+					var datadel = '<Button class="keydels" value="'+item.key_number+'">X</Button>'
+					$(cls).text(item.sou_name);
+					$(idx).css('border','1px solid blue');
+					$(dels).html(datadel);
+					cound++;
+					$(document).keydown(function(event){
+						if(event.keyCode == item.key_name && $("#newset").text()==item.key_board){
+							$(idx).css('background-color', 'red');
+							path = item.sou_path;
+							setup();
+						}else{
+							$(idx).css('background-color','white');
+						}
+					})
+					$('.keydels').click(function(){
+						$.ajax({
+							method : 'post'
+							,url : 'delkey'
+							,data : {'key_number':this.value}
+							,success : function(resp){
+								getkeys(sets);
+								}
+						})
+					})
+				})
+				if(cound==0){
+					$("#newment").text('Drag and drop a sound to the keyboard on the right!');
+				}else{
+					$("#newment").text('Press the keys!')
+				}
+			}
+	})
+}
+function allowDrop(ev){
+	ev.preventDefault();
+	var tagid = '#'+ev.target.id;
+	$(tagid).css('background-color','red');
+}
+function leavedrag(ev){
+	var tagid = '#'+ev.target.id;
+	$(tagid).css('background-color','white');
+}
+$(function(){
+	$("#makingmusic").click(function(){
+		location.href="makingmusic2";
+	})
+})
 </script>
 </head>
 <body>
+<!-- Top for logo and navibar -->
+	 <nav class="navigation">
+		<div class="navigation__column">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>
+		</div>
+		<div class="navigation__column">
+			<div id="slib" class="button_base btn_3d_double_roll">
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+			<div>Setting Music</div>
+		</div>
+		<div id="makingmusic" class="button_base btn_3d_double_roll">
+			<div>Making Music</div>
+			<div>Making Music</div>
+			<div>Making Music</div>
+			<div>Making Music</div>
+		</div>
+		</div>
+		<div class="navigation__column">
+			<div class="navigations__links">
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
+				</a></div>
+				<div class="navigation__list-item"><a href="#"
+					class="navigation__link"><i class="fa fa-bell-o"></i>
+				</a></div>
+				<div class="navigation__list-item">
+					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+				</div>
+			</div>
+			<div id="mySidenav" class="sidenav">
+			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
+			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
+			</div>
+		</div>
+	</nav>
 	<div id="wrapper">
-		음악 제목 : <span id="target">임시 제목</span> <br>
-		<button id="slib" data-toggle="collapse" data-target="#soundlib">Sound Library</button>
-		<button data-toggle="collapse" data-target="#keyboard">Keyboard Set</button>
-		<button>트랩 추가</button>
-		<button>임시 저장</button>
-		<button>불러오기</button>
-		<button>음악 저장</button>
-		<br>
-		<div id="soundlib" class="collapse">
-		<div id="fronts">
+		<div id="soundlib">
+		<div class="fronts">
 			<span style="font-size: 50px;">Sound Library</span>
 			<br>
 			<img alt="soundlibrary" src="resources/images/sound/soundlibrary.png">
 			<span id="target2"></span>
 		</div>
 			<div id="bags">
-				<div id="libs">
+				<div class="libs">
 				<ul>
 					<li><button id="added" value="added">Added</button></li>
 					<li><button id="beatbox" value="Beatbox">Beatbox</button></li>
 					<li><button id="piano" value="Piano">Piano</button></li>
+					<li><button id="drum" value="Drum">Drum</button></li>
 					<span id="newbtn"></span>
 				</ul>
 				</div>
@@ -849,10 +1128,74 @@ $(function(){
 				<br>- Empty -
 			</div>
 		</div>
+	<div id="keyboard">
+	<div class="fronts">
+		<span style="font-size: 50px;">Key Board</span>
+		<br>
+		<div class="libs" style="height:130px;">
+			<ul>
+				<li><button id="Set1" value="Set1">Set1</button></li>
+				<li><button id="Set2" value="Set2">Set2</button></li>
+				<li><button id="Set3" value="Set3">Set3</button></li>
+				<li><button id="Set4" value="Set4">Set4</button></li>			
+			</ul>
+		</div>
+		<span id="newset"></span><br>
+	<span id="newment">Select one of the Sets</span>
 	</div>
-	<div id="keyboard" class="collapse">자판</div>
-	<br>
-	
+	<div id="keys">
+	<div id="key1">
+<div class="keys" id="49" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">1<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="50" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">2<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="51" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">3<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="52" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">4<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="53" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">5<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="54" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">6<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="55" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">7<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="56" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">8<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="57" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">9<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="48" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">0<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="189" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">-<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="187" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">=<span class="keydel"></span><div class="keysou"></div></div>
+</div>
+<div id="key2">
+<div class="keys" id="81" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Q<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="87" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">W<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="69" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">E<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="82" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">R<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="84" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">T<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="89" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Y<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="85" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">U<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="73" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">I<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="79" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">O<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="80" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">P<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="219" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">[<span class="keydel"></span><div class="keysou"></div></div>
+</div>
+<div id="key3">
+<div class="keys" id="65" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">A<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="83" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">S<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="68" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">D<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="70" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">F<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="71" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">G<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="72" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">H<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="74" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">J<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="75" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">K<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="76" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">L<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="186" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">;<span class="keydel"></span><div class="keysou"></div></div>
+</div>
+<div id="key4">
+<div class="keys" id="90" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Z<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="88" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">X<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="67" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">C<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="86" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">V<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="66" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">B<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="78" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">N<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="77" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">M<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="188" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">,<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="190" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">.<span class="keydel"></span><div class="keysou"></div></div>
+</div>
+</div>
+</div><!-- end #keyboard -->
 	<div id="addModal" class="modal">
 			<span class="close">&times;</span>
 			<span id="sketch-target"></span><br>
@@ -873,8 +1216,18 @@ $(function(){
     </div>
     </div>
     Sound Name : <input type="text" id="addcom">&nbsp;
-			<input id="addbtn" type="button" value="Add Sound">
-			<input id="rcdbtn" type="hidden" value="Add Record">
-		</div>
+		<input id="addbtn" type="button" value="Add Sound">
+		<input id="rcdbtn" type="hidden" value="Add Record">
+	</div>
+</div>
 </body>
+<script>
+function openNav() {
+	  document.getElementById("mySidenav").style.width = "250px";
+	}
+
+function closeNav() {
+	  document.getElementById("mySidenav").style.width = "0";
+	}
+</script>
 </html>

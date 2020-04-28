@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.MakeMapper">
+<insert id="inserttemp" parameterType="Temp">
+insert into temp
+values(
+SEQ_TEMP_TEMP_NUMBER.nextval
+,#{cust_number}
+,#{temp_title}
+,#{temp_bpm}
+)
+</insert>
+
+<select id="gettemp" parameterType="Temp" resultType="Temp">
+select *
+from temp
+where
+cust_number = #{cust_number}
+</select>
+
+<update id="updatetemp" parameterType="Temp">
+update temp
+set
+temp_title = #{temp_title}
+,temp_bpm = #{temp_bpm}
+where
+cust_number = #{cust_number}
+</update>
+
+<delete id="deltemp" parameterType="Temp">
+delete from temp
+where
+cust_number = #{cust_number}
+</delete>
+
+<insert id="sendpart" parameterType="Parts">
+insert into part_music
+values(
+SEQ_Part_music_make_number.nextval
+,#{cust_number}
+,#{part_number}
+,#{phrase_number}
+,#{key_board}
+,#{phrase_saved}
+)
+</insert>
+</mapper>

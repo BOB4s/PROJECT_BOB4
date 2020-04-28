@@ -1,6 +1,7 @@
 package global.sesoc.teamBOB4.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Follow;
@@ -15,7 +16,7 @@ public interface CustomerMapper {
 
 	List<Integer> getFollowers(int follow_number);
 
-	Customer searchOne(String cust_nickname);
+	Customer searchOne(Customer customer);
 
 	List<Integer> getFollowings(int cust_number);
 	
@@ -38,5 +39,11 @@ public interface CustomerMapper {
 	List<Customer> searchList(Customer customer);
 
 	List<Customer> searchpf(String search);
+
+	int alter_userKey(String cust_id, String cust_key);
+
+	int GetKey(Map<String, Object> map);
+
+	Customer getDataFromDBsendData(String sendData);
 
 }

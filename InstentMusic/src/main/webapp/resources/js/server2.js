@@ -25,10 +25,9 @@ io.on('connection', function(socket) {
 
 	});
 
-	socket.on('disconnect', function() {
-		if (!addedUser)
-			return;
-
+	socket.on('postWrite', function() {
+		
+		
 		var index = userList.indexOf(socket.username);
 		userList.splice(index, 1);
 

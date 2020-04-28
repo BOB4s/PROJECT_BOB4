@@ -42,7 +42,8 @@
 					"recentMessage":recentMessage }
 			
 			
-				
+			//이거를 값을 보내고 처리한다 그리고 
+		// 답변을 받아와서 글을 보내는  on문도 처리해야하한다.	
 		})
 		this.close();
 		opener.	location.href = "chattingTemp?UserName=" + UserName + "&opponentName="+ opponentName;

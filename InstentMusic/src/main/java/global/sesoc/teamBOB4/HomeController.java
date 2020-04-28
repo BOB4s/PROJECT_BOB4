@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
+import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.vo.Customer;
 
 @Controller
@@ -64,15 +64,21 @@ public class HomeController {
 		
 		Customer c = custdao.selectOne(customer);
 		
+			
+		
 		if(c != null) {
+			if(c.getCust_key().equals("Y")) {
 			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("id", c.getCust_id());
+			session.setAttribute("cust_number", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			session.setAttribute("password", c.getCust_password());
-			session.setAttribute("email", c.getCust_email());
 			session.setAttribute("introduce", c.getCust_introduce());
 			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";
+			}else {
+				model.addAttribute("Error", "이메일인증해주세요");
+				return "redirect:/";
+			}
 		}else {
 			model.addAttribute("Error", "Typed down with wrong ID or Password");
 			return "redirect:/";
@@ -114,26 +120,19 @@ public class HomeController {
 
 
 	@GetMapping("/profile")
-	public String profile(Model model,Customer customer) {
+	public String profile(Model model, Customer customer, HttpSession session) {
 		//닉네임으로 원하는값 찾기
 		// profile 에 파라미터로  >>> String cust_nickname, 를넣고 아래의
 		// 회원가입 만들어지면 주석 풀면됩니다.
-		/*Customer customersData =custdao.searchOne(cust_nickname);
-		int cust_number =customersData.getCust_number();
+		/*List<Post> ListAll =  postdao.getAll(cust_number);*/
+		int cust_number = (int) session.getAttribute("login");
+		customer.setCust_number(cust_number);
+		Customer customersData = custdao.searchOne(customer);
+		List<Customer>list = custdao.searchList(customer);
 		List<Integer> followersList=custdao.getFollowers(cust_number);
 		int followers=followersList.size();
 		List<Integer> followingList=custdao.getFollowings(cust_number);
 		int followings=followingList.size();
-		List<Post> ListAll =  postdao.getAll(cust_number);*/
-		
-		Customer customersData = new Customer();
-		customersData.setCust_introduce("이지은입니다");
-		customersData.setCust_nickname("IU");
-		customersData.setCust_number(123);
-		int followers= 5030;
-		int followings =150;
-		List<Customer>list = custdao.searchList(customer);
-		
 		model.addAttribute("customersData", customersData);
 		model.addAttribute("followers", followers);
 		model.addAttribute("followings", followings);
@@ -144,18 +143,20 @@ public class HomeController {
 
 		return "customer/profile";
 	}
-	@RequestMapping(value="/join", method = RequestMethod.POST)
-	public String join(Customer customer,MultipartFile upload,RedirectAttributes rttr) {
-		
-		String originalFilename = upload.getOriginalFilename();
-		String savedFilename = FileService.saveFile(upload, savePath);
-		customer.setCust_photo_original(originalFilename);
-		customer.setCust_photo_saved(savedFilename);
-		
-		custdao.signup(customer);
-		
-		return "redirect:home";
-	}
+
+	/*
+	 * @RequestMapping(value="/join", method = RequestMethod.POST) public String
+	 * join(Customer customer,MultipartFile upload,RedirectAttributes rttr) {
+	 * 
+	 * String originalFilename = upload.getOriginalFilename(); String savedFilename
+	 * = FileService.saveFile(upload, savePath);
+	 * customer.setCust_photo_original(originalFilename);
+	 * customer.setCust_photo_saved(savedFilename);
+	 * 
+	 * custdao.signup(customer);
+	 * 
+	 * return "redirect:home"; }
+	 */
 	@GetMapping("/deleteView")
 	public String deletePage() {
 		
@@ -255,5 +256,16 @@ public class HomeController {
 		model.addAttribute("pd", customer);
 		
 		return "customer/proDetail";
+	}
+	@GetMapping("/partmake")
+	public String partmake(int part_number, int temp_bpm, Model model) {
+		model.addAttribute("part_number", part_number);
+		model.addAttribute("temp_bpm", temp_bpm);
+		return "music/partmake";
+	}
+	
+	@GetMapping("/makingmusic2")
+	public String makingmusic2() {
+		return "music/makingMusic2";
 	}
 }

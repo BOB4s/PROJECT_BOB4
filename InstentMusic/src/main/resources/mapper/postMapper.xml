@@ -35,7 +35,6 @@
 		,post_nickname
 		,post_url
 		,post_date
-		,tagsresult
 		,post_reply
 		,post_like
 		,post_play
@@ -49,14 +48,62 @@
 		,#{mus_time}
 		,#{post_content}
 		,#{post_nickname}
-		,'131235'
+		,'asdas'
 		,sysdate
-		,#{tagsresult}
 		,0
 		,0
 		,0
 		)
 	
 	</insert>
+	<select id="getOneByMus_number" parameterType="int" resultType="int">
+	select post_number
+	from Post
+	where mus_number = #{mus_number}
 	
+	
+	
+	</select>
+	
+	<select id="getPostAll"  resultType="Post">
+	select * from post
+	order by post_number desc
+	
+	</select>
+	<select id="myList" resultType="Post" parameterType="int">
+	select * from post
+	where cust_number = #{cust_number}
+	order by post_number desc
+	
+	</select>
+	<select id="getPostByPostNum" parameterType="int" resultType="Post">
+	select *
+	from Post
+	where post_number = #{post_number}
+	</select>
+	<select id="searchcheck" parameterType="string" resultType="Word">
+	select * from searchword
+	where
+	search_word = #{search_word}
+	</select>
+	<select id="searchPost" parameterType="string" resultType="Word">
+	select * from searchword
+	where
+	search_word like '%'||#{search_word}||'%'
+	</select>
+	<select id="postList" parameterType="string" resultType="Post">
+	select * from Post
+	where mus_title like '%'||#{search_word}||'%'or
+	post_content like '%'||#{search_word}||'%'or
+	post_nickname like '%'||#{search_word}||'%'
+	</select>
+	<insert id="insertWord" parameterType="string">
+	insert into searchword(
+		search_number,
+		search_word
+	)values(
+		SEQ_Search_number.nextval,
+		#{search_word}
+	)
+	</insert>
 </mapper>

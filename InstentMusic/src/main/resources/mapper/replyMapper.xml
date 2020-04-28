@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="global.sesoc.teamBOB4.dao.ReplyMapper">
+	<insert id="replyWrite" parameterType="Reply">
+	
+	insert into Reply
+		(
+		rep_number
+		,post_number
+		,cust_number
+		,rep_content
+		,rep_nickname
+		,rep_url
+		,rep_date
+		)
+		values
+		(
+		SEQ_Reply_rep_number.nextval
+		,#{post_number}
+		,#{cust_number}
+		,#{rep_content}
+		,#{rep_nickname}
+		,#{rep_url}
+		,sysdate
+		)
+	
+
+	</insert>
+	<select id="replylist" parameterType="int" resultType="Reply">
+		select *
+	from Reply
+	where post_number =#{post_number}
+	
+	order by 
+	rep_number desc
+	</select>
+	<delete id="deleteReply" parameterType="map">
+		delete 
+	Reply
+	where rep_number =#{rep_number}
+	</delete>
+	<update id="modifyReply" parameterType="Reply">
+		update Reply set
+	rep_content = #{rep_content}
+	
+	where rep_number =#{rep_number}
+	</update>
+	
+	<select id="getReplyAmmout" parameterType="int" resultType="int">
+	
+	select count(*)
+	from Reply
+	where
+		post_number=#{post_number}
+	
+	</select>
+</mapper>

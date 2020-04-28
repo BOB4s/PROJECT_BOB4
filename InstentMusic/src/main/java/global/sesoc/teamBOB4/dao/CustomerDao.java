@@ -1,7 +1,5 @@
 package global.sesoc.teamBOB4.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -42,16 +40,16 @@ public class CustomerDao {
 		return tempList;
 	}
 
-	public Customer searchOne(String cust_nickname) {
+	public Customer searchOne(Customer customer) {
 		CustomerMapper mapper= session.getMapper(CustomerMapper.class);
-		return  mapper.searchOne(cust_nickname);
+		return  mapper.searchOne(customer);
 		
 	}
 
-	public List<Integer> getFollowings(int custId) {
+	public List<Integer> getFollowings(int cust_number) {
 		CustomerMapper mapper= session.getMapper(CustomerMapper.class);
 		List<Integer> tempList = null;
-		tempList= mapper.getFollowings(custId);
+		tempList= mapper.getFollowings(cust_number);
 		return tempList;
 	}
 	
@@ -76,7 +74,7 @@ public class CustomerDao {
 
 	public String getDataFromDBsendData(String sendData) {
 		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
-		Customer c =mapper.searchOne(sendData);
+		Customer c =mapper.getDataFromDBsendData(sendData);
 		
 		String reciver ="";
 		

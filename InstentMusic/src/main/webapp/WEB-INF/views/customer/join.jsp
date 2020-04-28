@@ -106,9 +106,6 @@ a {
   background-color: #f1f1f1;
   text-align: center;
 }
-
-	
-	
 </style>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script>
@@ -128,6 +125,11 @@ function formCheck(){
 			document.getElementById("cust_email").select();
 			return ;
 		}
+		
+		var welcomeForm = document.getElementById("join");
+		welcomeForm.submit();
+		alert("이메일 인증 후에 로그인 하실수 있습니다!");
+		
 }
 
 var sel_file;
@@ -208,12 +210,10 @@ $(function(){
 	<form id="join" action="join" method="POST" enctype="multipart/form-data">
 	<div class="container">
     <h1>Register</h1>
-    <p>Please fill in this form to create an account.</p>
     <hr>
     <div class="col-xs-6 profileplace">
-		<label for="profile"><b>Image</b></label>
+		<label for="profile"><b>Image</b><img class="img-responsive center-block" id=m_photo name="m_photo" src="resources/images/profile.png"></label>
     	<input type="file" value="사진 첨부" name="upload" id="input_img">
-		<img class="img-responsive center-block" id=m_photo name="m_photo" src="resources/images/profile.png">
 	</div>
 	
     <label for="id"><b>ID</b></label><span id="idCheck"></span>   
@@ -236,9 +236,6 @@ $(function(){
     <br>
     
 	<button type="submit" class="registerbtn" onclick="formCheck()">Register</button>
-	<button type="reset" class="registerbtn">Reset</button>
-    
-    <hr>
   </div>
 	</form>
 </div>

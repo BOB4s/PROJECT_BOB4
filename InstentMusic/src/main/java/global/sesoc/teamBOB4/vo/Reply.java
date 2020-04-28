@@ -12,4 +12,5 @@ public class Reply {
 	private String rep_nickname; // 리플 단 회원 닉네임
 	private String rep_url; // 리플 단 회원의 프로필 url 주소
 	private String rep_date; // 리플 단 시간
+	private String cust_photo;
 }

@@ -11,6 +11,12 @@
 		<typeAlias type="global.sesoc.teamBOB4.vo.MessageList" alias="MessageList"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Tag" alias="Tag"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Sound_library" alias="Sound"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Post_tag" alias="Post_tag"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Reply" alias="Reply"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Key_sound" alias="Keys"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Temp" alias="Temp"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Part_music" alias="Parts"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.SearchWord" alias="Word"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />
@@ -19,5 +25,8 @@
 		<mapper resource="mapper/chatMapper.xml" />
 		<mapper resource="mapper/tagMapper.xml" />
 		<mapper resource="mapper/musicMapper.xml" />
+		<mapper resource="mapper/post_tagMapper.xml" />
+		<mapper resource="mapper/replyMapper.xml" />
+		<mapper resource="mapper/makeMapper.xml" />
 	</mappers>
 </configuration>

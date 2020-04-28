@@ -531,10 +531,12 @@ position: absolute;
 
 		 var data = "<div id = 'noti_list_thing'>"
 			 $.each(resp,function(index, item) {
-					
+				 
 					 	data += ' <div class="opps_profile_imgs_1" >'
 						data +='<div class="opps_profile_imgs_inner_1" style="float: left;">'
+							
 						data += '<img class = "opps_orifile_img_1" alt="" src="<c:url value="/image/'+item.not_savedData+'"/>"/></div>'
+						
 						data +='<div  class="opps_main_css_1" style ="padding-top: 15px;" ><span style="border: thick;font-size: 12pt;font-weight: bold;"></span>' 
 							
 						data +='<span style ="margin-left: 20px;">'+item.not_content+'</span>'; 
@@ -572,6 +574,7 @@ if(${messangerRoom}!=0){
 			/*  = $('#newOpps_data')[0].currentSrc; */
 			var srcdata = $('#newOpps_data')[0].value;
 			var oppsnumber = $('#newOpps_number')[0].value;
+		
 			 socket.emit('chat message', $('#Mes_content').val(),srcdata); 
 			noti_save(oppsnumber);
 			sendText();
@@ -719,6 +722,7 @@ if(${messangerRoom}!=0){
 			var not_content  =opponentName;
 			var not_cust_number = oppsnumber;
 			var not_sender_number ='${cust_number}';
+			
 			var not_type = 'CHAT';
 			$.ajax({
 				method : 'GET',

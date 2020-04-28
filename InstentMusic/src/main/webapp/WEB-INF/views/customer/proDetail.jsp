@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
 <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
- <script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
+ <script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
  <style type="text/css">
   #data_notis {
 position: absolute;
@@ -144,7 +144,7 @@ var cust_number = '${cust_number}';
 var username = '${nickname}';
 
 var data_flag = 0;
-var socket = io.connect('http://192.168.43.107:4000');
+var socket = io.connect('http://172.16.101.220:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,

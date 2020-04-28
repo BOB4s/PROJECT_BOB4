@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
- <script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
+ <script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
 <%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
 <link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/toastr.min.js"></script>
@@ -85,7 +85,7 @@ position: absolute;
 
 
 </style>
-<script src="http://172.30.1.58:4000/socket.io/socket.io.js"></script>
+<script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
 <script>
 $(function(){
 $("#profileSetting").click(function(){
@@ -119,7 +119,7 @@ var cust_number = '${cust_number}';
 var username = '${nickname}';
 
 var data_flag = 0;
-var socket = io.connect('http://192.168.43.107:4000');
+var socket = io.connect('http://172.16.101.220:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -256,7 +256,7 @@ function getNotis(resp){
 
 
 	var username = '${nickname}';
-	var socket = io.connect('http://172.30.1.58:4000');
+	var socket = io.connect('http://172.16.101.220:4000');
 	$(function() {
 
 		socket.emit('add user', username);

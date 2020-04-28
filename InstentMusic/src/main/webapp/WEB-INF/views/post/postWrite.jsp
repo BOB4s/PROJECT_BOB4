@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="http://10.10.12.230:4000/socket.io/socket.io.js"></script>
+<script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
@@ -92,7 +92,7 @@ var cust_number = '${cust_number}';
 var username = '${nickname}';
 
 var data_flag = 0;
-var socket = io.connect('http://192.168.43.107:4000');
+var socket = io.connect('http://172.16.101.220:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,

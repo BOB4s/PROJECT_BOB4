@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
-<script src="http://10.10.12.230:4000/socket.io/socket.io.js"></script>
+<script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -54,8 +54,6 @@ transform: translateY(200px);
 -webkit-animation: moveUp 3.65s ease forwards;
 animation: moveUp 3.65s ease forwards;
 }
-<<<<<<< HEAD
-
 .nav-counter {
 
  position:absolute;
@@ -121,7 +119,6 @@ position: absolute;
     height: 60px;
   }
 
-=======
 #nav{
 position: fixed;
   top: 0;
@@ -131,19 +128,15 @@ position: fixed;
 body{
 padding-top: 75px;
 }
->>>>>>> branch 'master' of https://github.com/BOB4s/PROJECT_BOB4.git
 </style>
 <!-- 192.168.0.84 -->
 <script type="text/javascript">
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-<<<<<<< HEAD
 
 	var data_flag = 0;
-=======
->>>>>>> branch 'master' of https://github.com/BOB4s/PROJECT_BOB4.git
-	var socket = io.connect('http://10.10.12.230:4000');
+	var socket = io.connect('172.16.101.220:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -198,14 +191,9 @@ padding-top: 75px;
 	$(function(){
 	
 		socket.emit('add user', username);
-<<<<<<< HEAD
 		getPage_data();
 		 getfollwedList();
 			$("#data_notis").hide(); 
-=======
-		getPage_data(cust_number);
-		getfollwedList();
->>>>>>> branch 'master' of https://github.com/BOB4s/PROJECT_BOB4.git
 			
 		$(window).scroll(function() {
 		    var scrolltop = $(document).scrollTop();

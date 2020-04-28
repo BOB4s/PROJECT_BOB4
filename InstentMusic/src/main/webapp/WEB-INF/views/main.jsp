@@ -192,7 +192,6 @@ padding-top: 75px;
 	
 		socket.emit('add user', username);
 		getPage_data();
-		
 			$("#data_notis").hide(); 
 			
 		$(window).scroll(function() {
@@ -315,8 +314,13 @@ padding-top: 75px;
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
 
 					//사진
-				 	data += "<img src='resources/images/IUfeed.jpg' />"
-				 		
+					if(item.post_saved==null){
+						data += "<img src='resources/images/IUfeed.jpg' />"
+						}else{
+							data += '<img src="<c:url value="/image/'+item.post_saved+'"/>"/>'	
+							}
+				 
+					
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
 				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"
 				 	 data += "<span class='overlay__item'> <i class='fa fa-heart'>"+item.mus_title+"</i></span> ";

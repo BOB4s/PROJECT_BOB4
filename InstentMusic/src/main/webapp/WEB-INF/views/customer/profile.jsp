@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
- <script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+ <script src="http://172.20.10.3:4000/socket.io/socket.io.js"></script>
 <%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
 <link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/toastr.min.js"></script>
@@ -84,13 +84,13 @@ position: absolute;
 
 
 </style>
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<script src="http://172.20.10.3:4000/socket.io/socket.io.js"></script>
 <script>
 var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://172.30.1.18:4000');
+var socket = io.connect('http://172.20.10.3:4000');
 $(function(){
 $("#profileSetting").click(function(){
 	location.href="goModify"
@@ -312,7 +312,7 @@ function getNotis(resp){
 
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(0px);transform: translateY(0px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
 						
-				 	data += "<img src='resources/images/IUfeed.jpg' />"
+				 	data += "<img src='resources/uploadPath/"+item.post_original+"' />"
 				 		
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
 				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"

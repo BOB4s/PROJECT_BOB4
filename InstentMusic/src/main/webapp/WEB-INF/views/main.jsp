@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<script src="http://172.20.10.3:4000/socket.io/socket.io.js"></script>
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
@@ -313,10 +313,10 @@ padding-top: 75px;
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
 
 					//사진
-					if(item.post_saved==null){
-						data += "<img src='resources/images/IUfeed.jpg' />"
+					if(item.post_original==null){
+						data += '<img src="resources/images/IUfeed.jpg" />'
 						}else{
-							data += '<img src="<c:url value="/image/'+item.post_saved+'"/>"/>'	
+							data += '<img src="resources/uploadPath/'+item.post_original+'"/>'	
 							}
 				 
 					

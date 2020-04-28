@@ -8,6 +8,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
+<script src="resources/js/p5.min.js"></script>
+<script src="resources/js/p5.sound.min.js"></script>
+<script src="resources/js/jquery-ui.min.js"></script>
+<script src="resources/js/sketch.js"></script>
 <!-- include libraries(jQuery, bootstrap) -->
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,7 +20,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<script src="http://172.20.10.3:4000/socket.io/socket.io.js"></script>
 <style>
 .write, .delete{
 	width: 20px;
@@ -47,6 +51,39 @@ float : left;
 	height: 30px;
 	border-radius:15px;
 }
+#visualizer{
+	padding : 25px 25px 25px 25px;
+	width : 100%;
+	height : 450px;
+	background-color : #D8D8D8;
+}
+#musicinfo{
+	float : left;
+	width : 600px;
+	height : 400px;
+	margin-down : 20px;
+	margin-left : 23px;
+}
+#profile{
+	float : left;
+	width : 400px;
+	height : 400px;
+	background-color : white;
+	margin-top : 0px;
+	margin-left : 23px;
+}
+#musicimg{
+	float : left;
+	width : 400px;
+	height : 400px;
+	margin-left : 20px;
+}
+#musicimg img{
+	width : 300px;
+	height : 300px;
+	margin-top : 25px;
+	margin-left : 25px;
+}
 </style>
 <script type="text/javascript">
 
@@ -54,7 +91,7 @@ var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://172.30.1.18:4000');
+var socket = io.connect('http://172.20.10.3:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -400,7 +437,32 @@ function noti_getBycust_number(){
 	})
 
    }
-
+function setup() {
+	userStartAudio();
+	var cvs = createCanvas(200,200);
+	cvs.parent('sketch-target');
+	colorMode(HSB);
+	angleMode(DEGREES);
+	//song = loadSound(path,loaded);
+	fft = new p5.FFT(0.9, 256);
+	w = width / 64;
+	//fft.setInput(song);
+}
+function draw() {
+	  background(0);
+	  var spectrum = fft.analyze();
+	  noStroke();
+	  translate(width/2, height/2);
+	  for (var i = 0; i < spectrum.length; i++) {
+		var angle = map(i,0,spectrum.length,0,360);
+		var amp = spectrum[i];
+		var r = map(amp, 0, 64, 20, 100);
+		var x = r * cos(angle);
+		var y = r * sin(angle);
+		stroke(i,255,255);
+		line(0,0,x,y);
+	  }
+}
 </script>
 
 </head>
@@ -440,8 +502,17 @@ function noti_getBycust_number(){
 			</div>
 		</div>
 	</nav>
-	<br><br>
    <div id="wrapper">
+   <div id="visualizer">
+   <div id="musicimg"><img src="resources/uploadPath/${post.post_original}"></div>
+   <div id="musicinfo">
+   <div id="sketch-target"></div><div id="musictitle">${post.mus_title }</div>
+   <div id="tags">tags</div>
+   </div>
+   <div id="profile">
+   <div id="custphoto"></div>
+   </div>
+   </div>
       <div id="replyForm" style="text-align: center;">
          <c:if test="${not empty nickname}">
             <form action="replyWrite" method="POST">

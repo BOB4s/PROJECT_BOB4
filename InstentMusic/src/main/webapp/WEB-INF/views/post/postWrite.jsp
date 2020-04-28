@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<script src="http://172.20.10.3:4000/socket.io/socket.io.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
@@ -19,14 +19,74 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="resources/js/toastr.min.js"></script>
 <title>글쓰기</title>
+<style type="text/css">
+#postForm{
+	width: 800px;
+	height: 600px;
+	margin : 0 auto;
+	margin-top : 40px;
+	border : 1px solid black;
+	text-align: center;
+}
+#postcontent{
+	margin : 10px 10px 10px 10px;
+	width: 700px;
+	height : 100px;
+}
+#postimg{
+	margin-top : 20px;
+	margin-bottom : 20px;
+	width : 160px;
+	height : 160px;
+}
+#upload{
+	margin : 0 auto;
+}
+#posttitle{
+	font-size : 20px;
+}
+#posttag{
+	width : 700px;
+	height : 100px;
+	margin : 0 auto;
+	margin-top : 10px;
+	background-color: #E6E6E6;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+#postup{
+	margin-top : 10px;
+}
+.addtag{
+	float : left;
+	margin : 5px 5px 5px 5px;
+}
+#musicplay{
+	margin-left : 5px;
+	width : 30px;
+	height : 30px;
+	cursor: pointer;
+}
+.deltag{
+	width : 15px;
+	height : 15px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0;
+	background: red;
+	color: #FFFFFF;
+	border-radius: 100%;
+	padding: 0;
+	font-size: 5px;
+}
+</style>
 <script  type="text/javascript">
-
 var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 
 var data_flag = 0;
-var socket = io.connect('http://172.30.1.18:4000');
+var socket = io.connect('http://172.20.10.3:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -311,131 +371,6 @@ $(function(){
 		});
 }
 </script>
-<style type="text/css">
- #data_notis {
-position: absolute;
-    right: 9%;
-    top: 9.4%;
- 	width: 30.5%;
-	float: right;
-	box-sizing: border-box;
-	background-color: white;
-	max-height: 800px;
-    overflow-y: auto;
-    height: 400px;
-    background: white;
-    z-index: 4;
-}
-.nav-counter {
-
- position:absolute;
- top: -1px;
- left: 60%;
- line-height: 20px;
- margin-top: -11px;
- padding: 0 6px;
- font-weight: normal;
- font-size: small;
- color: white;
- text-align: center;
- text-shadow: 0 1px rgba(0, 0, 0, 0.2);
- background: #e23442;
- border: 1px solid #911f28;
- border-radius: 11px;
- background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
- background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
- background-image: -o-linear-gradient(top, #e8616c, #dd202f);
- background-image: linear-gradient(to bottom, #e8616c, #dd202f);
- -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
- box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
-}
-.opps_profile_1{
-	font-size: 15pt; position: fixed; 
-	 left: 33.01%;
-    top: 10.7%;
-    width: 55.5%;
-	height: 6.4%;
-	background: white;
-
-  }
-  .opps_orifile_img_1{
-     border-radius: 50%;
-    transform-style: preserve-3d;
-    transition: transform 0.5s linear;
-    height: 45px;
-    margin-left: 15px;
-    margin-top: 15px;
-    text-align: center;
-      
-  }
-  .opps_main_css_1{
-  
-   border-left-style: groove;
-    border-left-color: cyan;
-    background: aliceblue;
-    height: 60px;
-  }
-
-#postForm{
-	width: 800px;
-	height: 600px;
-	margin : 0 auto;
-	margin-top : 40px;
-	border : 1px solid black;
-	text-align: center;
-
-#postcontent{
-	margin : 10px 10px 10px 10px;
-	width: 700px;
-	height : 100px;
-}
-#postimg{
-	margin-top : 20px;
-	margin-bottom : 20px;
-	width : 160px;
-	height : 160px;
-}
-#upload{
-	margin : 0 auto;
-}
-#posttitle{
-	font-size : 20px;
-}
-#posttag{
-	width : 700px;
-	height : 100px;
-	margin : 0 auto;
-	margin-top : 10px;
-	background-color: #E6E6E6;
-	white-space: nowrap;
-	overflow-x: hidden;
-}
-#postup{
-	margin-top : 10px;
-}
-.addtag{
-	float : left;
-	margin : 5px 5px 5px 5px;
-}
-#musicplay{
-	margin-left : 5px;
-	width : 30px;
-	height : 30px;
-	cursor: pointer;
-}
-.deltag{
-	width : 15px;
-	height : 15px;
-	font-weight: bold;
-	cursor: pointer;
-	border: 0;
-	background: red;
-	color: #FFFFFF;
-	border-radius: 100%;
-	padding: 0;
-	font-size: 5px;
-}
-</style>
 </head>
 <body >
 	<!-- Top for logo and navibar -->

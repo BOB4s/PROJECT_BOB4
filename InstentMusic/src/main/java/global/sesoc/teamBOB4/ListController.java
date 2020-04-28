@@ -38,11 +38,9 @@ public class ListController {
 	
 	@GetMapping("/getmusic")
 	public Music_library getmusic(Music_library music) {
-		System.out.println('ddd');
 		Music_library result = dao.getmusic(music);
 		String fullPath = "resources/"+uploadPath+result.getMus_saved();
 		result.setFullPath(fullPath);
-		System.out.println(result.getMus_title());
 		return result;
 	}
 }

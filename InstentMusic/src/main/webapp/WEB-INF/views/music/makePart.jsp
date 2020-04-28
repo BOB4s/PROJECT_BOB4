@@ -16,18 +16,24 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
+<link rel="stylesheet" href="resources/css/background_left_right_for_makePartJsp.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 html{
 	margin-left: 2%;
 }
 body{
-margin : 10px 10px 10px 10px;
+ /*margin : 10px 10px 10px 10px; */
 overflow-y: hidden;
+}
+#wrapper{
+	top: 16%;
+	left: 10%;
+	position: absolute;
 }
 #keyboard{
 	margin-left: 40px;
-	margin-top : 10px;
+	margin-top : 60px;
 	padding: 5px 5px 5px 5px;
 	width: 1120px;
 	height: 220px;
@@ -138,6 +144,9 @@ height: 120px;
 	line-height: 1.2;
 }
 #musinfo{
+	top: -40px;
+	position: absolute;
+	left: 320px;
 	text-align: center;
 	margin-top: 10px;
 }
@@ -177,6 +186,7 @@ height: 120px;
 	padding-left: 5px;
 }
 #phrases{
+	width: 1300px;
 	margin : 0 auto;
 }
 .phrase1, .phrase2, .phrase3, .phrase4{
@@ -189,14 +199,14 @@ height: 120px;
 	padding-top: 10px;
 }
 .rcdmusic{
-	fload : right;
+	float : right;
 	height : 30px;
 	width : 30px;
 	cursor : pointer;
 	margin-left: 10px;
 }
 .rcdplay{
-	fload : right;
+	float : right;
 	height : 30px;
 	width : 30px;
 	cursor : pointer;
@@ -712,6 +722,15 @@ $(function(){
 			</div>
 		</div>
 	</nav>
+	
+	<!-- left, right backgroung image -->
+	<div id="backgroundLeft">
+		<img alt="BL" src="resources/images/makingMusic/backgroundLeft-1.png">
+	</div>
+	<div id="backgroundRight">
+		<img alt="BR" src="resources/images/makingMusic/backgroundRight-1.png">
+	</div>
+	
 	<div id="wrapper">
 		<div id="musinfo">
 	Part Number : <span id="partnumber">${sessionScope.part_num}</span>&emsp;/&emsp;
@@ -787,12 +806,29 @@ $(function(){
 </div>
 </div>
 </div><!-- end #keyboard -->
-<div id="phrases">
-<div id="p1"><span class="pnames">Phrase1</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p1'">X</Button>reset</span></div><div id="phrase1"></div>
-<div id="p2"><span class="pnames">Phrase2</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p2'">X</Button>reset</span></div><div id="phrase2"></div>
-<div id="p3"><span class="pnames">Phrase3</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p3'">X</Button>reset</span></div><div id="phrase3"></div>
-<div id="p4"><span class="pnames">Phrase4</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p4'">X</Button>reset</span></div><div id="phrase4"></div>
-</div>
+	<div id="phrases">
+	<div id="phraseBlock">
+		<div id="p1">
+			<span class="pnames">Phrase1</span>
+				<img class="rcdmusic" src="resources/images/sound/rcd.png">
+				<img class="rcdplay" alt="play" src="resources/images/sound/play.png">
+					<span class = "delreset">
+						<Button class="del" value="p1'">X</Button>reset</span>
+		</div>
+		<div id="phrase1"></div>
+	</div>
+	<br>
+	<div id="phraseBlock">
+		<div id="p2"><span class="pnames">Phrase2</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p2'">X</Button>reset</span></div><div id="phrase2"></div>
+	</div>
+	<br>
+	<div id="phraseBlock">
+	<div id="p3"><span class="pnames">Phrase3</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p3'">X</Button>reset</span></div><div id="phrase3"></div>
+	</div>
+	<br>
+	<div id="phraseBlock">
+	<div id="p4"><span class="pnames">Phrase4</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p4'">X</Button>reset</span></div><div id="phrase4"></div>
+	</div>
 </div> 
 </body>
 <script>

@@ -290,9 +290,9 @@ function sendfile(){
 }
 </script>
 <style>
-body{
+/* body{
 margin : 10px 10px 10px 10px;
-}
+} */
 #musinfo{
 	text-align: center;
 	margin : 0 auto;
@@ -303,7 +303,7 @@ margin : 10px 10px 10px 10px;
 	width: 1200px;
 }
 #parts{
-	margin-left: 8%;
+	margin-left: 16%;
 	margin-right: 8%;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -426,12 +426,7 @@ float : left;
 		</div>
 	</nav>
 	
-	<div id="backgroundLeft">
-		<img alt="composing" src="resources/images/makingMusic/backgroundLeft-1.png">
-	</div>
-	<div id="backgroundRight">
-		<img alt="composing" src="resources/images/makingMusic/backgroundRight-1.png">
-	</div>
+	
 	<div id="wrapper">
 	<div id="musinfo">
 	Music Title : <span id="title"></span>&emsp;/&emsp;

@@ -132,9 +132,10 @@ body, html {
 	height: 400px;
 }
 .tryIt{
+	color: white;
 	position: absolute;
 	top: 50%;
-	left: 65%;
+	left: 42%;
 	text-align: center;
 } 
 .w3-button {
@@ -166,7 +167,7 @@ input[type=text], input[type=password]{
 	box-sizing: border-box;
 }
 .loginbtn{
-	background-color: #4CAF50;
+	background-color: gray;
 	color: white;
 	padding: 14px 20px;
 	margin: 8px 0;
@@ -180,7 +181,8 @@ input:hover{
 .cancelbtn{
 	width: auto;
 	padding: 10px 18px;
-	background-color: #f44336;
+	background-color: black;
+	color: white;
 }
 .imgcontainer{
 	text-align: center;
@@ -285,10 +287,10 @@ span.forgotPassword{
     <p><a href="#about" class="fa fa-info-circle w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off"> About</a></p>
   	<p><a class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off" onclick="loginBlock()">Get Start</a></p>
   	<p><a href="join" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Register</a></p>
-  	<div class="tryIt">
-  			<span class="w3-xlarge" id="target">Please press Enter!</span>
-  		</div>
   </div> 
+  	<div class="tryIt">
+  		<span class="w3-xlarge" id="target">Please press Enter!</span>
+  	</div>
   <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
     <i class="fa fa-instagram w3-hover-opacity"></i>

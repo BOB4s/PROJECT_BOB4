@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
-<script src="http://192.168.43.28:4000/socket.io/socket.io.js"></script>
+<script src="http://172.20.10.2:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -58,7 +58,7 @@ animation: moveUp 3.65s ease forwards;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-	var socket = io.connect('http://192.168.0.198:4000');
+	var socket = io.connect('http://203.233.199.159:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -260,7 +260,7 @@ animation: moveUp 3.65s ease forwards;
 	<!-- Top for logo and navibar -->
 	 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -295,22 +295,6 @@ animation: moveUp 3.65s ease forwards;
 	<ul class="stage">
 	<li class="icon">
 		<div class="boxContainer">
-    		<div class="frontImgForBoxContainer">
-    			<img alt="posting" src="resources/images/main/posting.png">
-    		</div>
-    		<div class="info">
-				<header>
-					<h1>Posting</h1>
-						<a href="postWrite"><img alt="posting" src="resources/images/main/posting_icon.png"></a>
-				</header>
-					<p>
-					Click the icon for posting or sharing what you made it!
-					</p>
-			</div>
-		</div>
-	</li>
-	<li class="icon">
-		<div class="boxContainer">
 			<div class="frontImgForBoxContainer">
 				<img alt="manListening" src="resources/images/main/manListening.JPG">
 			</div>
@@ -320,7 +304,7 @@ animation: moveUp 3.65s ease forwards;
 						<a href="musiclist"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
 				</header>
 					<p>
-					Click the icon for listening to the music list that built with what you composed music
+					Click the icon for listening to the music list that built by what you composed music.
 					</p>
 			</div>
 		</div>
@@ -336,7 +320,7 @@ animation: moveUp 3.65s ease forwards;
 					<a href="makingMusic"><img alt="producing" src="resources/images/main/producing_icon.png"></a>
 				</header>
 				<p>
-				Click the icon for composing and producing your new music
+				Click the icon for composing and producing your new music.
 				</p>
 			</div>
 		</div>
@@ -352,7 +336,7 @@ animation: moveUp 3.65s ease forwards;
 					<a href="#musicBoard"><img alt="musicBoard" src="resources/images/main/allList.png"></a>
 				</header>
 				<p>
-				Click the icon to see your friends' music and what's the trend
+				Click the icon to see your friends' music and what's the trend.
 				</p>
 			</div>
 		</div>

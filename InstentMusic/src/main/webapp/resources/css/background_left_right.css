@@ -1,12 +1,12 @@
 #backgroundLeft img{
 	position: absolute;
-	width: 10%;
-	height: 100%;
+	width: 16%;
+	height: 88.5%;
 	left: -1%;
 }
 #backgroundRight img{
 	position: absolute;
-	width: 10%;
-	height: 100%;
+	width: 16%;
+	height: 88.5%;
 	right: -1%;
 }

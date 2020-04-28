@@ -44,12 +44,14 @@
 	margin-top : 270px;
 	text-align : center;
 	font-size : 50px;
+	font-family: "Times New Roman", Times, serif;
 }
 #startments{
 	width : 690px;
 	height : 20px;
 	margin-top : 30px;
 	font-size : 50px;
+	font-family: "Times New Roman", Times, serif;
 }
 .musiclist{
 	width : 600px;
@@ -62,7 +64,8 @@
 	margin-top : 20px;
 	text-align : center;
 	font-size : 30px;
-	font-family: fantasy;
+	font-style: italic;
+	font-family: "Times New Roman", Times, serif;
 }
 #lists{
 	width : 650px;
@@ -204,6 +207,26 @@ function draw() {
 	<div id="list">
 	<div id="listname">${sessionScope.nickname}'s Music List</div>
 	<div id="lists">
+	
+<!-- <div class="marquee">
+	<table class="musiclist" border="1">
+		<tr>
+			<td class="indexlist">1</td>
+			<td class="titlelist">Music title</td>
+			<td class="datelist">
+					<div class="marquee__inner" aria-hidden="true">
+						<span>mus_date</span>
+						<span>mus_date</span>
+						<span>mus_date</span>
+						<span>mus_date</span>
+					</div>
+			</td>
+			<td class="images"><img class="playsonge" alt="item.fullPath" src="resources/images/sound/playlist.png">
+			<img class="writesong" alt="item.mus_saved" src="resources/images/sound/writelist.png"></td>
+		</tr>
+	</table>	
+</div> -->
+	
 	<div id="startment">No composed Music :(</div>
 	</div>
 	</div>

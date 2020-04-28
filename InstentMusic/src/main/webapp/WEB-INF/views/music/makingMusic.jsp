@@ -23,13 +23,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-body{
-margin : 10px 10px 10px 10px;
-}
-
 #soundlib, #keyboard{
 	margin: 0 auto;
-	margin-top : 20px;
+	margin-top : 60px;
 	padding: 5px 5px 5px 5px;
 	width: 1020px;
 	height: 220px;
@@ -1102,10 +1098,10 @@ $(function(){
 	</nav>
 	
 	<div id="backgroundLeft">
-		<img alt="BL" src="resources/images/makingMusic/background_left.png">
+		<img alt="BL" src="">
 	</div>
 	<div id="backgroundRight">
-		<img alt="BR" src="resources/images/makingMusic/background_right.png">
+		<img alt="BR" src="">
 	</div>
 	<div id="wrapper">
 		<div id="soundlib">

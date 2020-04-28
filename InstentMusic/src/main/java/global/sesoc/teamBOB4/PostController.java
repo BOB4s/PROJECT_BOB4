@@ -1,11 +1,7 @@
 package global.sesoc.teamBOB4;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import global.sesoc.teamBOB4.dao.CustomerDao;
-import global.sesoc.teamBOB4.dao.ListDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.dao.Post_tagDao;
 import global.sesoc.teamBOB4.dao.TagDao;
-import global.sesoc.teamBOB4.util.FileService;
-import global.sesoc.teamBOB4.vo.Music_library;
+import global.sesoc.teamBOB4.vo.Like_click;
 import global.sesoc.teamBOB4.vo.Post;
-import global.sesoc.teamBOB4.vo.Post_tag;
 import global.sesoc.teamBOB4.vo.Tag;
 
 @Controller
@@ -52,31 +43,6 @@ public class PostController {
 		return "post/postWrite";
 	}
 	
-	@PostMapping("/postup")
-	public @ResponseBody int post_write_save(String[] tags, Post post, MultipartFile file, HttpSession session, HttpServletRequest request) {
-		String rootPath = request.getSession().getServletContext().getRealPath("/") ;//리얼경로
-		String savePath = rootPath + "/resources/"+uploadPath ;
-		
-		String savedFilename = FileService.saveFile(file, savePath);
-		post.setPost_original(savedFilename);
-		post.setPost_nickname((String)session.getAttribute("nickname"));
-		
-		int result = postdao.post_save_method(post);
-		int post_number = postdao.getOneByMus_number(post);
-		
-		for(int i=1; i<tags.length; i++) {
-			Tag t = new Tag();
-			t.setTag_name(tags[i]);
-			
-			System.out.println();
-			
-			Tag tresult = tagdao.selectTag(t);
-			System.out.println("tresult.getTag_number() : "+tresult.getTag_number());
-			post_tagdao.linkedTags(post_number, tresult.getTag_number());
-		}
-		
-		return post_number;
-	}
 	
 @RequestMapping(value = "/postLists", method = RequestMethod.GET)
 public @ResponseBody List<Post> postLists(
@@ -96,7 +62,9 @@ public @ResponseBody List<Post> postLists(
 			break;
 		}
 		postList.add(post_All_List_byFollow.get(i+(start_Page*page_control_int)));
-	}
+			/*
+			 * >>>>>>> branch 'newsejun44' of https://github.com/BOB4s/PROJECT_BOB4.git
+			 */	}
 	
 	/*
 	 * for (Post post:postList.get("title")) {
@@ -153,6 +121,32 @@ public @ResponseBody List<Post> postLists(
 		
 		return "post/postDetail";
 
+	}
+	
+	@RequestMapping(value = "/like_click", method = RequestMethod.GET)
+	public @ResponseBody String like_click(Like_click Like_click) {
+				System.out.println(Like_click.toString());
+		int result =postdao.checkLike_click(Like_click);
+		if (result == 0) {
+			 postdao.newliked(Like_click);
+			 System.out.println("조아여");
+			return "liked";
+		}
+		 postdao.unliked(Like_click);
+		 System.out.println("시러여");
+		return "unliked";
+	
+	}
+	@RequestMapping(value = "/likedchecking", method = RequestMethod.GET)
+	public @ResponseBody String followchecking(Like_click Like_click) {
+
+		int result =postdao.checkLike_click(Like_click);
+		if (result == 0) 
+			return "unliked";
+		if(result == 1) 
+		return "liked";
+		return "liked";
+	
 	}
 
 }

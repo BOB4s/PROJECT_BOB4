@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import global.sesoc.teamBOB4.dao.ChatDao;	
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.vo.Customer;
-import global.sesoc.teamBOB4.vo.Message;
 import global.sesoc.teamBOB4.vo.MessageList;
 
 @Controller
@@ -112,9 +111,10 @@ public class ChatController {
 	    
 	 	  }
 	 if(cust_number1!=0) {
+		 
+		 mesList.setHowManyChecks(cust_number1);
 	   Customer customer = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
 	  	mesList.setOppsProfile(customer.getCust_photo_saved());
-	  	
 	 }
 	return mesList;
 }

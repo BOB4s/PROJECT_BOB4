@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import global.sesoc.teamBOB4.dao.ListDao;
 import global.sesoc.teamBOB4.vo.Music_library;
-import global.sesoc.teamBOB4.vo.Part_music;
-import global.sesoc.teamBOB4.vo.Temp;
 
 @Controller
 @RestController

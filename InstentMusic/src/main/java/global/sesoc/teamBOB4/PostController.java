@@ -40,7 +40,6 @@ public class PostController {
 		int follow_number =(int)session.getAttribute("cust_number");
 		List<Integer> followerList = custdao.getFollowers(follow_number) ;
 		model.addAttribute("followerList",followerList);
-		System.out.println(mus_number);
 		model.addAttribute("mus_number", mus_number);
 		return "post/postWrite";
 	}
@@ -56,7 +55,6 @@ public class PostController {
 		post.setCust_number(cust_numbers);
 		post.setMus_title(mus_title);
 		post.setPost_content(post_content);
-		System.out.println(post.toString());
 		int result = postdao.post_save_method(post);
 
 		int post_number = postdao.getOneByMus_number(mus_numbers);
@@ -74,8 +72,6 @@ public class PostController {
 	public @ResponseBody String login(String text, int resp) {
 
 		int post_number = resp;
-		System.out.println(text);
-		System.out.println(post_number);
 
 		int tag_number = tagdao.selectTagLink(text);
 		post_tagdao.linkedTags(post_number, tag_number);

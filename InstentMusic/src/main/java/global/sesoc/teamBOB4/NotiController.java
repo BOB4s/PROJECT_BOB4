@@ -52,7 +52,9 @@ public class NotiController {
 			if (notiList.get(i).getNot_type().equals("POST")) {
 				String tempData =  notiList.get(i).getNot_content();
 				int mus_number = Integer.parseInt(tempData);
-				Post posts=	postdao.getPostByPostNum(postdao.getOneByMus_number(mus_number));
+				Post p = new Post();
+				p.setMus_number(mus_number);
+				Post posts=	postdao.getPostByPostNum(postdao.getOneByMus_number(p));
 				tempData = notiList.get(i).getNot_nickname()+"님이"+posts.getMus_title()+"을 업로드하였습니다.";
 				int cust_number2 = notiList.get(i).getNot_sender_number();
 				String aTeg2 = "<a href ='proDetail?cust_number="+ cust_number2+"'>"+notiList.get(i).getNot_nickname();

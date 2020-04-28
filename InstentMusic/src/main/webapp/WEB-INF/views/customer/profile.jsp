@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
- <script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
+ <script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
 <%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
 <link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/toastr.min.js"></script>
@@ -85,6 +85,7 @@ position: absolute;
 
 
 </style>
+<script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
 <script>
 $(function(){
 $("#profileSetting").click(function(){
@@ -113,13 +114,12 @@ $("#profileSetting").click(function(){
 	})
 })
 
-
 var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 
 var data_flag = 0;
-var socket = io.connect('http://192.168.43.107:4000');
+var socket = io.connect('http://172.16.101.220:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -255,52 +255,13 @@ function getNotis(resp){
 
 
 
+	var username = '${nickname}';
+	var socket = io.connect('http://172.16.101.220:4000');
 	$(function() {
 
 		socket.emit('add user', username);
 		$("#data_notis").hide(); 	
 		
-		
-		var follower_number = '${cust_number}';
-	 	var follow_number = '${customersData.cust_number}'; 
-		
-		$.ajax({
-			method : 'GET',
-			url : 'followchecking',
-			data : {
-				"follower_number" : follower_number,
-				"follow_number" : follow_number
-			},
-			success : function(resp) {
-				if (resp == 'unfollowed')
-					$("#following_button").text("follow")
-				if (resp == 'followed')
-					$("#following_button").text("unfollow")
-			}
-		})
-
-		$("#following_button").on("click", function() {
-			
-			$.ajax({
-				method : 'GET',
-				url : 'following',
-				data : {
-					"follower_number" : follower_number,
-					"follow_number" : follow_number
-				},
-				success : function(resp) {
-					if (resp == 'unfollowed')
-						$("#following_button").text("follow")
-					if (resp == 'followed'){
-						 socket.emit('newFollow',follow_number,username,follower_number );
-						 noti_save();
-						$("#following_button").text("unfollow")
-					}
-				}
-
-			})
-
-		});
 		$("#followList").on("click", function() {
 			$.ajax({
 				method : 'GET',
@@ -358,6 +319,11 @@ function getNotis(resp){
 		})
 
 		}
+$(function(){
+	$("#goModify").click(function(){
+		location.href="goModify";
+	})
+})
 </script>
 </head>
 <body>
@@ -367,7 +333,7 @@ function getNotis(resp){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search" id="searchpf">
 		</div>
 	
 		<div class="navigation__column">
@@ -389,9 +355,9 @@ function getNotis(resp){
 			<div id="mySidenav" class="sidenav">
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
-			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
-			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
 			  <a href="chattingTemp" ><i class="fa fa-comments-o "></i> Texting</a>
+			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
+			  <a href="goModify"><i class="fa fa-id-card-o"></i> Edit profile</a>
 			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
 			</div>
 		</div>
@@ -411,7 +377,7 @@ function getNotis(resp){
 				<div class="profile__title">
 					<h3 class="profile__username">${customersData.cust_nickname}</h3>
 					<a id="following_button" >following</a> <i
-						class="fa fa-cog fa-lg"></i>
+						class="fa fa-cog fa-lg" id="goModify"></i>
 				</div>
 				<ul class="profile__stats">
 					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>
@@ -465,28 +431,6 @@ function getNotis(resp){
 			</div>
 		</section>
 	</main>
-	<footer class="footer">
-		<div class="footer__column">
-			<nav class="footer__nav">
-				<ul class="footer__list">
-					<li class="footer__list-item"><a href="#" class="footer__link">About
-							Us</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Support</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Blog</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Press</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Api</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Jobs</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Privacy</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Terms</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Directory</a></li>
-					<li class="footer__list-item"><a href="#" class="footer__link">Language</a></li>
-				</ul>
-			</nav>
-		</div>
-		<div class="footer__column">
-			<span class="footer__copyright">© 2020 IM!</span>
-		</div>
-	</footer>
 </body>
 <script>
 function openNav() {

@@ -129,7 +129,6 @@ public class CustomerDao {
 	}
 
 	public Customer searchOne_ByCustnumber_getProfile(int cust_number1) {
-
 		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
 		int cust_number = cust_number1;
 		return mapper.searchOne_ByCustnumber_getProfile(cust_number);

@@ -12,6 +12,7 @@
     text-align: center;
     cursor: default;
     float: left;
+    margin-left: 4px;
 }
 
 .button_base:hover {

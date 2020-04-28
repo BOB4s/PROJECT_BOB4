@@ -3,32 +3,18 @@
 
 <mapper namespace="global.sesoc.teamBOB4.dao.TagMapper">
 
-<select id="selectTagLink" parameterType="String" resultType="int">
-  (select NVL(max(tag_number),0)  from Tag
-	where tag_name =#{tag_name} ) 
-
-</select>
-	
-<insert id="creatTagLink" parameterType="String" >
-	insert into Tag
-		(
-		tag_number
-		,tag_name
-		)
-		values
-		(
-		SEQ_Tag_tag_number.nextval
-		,#{tag_name}
-		)
+<insert id="inserttag" parameterType="Tag">
+insert into tag
+values(
+SEQ_TAG_TAG_NUMBER.nextval
+,#{tag_name}
+)
 </insert>
-<select id="selectTagnameByTagnum" parameterType="int" resultType="String">
 
-select tag_name
+<select id="selectTag" parameterType="Tag" resultType="Tag">
+select *
 from Tag
-where tag_number =#{tag_number}
-
-
+where tag_name = #{tag_name}
 </select>
-
 	
 </mapper>

@@ -14,11 +14,13 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://172.30.1.32:4000/socket.io/socket.io.js"></script>
+<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
 <link rel="stylesheet" href="resources/css/styles.css">
+<link rel="stylesheet" href="resources/css/opps_data_css.css">
+<link rel="stylesheet" href="resources/css/followBar.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
- <link href="resources/css/toastr.min.css" rel="stylesheet"/>
+<link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style type="text/css">
 a:link{
 	text-decoration: none;
@@ -52,13 +54,88 @@ transform: translateY(200px);
 -webkit-animation: moveUp 3.65s ease forwards;
 animation: moveUp 3.65s ease forwards;
 }
+.nav-counter {
+
+ position:absolute;
+ top: -1px;
+ left: 60%;
+ line-height: 20px;
+ margin-top: -11px;
+ padding: 0 6px;
+ font-weight: normal;
+ font-size: small;
+ color: white;
+ text-align: center;
+ text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+ background: #e23442;
+ border: 1px solid #911f28;
+ border-radius: 11px;
+ background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
+ background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
+ background-image: -o-linear-gradient(top, #e8616c, #dd202f);
+ background-image: linear-gradient(to bottom, #e8616c, #dd202f);
+ -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+ box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+}
+ #data_notis {
+position: absolute;
+    right: 9%;
+    top: 9.4%;
+ 	width: 30.5%;
+	float: right;
+	box-sizing: border-box;
+	background-color: white;
+	max-height: 800px;
+    overflow-y: auto;
+    height: 400px;
+    background: white;
+    z-index: 4;
+}
+
+.opps_profile_1{
+	font-size: 15pt; position: fixed; 
+	 left: 33.01%;
+    top: 10.7%;
+    width: 55.5%;
+	height: 6.4%;
+	background: white;
+
+  }
+  .opps_orifile_img_1{
+     border-radius: 50%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s linear;
+    height: 45px;
+    margin-left: 15px;
+    margin-top: 15px;
+    text-align: center;
+      
+  }
+  .opps_main_css_1{
+  
+   border-left-style: groove;
+    border-left-color: cyan;
+    background: aliceblue;
+    height: 60px;
+  }
+
+#nav{
+position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body{
+padding-top: 75px;
+}
 </style>
 <!-- 192.168.0.84 -->
 <script type="text/javascript">
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-	var socket = io.connect('http://172.30.1.32:4000');
+	var data_flag = 0;
+	var socket = io.connect('172.30.1.18:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -77,22 +154,44 @@ animation: moveUp 3.65s ease forwards;
 			  "onclick" : function(event){
 				  console.log(event);
 			var toastr_kind = event.currentTarget.children[1].children[0].value;
-			alert(toastr_kind);
 			if(toastr_kind == 'CHAT'){
 				  
 			var opponentName = event.currentTarget.children[1].innerText
 			var UserName = username;
-		
+			
 		 location.href = "chattingTemp?UserName=" + UserName + "&opponentName="+ opponentName; 
 				  }
+			  // mus 로 post번호로 찾아감
+			if(toastr_kind == 'POST'){
+				
+				var mus_number =  event.currentTarget.children[2].children[1].value;
+				location.href = "postGetOne?mus_number=" + mus_number ; 
+					  }
+			if(toastr_kind == 'Follow'){
+				
+				var opponentName = event.currentTarget.children[1].innerText
+				var cust_number =  event.currentTarget.children[2].children[0].value;
+			  location.href = "proDetail?cust_number=" + cust_number ;
+					  }
+			if(toastr_kind == 'Reply'){
+				var mus_title
+				var opponentName = event.currentTarget.children[1].innerText
+				var post_number =event.currentTarget.children[2].children[0].value;
+			
+			 location.href = "postGetOne?post_number=" + post_number ; 
+					  }
+		
 			  }	
 			};
+
+
+
 
 	$(function(){
 	
 		socket.emit('add user', username);
-		getPage_data(cust_number);
-		
+		getPage_data();
+			$("#data_notis").hide(); 
 			
 		$(window).scroll(function() {
 		    var scrolltop = $(document).scrollTop();
@@ -129,9 +228,10 @@ animation: moveUp 3.65s ease forwards;
 	socket.on('postWrite message', function(data) {
 			$.each(data.followerList,function(index, item) {
 				if(item==cust_number){
-				var mesMain = data.username+"님이 올린 새글"+ data.message;
+					var cust_number2 = data.cust_number;
+				var mesMain = data.username+"님이 올린 새글"+ data.message+"<input type='hidden'  name='cust_number' value='"+data.cust_number2+"' ><input type='hidden'  name='mus_number' value='"+data.mus_number+"' >";
 				var mesHead = "<input type='hidden'  name='toastr_kind' value='POST' > 알림" ;
-
+				
 				toastr["info"](mesMain, mesHead);
 					}
 			});
@@ -139,7 +239,8 @@ animation: moveUp 3.65s ease forwards;
 	});
 	socket.on('newFollow message', function(data) {
 			if(data.follow_number==cust_number){
-				var mesMain = data.username+"님이 회원님을  팔로우하기 시작하였습니다.";
+				
+				var mesMain = data.username+"님이 회원님을  팔로우하기 시작하였습니다.<input type='hidden'  name='cust_number' value='"+data.follower_number+"' > ";
 				var mesHead = "<input type='hidden'  name='toastr_kind' value='Follow' > 알림" ;
 			
 			toastr["info"](mesMain, mesHead);
@@ -151,7 +252,7 @@ animation: moveUp 3.65s ease forwards;
 
 	socket.on('replynotice message', function(data) {
 		if(data.postWriter_number==cust_number){
-		var mesMain = data.replyWriter_number+"님이 "+data.mus_title+"글에 댓글을 달았습니다.";
+		var mesMain = data.replyWriter_number+"님이 "+data.mus_title+"글에 댓글을 달았습니다.<input type='hidden'  name='post_number' value='"+data.post_number+"' >";
 		var mesHead = "<input type='hidden'  name='toastr_kind' value='Reply' > 알림" ;
 	
 	toastr["info"](mesMain, mesHead);
@@ -159,7 +260,7 @@ animation: moveUp 3.65s ease forwards;
 
 
 });
-	function getPage_data(cust_number){
+	function getPage_data(){
 		if($("#profile")[0].className=='stop'){
 			$("#profile")[0].className='';
 			$('#endDan').html('');
@@ -187,7 +288,19 @@ animation: moveUp 3.65s ease forwards;
 	function chatOpen(){
 		window.open("popup", "win", "width=450,height=450, left=50,up=50");
 	}
-	
+
+	function noti_getBycust_number(){
+		
+		$.ajax({
+			method : 'GET',
+			url : 'noti_getBycust_number',
+			success : getNotis,
+			error : function(resp) {
+				alert("Error");
+			}
+		})
+
+		}
 	function getPage(resp){
 		if(resp==null) {
 			alert("글이 없습니다.");
@@ -198,9 +311,15 @@ animation: moveUp 3.65s ease forwards;
 				var rannum =  Math.floor(Math.random() * 3)+0.65;/* 0.65 */
 
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
-						
-				 	data += "<img src='resources/images/IUfeed.jpg' />"
-				 		
+
+					//사진
+					if(item.post_saved==null){
+						data += "<img src='resources/images/IUfeed.jpg' />"
+						}else{
+							data += '<img src="<c:url value="/image/'+item.post_saved+'"/>"/>'	
+							}
+				 
+					
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
 				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"
 				 	 data += "<span class='overlay__item'> <i class='fa fa-heart'>"+item.mus_title+"</i></span> ";
@@ -272,11 +391,59 @@ animation: moveUp 3.65s ease forwards;
 		
 		})
 	
+	/* function getfollwedList(){
+		var data = "<table border='1' style='font-size: 15pt'>";
+		var j[] = '${followed_Profiles_List}';
+		$.each(j[],function(index, item) {
+			data +="<tr>";
+			data += "<td>"+item.cust_nickname+"</td>";
+			data += "<td>"+item.cust_number+"</td>";
+			data += "<td>"+item.cust_photo_saved+"</td>";
+			data += "</tr>";
+				});
+		data +="</table>";
+		$('#followerList_Profiles').html(data);
+		} */
+	function logout(){
+		socket.emit('disconnect',username);
+		location.href = "logout";
+		}
+
+
+	function getNotis(resp){
+
+		 var data = "<div id = 'noti_list_thing'>"
+			$.each(resp,function(index, item) {
+				console.log(item)
+				
+				 	data += ' <div class="opps_profile_imgs_1" >'
+					data +='<div class="opps_profile_imgs_inner_1" style="float: left;">'
+					data += '<img class = "opps_orifile_img_1" alt="" src="<c:url value="/image/'+item.not_savedData+'"/>"/></div>'
+					data +='<div  class="opps_main_css_1" style ="padding-top: 15px;" ><span style="border: thick;font-size: 12pt;font-weight: bold;"></span>' 
+						
+					data +='<span style ="margin-left: 20px;">'+item.not_content+'</span>'; 
+							
+						data += "</div></div></div>";
+					});
+		data += '</div>'
+
+			 console.log(data);
+		$("#data_notis").html(data); 
+
+		
+		if(data_flag==0){
+			$("#data_notis").show();
+			data_flag++;
+			}else if(data_flag==1){
+				$("#data_notis").hide();
+				data_flag--;
+				}
+	}
 </script>
 </head>
 <body>
 	<!-- Top for logo and navibar -->
-	 <nav class="navigation">
+	 <nav class="navigation" id="nav">
 		<div class="navigation__column">
 			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>&nbsp;&nbsp;&nbsp;
@@ -294,46 +461,38 @@ animation: moveUp 3.65s ease forwards;
 		</div>	
 		<div class="navigation__column">
 			<div class="navigations__links">
-				<div class="navigation__list-item"><a href="#"
+				<div class="navigation__list-item"><a 
 					class="navigation__link" onclick="chatOpen()"><i class="fa fa-send-o"></i>
 				</a></div>
-				<div class="navigation__list-item"><a href="#"
-					class="navigation__link"><i class="fa fa-bell-o"></i>
+				<div class="navigation__list-item"><a 
+					class="navigation__link" onclick="noti_getBycust_number()"><i class="fa fa-bell-o"><span class="nav-counter">new</span>
+					</i>
 				</a></div>
 				<div class="navigation__list-item"  >
 					<span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
 				</div>
 			</div>
+			
+			
+			
 			<div id="mySidenav" class="sidenav">
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
 			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
 			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
-			  <a href="chattingTemp"><i class="fa fa-comments-o"></i> Texting</a>
+			  <a href="chattingTemp" ><i class="fa fa-comments-o "></i> Texting</a>
 			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
 			</div>
 		</div>
 	</nav>
 
 <div class="wrapper">
+<div id="data_notis">
+				
+			
+			</div>
 <img class="imgContainer" alt="produce" src="resources/images/musiclist/produce.png">
 	<ul class="stage">
-	<li class="icon">
-		<div class="boxContainer">
-    		<div class="frontImgForBoxContainer">
-    			<img alt="posting" src="resources/images/main/posting.png">
-    		</div>
-    		<div class="info">
-				<header>
-					<h1>Posting</h1>
-						<a href="postWrite"><img alt="posting" src="resources/images/main/posting_icon.png"></a>
-				</header>
-					<p>
-					Click the icon for posting or sharing what you made it!
-					</p>
-			</div>
-		</div>
-	</li>
 	<li class="icon">
 		<div class="boxContainer">
 			<div class="frontImgForBoxContainer">
@@ -342,7 +501,7 @@ animation: moveUp 3.65s ease forwards;
 			<div class="info">
 				<header>
 					<h1>My Music List</h1>
-						<a href="myMusicList"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
+						<a href="musiclist"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
 				</header>
 					<p>
 					Click the icon for listening to the music list that built with what you composed music
@@ -387,15 +546,7 @@ animation: moveUp 3.65s ease forwards;
 <div id="musicBoard">
 	<h1>Music Board</h1>
 </div>
-		<a href="postWrite"> 글쓰자</a>
-		<a href="logout">로그아웃</a>
-	<input type="button" id="test1"  value="toast" onclick="toasted()">
-		<a href="deleteView">탈주닌자</a>
-		<a href="goModify">정보수정수정</a>
-		<a href="popup">popup</a>
-		<input type="button" value="popup" onclick="chatOpen()">
-		<a href="infinity"> infinity</a>
-		
+<div id="followerList_Profiles"> </div>
 <br>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>
@@ -409,16 +560,22 @@ animation: moveUp 3.65s ease forwards;
 	</div>
 	<div class="rightGrid">New tracks from followers
 	</div>
-<<<<<<< HEAD
 </div>
 
-		<input type="button" value="챗방" onclick="chatOpen()">
-	<input type="button" id="test1"  value="toast" onclick="toasted()">
-		<a href="postWrite"> 글쓰자</a>
-		<a href="logout">로그아웃</a>
-		<a href="test1">프로필실험</a>
-=======
-</div> -->
+<!-- follow list -->
+<article id="follower_tool" style="font-size: 15pt">
+	<div id="followBar">
+		<div class="follower_viewall">
+			<a href="#">View all</a>
+		</div>
+		<div id="initialPhoto">
+			<ul id="photoDataBar"></ul>
+		</div>
+		<div>
+			<ul id="followerList_Profiles"></ul>
+		</div>
+	</div>
+</article>
 </body>
 <script>
 function openNav() {

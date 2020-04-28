@@ -22,6 +22,7 @@ import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.vo.Customer;
+import net.sf.json.JSONArray;
 
 @Controller
 public class HomeController {
@@ -35,7 +36,6 @@ public class HomeController {
 	@GetMapping("temp")
 	public String temp() {
 		return "temp";
-		
 	}
 	
 	@GetMapping("/")
@@ -64,15 +64,27 @@ public class HomeController {
 		
 		Customer c = custdao.selectOne(customer);
 		
-			
-		
 		if(c != null) {
 			if(c.getCust_key().equals("Y")) {
+				List<Customer> followed_Profiles_List  = new ArrayList<>();
+				int follow_number = c.getCust_number();
+				List <Integer> followersList =custdao.getFollowers(follow_number);
+				for(int cust_number1:followersList) {
+					Customer temp = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
+					if(temp.getCust_photo_saved()==null) {
+						temp.setCust_photo_saved("디폴트값");
+					}
+					followed_Profiles_List.add(temp); 
+				}
 			session.setAttribute("login", c.getCust_number());
-			session.setAttribute("id", c.getCust_id());
 			session.setAttribute("cust_number", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
-			session.setAttribute("introduce", c.getCust_introduce());
+			/*
+			 * session.setAttribute("password", c.getCust_password());
+			 * session.setAttribute("email", c.getCust_email());
+			 */
+			/* session.setAttribute("introduce", c.getCust_introduce()); */
+			model.addAttribute("followed_Profiles_List",JSONArray.fromObject(followed_Profiles_List));
 			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";
 			}else {
@@ -84,14 +96,15 @@ public class HomeController {
 			return "redirect:/";
 		}
 	}
-	
-	//must be linked with HTTP through the 'value=""'
+
 	@GetMapping(value="logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
+		
+		
 		return "home";
 	}
-
+	
 	@GetMapping("/join")
 	public String join() {
 		return "customer/join";
@@ -258,10 +271,8 @@ public class HomeController {
 		return "customer/proDetail";
 	}
 	@GetMapping("/partmake")
-	public String partmake(int part_number, int temp_bpm, Model model) {
-		model.addAttribute("part_number", part_number);
-		model.addAttribute("temp_bpm", temp_bpm);
-		return "music/partmake";
+	public String partmake() {
+		return "music/makePart";
 	}
 	
 	@GetMapping("/makingmusic2")

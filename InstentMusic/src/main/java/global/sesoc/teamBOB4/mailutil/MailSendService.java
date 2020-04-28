@@ -75,7 +75,7 @@ public class MailSendService {
 		MimeMessage mail = mailSender.createMimeMessage(); 
 		String htmlStr = "<h2>IM 회원가입을 환영합니다. </h2><br><br>" 
 				+ "<h3>" + cust_id + "님 인증을 마치시려면 다음을 입력해주세요</h3>" + "<br><p>인증하기 버튼을 누르시면 로그인을 하실 수 있습니다.<br> " 
-				+ "<a href='http://localhost:8089" + request.getContextPath() + "/user/key_alter?cust_id="+ cust_id +"&cust_key="+cust_key+"'>인증하기</a></p>"
+				+ "<a href='http://localhost:8888" + request.getContextPath() + "/user/key_alter?cust_id="+ cust_id +"&cust_key="+cust_key+"'>인증하기</a></p>"
 				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
 		try {
 			mail.setSubject("[본인인증] 계정 확인해주세요 !", "utf-8");
@@ -92,7 +92,6 @@ public class MailSendService {
 	public int alter_userKey_service(String cust_id, String cust_key) {
 		
 		int resultCnt = 0;
-		
 		userDao = sqlSession.getMapper(CustomerMapper.class);
 		resultCnt = userDao.alter_userKey(cust_id, cust_key);
 		

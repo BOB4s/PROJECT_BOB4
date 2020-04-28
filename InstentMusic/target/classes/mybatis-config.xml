@@ -16,6 +16,7 @@
 		<typeAlias type="global.sesoc.teamBOB4.vo.Key_sound" alias="Keys"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Temp" alias="Temp"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Part_music" alias="Parts"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Notification2" alias="Notification"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />
@@ -27,5 +28,6 @@
 		<mapper resource="mapper/post_tagMapper.xml" />
 		<mapper resource="mapper/replyMapper.xml" />
 		<mapper resource="mapper/makeMapper.xml" />
+		<mapper resource="mapper/notiMapper.xml" />
 	</mappers>
 </configuration>

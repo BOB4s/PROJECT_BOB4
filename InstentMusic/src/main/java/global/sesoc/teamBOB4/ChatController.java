@@ -22,7 +22,7 @@ public class ChatController {
 	ChatDao chatdao;
 
 	@RequestMapping(value = "/CreateChatRoom", method = RequestMethod.POST)
-	public @ResponseBody String CreateChatRoom(MessageList newList ,Model model) {
+	public @ResponseBody int CreateChatRoom(MessageList newList ,Model model) {
 		int messangerRoom = 0;
 		
 		messangerRoom = chatdao.selectmessangerRoom(newList);
@@ -31,9 +31,10 @@ public class ChatController {
 		}
 		if(messangerRoom==0) {
 		chatdao.createChatRoom(newList);
+		messangerRoom = chatdao.selectmessangerRoom(newList);
 		model.addAttribute("messangerRoom",messangerRoom);
 		}
-		return "";
+		return messangerRoom;
 	}
 	
 @RequestMapping(value = "/chattingTemp", method = RequestMethod.GET,produces = "application/text; charset=utf8")
@@ -46,9 +47,13 @@ public class ChatController {
 		String username =(String)session.getAttribute("nickname");
 		List<MessageList> RoomList = chatdao.getUsersChatRoom(username);
 		List<MessageList> RoomList2 = chatdao.getUsersChatRoom2(username);
-		for(MessageList temps:RoomList2)
+		for(MessageList temps:RoomList2) {
+			String temp = temps.getUserName();
+			temps.setUserName(temps.getOpponentName());
+			temps.setOpponentName(temp);
 		RoomList.add(temps);
 		
+		}
 		for(MessageList ml : RoomList) {
 			if(opponentName.equals(ml.getOpponentName())) {
 				if(UserName.equals(ml.getUserName())) 

@@ -3,11 +3,17 @@
 
 <mapper namespace="global.sesoc.teamBOB4.dao.CustomerMapper">
 
-	<select id="searchpf" parameterType="string" resultType="Customer">
+	<select id="searchpf" parameterType="String" resultType="Customer">
 		select *
 		from customer
 		where
 		cust_nickname like '%'||#{search}||'%'
+	</select>
+	
+	<select id="get_cust_number_by_nickname" parameterType="String" resultType="int">
+	 (select NVL(max(cust_number),0)  from Customer
+	where cust_nickname =#{cust_nickname}) 
+	
 	</select>
 
 	<insert id="following" parameterType="Follow">
@@ -136,7 +142,13 @@ update Customer set cust_key = #{cust_key} where cust_id =#{cust_id}
 		select * from customer
 		
 	</select>
-	
+			<select id="searchOne_ByCustnumber_getProfile" parameterType="int"
+		resultType="Customer">
+		select cust_number,cust_nickname,cust_photo_saved
+		from Customer
+		where
+		cust_number =#{cust_number}
+	</select>
 	<delete id="deleteCustomer" parameterType="Customer">
 		delete from customer where
 		cust_password = #{cust_password} 

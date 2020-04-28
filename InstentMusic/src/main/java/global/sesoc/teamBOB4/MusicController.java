@@ -18,7 +18,6 @@ import global.sesoc.teamBOB4.dao.MusicDao;
 import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.vo.Key_sound;
 import global.sesoc.teamBOB4.vo.Sound_library;
-import global.sesoc.teamBOB4.vo.Temp;
 
 @Controller
 @RestController

@@ -32,6 +32,7 @@
 		,mus_title
 		,post_content
 		,post_date
+		,post_nickname
 		,post_reply
 		,post_like
 		,post_play
@@ -46,6 +47,7 @@
 		,#{mus_title}
 		,#{post_content}
 		,sysdate
+		,#{post_nickname}
 		,0
 		,0
 		,0

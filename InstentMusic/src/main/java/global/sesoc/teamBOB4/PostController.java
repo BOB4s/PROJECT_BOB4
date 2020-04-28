@@ -60,6 +60,7 @@ public class PostController {
 		
 		String savedFilename = FileService.saveFile(file, savePath);
 		post.setPost_original(savedFilename);
+		post.setPost_nickname((String)session.getAttribute("nickname"));
 		
 		int result = postdao.post_save_method(post);
 		int post_number = postdao.getOneByMus_number(post.getMus_number(),post.getPost_content());
@@ -87,43 +88,6 @@ public class PostController {
 			return result2;
 		}
 		return 0;
-	}
-	
-	@RequestMapping(value = "/postLists", method = RequestMethod.GET)
-	public @ResponseBody List<Post> postLists(
-			@RequestParam(value = "searchWord", defaultValue = "") String searchWord,
-			@RequestParam(value = "start_Page", defaultValue = "0") int start_Page,
-			@RequestParam(value = "cust_number", defaultValue = "0") int cust_number,
-		 Model model) {
-		List <Integer> follwedList =custdao.getFollowings(cust_number);
-		List<Post> post_All_List_byFollow = postdao.getPostAll(follwedList);
-		List<Post> postList =new ArrayList<>();
-		int page_control_int=3;
-		if(start_Page==0) 
-			page_control_int=6;
-		for (int i=0;i<page_control_int;i++) {
-			if(i+(start_Page*page_control_int)>=post_All_List_byFollow.size()) {
-				break;
-			}
-			postList.add(post_All_List_byFollow.get(i+(start_Page*page_control_int)));
-		}
-		
-		/*
-		 * for (Post post:postList.get("title")) {
-		 * System.out.println(post.getMus_title()+"//"+post.getPost_number());
-		 * 
-		 * } System.out.println(postList.get("title").size());
-		 */
-		String controls = "title";
-		if (searchWord.equals("title")) {
-			controls = "title";
-		}
-
-		
-		/* model.addAttribute("postList", postList); */
-		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("controls", controls);
-		return postList;
 	}
 	
 	@GetMapping("/postGetOne")

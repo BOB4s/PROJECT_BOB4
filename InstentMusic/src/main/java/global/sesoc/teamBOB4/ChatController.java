@@ -112,9 +112,10 @@ public class ChatController {
 	    
 	 	  }
 	 if(cust_number1!=0) {
+		 
+		 mesList.setHowManyChecks(cust_number1);
 	   Customer customer = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
 	  	mesList.setOppsProfile(customer.getCust_photo_saved());
-	  	
 	 }
 	return mesList;
 }

@@ -15,7 +15,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
  <style type="text/css">
@@ -82,6 +82,11 @@ position: absolute;
     background: aliceblue;
     height: 60px;
   }
+  .heart_icons{
+  height: 40px;
+  width: 40px;
+  
+  }
 
 </style>
 <script type="text/javascript">
@@ -139,11 +144,6 @@ var socket = io.connect('http://192.168.43.107:4000');
 	
 		  }	
 		};
-
-
-
-
-
 
 socket.on('chat message', function(data) {
 	
@@ -223,15 +223,7 @@ function getNotis(resp){
 			data_flag--;
 			}
 }
-
-
-
-
-	
-
-	
 		
-
 $(function() {
 	socket.emit('add user', username);
 	$("#data_notis").hide(); 	
@@ -252,9 +244,7 @@ function init() {
 			alert("Error");
 		}
 	})
-
 }
-
 function output(resp) {
 	var nickname = "${sessionScope.nickname}";
 	var data = '   <table class="table table-dark"><thead><tr><th>입력일시</th><th>아이디</th><th>댓글내용</th></tr></thead><tbody>';
@@ -285,13 +275,10 @@ function output(resp) {
 	$(".replyUpdate").on('click', replyUpdate);
 
 }
-
 function replyUpdate() {
-
 	var rep_number = $(this).attr("data-num");
 	var rep_content = $(this).attr("data-text");
 	$("#replyControl").attr("data-num", rep_number);
-
 	$("#rep_content").val(rep_content);
 	$("#replyControl").val('댓글수정');
 
@@ -418,7 +405,6 @@ function noti_save(){
 			"not_content" : not_content,
 			"not_type" : not_type
 		}
-
 	});
 
 	}
@@ -438,6 +424,56 @@ function noti_getBycust_number(){
 	})
 
 	}
+
+
+		$(function() {
+			var post_number = '${post.post_number}';
+			var cust_number = '${cust_number}';
+			var target_number = '${post.cust_number}'	
+
+				
+			$.ajax({
+				method : 'GET',
+				url : 'likedchecking',
+				data : {
+					"post_number" : post_number,
+					"cust_number" : cust_number,
+					"target_number" : target_number
+				},
+				
+				
+				success : function(resp) {
+					if (resp == 'unliked')
+						$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
+					if (resp == 'liked')
+						$("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
+				}
+			})
+			$("#liked_button").on("click", function() {
+				$.ajax({
+					method : 'GET',
+					url : 'like_click',
+					data : {
+						"post_number":post_number,
+						"cust_number":cust_number,
+						"target_number" : target_number
+					},
+					success : function(resp) {
+						if (resp == 'unliked')
+							$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
+						if (resp == 'liked')
+							$("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
+							
+						 /* socket.emit('newFollow',follow_number,username ); */
+						
+
+					}
+
+				})
+
+			})
+		});
+		
 </script>
 
 </head>
@@ -488,6 +524,7 @@ ${tagList}
 			</div>
 		</div>
 	</nav>
+	
 	<div id="wrapper">
 		<div id="replyForm" style="text-align: center;">
 			<c:if test="${not empty nickname}">
@@ -513,9 +550,8 @@ ${tagList}
 			</c:if>
 
 		</div>
+		<a id="liked_button" >like</a> 
 		<!-- 댓글 목록 출력 -->
-
-		
 
 	</div>
 	<div id="replyResult" style="width: 60%; margin: auto; "></div>

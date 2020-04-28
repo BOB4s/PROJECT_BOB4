@@ -73,4 +73,45 @@
 	from Post
 	where post_number = #{post_number}
 	</select>
+	
+<!-- 	<select id="getPostByPostNum" parameterType="Like_click">
+	select *
+	from Like_click
+	where post_number = #{post_number}
+	and 
+	</select> -->
+	<select id="checkLike_click" parameterType="Like_click" resultType="int">
+	 (select NVL(max(likt_type),0)  from Like_click
+	where post_number =#{post_number}
+	 and  cust_number =#{cust_number}
+	 and target_number=#{target_number}) 
+
+	</select>
+	
+		<insert id="newliked" parameterType="Like_click">
+		insert into Like_click
+		(
+		like_number
+		,post_number
+		,cust_number
+		,target_number
+		,likt_type
+		)
+		values
+		(
+		SEQ_like_click_like_number.nextval
+		,#{post_number}
+		,#{cust_number}
+		,#{target_number}
+		,'1'
+		)
+
+	</insert>
+	<delete id="unliked" parameterType="Like_click">
+		delete from Like_click
+	where post_number =#{post_number}
+	 and  cust_number =#{cust_number}
+	 and target_number=#{target_number}
+
+	</delete>
 </mapper>

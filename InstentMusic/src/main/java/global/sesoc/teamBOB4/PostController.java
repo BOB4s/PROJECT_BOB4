@@ -19,6 +19,8 @@ import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.dao.Post_tagDao;
 import global.sesoc.teamBOB4.dao.TagDao;
+import global.sesoc.teamBOB4.vo.Follow;
+import global.sesoc.teamBOB4.vo.Like_click;
 import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
@@ -61,7 +63,6 @@ public class PostController {
 		post.setPost_content(post_content);
 		post.setPost_nickname(post_nickname);
 		post.setPost_url(post_url);
-		System.out.println(post.toString());
 		int result = postdao.post_save_method(post);
 
 		int post_number = postdao.getOneByMus_number(mus_numbers);
@@ -79,11 +80,8 @@ public class PostController {
 	public @ResponseBody String login(String text, int resp) {
 
 		int post_number = resp;
-		System.out.println(text);
-		System.out.println(post_number);
 
 		int tag_number = tagdao.selectTagLink(text);
-		System.out.println(tag_number);
 		post_tagdao.linkedTags(post_number, tag_number);
 		return "success";
 
@@ -150,6 +148,32 @@ public class PostController {
 		
 		return "post/postDetail";
 
+	}
+	
+	@RequestMapping(value = "/like_click", method = RequestMethod.GET)
+	public @ResponseBody String like_click(Like_click Like_click) {
+				System.out.println(Like_click.toString());
+		int result =postdao.checkLike_click(Like_click);
+		if (result == 0) {
+			 postdao.newliked(Like_click);
+			 System.out.println("조아여");
+			return "liked";
+		}
+		 postdao.unliked(Like_click);
+		 System.out.println("시러여");
+		return "unliked";
+	
+	}
+	@RequestMapping(value = "/likedchecking", method = RequestMethod.GET)
+	public @ResponseBody String followchecking(Like_click Like_click) {
+
+		int result =postdao.checkLike_click(Like_click);
+		if (result == 0) 
+			return "unliked";
+		if(result == 1) 
+		return "liked";
+		return "liked";
+	
 	}
 
 }

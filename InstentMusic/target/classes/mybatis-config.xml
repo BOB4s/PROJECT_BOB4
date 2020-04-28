@@ -17,6 +17,7 @@
 		<typeAlias type="global.sesoc.teamBOB4.vo.Temp" alias="Temp"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Part_music" alias="Parts"/>
 		<typeAlias type="global.sesoc.teamBOB4.vo.Notification2" alias="Notification"/>
+		<typeAlias type="global.sesoc.teamBOB4.vo.Like_click" alias="Like_click"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />

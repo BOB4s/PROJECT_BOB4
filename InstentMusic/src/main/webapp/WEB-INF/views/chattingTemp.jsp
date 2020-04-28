@@ -571,9 +571,9 @@ if(${messangerRoom}!=0){
 		$('form').submit(function() {
 			/*  = $('#newOpps_data')[0].currentSrc; */
 			var srcdata = $('#newOpps_data')[0].value;
+			var oppsnumber = $('#newOpps_number')[0].value;
 			 socket.emit('chat message', $('#Mes_content').val(),srcdata); 
-			
-			noti_save();
+			noti_save(oppsnumber);
 			sendText();
 			$('#Mes_content').val('');
 			return false;
@@ -669,8 +669,11 @@ if(${messangerRoom}!=0){
 					"UserName" : UserName
 				},success :function(msList){
 				 	 /* $('#Opps_file').text();  */
-				 	/* '+msList.oppsProfile+' */
+				 	/* '+msList.oppsProfile+' 
+				 	
+				 	*/
 				 	var opData ='<input id ="newOpps_data" type="hidden" value="'+msList.oppsProfile+'">';
+				 	opData +='	<input id ="newOpps_number" type="hidden" value="'+msList.howManyChecks+'">';
 				 	 opData +=msList.opponentName+"의 메세지";
 					$('#Opps_file').html(opData);
 					
@@ -712,9 +715,9 @@ if(${messangerRoom}!=0){
 		function closeNav() {
 			  document.getElementById("mySidenav").style.width = "0";
 			}
-		function noti_save(){
+		function noti_save(oppsnumber){
 			var not_content  =opponentName;
-			var not_cust_number = cust_number;
+			var not_cust_number = oppsnumber;
 			var not_sender_number ='${cust_number}';
 			var not_type = 'CHAT';
 			$.ajax({

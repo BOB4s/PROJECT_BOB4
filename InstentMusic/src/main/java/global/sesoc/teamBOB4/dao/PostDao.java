@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import global.sesoc.teamBOB4.vo.Follow;
+import global.sesoc.teamBOB4.vo.Like_click;
 import global.sesoc.teamBOB4.vo.Post;
 
 @Repository
@@ -94,6 +95,23 @@ public class PostDao {
 	public Post getPostByPostNum(int post_number) {
 		PostMapper mapper = session.getMapper(PostMapper.class);
 		return mapper.getPostByPostNum(post_number);
+	}
+
+
+	public int checkLike_click(Like_click like_click) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		return mapper.checkLike_click(like_click);
+	}
+
+	public void newliked(Like_click like_click) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.newliked(like_click);
+	}
+
+	public void unliked(Like_click like_click) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.unliked(like_click);
+		
 	}
 
 

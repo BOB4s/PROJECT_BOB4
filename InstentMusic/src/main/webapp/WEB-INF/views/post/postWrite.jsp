@@ -42,7 +42,7 @@ function getmusic(){
 					if(song.isPlayed){
 						song.stop();
 					}
-					setup();
+					song.play();
 				})
 			}
 	})
@@ -61,19 +61,48 @@ function postnotice(mus_title){
 }
 function setup(){
 	userStartAudio();
-	song = loadSound(path,loaded);
-}
-function loaded(){
-	userStartAudio();
-	song.play();
+	song = loadSound(path);
 }
 var sel_file;
+var count = 0;
 $(function(){
 	$("#upload").on("change",handleImgFileSelect);
 	$("#tagbtn").click(function(){
 		var tag = $("#inputtag").val();
-		var data = '<div class="addtag">'+tag+'<button class="deltag">x</button></div>'
-		$("#posttag").append(data);
+		if(tag.trim().length<1){
+			alert("The tag must be at least one character.");
+			return;
+		}
+		if(count>=10){
+			alert("Tags are too much!");
+			return;
+		}
+		$.ajax({
+			type : 'post'
+			,url : 'inserttag'
+			,data : {'tag_name':tag}
+			,success : function(resp){
+				var data = '<div class="addtag">'+tag+'<button class="deltag">x</button></div>'
+				$("#posttag").append(data);
+				$("#inputtag").val('');
+				count++;
+				}
+		})
+		
+		$(".deltag").click(function(){
+			$(this).parent().remove();
+			count--;
+		})
+	})
+	$("#postup").click(function(){
+		var formData = new FormData();
+		 
+		   formData.append("file", $("#upload")[0].files[0]);
+		   formData.append("mus_number", "${mus_number}");
+		   formData.append("cust_number", "${sessionScope.login}");
+		   formData.append("mus_title", $("#posttitle").text());
+		   formData.append("post_content", $("#postcontent").val());
+		   formData
 	})
 });
 	function handleImgFileSelect(e){
@@ -126,6 +155,8 @@ $(function(){
 	margin : 0 auto;
 	margin-top : 10px;
 	background-color: #E6E6E6;
+	white-space: nowrap;
+	overflow-x: hidden;
 }
 #postup{
 	margin-top : 10px;
@@ -139,6 +170,18 @@ $(function(){
 	width : 30px;
 	height : 30px;
 	cursor: pointer;
+}
+.deltag{
+	width : 15px;
+	height : 15px;
+	font-weight: bold;
+	cursor: pointer;
+	border: 0;
+	background: red;
+	color: #FFFFFF;
+	border-radius: 100%;
+	padding: 0;
+	font-size: 5px;
 }
 </style>
 </head>

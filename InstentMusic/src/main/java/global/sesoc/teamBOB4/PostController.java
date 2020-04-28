@@ -23,6 +23,7 @@ import global.sesoc.teamBOB4.dao.Post_tagDao;
 import global.sesoc.teamBOB4.dao.TagDao;
 import global.sesoc.teamBOB4.vo.Music_library;
 import global.sesoc.teamBOB4.vo.Post;
+import global.sesoc.teamBOB4.vo.Tag;
 
 @Controller
 public class PostController {
@@ -67,16 +68,16 @@ public class PostController {
 
 		return post_number;
 	}
-
-	@GetMapping("/tag_write_save")
-	public @ResponseBody String login(String text, int resp) {
-
-		int post_number = resp;
-
-		int tag_number = tagdao.selectTagLink(text);
-		post_tagdao.linkedTags(post_number, tag_number);
-		return "success";
-
+	
+	@ResponseBody
+	@PostMapping("/inserttag")
+	public int inserttag(Tag tag) {
+		Tag result = tagdao.selectTag(tag);
+		if(result==null) {
+			int result2 = tagdao.inserttag(tag);
+			return result2;
+		}
+		return 0;
 	}
 	
 	@RequestMapping(value = "/postLists", method = RequestMethod.GET)
@@ -125,7 +126,7 @@ public class PostController {
 		
 		
 		for (int tag_number:tagnumList) {
-			tagList.add(tagdao.selectTagnameByTagnum(tag_number));
+			//tagList.add(tagdao.selectTagnameByTagnum(tag_number));
 			
 		}
 		Post post=postdao.getPostByPostNum(post_number);

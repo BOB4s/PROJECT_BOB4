@@ -111,7 +111,7 @@
 </head>
 <body>
 	<div class="logoDiv">
-		<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
+		<a href="main" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
 	</div>
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">

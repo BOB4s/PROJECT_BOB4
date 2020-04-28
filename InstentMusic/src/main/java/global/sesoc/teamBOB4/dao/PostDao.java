@@ -58,14 +58,12 @@ public class PostDao {
 		List<Post> tempList = new ArrayList<>();
 		/* Map <String, List<Post>> resultMap = new HashMap<>(); */
 		tempList = mapper.getPostAll();
-		List<Post> resultList = new ArrayList<>();
-		for (Post post : tempList) {
-			for (int cust_number : follwedList) {
-				if (post.getCust_number() == cust_number)
-					resultList.add(post);
-			}
-		}
-		 
+		return tempList;
+		/*
+		 * List<Post> resultList = new ArrayList<>(); for (Post post : tempList) { for
+		 * (int cust_number : follwedList) { if (post.getCust_number() == cust_number)
+		 * resultList.add(post); } } return resultList;
+		 */
 		
 		/*
 		 * for (Post post:tempList) { if(post.getPost_nickname().contains(searchWord)) {
@@ -87,7 +85,7 @@ public class PostDao {
 		 * }
 		 */
 
-		return resultList;
+	
 	}
 
 	public Post getPostByPostNum(int post_number) {

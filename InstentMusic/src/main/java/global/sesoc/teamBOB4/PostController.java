@@ -136,19 +136,19 @@ public @ResponseBody List<Post> postLists(
 			post.setMus_number(mus_number);
 		 post_number = postdao.getOneByMus_number(post);
 	}
-		List <Tag> tagList = new ArrayList<>();
-		List<Integer> tagnumList=post_tagdao.GetlinkedTags(post_number);
-		
-		
-		for (int tag_number:tagnumList) {
-			Tag t = new Tag();
-			t.setTag_number(tag_number);
-			tagList.add(tagdao.selectTag(t));
-			
-		}
+		/*
+		 * List <Tag> tagList = new ArrayList<>(); List<Integer>
+		 * tagnumList=post_tagdao.GetlinkedTags(post_number);
+		 * 
+		 * 
+		 * for (int tag_number:tagnumList) { Tag t = new Tag();
+		 * t.setTag_number(tag_number); tagList.add(tagdao.selectTag(t));
+		 * 
+		 * }
+		 */
 		Post post=postdao.getPostByPostNum(post_number);
 		
-		model.addAttribute("tagList",tagList);
+		//model.addAttribute("tagList",tagList);
 		model.addAttribute("post",post);
 		
 		return "post/postDetail";

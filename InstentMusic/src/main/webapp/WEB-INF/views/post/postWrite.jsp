@@ -18,72 +18,6 @@
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="resources/js/toastr.min.js"></script>
-<style type="text/css">
- #data_notis {
-position: absolute;
-    right: 9%;
-    top: 9.4%;
- 	width: 30.5%;
-	float: right;
-	box-sizing: border-box;
-	background-color: white;
-	max-height: 800px;
-    overflow-y: auto;
-    height: 400px;
-    background: white;
-    z-index: 4;
-}
-.nav-counter {
-
- position:absolute;
- top: -1px;
- left: 60%;
- line-height: 20px;
- margin-top: -11px;
- padding: 0 6px;
- font-weight: normal;
- font-size: small;
- color: white;
- text-align: center;
- text-shadow: 0 1px rgba(0, 0, 0, 0.2);
- background: #e23442;
- border: 1px solid #911f28;
- border-radius: 11px;
- background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
- background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
- background-image: -o-linear-gradient(top, #e8616c, #dd202f);
- background-image: linear-gradient(to bottom, #e8616c, #dd202f);
- -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
- box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
-}
-.opps_profile_1{
-	font-size: 15pt; position: fixed; 
-	 left: 33.01%;
-    top: 10.7%;
-    width: 55.5%;
-	height: 6.4%;
-	background: white;
-
-  }
-  .opps_orifile_img_1{
-     border-radius: 50%;
-    transform-style: preserve-3d;
-    transition: transform 0.5s linear;
-    height: 45px;
-    margin-left: 15px;
-    margin-top: 15px;
-    text-align: center;
-      
-  }
-  .opps_main_css_1{
-  
-   border-left-style: groove;
-    border-left-color: cyan;
-    background: aliceblue;
-    height: 60px;
-  }
-
-</style>
 <title>글쓰기</title>
 <script  type="text/javascript">
 
@@ -163,7 +97,7 @@ socket.on('postWrite message', function(data) {
 			toastr["info"](mesMain, mesHead);
 				}
 		});
-
+})
 socket.on('newFollow message', function(data) {
 		if(data.follow_number==cust_number){
 			
@@ -225,8 +159,9 @@ function getNotis(resp){
 	$(function() {
 
 		socket.emit('add user', username);
-		$("#data_notis").hide(); 	
-		
+		$("#data_notis").hide(); 
+		getmusic();	
+	})
 	function postnotice(mus_title){
 		var followerList = new Array();
 		var mus_number  =document.getElementById("mus_number").value;
@@ -280,13 +215,6 @@ var sel_file;
 var count = 0;
 $(function(){
 	$("#upload").on("change",handleImgFileSelect);
-	$("#tagbtn").click(function(){
-		var tag = $("#inputtag").val();
-		if(tag.trim().length<1){
-			alert("The tag must be at least one character.");
-			return;
-		}
-
 
 	function noti_save(item){
 	
@@ -322,6 +250,12 @@ $(function(){
 			}
 		})
 
+		}
+	$("#tagbtn").click(function(){
+		var tag = $("#inputtag").val();
+		if(tag.trim().length<1){
+			alert("The tag must be at least one character.");
+			return;
 		}
 		if(count>=10){
 			alert("Tags are too much!");
@@ -389,7 +323,71 @@ $(function(){
 		});
 }
 </script>
-<style>
+<style type="text/css">
+ #data_notis {
+position: absolute;
+    right: 9%;
+    top: 9.4%;
+ 	width: 30.5%;
+	float: right;
+	box-sizing: border-box;
+	background-color: white;
+	max-height: 800px;
+    overflow-y: auto;
+    height: 400px;
+    background: white;
+    z-index: 4;
+}
+.nav-counter {
+
+ position:absolute;
+ top: -1px;
+ left: 60%;
+ line-height: 20px;
+ margin-top: -11px;
+ padding: 0 6px;
+ font-weight: normal;
+ font-size: small;
+ color: white;
+ text-align: center;
+ text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+ background: #e23442;
+ border: 1px solid #911f28;
+ border-radius: 11px;
+ background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
+ background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
+ background-image: -o-linear-gradient(top, #e8616c, #dd202f);
+ background-image: linear-gradient(to bottom, #e8616c, #dd202f);
+ -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+ box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+}
+.opps_profile_1{
+	font-size: 15pt; position: fixed; 
+	 left: 33.01%;
+    top: 10.7%;
+    width: 55.5%;
+	height: 6.4%;
+	background: white;
+
+  }
+  .opps_orifile_img_1{
+     border-radius: 50%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s linear;
+    height: 45px;
+    margin-left: 15px;
+    margin-top: 15px;
+    text-align: center;
+      
+  }
+  .opps_main_css_1{
+  
+   border-left-style: groove;
+    border-left-color: cyan;
+    background: aliceblue;
+    height: 60px;
+  }
+
 #postForm{
 	width: 800px;
 	height: 600px;

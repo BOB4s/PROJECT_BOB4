@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +9,15 @@
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
 <title>Profile</title>
-	
-
+<script src="resources/js/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
-<script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
  <script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
+<%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
+<link rel="stylesheet" href="resources/css/main.css">
+<script src="resources/js/toastr.min.js"></script>
+ <link href="resources/css/toastr.min.css" rel="stylesheet"/>
  <style type="text/css">
   #data_notis {
 position: absolute;
@@ -83,36 +84,8 @@ position: absolute;
 
 </style>
 <script>
-
 $(function(){
-	$("#profileSetting").click(function(){
-		location.href="goModify"
-		})
-	
-	$("#searchpf").keyup(function(){
-		var data = {'search':$("#searchpf").val()};
-		$.ajax({
-			method : 'get'
-			,url : 'searchpf'
-			,data : data
-			,success : function(resp){
-				var d = '';
-					if($("#searchpf").val()==''){
-					$("#myUL").html('');
-					}else{
-					$.each(resp,function(index,item){
-// 						d+= '<span class="sepf">'+item.cust_nickname+'</span><br/>'
-						d+= '<li>'+'<a href="proDetail?cust_number='+item.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
-						+item.cust_photo_saved+'"/>"/>'+item.cust_nickname+'</a>'+'</li>';
-					})
-					$("#myUL").html(d);
-					}
-				}
-		})
-	})
-})
-
-$(function(){
+	$("#data_notis").hide();
 $("#profileSetting").click(function(){
 	location.href="goModify"
 	})
@@ -286,7 +259,7 @@ function getNotis(resp){
 		$("#data_notis").hide(); 	
 		
 		var follower_number = '${cust_number}';
-	 	var follow_number = '${customersData.cust_number}'; 
+	 	var follow_number = '2'; 
 		$.ajax({
 			method : 'GET',
 			url : 'followchecking',
@@ -372,7 +345,7 @@ function getNotis(resp){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search" id="searchpf">
 		</div>
 	
 		<div class="navigation__column">

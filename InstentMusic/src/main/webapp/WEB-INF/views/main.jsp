@@ -192,7 +192,7 @@ padding-top: 75px;
 	
 		socket.emit('add user', username);
 		getPage_data();
-		 getfollwedList();
+		
 			$("#data_notis").hide(); 
 			
 		$(window).scroll(function() {
@@ -342,10 +342,10 @@ padding-top: 75px;
 		location.href = "postGetOne?post_number=" + post_number;
 
 		}
-	function getfollwedList(){
+	/* function getfollwedList(){
 		var data = "<table border='1' style='font-size: 15pt'>";
-		console.log(${followed_Profiles_List});
-		$.each(${followed_Profiles_List},function(index, item) {
+		var j[] = '${followed_Profiles_List}';
+		$.each(j[],function(index, item) {
 			data +="<tr>";
 			data += "<td>"+item.cust_nickname+"</td>";
 			data += "<td>"+item.cust_number+"</td>";
@@ -354,7 +354,7 @@ padding-top: 75px;
 				});
 		data +="</table>";
 		$('#followerList_Profiles').html(data);
-		}
+		} */
 	function logout(){
 		socket.emit('disconnect',username);
 		location.href = "logout";

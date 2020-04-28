@@ -407,14 +407,14 @@ position: absolute;
 	</footer>
 		</div>
 	</div>
-	<script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
+	<script src="http://172.16.101.220:4000/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	
 	<script type="text/javascript">
 	var $window = $(window);
 	var username = '${nickname}';
 							//Need to change IP address**
-	var socket = io.connect('http://192.168.43.107:4000');
+	var socket = io.connect('http://172.16.101.220:4000');
 
 	var opponentName = '${opponentName}';
 	var cust_number = '${cust_number}' ;

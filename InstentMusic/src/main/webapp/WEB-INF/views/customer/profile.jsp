@@ -262,47 +262,6 @@ function getNotis(resp){
 		socket.emit('add user', username);
 		$("#data_notis").hide(); 	
 		
-		
-		var follower_number = '${cust_number}';
-	 	var follow_number = '${customersData.cust_number}'; 
-		
-		$.ajax({
-			method : 'GET',
-			url : 'followchecking',
-			data : {
-				"follower_number" : follower_number,
-				"follow_number" : follow_number
-			},
-			success : function(resp) {
-				if (resp == 'unfollowed')
-					$("#following_button").text("follow")
-				if (resp == 'followed')
-					$("#following_button").text("unfollow")
-			}
-		})
-
-		$("#following_button").on("click", function() {
-			
-			$.ajax({
-				method : 'GET',
-				url : 'following',
-				data : {
-					"follower_number" : follower_number,
-					"follow_number" : follow_number
-				},
-				success : function(resp) {
-					if (resp == 'unfollowed')
-						$("#following_button").text("follow")
-					if (resp == 'followed'){
-						 socket.emit('newFollow',follow_number,username,follower_number );
-						 noti_save();
-						$("#following_button").text("unfollow")
-					}
-				}
-
-			})
-
-		});
 		$("#followList").on("click", function() {
 			$.ajax({
 				method : 'GET',
@@ -374,7 +333,7 @@ $(function(){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search" id="searchpf">
 		</div>
 	
 		<div class="navigation__column">

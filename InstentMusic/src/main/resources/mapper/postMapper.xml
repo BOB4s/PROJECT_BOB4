@@ -30,14 +30,13 @@
 		,mus_number
 		,cust_number
 		,mus_title
-		,mus_time
 		,post_content
-		,post_nickname
-		,post_url
 		,post_date
 		,post_reply
 		,post_like
 		,post_play
+		,post_original
+		,post_saved
 		)
 		values
 		(
@@ -45,21 +44,21 @@
 		,#{mus_number}
 		,#{cust_number}
 		,#{mus_title}
-		,#{mus_time}
 		,#{post_content}
-		,#{post_nickname}
-		,'asdas'
 		,sysdate
 		,0
 		,0
 		,0
+		,#{post_original}
+		,#{post_saved}
 		)
 	
 	</insert>
-	<select id="getOneByMus_number" parameterType="int" resultType="int">
+	<select id="getOneByMus_number" parameterType="map" resultType="int">
 	select post_number
 	from Post
 	where mus_number = #{mus_number}
+	and post_content = #{post_content}
 	
 	
 	

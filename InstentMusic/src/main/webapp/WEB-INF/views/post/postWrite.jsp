@@ -82,7 +82,7 @@ $(function(){
 			,url : 'inserttag'
 			,data : {'tag_name':tag}
 			,success : function(resp){
-				var data = '<div class="addtag">'+tag+'<button class="deltag">x</button></div>'
+				var data = '<div class="addtag"><span>#'+tag+'</span><button class="deltag">x</button></div>'
 				$("#posttag").append(data);
 				$("#inputtag").val('');
 				count++;
@@ -96,13 +96,28 @@ $(function(){
 	})
 	$("#postup").click(function(){
 		var formData = new FormData();
+		var tagss = $(".addtag").children('span').text();
+		var tags = tagss.split("#");
 		 
 		   formData.append("file", $("#upload")[0].files[0]);
-		   formData.append("mus_number", "${mus_number}");
+		   formData.append("mus_number", ${mus_number});
 		   formData.append("cust_number", "${sessionScope.login}");
 		   formData.append("mus_title", $("#posttitle").text());
 		   formData.append("post_content", $("#postcontent").val());
-		   formData
+		   formData.append("tags",tags);
+		   formData.append("post_saved",path);
+
+		   $.ajax({
+				type : 'post'
+				,url : 'postup'
+				,data : formData
+				,processData: false
+			    ,contentType: false
+			    ,success : function(resp){
+						alert("success!");
+						location.href="main?post_number="+resp;
+				    }
+		   })
 	})
 });
 	function handleImgFileSelect(e){

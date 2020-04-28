@@ -49,9 +49,14 @@ public class PostDao {
 		return mapper.post_save_method(post);
 	}
 
-	public int getOneByMus_number(int mus_number) {
+	public int getOneByMus_number(int mus_number, String post_content) {
 		PostMapper mapper = session.getMapper(PostMapper.class);
-		return mapper.getOneByMus_number(mus_number);
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("mus_number", mus_number);
+		map.put("post_content", post_content);
+		
+		return mapper.getOneByMus_number(map);
 	}
 
 	public List<Post> getPostAll(List<Integer> follwedList) {

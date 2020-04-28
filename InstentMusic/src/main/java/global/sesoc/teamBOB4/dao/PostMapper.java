@@ -13,7 +13,7 @@ public interface PostMapper {
 
 	int post_save_method(Post post);
 
-	int getOneByMus_number(int mus_number);
+	int getOneByMus_number(Map<String, Object> map);
 
 	List<Post> getPostAll();
 

@@ -15,12 +15,12 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
 <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://10.10.12.212:4000/socket.io/socket.io.js"></script>
+<script src="http://172.30.1.32:4000/socket.io/socket.io.js"></script>
 <script>
 var start_Page = -1;
 var cust_number = '${pd.cust_number}';
 var username = '${pd.cust_nickname}';
-var socket = io.connect('http://10.10.12.212:4000');
+var socket = io.connect('http://172.30.1.32:4000');
 $(function(){
 	$("#profileSetting").click(function(){
 		location.href="goModify"
@@ -184,7 +184,7 @@ $(function() {
 		<div class="navigation__column">
 			<a href="main"> <img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg" />
 			</a>&nbsp;&nbsp;&nbsp;
-			<a href="goModify">
+			<a href="profile">
 			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
 			</a>
 		</div>

@@ -14,12 +14,12 @@
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
 <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script>
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://10.10.12.212:4000/socket.io/socket.io.js"></script>
+<script src="http://172.30.1.32:4000/socket.io/socket.io.js"></script>
 <script>
 var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
-var socket = io.connect('http://10.10.12.212:4000');
+var socket = io.connect('http://172.30.1.32:4000');
 $(function(){
 $("#profileSetting").click(function(){
 	location.href="goModify"
@@ -184,7 +184,7 @@ $("#profileSetting").click(function(){
 		<div class="navigation__column">
 			<a href="main"> <img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg" />
 			</a>&nbsp;&nbsp;&nbsp;
-			<a href="goModify">
+			<a href="profile">
 			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
 			</a>
 		</div>
@@ -232,7 +232,7 @@ $("#profileSetting").click(function(){
 				<div class="profile__title">
 					<h3 class="profile__username">${customersData.cust_nickname}</h3>
 					<a id="following_button" >following</a> <i
-						class="fa fa-cog fa-lg"></i>
+						class="fa fa-cog fa-lg" id="profileSetting"></i>
 				</div>
 				<ul class="profile__stats">
 					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>

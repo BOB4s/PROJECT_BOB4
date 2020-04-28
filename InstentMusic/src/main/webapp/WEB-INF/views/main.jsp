@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://10.10.12.212:4000/socket.io/socket.io.js"></script>
+<script src="http://172.30.1.32:4000/socket.io/socket.io.js"></script>
 <link rel="stylesheet" href="resources/css/styles.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
@@ -58,7 +58,7 @@ animation: moveUp 3.65s ease forwards;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-	var socket = io.connect('http://10.10.12.212:4000');
+	var socket = io.connect('http://172.30.1.32:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -236,13 +236,18 @@ animation: moveUp 3.65s ease forwards;
 				,success : function(resp){
 					var d = '';
 						if($("#searchPost").val()==''){
-						$("#myUL").html('');
+						$("#myUL2").html('');
 						}else{
 						$.each(resp,function(index,item){
-							d+= '<li>'+'<a href="postList?search_word='+item.search_word+'">'+item.search_word+'</a>'+'</li>';
+							d+= '<li>'+'<a class="name">'+item.search_word+'</a>'+'</li>';
 // 							d+= '<li>'+item.search_word+'</li>';
 						})
-						$("#myUL").html(d);
+						$("#myUL2").html(d);
+						$(document).on("click",".name",function(){
+							var v = $(this).text();
+							$("#searchPost").val(v);
+							$("#myUL2").html('');
+							});
 						}
 					}
 			})
@@ -275,18 +280,17 @@ animation: moveUp 3.65s ease forwards;
 		<div class="navigation__column">
 			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>&nbsp;&nbsp;&nbsp;
-			<a href="goModify">
+			<a href="profile">
 			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
 			</a>
 		</div>
 		<div class="navigation__column">
 		<div class="searchingTool">
-			<i class="fa fa-search"></i><input id="searchPost" type="text" placeholder="Search">
-			<input type="button" value="search" id="searchp">
+			<a id="searchp"><i class="fa fa-search"></i></a><input id="searchPost" type="text" placeholder="Search">
 		</div>
 		</div>
-		<div id="myUL1">
-			<ul id="myUL"></ul>
+		<div id="myUL3">
+			<ul id="myUL2"></ul>
 		</div>	
 		<div class="navigation__column">
 			<div class="navigations__links">

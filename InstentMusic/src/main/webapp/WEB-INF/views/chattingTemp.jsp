@@ -335,13 +335,13 @@ div.friends_bar_list {
 	</footer>
 		</div>
 	</div>
-	<script src="http://10.10.12.212:4000/socket.io/socket.io.js"></script>
+	<script src="http://172.30.1.32:4000/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	
 	<script type="text/javascript">
 		var $window = $(window);
 		var username = '${nickname}';
-		var socket = io.connect('http://10.10.12.212:4000')
+		var socket = io.connect('http://172.30.1.32:4000')
 								//Need to change IP address**
 		var opponentName = '${opponentName}';
 		

@@ -61,7 +61,7 @@
 input[type=text], input[type=password] {
   width: 100%;
   padding: 15px;
-  margin: 5px 0 22px 0;
+  margin: 5px 0 15px 0;
   display: inline-block;
   border: none;
   background: #f1f1f1;
@@ -75,7 +75,7 @@ input[type=text]:focus, input[type=password]:focus {
 /* Overwrite default styles of hr */
 hr {
   border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
+  margin-bottom: 7px;
 }
 
 /* Set a style for the submit button */
@@ -107,8 +107,8 @@ a {
 
 .logoDiv img{
 	position: absolute;
-	top: 5%;
-	left: 15%;
+	top: 2%;
+    left: 61%;
 }
 
 </style>
@@ -194,10 +194,8 @@ $(function(){
 			success : function(resp) {
 
 				if (resp == 'success') {
-// 					$("#emailCheck").css("color", "blue");
 					$("#emailCheck").text(" 사용가능한 이메일입니다.");
 				} else {
-// 					$("#emailCheck").css("color", "red");
 					alert("이미 존재하는 이메일입니다.")
 					$("#emailCheck").text(' 사용 불가능한 이메일입니다.');
 				}
@@ -217,7 +215,6 @@ $(function(){
 	<form id="join" action="cust_join_byemail" method="POST" enctype="multipart/form-data">
 	<div class="container">
     <h1>Register</h1>
-    <p>Please full-fill the blanks in this form to create an account.</p>
     <hr>
     <div class="col-xs-6 profileplace">
 		<label for="profile"><b>Image</b></label>
@@ -245,7 +242,6 @@ $(function(){
     <br>
     
 	<button type="submit" class="registerbtn" onclick="formCheck()">Register</button>
-	<button type="reset" class="registerbtn">Reset</button>
     
     <hr>
   </div>

@@ -204,6 +204,7 @@ socket.on('newFollow message', function(data) {
 		toastr["info"](mesMain, mesHead);
 		
 		} 
+		
 
 });
 

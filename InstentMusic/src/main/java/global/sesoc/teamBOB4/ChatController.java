@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import global.sesoc.teamBOB4.dao.ChatDao;
+import global.sesoc.teamBOB4.dao.ChatDao;	
+import global.sesoc.teamBOB4.dao.CustomerDao;
+import global.sesoc.teamBOB4.vo.Customer;
+import global.sesoc.teamBOB4.vo.Message;
 import global.sesoc.teamBOB4.vo.MessageList;
 
 @Controller
@@ -20,7 +23,8 @@ public class ChatController {
 
 	@Autowired
 	ChatDao chatdao;
-
+	@Autowired
+	CustomerDao custdao;
 	@RequestMapping(value = "/CreateChatRoom", method = RequestMethod.POST)
 	public @ResponseBody int CreateChatRoom(MessageList newList ,Model model) {
 		int messangerRoom = 0;
@@ -64,7 +68,13 @@ public class ChatController {
 				if(opponentName.equals(ml.getUserName())) 
 					messangerRoom =ml.getMessangerRoom();	
 			}	
+			
+			int cust_number1 = custdao.get_cust_number_by_nickname(ml.getOpponentName());
+			Customer customer = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
+			if(customer!=null) 
+			ml.setOppsProfile(customer.getCust_photo_saved());
 		}
+	
 		model.addAttribute("opponentName",opponentName);
 		model.addAttribute("RoomList",RoomList);
 		model.addAttribute("messangerRoom",messangerRoom);
@@ -78,12 +88,34 @@ public class ChatController {
 	}
 
 	@RequestMapping(value = "/getOppsName", method = RequestMethod.GET,produces = "application/json; charset=utf8")
-	public @ResponseBody MessageList getOppsName(MessageList temp) {
+	public @ResponseBody MessageList getOppsName(MessageList temp,HttpSession session) {
+		
+		/* (String) session.getAttribute("nickname"); */
+		String cust_nickname = temp.getUserName();
+		System.out.println(cust_nickname);
 		
 	  MessageList mesList =chatdao.selectMesRoom(temp.getMessangerRoom());
+	  
 	  if(temp.getUserName().equals(mesList.getOpponentName())) {
-		  mesList.setOpponentName(mesList.getUserName());
-	}
+		  String tempstr = "";
+		  tempstr = mesList.getOpponentName();
+		  mesList.setOpponentName(mesList.getUserName());	 
+		  mesList.setUserName(tempstr);
+	  }  
+	  System.out.println(mesList.toString());
+	  int cust_number1 = 0;
+	    if(cust_nickname.equals(mesList.getOpponentName())) {
+	   	 cust_number1 = custdao.get_cust_number_by_nickname(mesList.getOpponentName());
+	  }
+	    if(cust_nickname.equals(mesList.getUserName())) {
+	     	cust_number1 = custdao.get_cust_number_by_nickname(mesList.getUserName());
+	    
+	 	  }
+	 if(cust_number1!=0) {
+	   Customer customer = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
+	  	mesList.setOppsProfile(customer.getCust_photo_saved());
+	  	
+	 }
 	return mesList;
 }
 }

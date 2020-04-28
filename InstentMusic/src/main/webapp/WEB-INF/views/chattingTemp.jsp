@@ -337,13 +337,18 @@ position: absolute;
 				style="font-size: 20pt; font-family: fantasy; color: black;">대화방
 				리스트</div>
 				<div class="friends_bar_list">
+					
 			<c:forEach var="room" items="${RoomList}">
 			 
 				<div class="friends_bar_profile_rooms"
 					onclick="init(${room.messangerRoom})" >
 					<div id="opps_profile_imgs" style=" width: 30%;">
 						<div id="opps_profile_imgs_inner" style="float: left;">
-						<img class = "opps_orifile_img" alt="???" src="resources/images/goyang.jpg">
+						<c:if test="${room.oppsProfile!=null}">
+						
+						<img class = "opps_orifile_img" alt="" src="<c:url value="/image/${room.oppsProfile}"/>"/>
+					</c:if>
+						<!-- <img class = "opps_orifile_img" alt="???" src="resources/images/goyang.jpg"> -->
 						</div>
 					<%-- <img alt="" src="resources/${room.oppsProfile}"> --%>
 					
@@ -441,7 +446,6 @@ position: absolute;
 			  "showMethod": "fadeIn",
 			  "hideMethod": "fadeOut",
 			  "onclick" : function(event){
-				  console.log(event);
 			var toastr_kind = event.currentTarget.children[1].children[0].value;
 			if(toastr_kind == 'CHAT'){
 				  
@@ -527,7 +531,6 @@ position: absolute;
 
 		 var data = "<div id = 'noti_list_thing'>"
 			 $.each(resp,function(index, item) {
-					console.log(item)
 					
 					 	data += ' <div class="opps_profile_imgs_1" >'
 						data +='<div class="opps_profile_imgs_inner_1" style="float: left;">'
@@ -540,7 +543,6 @@ position: absolute;
 						});
 		data += '</div>'
 
-			 console.log(data);
 		$("#data_notis").html(data); 
 
 		
@@ -567,7 +569,10 @@ if(${messangerRoom}!=0){
 };
 		
 		$('form').submit(function() {
-			socket.emit('chat message', $('#Mes_content').val());
+			/*  = $('#newOpps_data')[0].currentSrc; */
+			var srcdata = $('#newOpps_data')[0].value;
+			 socket.emit('chat message', $('#Mes_content').val(),srcdata); 
+			
 			noti_save();
 			sendText();
 			$('#Mes_content').val('');
@@ -581,7 +586,8 @@ if(${messangerRoom}!=0){
 
 				
 				}else if(data.username==opponentName){
-				var  li = '<div class  = "mett"><img class = "opps_orifile_img" alt="???" src="resources/images/IU.jpg"> '+data.username  +'<br><div class = "talk other" ><span class="nickname">' + data.message+ '</div></div>';	
+					
+				var  li = '<div class  = "mett"><img class = "opps_orifile_img" alt="" src="<c:url value="/image/'+data.srcdata+'"/>"/> '+data.username  +'<br><div class = "talk other" ><span class="nickname">' + data.message+ '</div></div>';	
 					/* var span = $('<span class="nickname">').text(data.username).append(' : ');
 					var li = $('<p class = "talk other">').append(span).append(data.message).append('<br>'); */
 			/* var li ='<p class = "talk other">' + data.username + ' :' + data.message+'</p><br>';
@@ -664,8 +670,8 @@ if(${messangerRoom}!=0){
 				},success :function(msList){
 				 	 /* $('#Opps_file').text();  */
 				 	/* '+msList.oppsProfile+' */
-				 	var opData ='<img class = "opps_orifile_img" alt="???" src="resources/images/IU.jpg">  '
-				 	 opData +=msList.opponentName;
+				 	var opData ='<input id ="newOpps_data" type="hidden" value="'+msList.oppsProfile+'">';
+				 	 opData +=msList.opponentName+"의 메세지";
 					$('#Opps_file').html(opData);
 					
 					/* $('#Opps_file').append('<input type="button" onclick="messages_delete_before_confirm()"  value="delete" style="width: 80px" ><input type="hidden" name="messangerRoom" id="messangerRoom" value="messangerRoom">'); */
@@ -683,13 +689,12 @@ if(${messangerRoom}!=0){
 			
 			$.each(resp, function(index, item) {
 				var chatcontent = decodeURIComponent(item.Mes_content);
-
 				if(username==item.cust_nickname){
 					data += '<div class  = "metest"><div class = "talk me" >'  + item.mes_content
 					+ '</div></div>';
 					}else{
-
-						data+=	 '<div class  = "mett"><img class = "opps_orifile_img" alt="???" src="resources/images/IU.jpg"> '+item.cust_nickname  +'<br><div class = "talk other" ><span class="nickname">' + item.mes_content+ '</div></div>';	
+						
+						data+=	 '<div class  = "mett"><img class = "opps_orifile_img" alt="???"  src="<c:url value="/image/'+item.mes_savefile+'"/>"/>'+item.cust_nickname  +'<br><div class = "talk other" ><span class="nickname">' + item.mes_content+ '</div></div>';	
 	
 						}
 				

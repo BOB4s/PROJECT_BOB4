@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -95,7 +95,7 @@ var cust_number = '${cust_number}';
 var username = '${nickname}';
 
 var data_flag = 0;
-var socket = io.connect('http://192.168.43.107:4000');
+var socket = io.connect('http://10.10.12.92:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,

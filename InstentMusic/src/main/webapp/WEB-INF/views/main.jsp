@@ -135,7 +135,7 @@ padding-top: 75px;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
 	var data_flag = 0;
-	var socket = io.connect('172.30.1.18:4000');
+	var socket = io.connect('172.20.10.3:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,

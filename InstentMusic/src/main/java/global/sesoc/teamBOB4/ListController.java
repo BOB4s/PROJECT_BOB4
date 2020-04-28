@@ -35,4 +35,9 @@ public class ListController {
 		}
 		return result;
 	}
+	
+	@GetMapping("/getmusic")
+	public Music_library getmusic(HttpSession session, Music_library music) {
+		return dao.getmusic(music);
+	}
 }

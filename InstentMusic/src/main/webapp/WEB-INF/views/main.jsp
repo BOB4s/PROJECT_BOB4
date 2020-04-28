@@ -52,6 +52,15 @@ transform: translateY(200px);
 -webkit-animation: moveUp 3.65s ease forwards;
 animation: moveUp 3.65s ease forwards;
 }
+#nav{
+position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body{
+padding-top: 75px;
+}
 </style>
 <!-- 192.168.0.84 -->
 <script type="text/javascript">
@@ -258,7 +267,7 @@ animation: moveUp 3.65s ease forwards;
 </head>
 <body>
 	<!-- Top for logo and navibar -->
-	 <nav class="navigation">
+	 <nav class="navigation" id="nav">
 		<div class="navigation__column">
 			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
@@ -293,22 +302,6 @@ animation: moveUp 3.65s ease forwards;
 <div class="wrapper">
 <img class="imgContainer" alt="produce" src="resources/images/musiclist/produce.png">
 	<ul class="stage">
-	<li class="icon">
-		<div class="boxContainer">
-    		<div class="frontImgForBoxContainer">
-    			<img alt="posting" src="resources/images/main/posting.png">
-    		</div>
-    		<div class="info">
-				<header>
-					<h1>Posting</h1>
-						<a href="postWrite"><img alt="posting" src="resources/images/main/posting_icon.png"></a>
-				</header>
-					<p>
-					Click the icon for posting or sharing what you made it!
-					</p>
-			</div>
-		</div>
-	</li>
 	<li class="icon">
 		<div class="boxContainer">
 			<div class="frontImgForBoxContainer">
@@ -362,15 +355,6 @@ animation: moveUp 3.65s ease forwards;
 <div id="musicBoard">
 	<h1>Music Board</h1>
 </div>
-		<a href="postWrite"> 글쓰자</a>
-		<a href="logout">로그아웃</a>
-	<input type="button" id="test1"  value="toast" onclick="toasted()">
-		<a href="deleteView">탈주닌자</a>
-		<a href="goModify">정보수정수정</a>
-		<a href="popup">popup</a>
-		<input type="button" value="popup" onclick="chatOpen()">
-		<a href="infinity"> infinity</a>
-		
 <br>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>

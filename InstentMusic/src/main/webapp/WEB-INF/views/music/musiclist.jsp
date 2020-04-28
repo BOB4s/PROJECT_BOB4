@@ -114,7 +114,7 @@ function getmusics(){
 					data+='<td class="titlelist">'+item.mus_title+'</td>'
 					data+='<td class="datelist">'+item.mus_date+'</td>'
 					data+='<td class="images"><img class="playsong" alt="'+item.fullPath+'" src="resources/images/sound/playlist.png">'
-					data+='<img class="writesong" alt="'+item.mus_saved+'" src="resources/images/sound/writelist.png"></td>'
+					data+='<img class="writesong" alt="'+item.mus_number+'" src="resources/images/sound/writelist.png"></td>'
 					data+='</tr>';
 				})
 				data+='</table>'
@@ -129,6 +129,12 @@ function getmusics(){
 					var title = $(this).parent().siblings(".titlelist").text();
 					$("#startments").text(title);
 					setup();
+				})
+
+				$(".writesong").click(function(){
+					var num = $(this).attr('alt');
+					$("#senddata").val(num);
+					$("#sendform").submit();
 				})
 			}
 		}
@@ -220,6 +226,9 @@ function loaded(){
 	<div id="startments">Select one Music :)</div>
 	</div>
 	</div>
+	<form id="sendform" action="postWrite" method='get'>
+	<input type="hidden" value="" id="senddata" name="mus_number">
+	</form>
 </body>
 <script>
 function openNav() {

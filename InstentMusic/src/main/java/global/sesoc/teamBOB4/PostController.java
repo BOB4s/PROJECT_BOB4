@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.teamBOB4.dao.CustomerDao;
+import global.sesoc.teamBOB4.dao.ListDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.dao.Post_tagDao;
 import global.sesoc.teamBOB4.dao.TagDao;
+import global.sesoc.teamBOB4.vo.Music_library;
 import global.sesoc.teamBOB4.vo.Post;
 
 @Controller
@@ -34,20 +36,15 @@ public class PostController {
 	CustomerDao custdao;
 
 	@GetMapping("/postWrite")
-	public String postWrite( Model model,HttpSession session) {
-		
+	public String postWrite(int mus_number, Model model,HttpSession session) {
 		int follow_number =(int)session.getAttribute("cust_number");
-	List<Integer> followerList = custdao.getFollowers(follow_number) ;
+		List<Integer> followerList = custdao.getFollowers(follow_number) ;
 		model.addAttribute("followerList",followerList);
-		
+		System.out.println(mus_number);
+		model.addAttribute("mus_number", mus_number);
 		return "post/postWrite";
 	}
-
-	@GetMapping("/infinity")
-	public String infinity() {
-		return "infinity";
-	}
-
+	
 	@PostMapping("/post_write_save")
 	public @ResponseBody int post_write_save(String mus_number, String cust_number, String mus_title, String mus_time,
 			String post_content, String post_nickname, String post_url) {
@@ -58,10 +55,7 @@ public class PostController {
 		post.setMus_number(mus_numbers);
 		post.setCust_number(cust_numbers);
 		post.setMus_title(mus_title);
-		post.setMus_time(mus_time);
 		post.setPost_content(post_content);
-		post.setPost_nickname(post_nickname);
-		post.setPost_url(post_url);
 		System.out.println(post.toString());
 		int result = postdao.post_save_method(post);
 

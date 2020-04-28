@@ -8,4 +8,10 @@ from music_library
 where cust_number = #{cust_number}
 order by mus_date
 </select>
+
+<select id="getmusic" parameterType="Music" resultType="Music">
+select *
+from music_library
+where mus_number = #{mus_number}
+</select>
 </mapper>

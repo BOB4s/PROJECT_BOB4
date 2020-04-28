@@ -96,14 +96,23 @@
 </script>
 <title>Crystal</title>
 <style>
-img{
+.profile__column img{
 	width:100px;
 	height:100px;
 	border-radius:50px;
 }
+.logoDiv img{
+	width: 60px;
+	position: absolute;
+	top: 5%;
+	left: 5%;
+}
 </style>
 </head>
 <body>
+	<div class="logoDiv">
+		<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
+	</div>
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">

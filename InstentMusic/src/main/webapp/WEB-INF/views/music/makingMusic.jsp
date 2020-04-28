@@ -8,10 +8,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
+<link rel="stylesheet" href="resources/css/background_left_right.css">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/jquery-ui.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
@@ -24,6 +26,7 @@
 body{
 margin : 10px 10px 10px 10px;
 }
+
 #soundlib, #keyboard{
 	margin: 0 auto;
 	margin-top : 20px;
@@ -32,10 +35,11 @@ margin : 10px 10px 10px 10px;
 	height: 220px;
 	border: 1px solid black;
 }
+
 .libs, dropdown-menu {
 	float:left;
 	margin-top:10px;
-	width: 200px;
+	width: 230px;
 	height: 100px;
 	white-space: nowrap;
 	overflow-x: hidden;
@@ -77,11 +81,12 @@ input {
 
 .inputbtn {
 	margin-top:5px;
-	margin-left:50px;
+	margin-left:20px;
 	float:left;
 	font-size: 15px;
-	width: 350px;
+	width: 400px;
 	height : 40px;
+	float: right;
 }
 
 .libs button {
@@ -91,6 +96,8 @@ input {
 	color: black;
 	font-size: 15px;
 	border: 0px;
+	margin-bottom: 2px;
+	padding-top: 2px;
 }
 #bags{
 float:right;
@@ -121,6 +128,7 @@ width: 30px;
 height: 30px;
 }
 #bags img{
+	position: inherit;
 margin-left:60px;
 margin-bottom:20px;
 width : 65px;
@@ -192,7 +200,7 @@ cursor: pointer;
 #target4, #target3{
 font-size : 20px;
 }
-#editlib, #deletelib, #editname{
+#editlib, #deletelib{
 width: 20px;
 height: 20px;
 cursor: pointer;
@@ -290,8 +298,8 @@ cursor: pointer;
 	white-space: normal;
 	line-height: 1.2;
 }
-#slib, #makingmusic{
-	width : 170px;
+#makingmusic{
+	width : 200px;
 }
 </style>
 <script>
@@ -299,7 +307,6 @@ var song, path;
 var premusic;
 $(function() {
 	newbtn();
-	gettemp();
 })
 function newbtn2(){
 	var name2 = ''; 
@@ -339,7 +346,7 @@ $.ajax({
 				if(item.sou_type=='added'){
 					return true;
 				}
-				name += '<li><button class="userbtn" value="'+item.sou_type+'">'+ item.sou_type+ '</button></li>'
+				name += '<li><button class="userbtn w3-btn w3-grey w3-round" value="'+item.sou_type+'">'+ item.sou_type+ '</button></li>'
 			})
 			$("#newbtn").html(name);
 			$(".userbtn").click(function() {
@@ -901,6 +908,7 @@ $(function(){
 		   formData.append("sou_type",library)
 		   formData.append("sou_name", cum);
 
+			console.log(formData);
 		$.ajax({
 			method : 'post'
 			,url : 'sendFile'
@@ -1063,17 +1071,11 @@ $(function(){
 			</a>
 		</div>
 		<div class="navigation__column">
-			<div id="slib" class="button_base btn_3d_double_roll">
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-			<div>Setting Music</div>
-		</div>
 		<div id="makingmusic" class="button_base btn_3d_double_roll">
-			<div>Making Music</div>
-			<div>Making Music</div>
-			<div>Making Music</div>
-			<div>Making Music</div>
+			<div>Go to making Music</div>
+			<div>Go to making Music</div>
+			<div>Go to making Music</div>
+			<div>Go to making Music</div>
 		</div>
 		</div>
 		<div class="navigation__column">
@@ -1098,10 +1100,17 @@ $(function(){
 			</div>
 		</div>
 	</nav>
+	
+	<div id="backgroundLeft">
+		<img alt="BL" src="resources/images/makingMusic/background_left.png">
+	</div>
+	<div id="backgroundRight">
+		<img alt="BR" src="resources/images/makingMusic/background_right.png">
+	</div>
 	<div id="wrapper">
 		<div id="soundlib">
 		<div class="fronts">
-			<span style="font-size: 50px;">Sound Library</span>
+			<span id="SL" style="font-size: 45px;">Sound Library</span>
 			<br>
 			<img alt="soundlibrary" src="resources/images/sound/soundlibrary.png">
 			<span id="target2"></span>
@@ -1109,10 +1118,10 @@ $(function(){
 			<div id="bags">
 				<div class="libs">
 				<ul>
-					<li><button id="added" value="added">Added</button></li>
-					<li><button id="beatbox" value="Beatbox">Beatbox</button></li>
-					<li><button id="piano" value="Piano">Piano</button></li>
-					<li><button id="drum" value="Drum">Drum</button></li>
+					<li><button id="added" class="w3-btn w3-grey w3-round" value="added">Added</button></li>
+					<li><button id="beatbox" class="w3-btn w3-grey w3-round" value="Beatbox">Beatbox</button></li>
+					<li><button id="piano" class="w3-btn w3-grey w3-round" value="Piano">Piano</button></li>
+					<li><button id="drum" class="w3-btn w3-grey w3-round" value="Drum">Drum</button></li>
 					<span id="newbtn"></span>
 				</ul>
 				</div>
@@ -1130,14 +1139,14 @@ $(function(){
 		</div>
 	<div id="keyboard">
 	<div class="fronts">
-		<span style="font-size: 50px;">Key Board</span>
+		<span id="KB" style="font-size: 50px;">Key Board</span>
 		<br>
 		<div class="libs" style="height:130px;">
 			<ul>
-				<li><button id="Set1" value="Set1">Set1</button></li>
-				<li><button id="Set2" value="Set2">Set2</button></li>
-				<li><button id="Set3" value="Set3">Set3</button></li>
-				<li><button id="Set4" value="Set4">Set4</button></li>			
+				<li><button id="Set1" class="w3-btn w3-grey w3-round" value="Set1">Set1</button></li>
+				<li><button id="Set2" class="w3-btn w3-grey w3-round" value="Set2">Set2</button></li>
+				<li><button id="Set3" class="w3-btn w3-grey w3-round" value="Set3">Set3</button></li>
+				<li><button id="Set4" class="w3-btn w3-grey w3-round" value="Set4">Set4</button></li>			
 			</ul>
 		</div>
 		<span id="newset"></span><br>

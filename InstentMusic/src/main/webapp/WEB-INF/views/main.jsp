@@ -16,10 +16,11 @@
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
+<link rel="stylesheet" href="resources/css/followBar.css">
 <script src="http://10.10.12.230:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
- <link href="resources/css/toastr.min.css" rel="stylesheet"/>
+<link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style type="text/css">
 a:link{
 	text-decoration: none;
@@ -53,6 +54,7 @@ transform: translateY(200px);
 -webkit-animation: moveUp 3.65s ease forwards;
 animation: moveUp 3.65s ease forwards;
 }
+<<<<<<< HEAD
 
 .nav-counter {
 
@@ -119,14 +121,28 @@ position: absolute;
     height: 60px;
   }
 
+=======
+#nav{
+position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+body{
+padding-top: 75px;
+}
+>>>>>>> branch 'master' of https://github.com/BOB4s/PROJECT_BOB4.git
 </style>
 <!-- 192.168.0.84 -->
 <script type="text/javascript">
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
+<<<<<<< HEAD
 
 	var data_flag = 0;
+=======
+>>>>>>> branch 'master' of https://github.com/BOB4s/PROJECT_BOB4.git
 	var socket = io.connect('http://10.10.12.230:4000');
 	 toastr.options = {
 			  "closeButton": true,
@@ -182,9 +198,14 @@ position: absolute;
 	$(function(){
 	
 		socket.emit('add user', username);
+<<<<<<< HEAD
 		getPage_data();
 		 getfollwedList();
 			$("#data_notis").hide(); 
+=======
+		getPage_data(cust_number);
+		getfollwedList();
+>>>>>>> branch 'master' of https://github.com/BOB4s/PROJECT_BOB4.git
 			
 		$(window).scroll(function() {
 		    var scrolltop = $(document).scrollTop();
@@ -385,9 +406,9 @@ position: absolute;
 </head>
 <body>
 	<!-- Top for logo and navibar -->
-	 <nav class="navigation">
+	 <nav class="navigation" id="nav">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -430,29 +451,13 @@ position: absolute;
 	<ul class="stage">
 	<li class="icon">
 		<div class="boxContainer">
-    		<div class="frontImgForBoxContainer">
-    			<img alt="posting" src="resources/images/main/posting.png">
-    		</div>
-    		<div class="info">
-				<header>
-					<h1>Posting</h1>
-						<a href="postWrite"><img alt="posting" src="resources/images/main/posting_icon.png"></a>
-				</header>
-					<p>
-					Click the icon for posting or sharing what you made it!
-					</p>
-			</div>
-		</div>
-	</li>
-	<li class="icon">
-		<div class="boxContainer">
 			<div class="frontImgForBoxContainer">
 				<img alt="manListening" src="resources/images/main/manListening.JPG">
 			</div>
 			<div class="info">
 				<header>
 					<h1>My Music List</h1>
-						<a href="myMusicList"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
+						<a href="musiclist"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
 				</header>
 					<p>
 					Click the icon for listening to the music list that built with what you composed music
@@ -497,26 +502,25 @@ position: absolute;
 <div id="musicBoard">
 	<h1>Music Board</h1>
 </div>
-		<a href="postWrite"> 글쓰자</a>
-		<a  onclick="logout()" >로그아웃</a>
-	<input type="button" id="test1"  value="toast" onclick="toasted()">
-		<a href="deleteView">탈주닌자</a>
-		<a href="goModify">정보수정수정</a>
-		<a href="popup">popup</a>
-		<input type="button" value="popup" onclick="chatOpen()">
-		<a href="infinity"> infinity</a>
-		
-<br>	
 <div id="followerList_Profiles"> </div>
+<br>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>
-			
 
-
-
-
-
-
+<!-- follow list -->
+<article id="follower_tool" style="font-size: 15pt">
+	<div id="followBar">
+		<div class="follower_viewall">
+			<a href="#">View all</a>
+		</div>
+		<div id="initialPhoto">
+			<ul id="photoDataBar"></ul>
+		</div>
+		<div>
+			<ul id="followerList_Profiles"></ul>
+		</div>
+	</div>
+</article>
 </body>
 <script>
 function openNav() {

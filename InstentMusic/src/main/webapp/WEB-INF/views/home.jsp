@@ -330,17 +330,20 @@ span.forgotPassword{
 	<div class="w3-third">
 		<i class="fa fa-music w3-margin-bottom w3-jumbo w3-center"></i>
 		<p class="w3-large">Easy Composition</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+		<p>You don't need to learn how to play musical instrument for composition.</p>
+		<p> Choose or record a sound, and place it where you want on a keyboard.</p>
 		</div>
 	<div class="w3-third">
       <i class="fa fa-share-alt-square w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Sharing</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+      <p>You can share what you have composed it yourself.</p>
+      <p>Don't be shy artist.</p>
     </div>
     <div class="w3-third">
       <i class="fa fa-users w3-margin-bottom w3-jumbo"></i>
       <p class="w3-large">Social Networking Service</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+      <p>You can Social Networking with another artists through IM's community.</p>
+      <p>Such as Posting, Texting and Chatting.</p>
     </div>
     </header>
 </div>

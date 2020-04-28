@@ -1,13 +1,12 @@
 package global.sesoc.teamBOB4.dao;
 
+import java.util.List;
+
+import global.sesoc.teamBOB4.vo.Tag;
+
 public interface TagMapper {
 
-	int selectTagLink(String tag_name);
+	int inserttag(Tag tag);
 
-	int creatTagLink(String tag_name);
-
-	String selectTagnameByTagnum(int tag_number);
-
-
-
+	Tag selectTag(Tag tag);
 }

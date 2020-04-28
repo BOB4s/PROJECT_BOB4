@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.teamBOB4.dao.ListMapper">
+<select id="getmusics" parameterType="Music" resultType="Music">
+select mus_number, mus_title, mus_saved, TO_CHAR(mus_date,'YYYY/MM/DD') as mus_date
+from music_library
+where cust_number = #{cust_number}
+order by mus_date
+</select>
+
+<select id="getmusic" parameterType="Music" resultType="Music">
+select *
+from music_library
+where mus_number = #{mus_number}
+</select>
+</mapper>

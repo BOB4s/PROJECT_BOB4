@@ -30,14 +30,14 @@
 		,mus_number
 		,cust_number
 		,mus_title
-		,mus_time
 		,post_content
-		,post_nickname
-		,post_url
 		,post_date
+		,post_nickname
 		,post_reply
 		,post_like
 		,post_play
+		,post_original
+		,post_saved
 		)
 		values
 		(
@@ -45,22 +45,24 @@
 		,#{mus_number}
 		,#{cust_number}
 		,#{mus_title}
-		,#{mus_time}
 		,#{post_content}
-		,#{post_nickname}
-		,'asdas'
 		,sysdate
+		,#{post_nickname}
 		,0
 		,0
 		,0
+		,#{post_original}
+		,#{post_saved}
 		)
 	
 	</insert>
-	<select id="getOneByMus_number" parameterType="int" resultType="int">
-	 (select NVL(max(post_number),0)  from Post
-	where mus_number =#{mus_number}) 
-	
-	
+	<select id="getOneByMus_number" parameterType="Post" resultType="int">
+	select post_number
+	from Post
+	where mus_number = #{mus_number}
+	<if test="post_content!=null">
+	and post_content = #{post_content}
+	</if>
 	</select>
 	
 	<select id="getPostAll"  resultType="Post">

@@ -1,0 +1,15 @@
+#wrapper {
+	margin-left: 10px;
+}
+#sendBtn{
+	margin-left: 10%;
+}
+
+#senderToWho{
+	width: 30%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#sendContents{
+	margin-top: 10px;
+}

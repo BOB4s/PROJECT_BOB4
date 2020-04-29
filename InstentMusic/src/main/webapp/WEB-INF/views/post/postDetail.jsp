@@ -20,7 +20,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://172.20.10.3:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
 <style>
 .write, .delete{
 	width: 20px;
@@ -79,10 +79,38 @@ float : left;
 	margin-left : 20px;
 }
 #musicimg img{
-	width : 300px;
-	height : 300px;
-	margin-top : 25px;
-	margin-left : 25px;
+	width : 400px;
+	height : 400px;
+}
+#musictitle{
+	font-size : 50px;
+	text-align:center;
+	width : 600px;
+	height : 80px;
+	text-decoration: underline;
+}
+#sketch-target{
+	width : 400px;
+	height : 100px;
+	float : left;
+}
+#musiccontent{
+	width : 600px;
+	height : 100px;
+	background-color : white;
+	margin-bottom : 10px;
+	font-size: 20px;
+}
+#tags{
+	width : 600px;
+	height : 100px;
+	background-color : black;
+	margin-bottom : 10px;
+}
+#musicbtns{
+	width : 100px;
+	height : 100px;
+	float : left;
 }
 </style>
 <script type="text/javascript">
@@ -91,7 +119,7 @@ var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://172.20.10.3:4000');
+var socket = io.connect('http://10.10.1.211:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -223,14 +251,6 @@ function getNotis(resp){
 			}
 }
 
-
-
-
-	
-
-	
-		
-
 $(function() {
    socket.emit('add user', username);
    $("#data_notis").hide();
@@ -250,6 +270,10 @@ function init() {
       error : function(resp) {
          alert("Error");
       }
+   })
+
+   $.ajax({
+		
    })
 
 }
@@ -439,7 +463,7 @@ function noti_getBycust_number(){
    }
 function setup() {
 	userStartAudio();
-	var cvs = createCanvas(200,200);
+	var cvs = createCanvas(500,100);
 	cvs.parent('sketch-target');
 	colorMode(HSB);
 	angleMode(DEGREES);
@@ -469,7 +493,7 @@ function draw() {
 <body>
 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -504,14 +528,19 @@ function draw() {
 	</nav>
    <div id="wrapper">
    <div id="visualizer">
-   <div id="musicimg"><img src="resources/uploadPath/${post.post_original}"></div>
-   <div id="musicinfo">
-   <div id="sketch-target"></div><div id="musictitle">${post.mus_title }</div>
-   <div id="tags">tags</div>
-   </div>
-   <div id="profile">
-   <div id="custphoto"></div>
-   </div>
+   	<div id="musicimg"><img id="postimg" src="${post.post_original}"></div>
+   	<div id="musicinfo">
+   		<div id="musictitle">${post.mus_title }</div>
+   		<div id="musiccontent">${post.post_content }</div>
+   		<div id="tags">tags</div>
+   		<div id="musicplayer">
+   			<div id="musicbtns"></div>
+   			<div id="sketch-target"></div>
+   		</div>
+   	</div>
+  	 <div id="profile">
+  		 <div id="custphoto"></div>
+  	 </div>
    </div>
       <div id="replyForm" style="text-align: center;">
          <c:if test="${not empty nickname}">

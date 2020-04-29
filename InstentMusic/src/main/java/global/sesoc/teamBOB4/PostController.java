@@ -166,7 +166,13 @@ public class PostController {
 		 * 
 		 * }
 		 */
+		
 		Post post=postdao.getPostByPostNum(post_number);
+		if(post.getPost_original()==null) {
+			post.setPost_original("resources/images/IUfeed.jpg");
+		}else {
+			post.setPost_original("resources/uploadPath/"+post.getPost_original());
+		}
 		
 		//model.addAttribute("tagList",tagList);
 		model.addAttribute("post",post);

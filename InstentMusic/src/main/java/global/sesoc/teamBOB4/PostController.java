@@ -159,12 +159,10 @@ public class PostController {
 		/*
 		 * List <Tag> tagList = new ArrayList<>(); List<Integer>
 		 * tagnumList=post_tagdao.GetlinkedTags(post_number);
-		 * 
-		 * 
-		 * for (int tag_number:tagnumList) { Tag t = new Tag();
-		 * t.setTag_number(tag_number); tagList.add(tagdao.selectTag(t));
-		 * 
-		 * }
+		 */
+		 
+		/*
+		 * for (int tag_number:tagnumList) { tagList.add(tagdao.getTag(tag_number)); }
 		 */
 		
 		Post post=postdao.getPostByPostNum(post_number);

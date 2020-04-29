@@ -21,6 +21,8 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
+<script src="resources/js/toastr.min.js"></script>
+ <link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style>
 .write, .delete{
 	width: 20px;
@@ -56,6 +58,7 @@ float : left;
 	width : 100%;
 	height : 450px;
 	background-color : #D8D8D8;
+	margin-bottom : 10px;
 }
 #musicinfo{
 	float : left;
@@ -100,17 +103,34 @@ float : left;
 	background-color : white;
 	margin-bottom : 10px;
 	font-size: 20px;
+	padding: 5px 5px 5px 5px;
 }
 #tags{
 	width : 600px;
 	height : 100px;
 	background-color : black;
 	margin-bottom : 10px;
+	padding: 5px 5px 5px 5px;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+.post_tag{
+	float : left;
+	margin : 5px 5px 5px 5px;
 }
 #musicbtns{
-	width : 100px;
+	width : 150px;
 	height : 100px;
 	float : left;
+}
+#musicbtns img{
+	margin-top : 25px;
+	width : 50px;
+	height : 50px;
+	float : left;
+	margin-right : 15px;
+	margin-left : 5px;
+	cursor: pointer;
 }
 </style>
 <script type="text/javascript">
@@ -271,13 +291,7 @@ function init() {
          alert("Error");
       }
    })
-
-   $.ajax({
-		
-   })
-
 }
-
 function output(resp) {
    var nickname = "${sessionScope.nickname}";
    var data = '   <table class="table table-dark"><thead><tr><th class="date"></th><th class="cid"></th><th class="recon"></th></tr></thead><tbody>';
@@ -461,31 +475,44 @@ function noti_getBycust_number(){
 	})
 
    }
+$(function(){
+	$("#playsong").click(function(){
+		song.play();
+	})
+	$("#stopsong").click(function(){
+		song.stop();
+	})
+})
+var amp;
+var volhistory = [];
+function preload(){
+	song = loadSound('${post.post_saved}');
+}
 function setup() {
 	userStartAudio();
-	var cvs = createCanvas(500,100);
+	var cvs = createCanvas(450,100);
 	cvs.parent('sketch-target');
-	colorMode(HSB);
-	angleMode(DEGREES);
-	//song = loadSound(path,loaded);
-	fft = new p5.FFT(0.9, 256);
-	w = width / 64;
-	//fft.setInput(song);
+	amp = new p5.Amplitude();
 }
 function draw() {
-	  background(0);
-	  var spectrum = fft.analyze();
-	  noStroke();
-	  translate(width/2, height/2);
-	  for (var i = 0; i < spectrum.length; i++) {
-		var angle = map(i,0,spectrum.length,0,360);
-		var amp = spectrum[i];
-		var r = map(amp, 0, 64, 20, 100);
-		var x = r * cos(angle);
-		var y = r * sin(angle);
-		stroke(i,255,255);
-		line(0,0,x,y);
-	  }
+	 background(0);
+	var vol = amp.getLevel();
+	stroke(255);
+	noFill();
+	beginShape();
+	volhistory.push(vol*10);
+	for(var i=0; i<volhistory.length; i++){
+		var y = map(volhistory[i], 0, 1, height, 0);
+		vertex(i, y);
+	}
+	endShape();
+
+	if(volhistory.length > width-50){
+		volhistory.splice(0,1);
+	}
+
+	stroke(255,0,0);
+	line(volhistory.length,0,volhistory.length,height);
 }
 </script>
 
@@ -534,7 +561,8 @@ function draw() {
    		<div id="musiccontent">${post.post_content }</div>
    		<div id="tags">tags</div>
    		<div id="musicplayer">
-   			<div id="musicbtns"></div>
+   			<div id="musicbtns"><img id="playsong" src="resources/images/sound/play.png">
+   			<img id="stopsong" src="resources/images/sound/stop.png"></div>
    			<div id="sketch-target"></div>
    		</div>
    	</div>

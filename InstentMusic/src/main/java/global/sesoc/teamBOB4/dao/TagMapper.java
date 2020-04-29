@@ -9,4 +9,6 @@ public interface TagMapper {
 	int inserttag(Tag tag);
 
 	Tag selectTag(Tag tag);
+
+	String getTag(int tag_number);
 }

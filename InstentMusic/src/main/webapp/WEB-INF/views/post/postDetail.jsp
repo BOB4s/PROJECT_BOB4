@@ -68,7 +68,7 @@ float : left;
 }
 #profile{
 	float : left;
-	width : 400px;
+	width : 300px;
 	height : 400px;
 	background-color : white;
 	margin-top : 0px;
@@ -97,16 +97,15 @@ float : left;
 	float : left;
 }
 #musiccontent{
-	width : 600px;
-	height : 100px;
-	background-color : white;
-	margin-bottom : 10px;
-	font-size: 20px;
+    background-color: gainsboro;
+    margin-bottom: 10px;
+    font-size: 20px;
 }
 #tags{
 	width : 600px;
 	height : 100px;
-	background-color : black;
+	text-align: center;
+	background-color : white;
 	margin-bottom : 10px;
 }
 #musicbtns{
@@ -114,6 +113,24 @@ float : left;
 	height : 100px;
 	float : left;
 }
+  .opps_orifile_img{
+     border-radius: 50%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s linear;
+    height: 150px;
+    text-align: center;
+     padding: 15px;
+  }
+  #profile_data{
+      padding: 15px;
+    font-size: 24pt;
+    font-weight: bolder;
+  }
+  .a_tag_css{
+  margin: 15px;
+  text-align: center;
+  
+  }
 </style>
 <script type="text/javascript">
 
@@ -257,6 +274,7 @@ $(function() {
    socket.emit('add user', username);
    $("#data_notis").hide();
    init();
+   tag_gets();
    $("#replyControl").on('click', replySend);
 });
 function init() {
@@ -489,6 +507,16 @@ function draw() {
 		line(0,0,x,y);
 	  }
 }
+function tag_gets(){
+
+	console.log(${tagList});
+	var data = "";
+	$.each(${tagList},function(index, item) {
+		data += "<a class='a_tag_css' href = ''>#"+item+"</a>";
+			});
+	$('#tags').html(data);
+	}
+
 </script>
 
 </head>
@@ -533,15 +561,17 @@ function draw() {
    	<div id="musicimg"><img id="postimg" src="${post.post_original}"></div>
    	<div id="musicinfo">
    		<div id="musictitle">${post.mus_title }</div>
-   		<div id="musiccontent">${post.post_content }</div>
-   		<div id="tags">tags</div>
+   		<div id="tags"></div>
    		<div id="musicplayer">
    			<div id="musicbtns"></div>
    			<div id="sketch-target"></div>
    		</div>
    	</div>
   	 <div id="profile">
-  		 <div id="custphoto"></div>
+  	 
+  	 <div id="custphoto"><img class = "opps_orifile_img" alt="" src="<c:url value="/image/${post_profile.cust_photo_saved}"/>"/></div> 
+  		 	<div id="profile_data">${post_profile.cust_nickname}</div>
+  		 <div id="musiccontent">${post.post_content }</div>
   	 </div>
    </div>
       <div id="replyForm" style="text-align: center;">

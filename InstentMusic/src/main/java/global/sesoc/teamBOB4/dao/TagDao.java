@@ -25,4 +25,9 @@ public class TagDao {
 		return mapper.selectTag(tag);
 	}
 
+	public String selectTagnameByTagnum(int tag_number) {
+		TagMapper mapper =session.getMapper(TagMapper.class);
+		return mapper.selectTagnameByTagnum(tag_number);
+	}
+
 }

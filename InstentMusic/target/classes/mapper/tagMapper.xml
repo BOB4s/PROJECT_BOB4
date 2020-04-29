@@ -16,5 +16,14 @@ select *
 from Tag
 where tag_name = #{tag_name}
 </select>
+
+<select id="selectTagnameByTagnum" parameterType="int" resultType="String">
+
+select tag_name
+from Tag
+where tag_number =#{tag_number}
+
+
+</select>
 	
 </mapper>

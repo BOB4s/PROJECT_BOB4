@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
+<!--  notice 업뎃시 chaticon파일 하나 옮기기 -->
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,10 +15,10 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
+<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -134,6 +135,7 @@ padding-top: 75px;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
+	var controls = "all";
 	var data_flag = 0;
 	var socket = io.connect('10.10.12.92:4000');
 	 toastr.options = {
@@ -188,7 +190,7 @@ padding-top: 75px;
 
 
 	$(function(){
-		$("#data_notis").hide();
+	
 		socket.emit('add user', username);
 		getPage_data();
 			$("#data_notis").hide(); 
@@ -277,6 +279,7 @@ padding-top: 75px;
 			data : {
 				"start_Page" : start_Page
 				,"cust_number":cust_number
+				,"controls" :controls
 			},
 			success : getPage,
 			error : function(resp) {
@@ -313,13 +316,11 @@ padding-top: 75px;
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
 
 					//사진
-					if(item.post_original==null){
-						data += '<img src="resources/images/IUfeed.jpg" />'
+					if(item.post_saved==null){
+						data += "<img src='resources/images/IUfeed.jpg' />"
 						}else{
-							data += '<img src="resources/uploadPath/'+item.post_original+'"/>'	
+							data += '<img src="<c:url value="/image/'+item.post_saved+'"/>"/>'	
 							}
-				 
-					
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
 				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"
 				 	 data += "<span class='overlay__item'> <i class='fa fa-heart'>"+item.mus_title+"</i></span> ";
@@ -345,52 +346,6 @@ padding-top: 75px;
 		location.href = "postGetOne?post_number=" + post_number;
 
 		}
-	$(function(){
-		$("#searchPost").keyup(function(){
-			var data = {'search_word':$("#searchPost").val()};
-			$.ajax({
-				method : 'get'
-				,url : 'searchpost'
-				,data : data
-				,success : function(resp){
-					var d = '';
-						if($("#searchPost").val()==''){
-						$("#myUL2").html('');
-						}else{
-						$.each(resp,function(index,item){
-							d+= '<li>'+'<a class="name">'+item.search_word+'</a>'+'</li>';
-// 							d+= '<li>'+item.search_word+'</li>';
-						})
-						$("#myUL2").html(d);
-						$(document).on("click",".name",function(){
-							var v = $(this).text();
-							$("#searchPost").val(v);
-							$("#myUL2").html('');
-							});
-						}
-					}
-			})
-		})
-	})
-	$(function(){
-		$("#searchp").click(function(){
-			var data = {'search_word':$("#searchPost").val()};
-			$.ajax({
-				method : 'get'
-				,url : 'postList'
-				,data : data
-				,success : function(resp){
-					var a = '';
-					$.each(resp,function(index,item){
-						a+='<a>'+item.post_nickname+'</a>';
-					})
-					$("#wrapper2").append(a);
-				}
-				})
-			})
-		
-		})
-	
 	/* function getfollwedList(){
 		var data = "<table border='1' style='font-size: 15pt'>";
 		var j[] = '${followed_Profiles_List}';
@@ -439,26 +394,39 @@ padding-top: 75px;
 				data_flag--;
 				}
 	}
+
+		 function id_change_to_all(){
+			 controls="all";
+			 $("#profile").html('');
+			 start_Page = -1;
+			 getPage_data();
+		 }
+		 function id_change_to_followOnly(){
+			 controls="followOnly";
+			 $("#profile").html('');
+			 start_Page = -1;
+			 getPage_data();
+		 }
+		 function id_change_to_likes(){
+			 controls="likes";
+			 $("#profile").html('');
+			 start_Page = -1;
+			 getPage_data();
+			
+		 }
 </script>
 </head>
 <body>
 	<!-- Top for logo and navibar -->
 	 <nav class="navigation" id="nav">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
-			</a>&nbsp;&nbsp;&nbsp;
-			<a href="profile">
-			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
-		<div class="searchingTool">
-			<a id="searchp"><i class="fa fa-search"></i></a><input id="searchPost" type="text" placeholder="Search">
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
 		</div>
-		</div>
-		<div id="myUL3">
-			<ul id="myUL2"></ul>
-		</div>	
+	
 		<div class="navigation__column">
 			<div class="navigations__links">
 				<div class="navigation__list-item"><a 
@@ -548,19 +516,12 @@ padding-top: 75px;
 </div>
 <div id="followerList_Profiles"> </div>
 <br>
+<a onclick="id_change_to_all()"  >글 전체 보기</a>&nbsp;
+<a onclick="id_change_to_followOnly()" >팔로우한 글 보기</a>&nbsp;
+<a onclick="id_change_to_likes()">인기글 보기</a>
+<br>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>
-				<div id="wrapper2">
-				</div>
-			
-<!-- grid for main page (holding) -->
-<!-- <div class="grid-container">
-	<div class="mainGrid">
-	
-	</div>
-	<div class="rightGrid">New tracks from followers
-	</div>
-</div>
 
 <!-- follow list -->
 <article id="follower_tool" style="font-size: 15pt">

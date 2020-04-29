@@ -111,5 +111,27 @@ public class PostDao {
 		
 	}
 
+	public List<Post> getPostAllbyall() {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		return mapper.getPostAll();
+	}
+
+	public List<Post> getPostAllbyliked() {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		return mapper.getPostAllbyliked();
+	}
+
+	public void up_like_in_post(int post_number) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.up_like_in_post(post_number);
+	}
+
+	public void down_like_in_post(int post_number) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.down_like_in_post(post_number);
+	}
+
+	
+
 
 }

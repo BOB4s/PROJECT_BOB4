@@ -444,9 +444,10 @@ function noti_getBycust_number(){
 				
 				success : function(resp) {
 					if (resp == 'unliked')
-						$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
-					if (resp == 'liked')
 						$("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
+					if (resp == 'liked')
+						$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
+						
 				}
 			})
 			$("#liked_button").on("click", function() {
@@ -460,9 +461,10 @@ function noti_getBycust_number(){
 					},
 					success : function(resp) {
 						if (resp == 'unliked')
-							$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
-						if (resp == 'liked')
 							$("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
+
+						if (resp == 'liked')
+							$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
 							
 						 /* socket.emit('newFollow',follow_number,username ); */
 						

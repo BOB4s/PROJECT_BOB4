@@ -46,12 +46,19 @@ public class PostController {
 	
 @RequestMapping(value = "/postLists", method = RequestMethod.GET)
 public @ResponseBody List<Post> postLists(
-		@RequestParam(value = "searchWord", defaultValue = "") String searchWord,
+		@RequestParam(value = "controls", defaultValue = "all") String controls,
 		@RequestParam(value = "start_Page", defaultValue = "0") int start_Page,
 		@RequestParam(value = "cust_number", defaultValue = "0") int cust_number,
 	 Model model) {
+	
+	if(controls.equals("all")) {
+		
+		return postdao.getPostAllbyall();
+	}else if(controls.equals("followOnly")) {
 	List <Integer> follwedList =custdao.getFollowings(cust_number);
 	List<Post> post_All_List_byFollow = postdao.getPostAll(follwedList);
+	 controls = "title";
+	 
 	
 	List<Post> postList =new ArrayList<>();
 	int page_control_int=3;
@@ -62,26 +69,19 @@ public @ResponseBody List<Post> postLists(
 			break;
 		}
 		postList.add(post_All_List_byFollow.get(i+(start_Page*page_control_int)));
-			/*
-			 * >>>>>>> branch 'newsejun44' of https://github.com/BOB4s/PROJECT_BOB4.git
-			 */	}
-	
+				}
 	/*
 	 * for (Post post:postList.get("title")) {
 	 * System.out.println(post.getMus_title()+"//"+post.getPost_number());
 	 * 
 	 * } System.out.println(postList.get("title").size());
-	 */
-	String controls = "title";
-	if (searchWord.equals("title")) {
-		controls = "title";
-	}
-
-	
-	/* model.addAttribute("postList", postList); */
-	model.addAttribute("searchWord", searchWord);
+	 * model.addAttribute("postList", postList); */
 	model.addAttribute("controls", controls);
 	return postList;
+	}
+	List<Post> likeList =postdao.getPostAllbyliked();
+	
+	return likeList;
 }
 	@ResponseBody
 	@PostMapping("/inserttag")
@@ -129,10 +129,12 @@ public @ResponseBody List<Post> postLists(
 		int result =postdao.checkLike_click(Like_click);
 		if (result == 0) {
 			 postdao.newliked(Like_click);
+			 postdao.up_like_in_post(Like_click.getPost_number());
 			 System.out.println("조아여");
 			return "liked";
 		}
 		 postdao.unliked(Like_click);
+		 postdao.down_like_in_post(Like_click.getPost_number());
 		 System.out.println("시러여");
 		return "unliked";
 	

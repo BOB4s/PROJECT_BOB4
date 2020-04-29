@@ -135,7 +135,7 @@ padding-top: 75px;
 	var start_Page = -1;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
-
+	var controls = "all";
 	var data_flag = 0;
 	var socket = io.connect('192.168.43.107:4000');
 	 toastr.options = {
@@ -279,6 +279,7 @@ padding-top: 75px;
 			data : {
 				"start_Page" : start_Page
 				,"cust_number":cust_number
+				,"controls" :controls
 			},
 			success : getPage,
 			error : function(resp) {
@@ -320,8 +321,6 @@ padding-top: 75px;
 						}else{
 							data += '<img src="<c:url value="/image/'+item.post_saved+'"/>"/>'	
 							}
-				 
-					
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
 				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"
 				 	 data += "<span class='overlay__item'> <i class='fa fa-heart'>"+item.mus_title+"</i></span> ";
@@ -395,6 +394,26 @@ padding-top: 75px;
 				data_flag--;
 				}
 	}
+
+		 function id_change_to_all(){
+			 controls="all";
+			 $("#profile").html('');
+			 start_Page = -1;
+			 getPage_data();
+		 }
+		 function id_change_to_followOnly(){
+			 controls="followOnly";
+			 $("#profile").html('');
+			 start_Page = -1;
+			 getPage_data();
+		 }
+		 function id_change_to_likes(){
+			 controls="likes";
+			 $("#profile").html('');
+			 start_Page = -1;
+			 getPage_data();
+			
+		 }
 </script>
 </head>
 <body>
@@ -496,6 +515,10 @@ padding-top: 75px;
 	<h1>Music Board</h1>
 </div>
 <div id="followerList_Profiles"> </div>
+<br>
+<a onclick="id_change_to_all()"  >글 전체 보기</a>&nbsp;
+<a onclick="id_change_to_followOnly()" >팔로우 글만 보기</a>&nbsp;
+<a onclick="id_change_to_likes()">인기글 보기</a>
 <br>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>

@@ -28,5 +28,11 @@ public interface PostMapper {
 
 	void unliked(Like_click like_click);
 
+	List<Post> getPostAllbyliked();
+
+	void up_like_in_post(int post_number);
+
+	void down_like_in_post(int post_number);
+
 
 }

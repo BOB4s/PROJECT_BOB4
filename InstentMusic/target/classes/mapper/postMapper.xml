@@ -116,4 +116,18 @@
 	 and target_number=#{target_number}
 
 	</delete>
+	<select id="getPostAllbyliked" resultType="Post">
+	select *
+		from Post
+			order by post_like desc 
+	
+	</select>
+	<update id="up_like_in_post" parameterType="int">
+		update post set post_like= post_like+1
+	
+	</update>
+		<update id="down_like_in_post" parameterType="int">
+		update post set post_like= post_like-1
+	
+	</update>
 </mapper>

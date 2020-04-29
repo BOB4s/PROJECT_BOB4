@@ -126,4 +126,10 @@ public class PostDao {
 		SearchWord list = mapper.searchcheck(search_word);
 		return list;
 	}
+	
+	public int hitcount(String search_word) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		
+		return mapper.updateHit(search_word);
+	}
 }

@@ -155,7 +155,7 @@ var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://10.10.12.92:4000');
+var socket = io.connect('http://10.10.1.211:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -548,6 +548,9 @@ function tag_gets(){
 <nav class="navigation">
 		<div class="navigation__column">
 			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>&nbsp;&nbsp;&nbsp;
+			<a href="profile">
+			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
 			</a>
 		</div>
 		<div class="navigation__column">

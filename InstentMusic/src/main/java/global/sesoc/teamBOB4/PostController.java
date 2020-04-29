@@ -195,8 +195,10 @@ public class PostController {
 		SearchWord result1 = postdao.searchcheck(search_word);
 		if (result1 == null) {
 			postdao.insertWord(search_word);
+			postdao.hitcount(search_word);
 		}
 		List<Post> result = postdao.postList(search_word);
+		postdao.hitcount(search_word);
 		return result;
 	}
 

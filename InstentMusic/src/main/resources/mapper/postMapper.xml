@@ -106,4 +106,7 @@
 		#{search_word}
 	)
 	</insert>
+	<update id="updateHit" parameterType="string">
+	update searchword set hitcount = hitcount+1 where search_word = #{search_word}
+	</update>
 </mapper>

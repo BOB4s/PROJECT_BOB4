@@ -412,7 +412,7 @@ position: absolute;
 	</footer>
 		</div>
 	</div>
-	<script src="http://110.10.1.211:4000/socket.io/socket.io.js"></script>
+	<script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	
 	<script type="text/javascript">

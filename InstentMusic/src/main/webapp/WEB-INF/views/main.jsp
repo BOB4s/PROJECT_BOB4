@@ -192,7 +192,7 @@ padding-top: 75px;
 	$(function(){
 	
 		socket.emit('add user', username);
-		getPage_data();
+		getPage_data(controls);
 			$("#data_notis").hide(); 
 			
 		$(window).scroll(function() {
@@ -262,7 +262,7 @@ padding-top: 75px;
 
 
 });
-	function getPage_data(){
+	function getPage_data(controls){
 		if($("#profile")[0].className=='stop'){
 			$("#profile")[0].className='';
 			$('#endDan').html('');
@@ -346,6 +346,58 @@ padding-top: 75px;
 		location.href = "postGetOne?post_number=" + post_number;
 
 		}
+	$(function(){
+		$("#searchPost").keyup(function(){
+			var data = {'search_word':$("#searchPost").val()};
+			$.ajax({
+				method : 'get'
+				,url : 'searchpost'
+				,data : data
+				,success : function(resp){
+					var d = '';
+						if($("#searchPost").val()==''){
+						$("#myUL2").html('');
+						}else{
+						$.each(resp,function(index,item){
+							if(item.hitcount>50 && item.hitcount<100){
+								d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';
+							}
+							else if(item.hitcount>100){
+								d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';	
+							}else{
+							d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';
+							}
+						})
+						$("#myUL2").html(d);
+						$(document).on("click",".name",function(){
+							var v = $(this).text();
+							$("#searchPost").val(v);
+							$("#myUL2").html('');
+							});
+						}
+					}
+			})
+		})
+	})
+	$(function(){
+		$("#searchp").click(function(){
+			var data = {'search_word':$("#searchPost").val()};
+			$.ajax({
+				method : 'get'
+				,url : 'postList'
+				,data : data
+				,success : function(resp){
+					var a = '';
+					$.each(resp,function(index,item){
+						a+='<a>'+item.post_nickname+'</a>';
+					})
+					$("#wrapper2").append(a);
+				}
+				})
+			})
+		
+		})
+	
 	/* function getfollwedList(){
 		var data = "<table border='1' style='font-size: 15pt'>";
 		var j[] = '${followed_Profiles_List}';
@@ -405,7 +457,7 @@ padding-top: 75px;
 			 controls="followOnly";
 			 $("#profile").html('');
 			 start_Page = -1;
-			 getPage_data();
+			 getPage_data(controls);
 		 }
 		 function id_change_to_likes(){
 			 controls="likes";

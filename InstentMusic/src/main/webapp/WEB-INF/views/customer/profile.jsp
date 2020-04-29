@@ -90,7 +90,7 @@ var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://10.10.12.230:4000');
+var socket = io.connect('http://10.10.1.211:4000');
 $(function(){
 $("#profileSetting").click(function(){
 	location.href="goModify"
@@ -108,7 +108,7 @@ $("#profileSetting").click(function(){
 					}else{
 					$.each(resp,function(index,item){
 // 						d+= '<span class="sepf">'+item.cust_nickname+'</span><br/>'
-						d+= '<li>'+'<a href="proDetail?cust_number='+item.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
+						d+= '<li>'+'<a style="font-style: italic" href="proDetail?cust_number='+item.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
 						+item.cust_photo_saved+'"/>"/>'+item.cust_nickname+'</a>'+'</li>';
 					})
 					$("#myUL").html(d);
@@ -165,94 +165,9 @@ $("#profileSetting").click(function(){
 		  }	
 		};
 
-<<<<<<< HEAD
 	var username = '${nickname}';
-	var socket = io.connect('http://203.233.199.159:4000');
-=======
+	var socket = io.connect('http://10.10.1.211:4000');
 
-
-
-
-
-socket.on('chat message', function(data) {
-	
-	if(data.username==username){
-		}else{
-		
-			var mesMain = data.message;
-			var mesHead = "<input type='hidden'  name='toastr_kind' value='CHAT' >"+data.username;
-				}
-		
-	toastr["info"](mesMain, mesHead);
-	
-});
-socket.on('postWrite message', function(data) {
-		$.each(data.followerList,function(index, item) {
-			if(item==cust_number){
-				var cust_number2 = data.cust_number;
-			var mesMain = data.username+"님이 올린 새글"+ data.message+"<input type='hidden'  name='cust_number' value='"+data.cust_number2+"' ><input type='hidden'  name='mus_number' value='"+data.mus_number+"' >";
-			var mesHead = "<input type='hidden'  name='toastr_kind' value='POST' > 알림" ;
-			
-			toastr["info"](mesMain, mesHead);
-				}
-		});
-
-});
-socket.on('newFollow message', function(data) {
-		if(data.follow_number==cust_number){
-			
-			var mesMain = data.username+"님이 회원님을  팔로우하기 시작하였습니다.<input type='hidden'  name='cust_number' value='"+data.follower_number+"' > ";
-			var mesHead = "<input type='hidden'  name='toastr_kind' value='Follow' > 알림" ;
-		
-		toastr["info"](mesMain, mesHead);
-		
-		} 
-
-});
-
-
-socket.on('replynotice message', function(data) {
-	if(data.postWriter_number==cust_number){
-	var mesMain = data.replyWriter_number+"님이 "+data.mus_title+"글에 댓글을 달았습니다.<input type='hidden'  name='post_number' value='"+data.post_number+"' >";
-	var mesHead = "<input type='hidden'  name='toastr_kind' value='Reply' > 알림" ;
-
-toastr["info"](mesMain, mesHead);
-	}
-
-
-});
-
-
-function getNotis(resp){
-
-	 var data = "<div id = 'noti_list_thing'>"
-		 $.each(resp,function(index, item) {
-				console.log(item)
-				
-				 	data += ' <div class="opps_profile_imgs_1" >'
-					data +='<div class="opps_profile_imgs_inner_1" style="float: left;">'
-					data += '<img class = "opps_orifile_img_1" alt="" src="<c:url value="/image/'+item.not_savedData+'"/>"/></div>'
-					data +='<div  class="opps_main_css_1" style ="padding-top: 15px;" ><span style="border: thick;font-size: 12pt;font-weight: bold;"></span>' 
-						
-					data +='<span style ="margin-left: 20px;">'+item.not_content+'</span>'; 
-							
-						data += "</div></div></div>";
-					});
-	data += '</div>'
-
-		 console.log(data);
-	$("#data_notis").html(data); 
-
-	
-	if(data_flag==0){
-		$("#data_notis").show();
-		data_flag++;
-		}else if(data_flag==1){
-			$("#data_notis").hide();
-			data_flag--;
-			}
-}
->>>>>>> branch 'jojang' of https://github.com/BOB4s/PROJECT_BOB4.git
 	$(function() {
 
 		socket.emit('add user', username);
@@ -443,12 +358,11 @@ $(function(){
 			<div class="profile__column">
 				<div class="profile__title">
 					<h3 class="profile__username">${customersData.cust_nickname}</h3>
-					<a id="following_button" >following</a> <i
-						class="fa fa-cog fa-lg" id="profileSetting"></i>
+					<i class="fa fa-cog fa-lg" id="profileSetting"></i>
 				</div>
 				<ul class="profile__stats">
-					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>
-						posts</li>
+					<li class="profile__stat"><span class="stat__number"></span>
+						</li>
 					<li class="profile__stat"><span class="stat__number">${followers}</span>
 						<a href="followers">followers</a></li>
 					<li class="profile__stat"><span class="stat__number">${followings}</span>

@@ -104,13 +104,11 @@ a {
   background-color: #f1f1f1;
   text-align: center;
 }
-
 .logoDiv img{
 	position: absolute;
 	top: 5%;
 	left: 15%;
 }
-
 </style>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script>
@@ -214,15 +212,14 @@ $(function(){
 	<div class="logoDiv">
 		<a href="home" class="w3-bar-item w3-button w3-wide"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg"></a>
 	</div>
-	<form id="join" action="join" method="POST" enctype="multipart/form-data">
+	<form id="join" action="cust_join_byemail" method="POST" enctype="multipart/form-data">
 	<div class="container">
     <h1>Register</h1>
     <p>Please full-fill the blanks in this form to create an account.</p>
     <hr>
     <div class="col-xs-6 profileplace">
-		<label for="profile"><b>Image</b></label>
+		<label for="profile"><b>Image</b><img class="img-responsive center-block" id=m_photo name="m_photo" src="resources/images/profile.png"></label>
     	<input type="file" value="사진 첨부" name="upload" id="input_img">
-		<img class="img-responsive center-block" id=m_photo name="m_photo" src="resources/images/profile.png">
 	</div>
 	
     <label for="id"><b>ID</b></label><span id="idCheck"></span>   
@@ -245,9 +242,6 @@ $(function(){
     <br>
     
 	<button type="submit" class="registerbtn" onclick="formCheck()">Register</button>
-	<button type="reset" class="registerbtn">Reset</button>
-    
-    <hr>
   </div>
 	</form>
 </div>

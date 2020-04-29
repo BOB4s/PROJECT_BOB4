@@ -1,8 +1,6 @@
 package global.sesoc.teamBOB4;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,12 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import global.sesoc.teamBOB4.dao.MakeDao;
-import global.sesoc.teamBOB4.dao.MusicDao;
 import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.vo.Key_sound;
 import global.sesoc.teamBOB4.vo.Music_library;
 import global.sesoc.teamBOB4.vo.Part_music;
-import global.sesoc.teamBOB4.vo.Sound_library;
 import global.sesoc.teamBOB4.vo.Temp;
 
 @RestController

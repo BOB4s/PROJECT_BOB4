@@ -30,7 +30,7 @@
 }
 #visualizer{
 	padding-top : 50px;
-	margin-left : 40px;
+	margin-left : 45px;
 	margin-top : 30px;
 	float : left;
 	width : 690px;
@@ -117,29 +117,40 @@ function getmusics(){
 					data+='<td class="titlelist">'+item.mus_title+'</td>'
 					data+='<td class="datelist">'+item.mus_date+'</td>'
 					data+='<td class="images"><img class="playsong" alt="'+item.fullPath+'" src="resources/images/sound/playlist.png">'
-					data+='<img class="writesong" alt="'+item.mus_saved+'" src="resources/images/sound/writelist.png"></td>'
+					data+='<img class="writesong" alt="'+item.mus_number+'" src="resources/images/sound/writelist.png"></td>'
 					data+='</tr>';
 				})
 				data+='</table>'
 				$("#lists").append(data);
-
-				setup();
 				
 				$(".playsong").click(function(){
+					userStartAudio();
+					if(song.isPlayed){
+						song.stop();
+					}
 					path = $(this).attr('alt');
-					song.play();
+					var title = $(this).parent().siblings(".titlelist").text();
+					$("#startments").text(title);
+					setup();
+				})
+
+				$(".writesong").click(function(){
+					var num = $(this).attr('alt');
+					$("#senddata").val(num);
+					$("#sendform").submit();
 				})
 			}
 		}
 	})
 }
 function setup() {
+	userStartAudio();
 	var cvs = createCanvas(400,400);
 	cvs.parent('sketch-target');
 	colorMode(HSB);
 	angleMode(DEGREES);
-	song = loadSound(path);
-	fft = new p5.FFT(0.8, 128);
+	song = loadSound(path,loaded);
+	fft = new p5.FFT(0.9, 512);
 	w = width / 64;
 	fft.setInput(song);
 }
@@ -151,12 +162,15 @@ function draw() {
 	  for (var i = 0; i < spectrum.length; i++) {
 		var angle = map(i,0,spectrum.length,0,360);
 		var amp = spectrum[i];
-		var r = map(amp, 0, 256, 20, 100);
+		var r = map(amp, 0, 64, 20, 100);
 		var x = r * cos(angle);
 		var y = r * sin(angle);
 		stroke(i,255,255);
 		line(0,0,x,y);
 	  }
+}
+function loaded(){
+	song.play();
 }
 </script>
 </head>
@@ -235,6 +249,9 @@ function draw() {
 	<div id="startments">Select one Music :)</div>
 	</div>
 	</div>
+	<form id="sendform" action="postWrite" method='get'>
+	<input type="hidden" value="" id="senddata" name="mus_number">
+	</form>
 </body>
 <script>
 function openNav() {

@@ -6,6 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
+<style>
+.sp{
+	width: 30px;
+	height: 30px;
+	border-radius:15px;
+}
+</style>
 <script>
 $(function(){
 for(var i in ${followersList}){
@@ -17,7 +24,8 @@ for(var i in ${followersList}){
 			},
 		url:"followers",
 		success:function(resp){
-				$("#list").append("<a>"+<img src="<spring:url value='/image/resp.cust_photo_saved'/>"/>+" /"+resp.cust_nickname+"</a><br>");
+				$("#list").append('<li>'+'<a href="proDetail?cust_number='+resp.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
+						+resp.cust_photo_saved+'"/>"/>'+resp.cust_nickname+'</a>'+'</li>');
 				
 			}
 		})	

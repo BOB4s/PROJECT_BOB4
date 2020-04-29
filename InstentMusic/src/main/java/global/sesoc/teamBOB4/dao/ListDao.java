@@ -18,4 +18,9 @@ public class ListDao {
 		ListMapper mapper = session.getMapper(ListMapper.class);
 		return mapper.getmusics(music);
 	}
+
+	public Music_library getmusic(Music_library music) {
+		ListMapper mapper = session.getMapper(ListMapper.class);
+		return mapper.getmusic(music);
+	}
 }

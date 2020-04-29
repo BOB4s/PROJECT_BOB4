@@ -96,14 +96,15 @@ public class HomeController {
 			return "redirect:/";
 		}
 	}
-	
-	//must be linked with HTTP through the 'value=""'
+
 	@GetMapping(value="logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
+		
+		
 		return "home";
 	}
-
+	
 	@GetMapping("/join")
 	public String join() {
 		return "customer/join";

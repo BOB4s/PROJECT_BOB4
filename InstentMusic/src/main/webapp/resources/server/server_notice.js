@@ -9,64 +9,88 @@ var io = require('socket.io').listen(server);
 // The server should start listening
 var userList = [];
 var idList = [];
-
+var id2List = [];
 
 
 // io는 socket.io 패키지 import 변수, socket은 커넥션이 성공시 커넥션 정보
 io.on('connection', function(socket) {
-	var addedUser = false; // 클라이언트와 연결이 완료시
+	var addedUser = false; 
+	socket.on('disconnect', function(username) {
+		if (!addedUser)
+			return;
+		
+		idList[socket.username] = socket.id;
+		id2List[socket.username] = username;
+		console.log(idList);
+		console.log(id2List);
+		console.log(socket.username + '접속 종료' );	
+		var index = idList.indexOf(socket.username);
+		var index2 = id2List.indexOf(username);
+		var index3=idList.splice(index, 1);
+		idList.splice(index, 1);
+		id2List.splice(index2, 1);
+		console.log(index);
+		console.log(index2);
+		console.log(index3);
+		idList[socket.username] = socket.id;
+		id2List[socket.username] = username;
+		console.log(idList);
+		console.log(id2List);
+	})
 
-	socket.on('chat message', function(msg) {
+	
+	socket.on('chat message', function(msg,srcdata) {
 
 		io.emit('chat message', {
 			username : socket.username,
-			message : msg
+			message : msg,
+			srcdata:srcdata
 		});
 		console.log(socket.username + ' ' + msg);
 
 	});
 
-	socket.on('newFollow', function(follow_number,username) {
+	socket.on('newFollow', function(follow_number,username,follower_number) {
 		if (!addedUser)
 			return;
 		
 		io.emit('newFollow message', {
 			username : username,
-			follow_number:follow_number
+			follow_number:follow_number,
+			follower_number:follower_number
 		});
 
 
 	});
-	socket.on('replynotice', function(replyWriter_number , postWriter_number,mus_title) {
+	socket.on('replynotice', function(replyWriter_number , postWriter_number,mus_title,post_number) {
 		if (!addedUser)
 			return;
 		
 		io.emit('replynotice message', {
 			replyWriter_number : replyWriter_number,
 			postWriter_number : postWriter_number,
-			mus_title : mus_title
+			mus_title : mus_title,
+			post_number:post_number
 		});
 
 
 	});
 	
-	socket.on('postWrite', function(followerList,username,mus_title) {
+	socket.on('postWrite', function(followerList,username,mus_title,mus_number,cust_number) {
 		if (!addedUser)
 			return;
 		
-	
 		io.emit('postWrite message', {
+			cust_number:cust_number,
 			username : username,
+			mus_number:mus_number,
 			message : mus_title,
 			followerList:followerList
 		});
-		console.log(username + ' ' + mus_title);
-/*		socket.broadcast.emit('user logout', {
-			username : socket.username,
-			userlist : userList
-		});*/
+		console.log(followerList + ' ' + mus_title);
 
-	});// ++ 퇴장시 유저목록에서 삭제시켜야함
+
+	});
 
 	socket.on('add user', function(username) {
 		if (addedUser)
@@ -77,18 +101,8 @@ io.on('connection', function(socket) {
 		console.log(idList);
 		socket.username = username;
 		userList.push(username);
-	/*	var from = "admin";*/
 		console.log(username+'is login');
-	/*	io.to(idList[username]).emit('chat message', {
-			username : from
 
-		})*/
-/*
-		socket.broadcast.emit('user joined', {
-			username : socket.username,
-			userlist : userList
-		}); // 신규자가 왔을때 신규자 페이지를 위한 부분
-*/
 	});
 
 });

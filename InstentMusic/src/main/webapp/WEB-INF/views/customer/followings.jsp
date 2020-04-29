@@ -17,7 +17,8 @@ for(var i in ${followingList}){
 			},
 		url:"followings",
 		success:function(resp){
-				$("#list").append("<a>"+<img src="<spring:url value='/image/resp.cust_photo_saved'/>"/>+" /"+resp.cust_nickname+"</a><br>");
+				$("#list").append('<li>'+'<a href="proDetail?cust_number='+resp.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
+						+resp.cust_photo_saved+'"/>"/>'+resp.cust_nickname+'</a>'+'</li>');
 				
 			}
 		})	

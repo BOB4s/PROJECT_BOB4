@@ -97,6 +97,7 @@ CREATE SEQUENCE SEQ_Tag_tag_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Temporary_temp_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Temp_temp_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_User_user_number INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_Search_number INCREMENT BY 1 START WITH 1;
 
 
 
@@ -264,14 +265,8 @@ CREATE TABLE Post
 	cust_number number NOT NULL,
 	-- 음악 이름이자 게시물 제목
 	mus_title varchar2(50) NOT NULL,
-	-- 음악의 총 시간
-	mus_time varchar2(10) NOT NULL,
 	-- 게시물 내용
 	post_content varchar2(3000),
-	-- 작성자의 닉네임
-	post_nickname varchar2(20) NOT NULL,
-	-- 작성자의 프로필 주소
-	post_url varchar2(500) NOT NULL,
 	-- 게시물 작성 일시
 	post_date date NOT NULL,
 	-- 게시물에 달린 댓글 수
@@ -361,15 +356,13 @@ CREATE TABLE Temp
 	PRIMARY KEY (temp_number)
 );
 
-
+Create TABLE searchword
+(
+search_number number PRIMARY KEY,
+search_word varchar2(50) not null
+);
 
 /* Create Foreign Keys */
-
-ALTER TABLE Follow
-	ADD FOREIGN KEY (follow_number)
-	REFERENCES Customer (cust_number)
-;
-
 
 ALTER TABLE Follow
 	ADD FOREIGN KEY (follower_number)
@@ -377,14 +370,20 @@ ALTER TABLE Follow
 ;
 
 
-ALTER TABLE letter
-	ADD FOREIGN KEY (send_number)
+ALTER TABLE Follow
+	ADD FOREIGN KEY (follow_number)
 	REFERENCES Customer (cust_number)
 ;
 
 
 ALTER TABLE letter
 	ADD FOREIGN KEY (recv_number)
+	REFERENCES Customer (cust_number)
+;
+
+
+ALTER TABLE letter
+	ADD FOREIGN KEY (send_number)
 	REFERENCES Customer (cust_number)
 ;
 
@@ -757,10 +756,7 @@ COMMENT ON COLUMN Post.post_number IS '게시판의 고유 번호 시퀀스';
 COMMENT ON COLUMN Post.mus_number IS '게시물에 올라가는 음악의 고유 번호';
 COMMENT ON COLUMN Post.cust_number IS '게시물을 작성한 회원의 회원 번호. 세션으로 등록';
 COMMENT ON COLUMN Post.mus_title IS '음악 이름이자 게시물 제목';
-COMMENT ON COLUMN Post.mus_time IS '음악의 총 시간';
 COMMENT ON COLUMN Post.post_content IS '게시물 내용';
-COMMENT ON COLUMN Post.post_nickname IS '작성자의 닉네임';
-COMMENT ON COLUMN Post.post_url IS '작성자의 프로필 주소';
 COMMENT ON COLUMN Post.post_date IS '게시물 작성 일시';
 COMMENT ON COLUMN Post.post_reply IS '게시물에 달린 댓글 수';
 COMMENT ON COLUMN Post.post_like IS '게시물의 좋아요 회수';

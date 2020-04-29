@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="global.sesoc.teamBOB4.dao.NotiMapper">
+	
+	<insert id="save_new_noti" parameterType="Notification">
+		insert into Notification2
+		(
+		not_number
+		,not_cust_number
+		,not_sender_number
+		,not_type
+		,not_content
+		,not_time
+		,not_check
+		)
+		values
+		(
+		SEQ_not_number.nextval
+		,#{not_cust_number}
+		,#{not_sender_number}
+		,#{not_type}
+		,#{not_content}
+		,sysdate
+		,0
+		)
+
+	</insert>
+	<select id="getnewnotisBycust_number" parameterType="int" resultType="Notification">
+	
+		select * from Notification2 
+		where not_cust_number = #{cust_number}
+	
+	</select>
+	
+</mapper>

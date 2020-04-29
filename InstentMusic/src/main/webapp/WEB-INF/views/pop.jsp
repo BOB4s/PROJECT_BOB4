@@ -39,15 +39,34 @@
 			,url : "CreateChatRoom"
 			,data : {"UserName" : UserName,
 					"opponentName" :opponentName,
-					"recentMessage":recentMessage }
-			
+					"recentMessage":recentMessage
+					 }
+				,success : function(messangerRoom){
+					$.ajax({
+						//입력한 아이디가 사용가능한지 여부
+						type : 'GET',
+						url : "socketsend",
+						data : {
+							"messangerRoom" : messangerRoom,
+							"cust_nickname" : UserName,
+							"Mes_content" : recentMessage
+						},
+						success : function() {
+							
+							opener.	location.href = "chattingTemp?UserName=" + UserName + "&opponentName="+ opponentName;
+						},
+						error : function(resp) {
+							alert("Error");
+						}
+					});
+					
+			}
 			
 			//이거를 값을 보내고 처리한다 그리고 
 		// 답변을 받아와서 글을 보내는  on문도 처리해야하한다.	
 		})
-		this.close();
-		opener.	location.href = "chattingTemp?UserName=" + UserName + "&opponentName="+ opponentName;
 		
+		this.close();
 		}
 		
 		

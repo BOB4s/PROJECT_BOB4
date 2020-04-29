@@ -13,7 +13,6 @@
 		,rep_nickname
 		,rep_url
 		,rep_date
-		
 		)
 		values
 		(
@@ -24,7 +23,6 @@
 		,#{rep_nickname}
 		,#{rep_url}
 		,sysdate
-
 		)
 	
 

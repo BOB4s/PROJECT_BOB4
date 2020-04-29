@@ -8,4 +8,5 @@ public interface ListMapper {
 
 	List<Music_library> getmusics(Music_library music);
 
+	Music_library getmusic(Music_library music);
 }

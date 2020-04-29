@@ -68,6 +68,11 @@
   position: relative;
 }
 
+.searchingTool{
+	position: absolute;
+    left: -125px;
+    top: -13px;
+    }
 .navigation__column .fa-search {
   position: absolute;
   top: 10px;

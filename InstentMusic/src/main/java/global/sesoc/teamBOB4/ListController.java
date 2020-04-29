@@ -35,4 +35,12 @@ public class ListController {
 		}
 		return result;
 	}
+	
+	@GetMapping("/getmusic")
+	public Music_library getmusic(Music_library music) {
+		Music_library result = dao.getmusic(music);
+		String fullPath = "resources/"+uploadPath+result.getMus_saved();
+		result.setFullPath(fullPath);
+		return result;
+	}
 }

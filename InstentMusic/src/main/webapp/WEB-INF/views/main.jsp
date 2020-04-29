@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
@@ -135,7 +135,7 @@ padding-top: 75px;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
 	var data_flag = 0;
-	var socket = io.connect('10.10.1.211s:4000');
+	var socket = io.connect('10.10.12.92:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,

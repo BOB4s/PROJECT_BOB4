@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
- <script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
+ <script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
 <%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
 <link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/toastr.min.js"></script>
@@ -88,7 +88,7 @@ var start_Page = -1;
 var cust_number = '${pd.cust_number}';
 var username = '${pd.cust_nickname}';
 var data_flag = 0;
-var socket = io.connect('http://10.10.1.211:4000');
+var socket = io.connect('http://10.10.12.92:4000');
 $(function(){
 	$("#data_notis").hide();
 	 toastr.options = {

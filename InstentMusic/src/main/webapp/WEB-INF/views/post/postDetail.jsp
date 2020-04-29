@@ -16,7 +16,9 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.1.100:4000/socket.io/socket.io.js"></script>
+<script src="resources/js/toastr.min.js"></script>
+ <link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style>
 .write, .delete{
 	width: 20px;
@@ -54,7 +56,7 @@ var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://172.30.1.18:4000');
+var socket = io.connect('http://10.10.1.100:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -408,6 +410,9 @@ function noti_getBycust_number(){
 <nav class="navigation">
 		<div class="navigation__column">
 			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>&nbsp;&nbsp;&nbsp;
+			<a href="profile">
+			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
 			</a>
 		</div>
 		<div class="navigation__column">

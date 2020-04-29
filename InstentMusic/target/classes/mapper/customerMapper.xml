@@ -66,12 +66,9 @@ update Customer set cust_key = #{cust_key} where cust_id =#{cust_id}
 	</delete>
 
 	<select id="getFollowers" parameterType="int" resultType="int">
-		select
-		FOLLOWER_NUMBER
-		from Follow
-		where
-		FOLLOW_NUMBER =#{follow_number}
 
+ (select NVL(max(FOLLOWER_NUMBER),0)  from Follow
+	where FOLLOW_NUMBER =#{FOLLOW_NUMBER}) 
 
 	</select>
 		<select id="getFollowings" parameterType="int" resultType="int">
@@ -131,6 +128,9 @@ update Customer set cust_key = #{cust_key} where cust_id =#{cust_id}
 		</if>
 	</select>
 	<select id="getNumber" parameterType="int" resultType="Customer">
+		select * from customer where cust_number=#{cust_number}
+	</select>
+	<select id="getNumber1" parameterType="int" resultType="Customer">
 		select * from customer where cust_number=#{cust_number}
 	</select>
 	<select id="selectEmail" parameterType="Customer" resultType="Customer">

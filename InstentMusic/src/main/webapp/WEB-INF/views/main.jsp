@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/css/navigation.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css">
 <link rel="stylesheet" href="resources/css/main.css">
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.1.100:4000/socket.io/socket.io.js"></script>
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
@@ -135,7 +135,7 @@ padding-top: 75px;
 	var cust_number = '${cust_number}';
 	var username = '${nickname}';
 	var data_flag = 0;
-	var socket = io.connect('172.30.1.18:4000');
+	var socket = io.connect('10.10.1.100:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -358,8 +358,14 @@ padding-top: 75px;
 						$("#myUL2").html('');
 						}else{
 						$.each(resp,function(index,item){
-							d+= '<li>'+'<a class="name">'+item.search_word+'</a>'+'</li>';
-// 							d+= '<li>'+item.search_word+'</li>';
+							if(item.hitcount>50 && item.hitcount<100){
+								d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';
+							}
+							else if(item.hitcount>100){
+								d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';	
+							}else{
+							d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';
+							}
 						})
 						$("#myUL2").html(d);
 						$(document).on("click",".name",function(){

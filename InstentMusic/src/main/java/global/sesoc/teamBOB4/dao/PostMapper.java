@@ -31,4 +31,6 @@ public interface PostMapper {
 
 	SearchWord searchcheck(String search_word);
 
+	int updateHit(String search_word);
+
 }

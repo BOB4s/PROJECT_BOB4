@@ -24,7 +24,6 @@ public class CustomerController {
 	public String follwing(int follower_number, int follow_number) {
 
 		Follow follow = new Follow();
-		follow_number=22;
 		follow.setFollow_number(follow_number);
 		follow.setFollower_number(follower_number);
 		System.out.println(follow.toString());

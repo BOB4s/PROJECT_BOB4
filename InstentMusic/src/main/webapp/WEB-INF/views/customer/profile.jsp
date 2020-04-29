@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
- <script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+ <script src="http://10.10.1.100:4000/socket.io/socket.io.js"></script>
 <%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
 <link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/toastr.min.js"></script>
@@ -84,13 +84,13 @@ position: absolute;
 
 
 </style>
-<script src="http://172.30.1.18:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.1.100:4000/socket.io/socket.io.js"></script>
 <script>
 var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://172.30.1.18:4000');
+var socket = io.connect('http://10.10.1.100:4000');
 $(function(){
 $("#profileSetting").click(function(){
 	location.href="goModify"
@@ -108,7 +108,7 @@ $("#profileSetting").click(function(){
 					}else{
 					$.each(resp,function(index,item){
 // 						d+= '<span class="sepf">'+item.cust_nickname+'</span><br/>'
-						d+= '<li>'+'<a href="proDetail?cust_number='+item.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
+						d+= '<li>'+'<a style="font-style: italic" href="proDetail?cust_number='+item.cust_number+'">'+'<img class="sp" src="<spring:url value="/image/'
 						+item.cust_photo_saved+'"/>"/>'+item.cust_nickname+'</a>'+'</li>';
 					})
 					$("#myUL").html(d);
@@ -438,12 +438,11 @@ $(function(){
 			<div class="profile__column">
 				<div class="profile__title">
 					<h3 class="profile__username">${customersData.cust_nickname}</h3>
-					<a id="following_button" >following</a> <i
-						class="fa fa-cog fa-lg" id="profileSetting"></i>
+					<i class="fa fa-cog fa-lg" id="profileSetting"></i>
 				</div>
 				<ul class="profile__stats">
-					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>
-						posts</li>
+					<li class="profile__stat"><span class="stat__number"></span>
+						</li>
 					<li class="profile__stat"><span class="stat__number">${followers}</span>
 						<a href="followers">followers</a></li>
 					<li class="profile__stat"><span class="stat__number">${followings}</span>

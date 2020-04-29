@@ -109,10 +109,15 @@ public class CustomerDao {
 		return result;
 	}
 
-	public Customer getNumber(int cust_number) {
+	public Customer getNumber(int follwer_number) {
 		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
-
+		int cust_number=follwer_number;
 		return mapper.getNumber(cust_number);
+	}
+	public Customer getNumber1(int follow_number) {
+		CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+		int cust_number=follow_number;
+		return mapper.getNumber1(cust_number);
 	}
 
 	public List<Customer> searchList(Customer customer) {

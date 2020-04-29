@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
+<script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -316,10 +316,10 @@ padding-top: 75px;
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
 
 					//사진
-					if(item.post_saved==null){
-						data += "<img src='resources/images/IUfeed.jpg' />"
+					if(item.post_original==null){
+						data += '<img src="resources/images/IUfeed.jpg" />'
 						}else{
-							data += '<img src="<c:url value="/image/'+item.post_saved+'"/>"/>'	
+							data += '<img src="<c:url value="/resources/uploadPath/'+item.post_original+'"/>"/>'	
 							}
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
 				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"

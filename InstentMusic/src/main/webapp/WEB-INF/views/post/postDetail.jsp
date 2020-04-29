@@ -86,10 +86,10 @@ float : left;
 	height : 400px;
 }
 #musictitle{
-	font-size : 50px;
+	font-size : 80px;
 	text-align:center;
 	width : 600px;
-	height : 80px;
+	height : 180px;
 	text-decoration: underline;
 }
 #sketch-target{
@@ -129,6 +129,7 @@ float : left;
 	margin-right : 15px;
 	margin-left : 5px;
 	cursor: pointer;
+	}
   .opps_orifile_img{
      border-radius: 50%;
     transform-style: preserve-3d;

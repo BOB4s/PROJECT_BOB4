@@ -9,14 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import global.sesoc.teamBOB4.dao.MakeDao;
 import global.sesoc.teamBOB4.util.FileService;
-import global.sesoc.teamBOB4.vo.Key_sound;
 import global.sesoc.teamBOB4.vo.Music_library;
 import global.sesoc.teamBOB4.vo.Part_music;
 import global.sesoc.teamBOB4.vo.Temp;

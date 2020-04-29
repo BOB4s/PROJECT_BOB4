@@ -1,10 +1,7 @@
 package global.sesoc.teamBOB4;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,16 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import global.sesoc.teamBOB4.dao.CustomerDao;
-import global.sesoc.teamBOB4.dao.ListDao;
 import global.sesoc.teamBOB4.dao.PostDao;
 import global.sesoc.teamBOB4.dao.Post_tagDao;
 import global.sesoc.teamBOB4.dao.TagDao;
 import global.sesoc.teamBOB4.vo.Customer;
+import global.sesoc.teamBOB4.vo.Like_click;
 import global.sesoc.teamBOB4.util.FileService;
-import global.sesoc.teamBOB4.vo.Music_library;
 import global.sesoc.teamBOB4.vo.Post;
 import global.sesoc.teamBOB4.vo.SearchWord;
-import global.sesoc.teamBOB4.vo.Post_tag;
 import global.sesoc.teamBOB4.vo.Tag;
 import net.sf.json.JSONArray;
 
@@ -197,6 +192,34 @@ public class PostController {
 		}
 		List<Post> result = postdao.postList(search_word);
 		return result;
+	}
+	
+	@RequestMapping(value = "/like_click", method = RequestMethod.GET)
+	public @ResponseBody String like_click(Like_click Like_click) {
+				System.out.println(Like_click.toString());
+		int result =postdao.checkLike_click(Like_click);
+		if (result == 0) {
+			 postdao.newliked(Like_click);
+			 postdao.up_like_in_post(Like_click.getPost_number());
+			 System.out.println("조아여");
+			return "liked";
+		}
+		 postdao.unliked(Like_click);
+		 postdao.down_like_in_post(Like_click.getPost_number());
+		 System.out.println("시러여");
+		return "unliked";
+	
+	}
+	@RequestMapping(value = "/likedchecking", method = RequestMethod.GET)
+	public @ResponseBody String followchecking(Like_click Like_click) {
+
+		int result =postdao.checkLike_click(Like_click);
+		if (result == 0) 
+			return "unliked";
+		if(result == 1) 
+		return "liked";
+		return "liked";
+	
 	}
 
 }

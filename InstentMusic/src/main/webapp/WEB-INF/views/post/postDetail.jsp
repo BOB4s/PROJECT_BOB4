@@ -349,7 +349,7 @@ function replySend() {
    var rep_url = $("#rep_url").val();
    var cust_number = '${cust_number}';
    var rep_content = $("#rep_content").val();
-   var post_number = ${post.post_number};
+   var post_number = '${post.post_number}';
    var status = ($("#replyControl").val() == "댓글수정") ? "replyUpdate": "replyWrite";
    /* var savedfilename = $("#getUserimgs").val(); */
 
@@ -516,7 +516,55 @@ function tag_gets(){
 			});
 	$('#tags').html(data);
 	}
+$(function() {
+    var post_number = '${post.post_number}';
+    var cust_number = '${cust_number}';
+    var target_number = '${post.cust_number}'   
 
+       
+    $.ajax({
+       method : 'GET',
+       url : 'likedchecking',
+       data : {
+          "post_number" : post_number,
+          "cust_number" : cust_number,
+          "target_number" : target_number
+       },
+       
+       
+       success : function(resp) {
+          if (resp == 'unliked')
+             $("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
+          if (resp == 'liked')
+             $("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
+             
+       }
+    })
+    $("#liked_button").on("click", function() {
+       $.ajax({
+          method : 'GET',
+          url : 'like_click',
+          data : {
+             "post_number":post_number,
+             "cust_number":cust_number,
+             "target_number" : target_number
+          },
+          success : function(resp) {
+             if (resp == 'unliked')
+                $("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
+
+             if (resp == 'liked')
+                $("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
+                
+              /* socket.emit('newFollow',follow_number,username ); */
+             
+
+          }
+
+       })
+
+    })
+ });  
 </script>
 
 </head>
@@ -572,6 +620,7 @@ function tag_gets(){
   	 <div id="custphoto"><img class = "opps_orifile_img" alt="" src="<c:url value="/image/${post_profile.cust_photo_saved}"/>"/></div> 
   		 	<div id="profile_data">${post_profile.cust_nickname}</div>
   		 <div id="musiccontent">${post.post_content }</div>
+			<a id="liked_button" >like</a>
   	 </div>
    </div>
       <div id="replyForm" style="text-align: center;">

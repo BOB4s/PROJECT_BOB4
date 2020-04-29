@@ -3,20 +3,15 @@ package global.sesoc.teamBOB4;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.dao.ReplyDao;
-import global.sesoc.teamBOB4.util.FileService;
 import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Reply;
 
@@ -70,7 +65,7 @@ public class ReplyController {
 	public List<Reply> replyList(int post_number) {
 		List<Reply> replyList = dao.replyList(post_number);
 		for(Reply r : replyList) {
-			int cust = (int)r.getCust_number();
+			int cust = r.getCust_number();
 			Customer c = new Customer();
 			c.setCust_number(cust);
 			Customer result = cdao.searchOne(c);

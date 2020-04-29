@@ -10,5 +10,5 @@ public interface TagMapper {
 
 	Tag selectTag(Tag tag);
 
-	String getTag(int tag_number);
+	String selectTagnameByTagnum(int tag_number);
 }

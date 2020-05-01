@@ -20,6 +20,11 @@
 <script src="resources/js/toastr.min.js"></script>
 <title>글쓰기</title>
 <style type="text/css">
+body{
+	background-image: url("resources/images/zzzzz.jpg");
+	background-size:cover;
+	background-repeat:no-repeat;
+}
 #postForm{
 	width: 800px;
 	height: 600px;
@@ -27,6 +32,7 @@
 	margin-top : 40px;
 	border : 1px solid black;
 	text-align: center;
+	background-color: #FFFFFF;
 }
 #postcontent{
 	margin : 10px 10px 10px 10px;

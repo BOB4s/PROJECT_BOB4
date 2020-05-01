@@ -220,6 +220,20 @@ height: 120px;
 	font-style: italic;
 	font-family: "Times New Roman", Times, serif;
 }
+#mods{
+	width: 1200px;
+	height : 10px;
+	text-align: center;
+}
+#mods button{
+	margin-top : 20px;
+	margin-left : 10px;
+	margin-right : 10px;
+	border: 0;
+	text-decoration: underline;
+	font-size: 20px;
+	background-color: #FFFFFF;
+}
 </style>
 <script>
 var list = [];
@@ -235,12 +249,13 @@ function getparts(){
 		,data : {'part_number':${sessionScope.part_num}}
 		,success : function(resp){
 				if(resp!=null){
+					$(".phrase1").html('');$(".phrase2").html('');$(".phrase3").html('');$(".phrase4").html('');
 					$.each(resp,function(index,item){
 						var pts = item.key_board.split("",16);
 						for(var j=1; j<17; j++){
 						var ids = '#'+item.phrase_number+"-"+j;
 						img = '<img src="resources/images/sound/note'+item.phrase_number+'.png" alt="'+ids+'" class="keyp">';
-						if(pts[j-1]=='Y'){
+						if(pts[j-1]!='N'){
 							$(ids).html(img);
 							}
 						}
@@ -278,6 +293,7 @@ function getkeys(sets){
 					var idx = "#"+item.key_name;
 					var cls = idx+' .keysou';
 					var dels = idx+' .keydel';
+					$(idx).val(item.sou_path);
 					$(cls).text(item.sou_name);
 					$(document).keydown(function(event){
 						if(event.keyCode == item.key_name && $("#newset").text()==item.key_board){
@@ -300,11 +316,13 @@ var p1song, p2song, p3song, p4song;
 var phrase1, phrase2, phrase3, phrase4, parts;
 var masterGain;
 var state = 0;
+var path2 = [];
 var s48, s49, s50, s51, s52, s53, s54, s55, s56, s57;
 var s65, s66, s67, s68, s69, s70, s71, s72, s73, s74, s75, s76, s77, s78, s79;
 var s80, s81, s82, s83, s84, s85, s86, s87, s88, s89, s90;
 var s186, s187, s188, s189, s190, s219;
 var ps1, ps2, ps3, ps4;
+var d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16;
 function touchStarted() {
 	  getAudioContext().resume()
 	}
@@ -312,6 +330,12 @@ function setup() {
 	userStartAudio();
 	masterGain = new p5.Gain();
 	masterGain.connect();
+	var dd1 = new p5.Gain();var dd2 = new p5.Gain();var dd3 = new p5.Gain();
+	var dd4 = new p5.Gain();var dd5 = new p5.Gain();var dd6 = new p5.Gain();
+	var dd7 = new p5.Gain();var dd8 = new p5.Gain();var dd9 = new p5.Gain();
+	var dd10 = new p5.Gain();var dd11 = new p5.Gain();var dd12 = new p5.Gain();
+	var dd13 = new p5.Gain();var dd14 = new p5.Gain();var dd15 = new p5.Gain();
+	var dd16 = new p5.Gain();
 	var pg1 = new p5.Gain();var pg2 = new p5.Gain();var pg3 = new p5.Gain();var pg4 = new p5.Gain();
 	var g48 = new p5.Gain();var g49 = new p5.Gain();var g50 = new p5.Gain();
 	var g51 = new p5.Gain();var g52 = new p5.Gain();var g53 = new p5.Gain();
@@ -333,6 +357,26 @@ function setup() {
 		if(item.phrase_number==3){ps3 = loadSound(item.phrase_saved);pg3.setInput(ps3);pg3.connect(masterGain);}
 		if(item.phrase_number==4){ps4 = loadSound(item.phrase_saved);pg4.setInput(ps4);pg4.connect(masterGain);}
 	})
+	if($("#dmode").val()=='modeon'){
+		$.each(saves,function(index,item){
+			if(index==0){d1 = loadSound(item);dd1.setInput(d1);dd1.connect(masterGain);}
+			if(index==1){d2 = loadSound(item);dd2.setInput(d2);dd2.connect(masterGain);}
+			if(index==2){d3 = loadSound(item);dd3.setInput(d3);dd3.connect(masterGain);}
+			if(index==3){d4 = loadSound(item);dd4.setInput(d4);dd4.connect(masterGain);}
+			if(index==4){d5 = loadSound(item);dd5.setInput(d5);dd5.connect(masterGain);}
+			if(index==5){d6 = loadSound(item);dd6.setInput(d6);dd6.connect(masterGain);}
+			if(index==6){d7 = loadSound(item);dd7.setInput(d7);dd7.connect(masterGain);}
+			if(index==7){d8 = loadSound(item);dd8.setInput(d8);dd8.connect(masterGain);}
+			if(index==8){d9 = loadSound(item);dd9.setInput(d9);dd9.connect(masterGain);}
+			if(index==9){d10 = loadSound(item);dd10.setInput(d10);dd10.connect(masterGain);}
+			if(index==10){d11 = loadSound(item);dd11.setInput(d11);dd11.connect(masterGain);}
+			if(index==11){d12 = loadSound(item);dd12.setInput(d12);dd12.connect(masterGain);}
+			if(index==12){d13 = loadSound(item);dd13.setInput(d13);dd13.connect(masterGain);}
+			if(index==13){d14 = loadSound(item);dd14.setInput(d14);dd14.connect(masterGain);}
+			if(index==14){d15 = loadSound(item);dd15.setInput(d15);dd15.connect(masterGain);}
+			if(index==15){d16 = loadSound(item);dd16.setInput(d16);dd16.connect(masterGain);}
+		})
+	}
 	$.each(list,function(index,item){
 		if(item.keyname==48){s48 = loadSound(item.soupath);g48.setInput(s48);g48.connect(masterGain);
 		}else if(item.keyname==49){s49 = loadSound(item.soupath);g49.setInput(s48);g49.connect(masterGain);
@@ -474,22 +518,28 @@ $(function(){
 			return;
         }
 		targetp = $(this).parent().attr('id');
-		var ment1 = ['','Press','','the','','space','bar','','to','','start','','record','ing'];
-		var a = targetp.substr(1,1);
-		var aa = '.phrase'+a;
-		$(aa).html('');
-		for(var i=0; i<ment1.length; i++){
-			var cls = '#'+a+'-'+(i+1);
-			$(cls).text(ment1[i]);		
-		}
-		$(document).keydown(function(event){
-			if(event.keyCode == 32){
-				$(aa).text('');
-				ps.start();
-				state = 0;
-				recordstart();
+		if($("#tmode").val()=='modeon'){
+			var ment1 = ['','Press','','the','','space','bar','','to','','start','','record','ing'];
+			var a = targetp.substr(1,1);
+			var aa = '.phrase'+a;
+			$(aa).html('');
+			for(var i=0; i<ment1.length; i++){
+				var cls = '#'+a+'-'+(i+1);
+				$(cls).text(ment1[i]);		
 			}
-		})
+			$(document).keydown(function(event){
+				if(event.keyCode == 32){
+					$(aa).text('');
+					ps.start();
+					state = 0;
+					recordstart();
+				}
+			})
+		}else{
+			ps.start();
+			state = 0;
+			recordstart();
+		}
 	})
 	
 	$(".rcdplay").click(function(){
@@ -497,23 +547,46 @@ $(function(){
 		targetp = $(this).parent().attr('id');
 		var a = targetp.substr(1,1);
 		var aa = '.phrase'+a;
-		if(state===1){
-			state=2;
-			recordstart();
-		}else if(targetp=='p1'){ps1.play();ps.start();}
-		else if(targetp=='p2'){ps2.play();ps.start();}
-		else if(targetp=='p3'){ps3.play();ps.start();}
-		else if(targetp=='p4'){ps4.play();ps.start();}
-		if($(this).attr('alt')=='play'){
-			$(this).attr('src','resources/images/sound/stop.png');
-			$(this).attr('alt','stop');
-			bpms.stop();parts.stop();
-		}else{
-			$(this).attr('src','resources/images/sound/play.png');
-			$(this).attr('alt','play');
-			ps.stop();
-			drawmatrix();
-			ps.metro.metroTicks = 0;
+		if($("#dmode").val()=='modeon'){
+			if(state===1){
+				state=2;
+				ps.start();
+				recordstart();
+			}else if(targetp=='p1'){ps1.play();ps.start();}
+			else if(targetp=='p2'){ps2.play();ps.start();}
+			else if(targetp=='p3'){ps3.play();ps.start();}
+			else if(targetp=='p4'){ps4.play();ps.start();}
+			if($(this).attr('alt')=='play'){
+				$(this).attr('src','resources/images/sound/stop.png');
+				$(this).attr('alt','stop');
+				bpms.stop();parts.stop();
+			}else{
+				$(this).attr('src','resources/images/sound/play.png');
+				$(this).attr('alt','play');
+				ps.stop();
+				drawmatrix();
+				ps.metro.metroTicks = 0;
+			}
+		}else {
+			if(state===1){
+				state=2;
+				ps.start();
+				recordstart();
+			}else if(targetp=='p1'){ps1.play();ps.start();}
+			else if(targetp=='p2'){ps2.play();ps.start();}
+			else if(targetp=='p3'){ps3.play();ps.start();}
+			else if(targetp=='p4'){ps4.play();ps.start();}
+			if($(this).attr('alt')=='play'){
+				$(this).attr('src','resources/images/sound/stop.png');
+				$(this).attr('alt','stop');
+				bpms.stop();parts.stop();
+			}else{
+				$(this).attr('src','resources/images/sound/play.png');
+				$(this).attr('alt','play');
+				ps.stop();
+				drawmatrix();
+				ps.metro.metroTicks = 0;
+			}
 		}
 	})
 })
@@ -521,10 +594,12 @@ function recordstart(){
 	userStartAudio();
     if(state===0){
     	recorder.record(soundFile);
+    	if($("#tmode").val()=='modeon'){
     	$(document).keydown(function(event){
     		count = 1;
     		pressimg();
     	})
+    	}
     }else if(state===1){
       recorder.stop();
       changes();
@@ -591,6 +666,29 @@ function rcdcss(time, beatIndex){
 	target = '#'+a+'-'+beatIndex;
 	$(target).css('border','1px solid red');
 	$(target).css('background-color','#F5BCA9')
+
+	if($("#dmode").val()=='modeon'){
+		var a = targetp.substr(1,1);
+		target = '#'+a+'-'+beatIndex+' img';
+		if(saves[beatIndex-1]!='N'){
+			if(beatIndex==1){d1.play();}
+			if(beatIndex==2){d2.play();}
+			if(beatIndex==3){d3.play();}
+			if(beatIndex==4){d4.play();}
+			if(beatIndex==5){d5.play();}
+			if(beatIndex==6){d6.play();}
+			if(beatIndex==7){d7.play();}
+			if(beatIndex==8){d8.play();}
+			if(beatIndex==9){d9.play();}
+			if(beatIndex==10){d10.play();}
+			if(beatIndex==11){d11.play();}
+			if(beatIndex==12){d12.play();}
+			if(beatIndex==13){d13.play();}
+			if(beatIndex==14){d14.play();}
+			if(beatIndex==15){d15.play();}
+			if(beatIndex==16){d16.play();}
+		}
+	}
 }
 function pressimg(){
 	if(count==1){
@@ -605,6 +703,9 @@ function sendfile(){
 		   var targetps = targetp.substr(1,1);
 		   var data = '';
 		   for(var i=0; i<saves.length; i++){
+			   if(saves[i].length>1){
+					saves[i] = 'Y';
+				}
 				data+=saves[i];
 			   }
 		   var formData = new FormData();
@@ -670,6 +771,108 @@ $(function(){
 		location.href="makingmusic2";
 	})
 })
+$(function(){
+	$(".del").click(function(){
+		var phrase = $(this).val();
+		var p = phrase.substr(1,1);
+		var pp = '.phrase'+p;
+		var part = $("#partnumber").text();
+		var answer = confirm("Are you sure you want to reset this phrase?");
+		if(answer){
+			$.ajax({
+				type : 'post'
+				,url : 'delphrase'
+				,data : {'part_number' : part, 'phrase_number' : p}
+				,success : function(resp){
+						$(pp).html('');
+						getparts();
+					}
+			})
+		}
+	})
+})
+$(function(){
+	$("#tmode").css('color','white');
+	$("#tmode").css('background-color','black');
+	
+	$("#tmode").click(function(){
+		$("#tmode").css('color','white');
+		$("#tmode").css('background-color','black');
+		$("#dmode").css('color','black');
+		$("#dmode").css('background-color','white');
+		$("#tmode").val('modeon');
+		$("#dmode").val('');
+
+		getparts();
+
+		$(".keys").attr('draggable','false');
+	})
+
+	$("#dmode").click(function(){
+		$("#dmode").css('color','white');
+		$("#dmode").css('background-color','black');
+		$("#tmode").css('color','black');
+		$("#tmode").css('background-color','white');
+		$("#dmode").val('modeon');
+		$("#tmode").val('');
+		getparts();
+
+		$(".keys").attr('draggable','true');
+		$(".keys").attr('ondragstart','drag(event)');
+		$(".phrase1").attr('ondragleave','leavedrag(event)');
+		$(".phrase1").attr('ondrop','drop(event)');
+		$(".phrase1").attr('ondragover','allowDrop(event)');
+		$(".phrase2").attr('ondragleave','leavedrag(event)');
+		$(".phrase2").attr('ondrop','drop(event)');
+		$(".phrase2").attr('ondragover','allowDrop(event)');
+		$(".phrase3").attr('ondragleave','leavedrag(event)');
+		$(".phrase3").attr('ondrop','drop(event)');
+		$(".phrase3").attr('ondragover','allowDrop(event)');
+		$(".phrase4").attr('ondragleave','leavedrag(event)');
+		$(".phrase4").attr('ondrop','drop(event)');
+		$(".phrase4").attr('ondragover','allowDrop(event)');
+	})
+})
+function drag(ev) { 
+	ev.dataTransfer.setData("fullpath", ev.target.value);
+}
+function drop(ev) {
+	ev.preventDefault(); 
+	var c = ev.dataTransfer.getData("fullpath"); 
+	var tagid = '#'+ev.target.id;
+	var p = tagid.substr(1,1);
+	var pp = tagid.substr(3,3)-1;
+	$(tagid).css('background-color','white');
+	var img = '<img class="keyp" src="resources/images/sound/note'+p+'.png">';
+	$(tagid).html(img);
+
+	saves[pp]=c;
+	setup();
+}
+function allowDrop(ev){
+	ev.preventDefault();
+	var tagid = '#'+ev.target.id;
+	$(tagid).css('background-color','red');
+}
+function leavedrag(ev){
+	var tagid = '#'+ev.target.id;
+	$(tagid).css('background-color','white');
+}
+$(function(){
+	$("#resetpart").click(function(){
+		var answer = confirm("Are you sure you want to reset this Part?");
+		if(answer){
+			$.ajax({
+				type : 'post'
+				,url : 'delpartone'
+				,data : {'part_number': $("#partnumber").text()}
+				,success : function(resp){
+					getparts();
+				}
+			})
+		}
+	})
+})
 </script>
 </head>
 <body>
@@ -690,12 +893,6 @@ $(function(){
 				<div>Reset</div>
 				<div>Reset</div>
 				<div>Reset</div>
-			</div>
-			<div id="savepart" class="button_base btn_3d_double_roll">
-				<div>Save Part</div>
-				<div>Save Part</div>
-				<div>Save Part</div>
-				<div>Save Part</div>
 			</div>
 			<br>
 		</div>
@@ -738,6 +935,8 @@ $(function(){
 	<button id="mixing" type="button" class="btn btn-secondary">BPM Start</button>&emsp;/&emsp;
 	<button id="musicall" type="button" class="btn btn-secondary" value="mixing">Mixing Music</button>
 	</div>
+	<div id="mods">
+	<button id="tmode" value="modeon">Typing Mode</button><button id="dmode">Drag Mode</button></div>
 	<div id="keyboard">
 	<div class="fronts">
 		<span id="KB" style="font-size: 50px;">Key Board</span>
@@ -755,81 +954,82 @@ $(function(){
 	</div>
 	<div id="keys">
 	<div id="key1">
-<div class="keys" id="49" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">1<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="50" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">2<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="51" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">3<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="52" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">4<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="53" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">5<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="54" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">6<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="55" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">7<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="56" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">8<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="57" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">9<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="48" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">0<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="189" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">-<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="187" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">=<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="49">1<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="50">2<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="51">3<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="52">4<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="53">5<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="54">6<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="55">7<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="56">8<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="57">9<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="48">0<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="189">-<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="187">=<span class="keydel"></span><div class="keysou"></div></div>
 </div>
 <div id="key2">
-<div class="keys" id="81" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Q<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="87" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">W<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="69" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">E<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="82" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">R<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="84" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">T<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="89" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Y<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="85" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">U<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="73" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">I<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="79" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">O<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="80" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">P<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="219" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">[<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="81">Q<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="87">W<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="69">E<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="82">R<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="84">T<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="89">Y<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="85">U<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="73">I<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="79">O<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="80">P<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="219">[<span class="keydel"></span><div class="keysou"></div></div>
 </div>
 <div id="key3">
-<div class="keys" id="65" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">A<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="83" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">S<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="68" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">D<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="70" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">F<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="71" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">G<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="72" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">H<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="74" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">J<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="75" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">K<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="76" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">L<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="186" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">;<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="65">A<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="83">S<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="68">D<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="70">F<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="71">G<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="72">H<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="74">J<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="75">K<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="76">L<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="186">;<span class="keydel"></span><div class="keysou"></div></div>
 </div>
 <div id="key4">
-<div class="keys" id="90" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Z<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="88" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">X<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="67" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">C<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="86" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">V<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="66" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">B<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="78" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">N<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="77" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">M<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="188" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">,<span class="keydel"></span><div class="keysou"></div></div>
-<div class="keys" id="190" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">.<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="90">Z<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="88">X<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="67">C<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="86">V<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="66">B<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="78">N<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="77">M<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="188">,<span class="keydel"></span><div class="keysou"></div></div>
+<div class="keys" id="190">.<span class="keydel"></span><div class="keysou"></div></div>
 </div>
 </div>
 </div><!-- end #keyboard -->
 	<div id="phrases">
-	<div id="phraseBlock">
+	<div class="phraseBlock">
 		<div id="p1">
 			<span class="pnames">Phrase1</span>
 				<img class="rcdmusic" src="resources/images/sound/rcd.png">
 				<img class="rcdplay" alt="play" src="resources/images/sound/play.png">
 					<span class = "delreset">
-						<Button class="del" value="p1'">X</Button>reset</span>
+						<Button class="del" value="p1">X</Button>reset</span>
 		</div>
 		<div id="phrase1"></div>
 	</div>
 	<br>
-	<div id="phraseBlock">
-		<div id="p2"><span class="pnames">Phrase2</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p2'">X</Button>reset</span></div><div id="phrase2"></div>
+	<div class="phraseBlock">
+		<div id="p2"><span class="pnames">Phrase2</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p2">X</Button>reset</span></div><div id="phrase2"></div>
 	</div>
 	<br>
-	<div id="phraseBlock">
-	<div id="p3"><span class="pnames">Phrase3</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p3'">X</Button>reset</span></div><div id="phrase3"></div>
+	<div class="phraseBlock">
+	<div id="p3"><span class="pnames">Phrase3</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p3">X</Button>reset</span></div><div id="phrase3"></div>
 	</div>
 	<br>
-	<div id="phraseBlock">
-	<div id="p4"><span class="pnames">Phrase4</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p4'">X</Button>reset</span></div><div id="phrase4"></div>
+	<div class="phraseBlock">
+	<div id="p4"><span class="pnames">Phrase4</span><img class="rcdmusic" src="resources/images/sound/rcd.png"><img class="rcdplay" alt="play" src="resources/images/sound/play.png"><span class = "delreset"><Button class="del" value="p4">X</Button>reset</span></div><div id="phrase4"></div>
 	</div>
 </div> 
+</div>
 </body>
 <script>
 function openNav() {

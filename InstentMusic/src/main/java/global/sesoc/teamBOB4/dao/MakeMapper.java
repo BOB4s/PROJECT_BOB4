@@ -29,4 +29,8 @@ public interface MakeMapper {
 	int uploadtemp(Temp temp);
 
 	int savemusic(Music_library music);
+
+	int delphrase(Part_music parts);
+
+	int delpartone(Part_music parts);
 }

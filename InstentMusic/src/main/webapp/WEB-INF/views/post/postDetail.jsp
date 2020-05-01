@@ -146,7 +146,7 @@ float : left;
   .a_tag_css{
   margin: 15px;
   text-align: center;
-  
+  font-size : 20px;
   }
 </style>
 <script type="text/javascript">

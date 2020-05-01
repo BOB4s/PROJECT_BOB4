@@ -99,6 +99,7 @@ function getall(){
 							addpart(partnum);
 						}
 					})
+					getphs();
 					setup();
 				}
 			}
@@ -112,7 +113,8 @@ function getall(){
 		addpart(partnum);
 	})
 }
-var s1,s2,s3,s4,s5,s6;
+var s1,s2,s3;
+var h1,h2,h3,h4,h5,h6,h7,h8,h9,h10,h11,h12;
 var recorder, soundFile, soundBlob;
 var masterGain;
 function preload(){
@@ -144,7 +146,20 @@ function setup(){
 		if(item.part_number==1){s1 = loadSound(item.phrase_saved);p1.setInput(s1);p1.connect(masterGain);}
 		if(item.part_number==2){s2 = loadSound(item.phrase_saved);p2.setInput(s2);p2.connect(masterGain);}
 		if(item.part_number==3){s3 = loadSound(item.phrase_saved);p3.setInput(s3);p3.connect(masterGain);}
-		} 
+		} else{
+			if(item.part_number==1&&item.phrase_number==1){h1 = loadSound(item.phrase_saved);}
+			if(item.part_number==1&&item.phrase_number==2){h2 = loadSound(item.phrase_saved);}
+			if(item.part_number==1&&item.phrase_number==3){h3 = loadSound(item.phrase_saved);}
+			if(item.part_number==1&&item.phrase_number==4){h4 = loadSound(item.phrase_saved);}
+			if(item.part_number==2&&item.phrase_number==1){h5 = loadSound(item.phrase_saved);}
+			if(item.part_number==2&&item.phrase_number==2){h6 = loadSound(item.phrase_saved);}
+			if(item.part_number==2&&item.phrase_number==3){h7 = loadSound(item.phrase_saved);}
+			if(item.part_number==2&&item.phrase_number==4){h8 = loadSound(item.phrase_saved);}
+			if(item.part_number==3&&item.phrase_number==1){h9 = loadSound(item.phrase_saved);}
+			if(item.part_number==3&&item.phrase_number==2){h10 = loadSound(item.phrase_saved);}
+			if(item.part_number==3&&item.phrase_number==3){h11 = loadSound(item.phrase_saved);}
+			if(item.part_number==3&&item.phrase_number==4){h12 = loadSound(item.phrase_saved);}
+		}
 	})
 	recorder = new p5.SoundRecorder();
 	recorder.setInput(masterGain);
@@ -197,43 +212,42 @@ function addpart(partnums){
 	userStartAudio();
 
 	var divs = '<div class="part" id="part'+partnums+'">'
-	divs+= '<div class="phrase1"></div>'
-	divs+= '<div class="phrase2"></div>'
-	divs+= '<div class="phrase3">No Phrase</div>'
-	divs+= '<div class="phrase4"></div>'
+	divs+= '<div class="phrase1" id="'+partnums+'-1" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+	divs+= '<div class="phrase2" id="'+partnums+'-2" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+	divs+= '<div class="phrase3" id="'+partnums+'-3" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+	divs+= '<div class="phrase4" id="'+partnums+'-4" ondragleave="leavedrag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
 	divs+= '<div class="partbtn"><button class="delpart" value="'+partnums+'">X</button><button class="gotomake" value="'+partnums+'">Make Music</button>'
 	divs+= '<button class="playpart" value="'+partnums+'">▷</button></div>'
 	divs+= '</div>'
-$("#parta").before(divs);
-var ids = "#part"+partnums;
-
-$(".delpart").on('click',function(){
-	alert($(this).val());
-	var delid = "#part"+$(this).val();
-	$(delid).remove();
-})
-
-$(".playpart").click(function(){
-	userStartAudio();
-	if($(this).val()==1){s1.play();}
-	if($(this).val()==2){s2.play();}
-	if($(this).val()==3){s3.play();}
-	if($(this).val()==4){s4.play();}
-	if($(this).val()==5){s5.play();}
-	if($(this).val()==6){s6.play();}
-})
-
-$(".gotomake").click(function(){
-	$.ajax({
-		type : 'get'
-		,url : 'saveinfo'
-		,data : {'part_num':$(this).val(),'temp_bpm':$("#bpmnum").text()}
-		,success : function(resp){
-				location.href='partmake'
-			}
+	$("#parta").before(divs);
+	var ids = "#part"+partnums;
+	
+	$(".delpart").on('click',function(){
+		var delid = "#part"+$(this).val();
+		$(delid).remove();
 	})
-})
-$("#mixing").click(function(){
+	
+	$(".playpart").click(function(){
+		userStartAudio();
+		if($(this).val()==1){s1.play();}
+		if($(this).val()==2){s2.play();}
+		if($(this).val()==3){s3.play();}
+		if($(this).val()==4){s4.play();}
+		if($(this).val()==5){s5.play();}
+		if($(this).val()==6){s6.play();}
+	})
+	
+	$(".gotomake").click(function(){
+		$.ajax({
+			type : 'get'
+			,url : 'saveinfo'
+			,data : {'part_num':$(this).val(),'temp_bpm':$("#bpmnum").text()}
+			,success : function(resp){
+					location.href='partmake'
+				}
+		})
+	})
+	$("#mixing").click(function(){
 		userStartAudio();
 		if(paths==null){
 			alert('please recording phrases!');
@@ -248,6 +262,33 @@ $("#mixing").click(function(){
 			$("#mixing").val('mixing');
 			$("#mixing").text('Mixing Music');
 		}
+	})
+}
+function getphs(){
+	$.each(paths,function(index, item){
+		var ids = '#part'+item.part_number+' .phrase'+item.phrase_number;
+		var idx = item.part_number+'-'+item.phrase_number;
+		var sav = item.phrase_saved;
+		var sav2 = sav.substr(21,sav.length);
+		var vals = item.key_board+sav2;
+		var data = '<button class="ps" ondragstart="drag(event)" draggable="true" id="'+idx+'" value="'+vals+'">Phrase'+item.phrase_number+'</button>';
+		$(ids).html(data);
+	})
+
+	$('.ps').click(function(){
+		var ids = $(this).attr('id');
+		if(ids=="1-1"){h1.play();}
+		if(ids=="1-2"){h2.play();}
+		if(ids=="1-3"){h3.play();}
+		if(ids=="1-4"){h4.play();}
+		if(ids=="2-1"){h5.play();}
+		if(ids=="2-2"){h6.play();}
+		if(ids=="2-3"){h7.play();}
+		if(ids=="2-4"){h8.play();}
+		if(ids=="3-1"){h9.play();}
+		if(ids=="3-2"){h10.play();}
+		if(ids=="3-3"){h11.play();}
+		if(ids=="3-4"){h12.play();}
 	})
 }
 function recordstart(){
@@ -288,6 +329,46 @@ function sendfile(){
 			}
 	   })
 }
+function drag(ev) { 
+	ev.dataTransfer.setData("ids", ev.target.id);
+	ev.dataTransfer.setData("vals", ev.target.value);
+}
+function drop(ev) {
+	ev.preventDefault(); 
+	var tagid = '#'+ev.target.id;
+	$(tagid).css('background-color','white');
+	var ids = ev.dataTransfer.getData("ids");
+	var vals = ev.dataTransfer.getData("vals");
+	var ph = tagid.substr(3,3);
+	var pt = tagid.substr(1,1);
+	var keys = vals.substr(0,16);
+	var sav = vals.substr(16,vals.length);
+	var data = '<button class="ps" ondragstart="drag(event)" draggable="true" id="'+ids+'" value="'+vals+'">Phrase'+ph+'</button>';
+	$(tagid).html(data);
+
+	var loops = {'part_number' : pt
+				,'phrase_number' : ph
+				,'key_board' : keys
+				,'phrase_saved' : sav}
+
+	$.ajax({
+		type : 'post'
+		,url : 'insertloop'
+		,data : loops
+		,success : function(resp){
+				getall();
+			}
+	})
+}
+function allowDrop(ev){
+	ev.preventDefault();
+	var tagid = '#'+ev.target.id;
+	$(tagid).css('background-color','yellow');
+}
+function leavedrag(ev){
+	var tagid = '#'+ev.target.id;
+	$(tagid).css('background-color','white');
+}
 </script>
 <style>
 /* body{
@@ -305,7 +386,7 @@ margin : 10px 10px 10px 10px;
 #parts{
 	margin-left: 16%;
 	margin-right: 8%;
-	margin-top: 0;
+	margin-top: 5px;
 	margin-bottom: 0;
 	width:1050px;
 }
@@ -316,14 +397,21 @@ margin : 10px 10px 10px 10px;
 	height: 150px;
 	border: 1px solid black;
 }
-.phrase1, .phrase2, .phrase3, .phrase4, .partbtn{
+.partbtn{
 	width : 200px;
 	height : 30px;
 	text-align: center;
+	border : 1px solid black;
+}
+.phrase1, .phrase2, .phrase3, .phrase4{
+	width : 200px;
+	height : 30px;
+	text-align: center;
+	border : 1px solid black;
 }
 .gotomake{
 	float : left;
-	height : 28px;
+	height : 27px;
 	width : 140px;
 	background-color: #8181F7;
 	border : 0px;
@@ -332,7 +420,7 @@ margin : 10px 10px 10px 10px;
 }
 .delpart{
 	float : left;
-	height : 28px;
+	height : 27px;
 	width : 29px;
 	background-color: red;
 	border : 0px;
@@ -340,8 +428,8 @@ margin : 10px 10px 10px 10px;
 	font-weight: bold;
 }
 .playpart{
-float : left;
-	height : 28px;
+	float : left;
+	height : 27px;
 	width : 29px;
 	background-color: green;
 	border : 0px;
@@ -373,6 +461,12 @@ float : left;
 	border: 0px;
 	color : skyblue;
 	font-size : 70px;
+}
+.ps{
+	border : 0px;
+	background-color : #FFFFFF;
+	width : 195px;
+	height : 28px;
 }
 </style>
 </head>

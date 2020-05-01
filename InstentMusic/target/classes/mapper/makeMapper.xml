@@ -96,4 +96,17 @@ SEQ_Music_Library_mus_number.nextval
 ,sysdate
 )
 </insert>
+
+<delete id="delphrase" parameterType="Parts">
+delete from part_music
+where cust_number=#{cust_number}
+and part_number = #{part_number}
+and phrase_number = #{phrase_number}
+</delete>
+
+<delete id="delpartone" parameterType="Parts">
+delete from part_music
+where cust_number=#{cust_number}
+and part_number = #{part_number}
+</delete>
 </mapper>

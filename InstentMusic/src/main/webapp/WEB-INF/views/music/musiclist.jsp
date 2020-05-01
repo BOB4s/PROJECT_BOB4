@@ -20,13 +20,15 @@
 <link rel="stylesheet" href="resources/css/makingMusic.css">
 <link rel="stylesheet" href="resources/css/3d_double_roll_btn.css">
 <style>
+body{
+	background-color : #1C1C1C;
+}
 #list{
 	float : left;
 	margin-left : 50px;
 	margin-top : 30px;
 	width: 690px;
 	height : 600px;
-	background-color : #D8D8D8;
 }
 #visualizer{
 	padding-top : 50px;
@@ -59,6 +61,8 @@
 	margin : 0 auto;
 	margin-top : 10px;
 	text-align : center;
+	border : 1;
+	color : #FFFFFF;
 }
 #listname{
 	margin-top : 20px;
@@ -66,6 +70,18 @@
 	font-size : 30px;
 	font-style: italic;
 	font-family: "Times New Roman", Times, serif;
+	font-weight: bold;
+	color : #FFFFFF;
+}
+@-webkit-keyframes movingtitle
+{
+/* modified */
+       to {text-indent:100%;}
+}
+@keyframes movingtitle
+{
+/* modified */
+       to {text-indent:100%;}
 }
 #lists{
 	width : 650px;
@@ -73,23 +89,31 @@
 	margin-left : 20px;
 	white-space: nowrap;
 	overflow-x: hidden;
+	border: 1px solid #FFFFFF;
 }
 .playsong{
 	witdh : 25px;
 	height : 25px;
 	cursor: pointer;
+	background-color: #FFFFFF;
 }
 .writesong{
 	margin-left : 5px;
-	witdh : 28px;
-	height : 28px;
+	witdh : 25px;
+	height : 25px;
 	cursor: pointer;
+	background-color: #FFFFFF;
 }
 .indexlist{
 	width : 30px;
 }
 .titlelist{
 	width: 370px;
+}
+.anima{
+	animation: movingtitle 10s infinite alternate linear;
+     white-space:nowrap;
+     overflow:hidden;
 }
 </style>
 <script>
@@ -110,10 +134,10 @@ function getmusics(){
 		,success : function(resp){
 			if(resp!=null){
 				$("#startment").remove();
-				var data = '<table class="musiclist" border="1">';
+				var data = '<table class="musiclist">';
 				$.each(resp,function(index,item){
 					data+='<tr>';
-					data+='<td class="indexlist">'+index+'</td>';
+					data+='<td class="indexlist">'+(index+1)+'</td>';
 					data+='<td class="titlelist">'+item.mus_title+'</td>'
 					data+='<td class="datelist">'+item.mus_date+'</td>'
 					data+='<td class="images"><img class="playsong" alt="'+item.fullPath+'" src="resources/images/sound/playlist.png">'
@@ -125,13 +149,15 @@ function getmusics(){
 				
 				$(".playsong").click(function(){
 					userStartAudio();
-					if(song.isPlayed){
-						song.stop();
-					}
 					path = $(this).attr('alt');
 					var title = $(this).parent().siblings(".titlelist").text();
 					$("#startments").text(title);
+					$(this).parent().siblings(".titlelist").addClass('anima');
 					setup();
+
+					song.onended(function(){
+						$(".titlelist").removeClass('anima');
+					})
 				})
 
 				$(".writesong").click(function(){

@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
-<script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.21:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -137,7 +137,7 @@ padding-top: 75px;
 	var username = '${nickname}';
 	var controls = "all";
 	var data_flag = 0;
-	var socket = io.connect('10.10.1.211:4000');
+	var socket = io.connect('192.168.0.21:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,

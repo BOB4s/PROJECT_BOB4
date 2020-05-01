@@ -146,6 +146,9 @@
   opacity: 1;
 }
 
+.profile__photo-overlay{
+	cursor: pointer;
+}
 .profile__photo-overlay .overlay__item {
   font-size: 130%;
   display: flex;

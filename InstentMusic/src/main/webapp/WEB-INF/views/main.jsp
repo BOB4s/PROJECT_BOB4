@@ -129,6 +129,18 @@ position: fixed;
 body{
 padding-top: 75px;
 }
+.postbtn{
+	text-decoration: underline;
+	font-size: 30px;
+	margin-left: 10px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+#musicBoard{
+	width: 1500px;
+	height : 30px;
+	text-align: center;
+}
 </style>
 <!-- 192.168.0.84 -->
 <script type="text/javascript">
@@ -564,14 +576,13 @@ padding-top: 75px;
 </ul>
 </div>
 <div id="musicBoard">
-	<h1>Music Board</h1>
+	<br><br>
+<a onclick="id_change_to_all()" class="postbtn">All</a>&nbsp;
+<a onclick="id_change_to_followOnly()" class="postbtn">Follow</a>&nbsp;
+<a onclick="id_change_to_likes()" class="postbtn">Popular</a>
+<br>
 </div>
 <div id="followerList_Profiles"> </div>
-<br>
-<a onclick="id_change_to_all()"  >글 전체 보기</a>&nbsp;
-<a onclick="id_change_to_followOnly()" >팔로우한 글 보기</a>&nbsp;
-<a onclick="id_change_to_likes()">인기글 보기</a>
-<br>
 	<main id="profile" class="">	</main>
 				<div id="endDan" ></div>
 

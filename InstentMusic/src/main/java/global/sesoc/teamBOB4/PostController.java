@@ -78,38 +78,69 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/postLists", method = RequestMethod.GET)
-	public @ResponseBody List<Post> postLists(@RequestParam(value = "searchWord", defaultValue = "") String searchWord,
-			@RequestParam(value = "start_Page", defaultValue = "0") int start_Page,
-			@RequestParam(value = "cust_number", defaultValue = "0") int cust_number, Model model) {
-		List<Integer> follwedList = custdao.getFollowings(cust_number);
-		List<Post> post_All_List_byFollow = postdao.getPostAll(follwedList);
-
-		List<Post> postList = new ArrayList<>();
-		int page_control_int = 3;
-		if (start_Page == 0)
-			page_control_int = 6;
-		for (int i = 0; i < page_control_int; i++) {
-			if (i + (start_Page * page_control_int) >= post_All_List_byFollow.size()) {
-				break;
-			}
-			postList.add(post_All_List_byFollow.get(i + (start_Page * page_control_int)));
-		}
-
-		/*
-		 * for (Post post:postList.get("title")) {
-		 * System.out.println(post.getMus_title()+"//"+post.getPost_number());
-		 * 
-		 * } System.out.println(postList.get("title").size());
-		 */
-		String controls = "title";
-		if (searchWord.equals("title")) {
-			controls = "title";
-		}
-
-		/* model.addAttribute("postList", postList); */
-		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("controls", controls);
-		return postList;
+	public @ResponseBody List<Post> postLists(
+	      @RequestParam(value = "controls", defaultValue = "all") String controls,
+	      @RequestParam(value = "start_Page", defaultValue = "0") int start_Page,
+	      @RequestParam(value = "cust_number", defaultValue = "0") int cust_number,
+	    Model model) {
+	   
+	   if(controls.equals("all")) {
+	      
+	      List<Post> list_all = postdao.getPostAllbyall();
+	      
+	      List<Post> postList =new ArrayList<>();
+	      int page_control_int=3;
+	      if(start_Page==0) 
+	         page_control_int=6;
+	      for (int i=0;i<page_control_int;i++) {
+	         if(i+(start_Page*page_control_int)>=list_all.size()) {
+	            break;
+	         }
+	         postList.add(list_all.get(i+(start_Page*page_control_int)));
+	         
+	         
+	               }
+	      
+	      return postList;
+	   }else if(controls.equals("followOnly")) {
+	   List <Integer> follwedList =custdao.getFollowings(cust_number);
+	   List<Post> post_All_List_byFollow = postdao.getPostAll(follwedList);
+	    controls = "title";
+	    
+	   
+	   List<Post> postList =new ArrayList<>();
+	   int page_control_int=3;
+	   if(start_Page==0) 
+	      page_control_int=6;
+	   for (int i=0;i<page_control_int;i++) {
+	      if(i+(start_Page*page_control_int)>=post_All_List_byFollow.size()) {
+	         break;
+	      }
+	      postList.add(post_All_List_byFollow.get(i+(start_Page*page_control_int)));
+	            }
+	   /*
+	    * for (Post post:postList.get("title")) {
+	    * System.out.println(post.getMus_title()+"//"+post.getPost_number());
+	    * 
+	    * } System.out.println(postList.get("title").size());
+	    * model.addAttribute("postList", postList); */
+	   model.addAttribute("controls", controls);
+	   return postList;
+	   }
+	   List<Post> likeList =postdao.getPostAllbyliked();
+	   
+	   List<Post> postList =new ArrayList<>();
+	   int page_control_int=3;
+	   if(start_Page==0) 
+	      page_control_int=6;
+	   for (int i=0;i<page_control_int;i++) {
+	      if(i+(start_Page*page_control_int)>=likeList.size()) {
+	         break;
+	      }
+	      postList.add(likeList.get(i+(start_Page*page_control_int)));
+	      
+	   }
+	   return postList;
 	}
 
 	@GetMapping("/myList")

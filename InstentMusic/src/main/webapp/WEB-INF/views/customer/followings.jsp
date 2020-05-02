@@ -13,8 +13,9 @@
 	border-radius:30px;
 }
 .table{
-	font-size: xx-large;
+	font-size: x-large;
     margin-left: 41%;
+    margin-top: -3%;
 }
 .line{
 	font-style: italic;
@@ -24,13 +25,21 @@
     margin-top: 4%;
 }
 .nick{
-	padding-bottom: 7px;
+	padding-bottom: 20px;
 	font-style: italic;
+}
+.hrcss{
+	 color:black;
+	 width:50%;
+	 margin-left:-14%;
+	 margin-right:0px;
+	 margin-top:50px;
+	 size:10px;
 }
 </style>
 <script>
 $(function(){
-	var data ='<div class="line">followingList</div><table class="table table-dark" div="wrapper"><thead><tr><th class="proimg"></th><th class="nick"></th></tr></thead><tbody><br>';
+	var data ='<div class="line">followingList<hr class="hrcss"></div><table class="table table-dark" div="wrapper"><thead><tr><th class="proimg"></th><th class="nick"></th></tr></thead><tbody><br>';
 	$.each(${following_Profiles_List},function(index, item) {
 		data += '<tr><td><a href="proDetail?cust_number='+item.cust_number+'">'+'<span class="proset"><img class="sp" src="<spring:url value="/image/'
 		+item.cust_photo_saved+'"/>"/></td>'+'&nbsp'+'<td class="nick" style="padding-left:65px;">'+item.cust_nickname + '</span></td></tr>';

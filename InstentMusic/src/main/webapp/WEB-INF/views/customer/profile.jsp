@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
- <script src="http://10.10.1.100:4000/socket.io/socket.io.js"></script>
+ <script src="http://192.168.0.4:4000/socket.io/socket.io.js"></script>
 <%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
 <link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/toastr.min.js"></script>
@@ -81,16 +81,58 @@ position: absolute;
     background: aliceblue;
     height: 60px;
   }
+  .flist1{
+  	position: absolute;
+    margin-left: 25%;
+    margin-top: -9%;
+  }
+  .sp{
+	width: 50px;
+	height: 50px;
+	border-radius:25px;
+}
+.div wrapper{
+	font-size: x-large;
+    margin-left: 41%;
+    margin-top: -3%;
+}
+.line{
+	font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+	margin-left: 43%;
+    font-size: xx-large;
+    margin-top: 4%;
+}
+.nick{
+    font-size: x-large;
+	font-style: italic;
+	padding-left: 45px;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    position: absolute;
+}
+.hrcss{
+	 color:black;
+	 width: 223px;
+     margin-left: -25%;
+	 margin-right:0px;
+	 margin-top:32px;
+	 size:10px;
+}
+.table{
+	margin-left: 38%;
+    margin-top: -10%;
+}
 
 
 </style>
-<script src="http://10.10.1.100:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.4:4000/socket.io/socket.io.js"></script>
 <script>
 var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://10.10.1.100:4000');
+var socket = io.connect('http://192.168.0.4:4000');
 $(function(){
 $("#profileSetting").click(function(){
 	location.href="goModify"
@@ -379,6 +421,45 @@ $(function(){
 		location.href="goModify";
 	})
 })
+function followers(){
+		
+		$.ajax({
+			method : 'GET',
+			url : 'followers',
+			success : wers,
+		})
+
+		}
+function followings(){
+	
+	$.ajax({
+		method : 'GET',
+		url : 'followings',
+		success : wings,
+	})
+
+	}
+function wers(resp){
+
+	var data ='<div class="line">followerList<hr class="hrcss"></div><table class="table table-dark" div="wrapper"><thead><tr><th class="proimg"></th><th class="nick"></th></tr></thead><tbody><br>';
+	$.each(resp,function(index, item) {
+		data += '<tr><td><a href="proDetail?cust_number='+item.cust_number+'">'+'<span class="proset"><img class="sp" src="<spring:url value="/image/'
+		+item.cust_photo_saved+'"/>"/></td>'+'&nbsp'+'<td class="nick">'+item.cust_nickname + '</span></td></tr>';
+			});
+	data +="</tbody></table>";
+	$('#followerList_Profiles').html(data);
+}
+function wings(resp){
+
+	var data ='<div class="line">followingList<hr class="hrcss"></div><table class="table table-dark" div="wrapper"><thead><tr><th class="proimg"></th><th class="nick"></th></tr></thead><tbody><br>';
+	$.each(resp,function(index, item) {
+		data += '<tr><td><a href="proDetail?cust_number='+item.cust_number+'">'+'<span class="proset"><img class="sp" src="<spring:url value="/image/'
+		+item.cust_photo_saved+'"/>"/></td>'+'&nbsp'+'<td class="nick">'+item.cust_nickname + '</span></td></tr>';
+			});
+	data +="</tbody></table>";
+	$('#followerList_Profiles').html(data);
+}
+
 </script>
 </head>
 <body>
@@ -444,13 +525,15 @@ $(function(){
 					<li class="profile__stat"><span class="stat__number"></span>
 						</li>
 					<li class="profile__stat"><span class="stat__number">${followers}</span>
-						<a href="followers">followers</a></li>
+						<a onclick="followers()">followers</a></li>
 					<li class="profile__stat"><span class="stat__number">${followings}</span>
-						<a href="followings">following</a></li>
+						<a onclick="followings()">following</a></li>
 				</ul>
 				<p class="profile__bio">
 					<span class="profile__full-name">${introduce} </span>
-				</p>
+				</p><div class="flist1">
+				<div id="followerList_Profiles"> </div>
+				</div>
 			</div>
 		</header>
 			<main id="profile" class="">	</main>

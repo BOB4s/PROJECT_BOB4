@@ -16,7 +16,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://10.10.1.100:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.4:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style>
@@ -56,7 +56,7 @@ var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://10.10.1.100:4000');
+var socket = io.connect('http://192.168.0.4:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import global.sesoc.teamBOB4.dao.ChatDao;	
 import global.sesoc.teamBOB4.dao.CustomerDao;
 import global.sesoc.teamBOB4.vo.Customer;
-import global.sesoc.teamBOB4.vo.Message;
 import global.sesoc.teamBOB4.vo.MessageList;
 
 @Controller

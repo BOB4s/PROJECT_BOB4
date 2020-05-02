@@ -9,8 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import global.sesoc.teamBOB4.vo.Customer;
 import global.sesoc.teamBOB4.vo.Follow;
+import global.sesoc.teamBOB4.vo.Like_click;
 import global.sesoc.teamBOB4.vo.Post;
 import global.sesoc.teamBOB4.vo.SearchWord;
 
@@ -126,4 +126,42 @@ public class PostDao {
 		SearchWord list = mapper.searchcheck(search_word);
 		return list;
 	}
+
+
+	public int checkLike_click(Like_click like_click) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		return mapper.checkLike_click(like_click);
+	}
+
+	public void newliked(Like_click like_click) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.newliked(like_click);
+	}
+
+	public void unliked(Like_click like_click) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.unliked(like_click);
+		
+	}
+
+	public List<Post> getPostAllbyall() {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		return mapper.getPostAll();
+	}
+
+	public List<Post> getPostAllbyliked() {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		return mapper.getPostAllbyliked();
+	}
+
+	public void up_like_in_post(int post_number) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.up_like_in_post(post_number);
+	}
+
+	public void down_like_in_post(int post_number) {
+		PostMapper mapper = session.getMapper(PostMapper.class);
+		 mapper.down_like_in_post(post_number);
+	}
+
 }

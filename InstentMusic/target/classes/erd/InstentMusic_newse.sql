@@ -9,7 +9,10 @@ DROP TRIGGER TRI_Letter_let_number;
 DROP TRIGGER TRI_like_click_like_number;
 DROP TRIGGER TRI_Like_like_number;
 DROP TRIGGER TRI_Member_mem_number;
+DROP TRIGGER TRI_messagelist_let_number;
+DROP TRIGGER TRI_MessageList_messagerRoom;
 DROP TRIGGER TRI_Music_Library_mus_number;
+DROP TRIGGER TRI_Notification2_not_number;
 DROP TRIGGER TRI_Notification_not_number;
 DROP TRIGGER TRI_Part_music_make_number;
 DROP TRIGGER TRI_Post_post_number;
@@ -28,13 +31,14 @@ DROP TRIGGER TRI_User_user_number;
 
 /* Drop Tables */
 
-DROP TABLE Notification CASCADE CONSTRAINTS;
 DROP TABLE Follow CASCADE CONSTRAINTS;
-DROP TABLE letter CASCADE CONSTRAINTS;
 DROP TABLE like_click CASCADE CONSTRAINTS;
+DROP TABLE Notification2 CASCADE CONSTRAINTS;
 DROP TABLE Reply CASCADE CONSTRAINTS;
 DROP TABLE Customer CASCADE CONSTRAINTS;
 DROP TABLE Key_Sound CASCADE CONSTRAINTS;
+DROP TABLE Message CASCADE CONSTRAINTS;
+DROP TABLE MessageList CASCADE CONSTRAINTS;
 DROP TABLE Post_tag CASCADE CONSTRAINTS;
 DROP TABLE Post CASCADE CONSTRAINTS;
 DROP TABLE Music_Library CASCADE CONSTRAINTS;
@@ -55,7 +59,10 @@ DROP SEQUENCE SEQ_Letter_let_number;
 DROP SEQUENCE SEQ_like_click_like_number;
 DROP SEQUENCE SEQ_Like_like_number;
 DROP SEQUENCE SEQ_Member_mem_number;
+DROP SEQUENCE SEQ_messagelist_let_number;
+DROP SEQUENCE SEQ_MessageList_messagerRoom;
 DROP SEQUENCE SEQ_Music_Library_mus_number;
+DROP SEQUENCE SEQ_Notification2_not_number;
 DROP SEQUENCE SEQ_Notification_not_number;
 DROP SEQUENCE SEQ_Part_music_make_number;
 DROP SEQUENCE SEQ_Post_post_number;
@@ -83,7 +90,10 @@ CREATE SEQUENCE SEQ_Letter_let_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_like_click_like_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Like_like_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Member_mem_number INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_messagelist_let_number INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_MessageList_messagerRoom INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Music_Library_mus_number INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_Notification2_not_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Notification_not_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Part_music_make_number INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_Post_post_number INCREMENT BY 1 START WITH 1;
@@ -156,26 +166,6 @@ CREATE TABLE Key_Sound
 );
 
 
-CREATE TABLE letter
-(
-	-- 쪽지의 고유 번호 시퀀스
-	let_number number NOT NULL,
-	-- 쪽지를 보낸 회원 번호. member 참조
-	send_number number NOT NULL,
-	-- 쪽지를 받은 회원 번호. member 참조
-	recv_number number NOT NULL,
-	-- 받은 쪽지 제목
-	let_title varchar2(50) NOT NULL,
-	-- 쪽지 내용
-	let_content varchar2(1000) NOT NULL,
-	-- 쪽지를 읽었는지 여부. 읽으면 1
-	recv_check nchar DEFAULT '0' NOT NULL,
-	-- 착,발신 날짜
-	let_date date DEFAULT sysdate NOT NULL,
-	PRIMARY KEY (let_number)
-);
-
-
 CREATE TABLE like_click
 (
 	-- 좋아요 고유 번호 시퀀스
@@ -189,6 +179,42 @@ CREATE TABLE like_click
 	-- 0. 좋아요 안함, 1.좋아요 누름
 	likt_type nchar DEFAULT '0' NOT NULL,
 	PRIMARY KEY (like_number)
+);
+
+
+CREATE TABLE Message
+(
+	Mes_number number NOT NULL,
+	-- 메시지 보낸 사람의 닉네임
+	cust_nickname varchar2(20) NOT NULL,
+	-- 메일 내용
+	Mes_content varchar2(4000) NOT NULL,
+	-- 메일 파일 내용
+	Mes_File varchar2(500),
+	-- 메일 확인
+	-- 
+	mes_checked number,
+	-- 저장 날짜
+	mes_date date DEFAULT sysdate,
+	-- 쪽지의 고유 번호 시퀀스
+	messagerRoom number NOT NULL,
+	PRIMARY KEY (Mes_number)
+);
+
+
+CREATE TABLE MessageList
+(
+	-- 쪽지의 고유 번호 시퀀스
+	messagerRoom number NOT NULL,
+	-- 유저 네임
+	UserName varchar2(20) NOT NULL,
+	-- 쪽지를 읽었는지 여부. 읽으면 1
+	HowManyChecks number DEFAULT 0 NOT NULL,
+	-- 최근 메시지 내용
+	recentMessage varchar2(4000) NOT NULL,
+	-- 상대방 닉네임
+	oppenentName varchar2(20) NOT NULL,
+	PRIMARY KEY (messagerRoom)
 );
 
 
@@ -208,30 +234,22 @@ CREATE TABLE Music_Library
 );
 
 
-CREATE TABLE Notification
+CREATE TABLE Notification2
 (
 	-- 알림 고유 번호 시퀀스
 	not_number number NOT NULL,
 	-- 알림을 받는 회원 번호
-	recv_number number NOT NULL,
-	-- 해당 알림을 받게끔 댓글, 쪽지, 좋아요 등의 액션을 취한 회원의 번호
-	send_number number NOT NULL,
-	-- 알림이 있게 한 팔로우 테이블의 고유 넘버. 시퀀스.
-	fol_number number,
-	-- 알림이 있게 한 쪽지의 고유 번호 시퀀스
-	let_number number,
-	-- 알림이 있게 한 댓글 고유 번호 시퀀스
-	rep_number number,
-	-- 알림이 있게 한 좋아요 고유 번호 시퀀스
-	like_number number,
+	not_cust_number number,
+	-- 회원의 번호
+	not_sender_number number,
 	-- comment, letter, like, follow 등의 알림 타입
 	not_type varchar2(30) NOT NULL,
 	-- 알림 클릭시 이동할 링크 주소
-	not_url varchar2(500) NOT NULL,
+	not_content varchar2(100) NOT NULL,
 	-- 알림 발생한 일시
 	not_time date DEFAULT sysdate NOT NULL,
 	-- 알림을 확인했는지 여부
-	not_check nchar DEFAULT '0',
+	not_check number DEFAULT 0,
 	PRIMARY KEY (not_number)
 );
 
@@ -278,6 +296,7 @@ CREATE TABLE Post
 	post_original varchar2(500),
 	-- 게시물에 등록된 이미지의 저장 이름
 	post_saved varchar2(500),
+	post_nickname varchar2(20),
 	PRIMARY KEY (post_number)
 );
 
@@ -360,25 +379,13 @@ CREATE TABLE Temp
 /* Create Foreign Keys */
 
 ALTER TABLE Follow
-	ADD FOREIGN KEY (follower_number)
-	REFERENCES Customer (cust_number)
-;
-
-
-ALTER TABLE Follow
 	ADD FOREIGN KEY (follow_number)
 	REFERENCES Customer (cust_number)
 ;
 
 
-ALTER TABLE letter
-	ADD FOREIGN KEY (recv_number)
-	REFERENCES Customer (cust_number)
-;
-
-
-ALTER TABLE letter
-	ADD FOREIGN KEY (send_number)
+ALTER TABLE Follow
+	ADD FOREIGN KEY (follower_number)
 	REFERENCES Customer (cust_number)
 ;
 
@@ -395,14 +402,14 @@ ALTER TABLE like_click
 ;
 
 
-ALTER TABLE Notification
-	ADD FOREIGN KEY (recv_number)
+ALTER TABLE Notification2
+	ADD FOREIGN KEY (not_cust_number)
 	REFERENCES Customer (cust_number)
 ;
 
 
-ALTER TABLE Notification
-	ADD FOREIGN KEY (send_number)
+ALTER TABLE Notification2
+	ADD FOREIGN KEY (not_sender_number)
 	REFERENCES Customer (cust_number)
 ;
 
@@ -413,21 +420,9 @@ ALTER TABLE Reply
 ;
 
 
-ALTER TABLE Notification
-	ADD FOREIGN KEY (fol_number)
-	REFERENCES Follow (fol_number)
-;
-
-
-ALTER TABLE Notification
-	ADD FOREIGN KEY (let_number)
-	REFERENCES letter (let_number)
-;
-
-
-ALTER TABLE Notification
-	ADD FOREIGN KEY (like_number)
-	REFERENCES like_click (like_number)
+ALTER TABLE Message
+	ADD FOREIGN KEY (messagerRoom)
+	REFERENCES MessageList (messagerRoom)
 ;
 
 
@@ -452,12 +447,6 @@ ALTER TABLE Post_tag
 ALTER TABLE Reply
 	ADD FOREIGN KEY (post_number)
 	REFERENCES Post (post_number)
-;
-
-
-ALTER TABLE Notification
-	ADD FOREIGN KEY (rep_number)
-	REFERENCES Reply (rep_number)
 ;
 
 
@@ -550,11 +539,41 @@ END;
 
 /
 
+CREATE OR REPLACE TRIGGER TRI_messagelist_let_number BEFORE INSERT ON messagelist
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_messagelist_let_number.nextval
+	INTO :new.let_number
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_MessageList_messagerRoom BEFORE INSERT ON MessageList
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_MessageList_messagerRoom.nextval
+	INTO :new.messagerRoom
+	FROM dual;
+END;
+
+/
+
 CREATE OR REPLACE TRIGGER TRI_Music_Library_mus_number BEFORE INSERT ON Music_Library
 FOR EACH ROW
 BEGIN
 	SELECT SEQ_Music_Library_mus_number.nextval
 	INTO :new.mus_number
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_Notification2_not_number BEFORE INSERT ON Notification2
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_Notification2_not_number.nextval
+	INTO :new.not_number
 	FROM dual;
 END;
 
@@ -713,34 +732,35 @@ COMMENT ON COLUMN Key_Sound.key_board IS '사용자 정의의 전체 키보드 �
 COMMENT ON COLUMN Key_Sound.sou_name IS '키에 매칭되는 소리 이름';
 COMMENT ON COLUMN Key_Sound.key_name IS '소리가 매칭되는 키 이름';
 COMMENT ON COLUMN Key_Sound.sou_path IS '소리 저장 경로';
-COMMENT ON COLUMN letter.let_number IS '쪽지의 고유 번호 시퀀스';
-COMMENT ON COLUMN letter.send_number IS '쪽지를 보낸 회원 번호. member 참조';
-COMMENT ON COLUMN letter.recv_number IS '쪽지를 받은 회원 번호. member 참조';
-COMMENT ON COLUMN letter.let_title IS '받은 쪽지 제목';
-COMMENT ON COLUMN letter.let_content IS '쪽지 내용';
-COMMENT ON COLUMN letter.recv_check IS '쪽지를 읽었는지 여부. 읽으면 1';
-COMMENT ON COLUMN letter.let_date IS '착,발신 날짜';
 COMMENT ON COLUMN like_click.like_number IS '좋아요 고유 번호 시퀀스';
 COMMENT ON COLUMN like_click.cust_number IS '좋아요를 누른 회원의 회원 번호';
 COMMENT ON COLUMN like_click.target_number IS '좋아요가 눌린 게시물을 작성한 회원의 회원 번호';
 COMMENT ON COLUMN like_click.post_number IS '게시판의 고유 번호 시퀀스';
 COMMENT ON COLUMN like_click.likt_type IS '0. 좋아요 안함, 1.좋아요 누름';
+COMMENT ON COLUMN Message.cust_nickname IS '메시지 보낸 사람의 닉네임';
+COMMENT ON COLUMN Message.Mes_content IS '메일 내용';
+COMMENT ON COLUMN Message.Mes_File IS '메일 파일 내용';
+COMMENT ON COLUMN Message.mes_checked IS '메일 확인
+';
+COMMENT ON COLUMN Message.mes_date IS '저장 날짜';
+COMMENT ON COLUMN Message.messagerRoom IS '쪽지의 고유 번호 시퀀스';
+COMMENT ON COLUMN MessageList.messagerRoom IS '쪽지의 고유 번호 시퀀스';
+COMMENT ON COLUMN MessageList.UserName IS '유저 네임';
+COMMENT ON COLUMN MessageList.HowManyChecks IS '쪽지를 읽었는지 여부. 읽으면 1';
+COMMENT ON COLUMN MessageList.recentMessage IS '최근 메시지 내용';
+COMMENT ON COLUMN MessageList.oppenentName IS '상대방 닉네임';
 COMMENT ON COLUMN Music_Library.mus_number IS '음악의 고유 번호 시퀀스';
 COMMENT ON COLUMN Music_Library.cust_number IS '작곡한 회원의 고유번호. 세션';
 COMMENT ON COLUMN Music_Library.mus_title IS '음악 이름';
 COMMENT ON COLUMN Music_Library.mus_saved IS '해당 음악의 저장 이름';
 COMMENT ON COLUMN Music_Library.mus_date IS '작곡한 일시';
-COMMENT ON COLUMN Notification.not_number IS '알림 고유 번호 시퀀스';
-COMMENT ON COLUMN Notification.recv_number IS '알림을 받는 회원 번호';
-COMMENT ON COLUMN Notification.send_number IS '해당 알림을 받게끔 댓글, 쪽지, 좋아요 등의 액션을 취한 회원의 번호';
-COMMENT ON COLUMN Notification.fol_number IS '알림이 있게 한 팔로우 테이블의 고유 넘버. 시퀀스.';
-COMMENT ON COLUMN Notification.let_number IS '알림이 있게 한 쪽지의 고유 번호 시퀀스';
-COMMENT ON COLUMN Notification.rep_number IS '알림이 있게 한 댓글 고유 번호 시퀀스';
-COMMENT ON COLUMN Notification.like_number IS '알림이 있게 한 좋아요 고유 번호 시퀀스';
-COMMENT ON COLUMN Notification.not_type IS 'comment, letter, like, follow 등의 알림 타입';
-COMMENT ON COLUMN Notification.not_url IS '알림 클릭시 이동할 링크 주소';
-COMMENT ON COLUMN Notification.not_time IS '알림 발생한 일시';
-COMMENT ON COLUMN Notification.not_check IS '알림을 확인했는지 여부';
+COMMENT ON COLUMN Notification2.not_number IS '알림 고유 번호 시퀀스';
+COMMENT ON COLUMN Notification2.not_cust_number IS '알림을 받는 회원 번호';
+COMMENT ON COLUMN Notification2.not_sender_number IS '회원의 번호';
+COMMENT ON COLUMN Notification2.not_type IS 'comment, letter, like, follow 등의 알림 타입';
+COMMENT ON COLUMN Notification2.not_content IS '알림 클릭시 이동할 링크 주소';
+COMMENT ON COLUMN Notification2.not_time IS '알림 발생한 일시';
+COMMENT ON COLUMN Notification2.not_check IS '알림을 확인했는지 여부';
 COMMENT ON COLUMN Part_music.make_number IS '파트 메이크 고유 번호';
 COMMENT ON COLUMN Part_music.cust_number IS '작곡중인 회원 고유 번호';
 COMMENT ON COLUMN Part_music.part_number IS '해당 곡의 몇번째 파트인가';

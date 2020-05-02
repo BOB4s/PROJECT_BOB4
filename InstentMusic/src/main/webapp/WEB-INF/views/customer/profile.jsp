@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/sideMenuBar.css"> 
- <script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
+ <script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
 <%-- <script src="<c:url value="resources/js/jquery-3.4.1.min.js" />"></script> --%>
 <link rel="stylesheet" href="resources/css/main.css">
 <script src="resources/js/toastr.min.js"></script>
@@ -84,13 +85,8 @@ position: absolute;
 
 
 </style>
-<script src="http://10.10.1.211:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
 <script>
-var start_Page = -1;
-var cust_number = '${cust_number}';
-var username = '${nickname}';
-var data_flag = 0;
-var socket = io.connect('http://10.10.12.230:4000');
 $(function(){
 $("#profileSetting").click(function(){
 	location.href="goModify"
@@ -117,6 +113,13 @@ $("#profileSetting").click(function(){
 		})
 	})
 })
+
+var start_Page = -1;
+var cust_number = '${cust_number}';
+var username = '${nickname}';
+
+var data_flag = 0;
+var socket = io.connect('http://172.16.101.220:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -248,10 +251,15 @@ function getNotis(resp){
 			data_flag--;
 			}
 }
+
+
+
+
+	var username = '${nickname}';
+	var socket = io.connect('http://172.16.101.220:4000');
 	$(function() {
 
 		socket.emit('add user', username);
-		getPage_data(cust_number);
 		$("#data_notis").hide(); 	
 		
 		$("#followList").on("click", function() {
@@ -275,71 +283,8 @@ function getNotis(resp){
 
 		});
 	
+		//끝
 	});
-	function getPage_data(cust_number){
-		if($("#profile")[0].className=='stop'){
-			$("#profile")[0].className='';
-			$('#endDan').html('');
-			}
- 		if(start_Page==0){
-			start_Page++;
-			} 
-		start_Page++;
-
-		console.log(start_Page);
-		$.ajax({
-			method : 'GET',
-			url : 'myList',
-			data : {
-				"start_Page" : start_Page
-				,"cust_number":cust_number
-			},
-			success : getPage,
-			error : function(resp) {
-				alert("Error");
-			}
-		})
-
-		}
-	function getPage(resp){
-		if(resp==null) {
-			alert("글이 없습니다.");
-			return ;
-		}
-		var data = "<section class='profile__photos'>"
-			$.each(resp,function(index, item) {
-				var rannum =  Math.floor(Math.random() * 3)+0.65;/* 0.65 */
-
-					data += "<div class='profile__photo' style='-webkit-transform: translateY(0px);transform: translateY(0px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
-						
-				 	data += "<img src='resources/uploadPath/"+item.post_original+"' />"
-				 		
-				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
-				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"
-				 	 data += "<span class='overlay__item'> <i class='fa fa-heart'>"+item.mus_title+"</i></span> ";
-				 	 data += "<span class='overlay__item'> <i class='fa fa-comment'>"+item.post_nickname+"</i></span> ";
-
-				 	 data += "</div></div>"
-
-					
-
-					});
-
-		data +="</section>";
-		$("#profile").append(data);
-	
-	
-	}
-	function postDetail(event){
-		if(event.target.children[0]==undefined){
-			return;
-			}
-		var post_number = event.target.children[0].value
-		console.log(post_number);
-		location.href = "postGetOne?post_number=" + post_number;
-
-		}
-	
 
 	function noti_save(){
  		var  not_cust_number = '${customersData.cust_number}';
@@ -384,20 +329,13 @@ $(function(){
 <body>
 	<nav class="navigation">
 		<div class="navigation__column">
-			<a href="main"> <img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg" />
-			</a>&nbsp;&nbsp;&nbsp;
-			<a href="profile">
-			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
-			<div class="searchingTool">
-				<i class="fa fa-search"></i> <input id="searchpf" type="text" placeholder="Search">
-			</div>
+			<i class="fa fa-search"></i> <input type="text" placeholder="Search" id="searchpf">
 		</div>
-		<div id="myUL1">
-			<ul id="myUL"></ul>
-		</div>
+	
 		<div class="navigation__column">
 			<div class="navigations__links">
 				<div class="navigation__list-item"><a 
@@ -439,7 +377,7 @@ $(function(){
 				<div class="profile__title">
 					<h3 class="profile__username">${customersData.cust_nickname}</h3>
 					<a id="following_button" >following</a> <i
-						class="fa fa-cog fa-lg" id="profileSetting"></i>
+						class="fa fa-cog fa-lg" id="goModify"></i>
 				</div>
 				<ul class="profile__stats">
 					<li class="profile__stat"><span class="stat__number">이사람이 글쓴수 가져오기</span>
@@ -454,9 +392,44 @@ $(function(){
 				</p>
 			</div>
 		</header>
-			<main id="profile" class="">	</main>
-				<div id="endDan" ></div>
-			
+		<section class="profile__photos">
+			<div class="profile__photo">
+				<img src="resources/images/IUfeed.jpg" />
+				<div class="profile__photo-overlay">
+					<span class="overlay__item"> <i class="fa fa-heart"></i> 좋아유수
+					</span> <span class="overlay__item"> <i class="fa fa-comment"></i>
+						댓글수/ 재생수
+					</span>
+				</div>
+			</div>
+			<div class="profile__photo">
+				<img src="resources/images/IUfeed.jpg" />
+				<div class="profile__photo-overlay">
+					<span class="overlay__item"> <i class="fa fa-heart"></i>  좋아유수
+					</span> <span class="overlay__item"> <i class="fa fa-comment"></i>
+						댓글수/ 재생수
+					</span>
+				</div>
+			</div>
+			<div class="profile__photo">
+				<img src="resources/images/IUfeed.jpg" />
+				<div class="profile__photo-overlay">
+					<span class="overlay__item"> <i class="fa fa-heart"></i>  좋아유수
+					</span> <span class="overlay__item"> <i class="fa fa-comment"></i>
+						댓글수/ 재생수
+					</span>
+				</div>
+			</div>
+			<div class="profile__photo">
+				<img src="resources/images/IUfeed.jpg" />
+				<div class="profile__photo-overlay">
+					<span class="overlay__item"> <i class="fa fa-heart"></i>  좋아유수
+					</span> <span class="overlay__item"> <i class="fa fa-comment"></i>
+						댓글수/ 재생수
+					</span>
+				</div>
+			</div>
+		</section>
 	</main>
 </body>
 <script>

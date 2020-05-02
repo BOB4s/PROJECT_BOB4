@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
-<script src="resources/js/p5.min.js"></script>
-<script src="resources/js/p5.sound.min.js"></script>
-<script src="resources/js/jquery-ui.min.js"></script>
-<script src="resources/js/sketch.js"></script>
 <!-- include libraries(jQuery, bootstrap) -->
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,125 +15,88 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
-<style>
-.write, .delete{
-	width: 20px;
-	height : 20px;
+ <style type="text/css">
+  #data_notis {
+position: absolute;
+    right: 9%;
+    top: 9.4%;
+ 	width: 30.5%;
+	float: right;
+	box-sizing: border-box;
+	background-color: white;
+	max-height: 800px;
+    overflow-y: auto;
+    height: 400px;
+    background: white;
+    z-index: 4;
+}.nav-counter {
+
+ position:absolute;
+ top: -1px;
+ left: 60%;
+ line-height: 20px;
+ margin-top: -11px;
+ padding: 0 6px;
+ font-weight: normal;
+ font-size: small;
+ color: white;
+ text-align: center;
+ text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+ background: #e23442;
+ border: 1px solid #911f28;
+ border-radius: 11px;
+ background-image: -webkit-linear-gradient(top, #e8616c, #dd202f);
+ background-image: -moz-linear-gradient(top, #e8616c, #dd202f);
+ background-image: -o-linear-gradient(top, #e8616c, #dd202f);
+ background-image: linear-gradient(to bottom, #e8616c, #dd202f);
+ -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+ box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
 }
-.table{
-text-align: center;
-max-width: 70%;
-margin-bottom: 0px;
-margin-left: 14%;
-}
-.recon{
-text-align: center;
-}
-.date{
-text-align: center;
-width: 100px;
-}
-.cid{
-text-align: center;
-width: 120px;
-}
-.proset{
-float : left;
-}
-.sp{
-	width: 30px;
-	height: 30px;
-	border-radius:15px;
-}
-#visualizer{
-	padding : 25px 25px 25px 25px;
-	width : 100%;
-	height : 450px;
-	background-color : #D8D8D8;
-}
-#musicinfo{
-	float : left;
-	width : 600px;
-	height : 400px;
-	margin-down : 20px;
-	margin-left : 23px;
-}
-#profile{
-	float : left;
-	width : 300px;
-	height : 400px;
-	background-color : white;
-	margin-top : 0px;
-	margin-left : 23px;
-}
-#musicimg{
-	float : left;
-	width : 400px;
-	height : 400px;
-	margin-left : 20px;
-}
-#musicimg img{
-	width : 400px;
-	height : 400px;
-}
-#musictitle{
-	font-size : 50px;
-	text-align:center;
-	width : 600px;
-	height : 80px;
-	text-decoration: underline;
-}
-#sketch-target{
-	width : 400px;
-	height : 100px;
-	float : left;
-}
-#musiccontent{
-    background-color: gainsboro;
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-#tags{
-	width : 600px;
-	height : 100px;
-	text-align: center;
-	background-color : white;
-	margin-bottom : 10px;
-}
-#musicbtns{
-	width : 100px;
-	height : 100px;
-	float : left;
-}
-  .opps_orifile_img{
+
+.opps_profile_1{
+	font-size: 15pt; position: fixed; 
+	 left: 33.01%;
+    top: 10.7%;
+    width: 55.5%;
+	height: 6.4%;
+	background: white;
+
+  }
+  .opps_orifile_img_1{
      border-radius: 50%;
     transform-style: preserve-3d;
     transition: transform 0.5s linear;
-    height: 150px;
+    height: 45px;
+    margin-left: 15px;
+    margin-top: 15px;
     text-align: center;
-     padding: 15px;
+      
   }
-  #profile_data{
-      padding: 15px;
-    font-size: 24pt;
-    font-weight: bolder;
+  .opps_main_css_1{
+  
+   border-left-style: groove;
+    border-left-color: cyan;
+    background: aliceblue;
+    height: 60px;
   }
-  .a_tag_css{
-  margin: 15px;
-  text-align: center;
+  .heart_icons{
+  height: 40px;
+  width: 40px;
   
   }
+
 </style>
 <script type="text/javascript">
 
 var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
+
 var data_flag = 0;
-var socket = io.connect('http://10.10.12.92:4000');
+var socket = io.connect('http://192.168.43.107:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -186,10 +144,6 @@ var socket = io.connect('http://10.10.12.92:4000');
 	
 		  }	
 		};
-
-
-
-
 
 socket.on('chat message', function(data) {
 	
@@ -269,181 +223,171 @@ function getNotis(resp){
 			data_flag--;
 			}
 }
-
+		
 $(function() {
-   socket.emit('add user', username);
-   $("#data_notis").hide();
-   init();
-   tag_gets();
-   $("#replyControl").on('click', replySend);
+	socket.emit('add user', username);
+	$("#data_notis").hide(); 	
+	init();
+	$("#replyControl").on('click', replySend);
 });
 function init() {
-   var post_number = ${post.post_number};
+	var post_number = ${post.post_number};
 
-   $.ajax({
-      method : 'GET',
-      url : 'replyAll',
-      data : {
-         "post_number" : post_number
-      },
-      success : output,
-      error : function(resp) {
-         alert("Error");
-      }
-   })
-
-   $.ajax({
-		
-   })
-
+	$.ajax({
+		method : 'GET',
+		url : 'replyAll',
+		data : {
+			"post_number" : post_number
+		},
+		success : output,
+		error : function(resp) {
+			alert("Error");
+		}
+	})
 }
-
 function output(resp) {
-   var nickname = "${sessionScope.nickname}";
-   var data = '   <table class="table table-dark"><thead><tr><th class="date"></th><th class="cid"></th><th class="recon"></th></tr></thead><tbody>';
-         $.each(resp,
-               function(index, item) {
-                  data += '<tr><td>' + item.rep_date + '</td>'
-                  data += '<td>';
-               /*    if (item.savedfilename!=null) {
-                     data += '<img src="<c:url value="/imgs/'+item.savedfilename+'"/>" width="25px" height="25px"/>'
-                  } else {
-                     data +='<img src="/personal/resources/images/userdefalut.png" width="25px" height="25px"/>'
-                     
-                  } */
-                  data += '<a href="proDetail?cust_number='+item.cust_number+'">'+'<span class="proset"><img class="sp" src="<spring:url value="/image/'
-					+item.cust_photo+'"/>"/>'+'&nbsp'+item.rep_nickname + '</span></td>'
-                  data += '<input type="hidden" value="'+item.rep_content+'">'
-                  data +='<td>'+ item.rep_content+'</td><td>' ;
+	var nickname = "${sessionScope.nickname}";
+	var data = '   <table class="table table-dark"><thead><tr><th>입력일시</th><th>아이디</th><th>댓글내용</th></tr></thead><tbody>';
+			$.each(resp,
+					function(index, item) {
+						data += '<tr><td>' + item.rep_date + '</td>'
+						data += '<td>';
+					/* 	if (item.savedfilename!=null) {
+							data += '<img src="<c:url value="/imgs/'+item.savedfilename+'"/>" width="25px" height="25px"/>'
+						} else {
+							data +='<img src="/personal/resources/images/userdefalut.png" width="25px" height="25px"/>'
+							
+						} */
+						data += item.rep_nickname + '</td>'
+						data += '<input type="hidden" value="'+item.rep_content+'">'
+						data +='<td>'+ item.rep_content+'</td><td>' ;
 
-                  if (nickname == item.rep_nickname) {
-                     data += '<a id="replyDelete" data-num="'+  item.rep_number+'" class="replyDelete" ">'+'<img class="delete" src="resources/images/reply/slreset.png">'+'</a>';
-//                      data +='<a id="replyUpdate" data-num="'+  item.rep_number+'" class="replyUpdate" ">'+'<img class="update" src="resources/images/sound/slset.png">'+'</a>';
-                  }
-                  data += '</td></tr>'
-               })
-   data += '</tbody></table>';
+						if (nickname == item.rep_nickname) {
+							data += '<input type="button" name ="rep_number" data-num = "'+  item.rep_number+'" class="replyDelete" value="댓글 삭제" style="color: black;">'
+							data += '<input type="button" name ="rep_number" data-num= "'+ item.rep_number+'" data-text="'+item.rep_content+'" class="replyUpdate" value="댓글 수정" style="color: black;">'
+						}
+						data += '</td></tr>'
+					})
+	data += '</tbody></table>';
 
-   $("#replyResult").html(data);
-   $("#replyDelete").on('click', replyDelete);
-   $("#replyUpdate").on('click', replyUpdate);
+	$("#replyResult").html(data);
+	$(".replyDelete").on('click', replyDelete);
+	$(".replyUpdate").on('click', replyUpdate);
 
 }
-
 function replyUpdate() {
-
-   var rep_number = $(this).attr("data-num");
-   var rep_content = $(this).attr("data-text");
-   $("#replyControl").attr("data-num", rep_number);
-
-   $("#rep_content").val(rep_content);
-//    $("#replyControl").val('댓글수정');
+	var rep_number = $(this).attr("data-num");
+	var rep_content = $(this).attr("data-text");
+	$("#replyControl").attr("data-num", rep_number);
+	$("#rep_content").val(rep_content);
+	$("#replyControl").val('댓글수정');
 
 }
 //수정과 입력을 동시에 처리할것이다.
 function replySend() {
-   var rep_number = $(this).attr("data-num");
-   if (rep_number == ""){
-      rep_number = 0;
-   }
-   var rep_url = $("#rep_url").val();
-   var cust_number = '${cust_number}';
-   var rep_content = $("#rep_content").val();
-   var post_number = '${post.post_number}';
-   var status = ($("#replyControl").val() == "댓글수정") ? "replyUpdate": "replyWrite";
-   /* var savedfilename = $("#getUserimgs").val(); */
+	var rep_number = $(this).attr("data-num");
+	if (rep_number == ""){
+		rep_number = 0;
+	}
+	var rep_url = $("#rep_url").val();
+	var cust_number = '${cust_number}';
+	var rep_content = $("#rep_content").val();
+	var post_number = ${post.post_number};
+	var status = ($("#replyControl").val() == "댓글수정") ? "replyUpdate": "replyWrite";
+	/* var savedfilename = $("#getUserimgs").val(); */
 
-   if (status == 'replyUpdate') {
-      var sendData = {
-            "rep_url" : rep_url,
-         "cust_number" : cust_number,
-         "rep_number" : rep_number,
-         "rep_content" : rep_content,
-         "post_number" : post_number
-      /*    ,"savedfilename" : savedfilename */
-      };
-      $.ajax({
-         method : "POST",
-         url : status,
-         data : sendData,
-         success : function(resp) {
-            if (resp == 'success') {
-               alert("댓글수정완료");
-               init();
-               $("#rep_content").val("");
-               $("#replyControl").val("댓글달기");
-            } else {
-               alert("댓글수정실패")
-            }
-         }
-      });
+	if (status == 'replyUpdate') {
+		var sendData = {
+				"rep_url" : rep_url,
+			"cust_number" : cust_number,
+			"rep_number" : rep_number,
+			"rep_content" : rep_content,
+			"post_number" : post_number
+		/* 	,"savedfilename" : savedfilename */
+		};
+		$.ajax({
+			method : "POST",
+			url : status,
+			data : sendData,
+			success : function(resp) {
+				if (resp == 'success') {
+					alert("댓글수정완료");
+					init();
+					$("#rep_content").val("");
+					$("#replyControl").val("댓글달기");
+				} else {
+					alert("댓글수정실패")
+				}
+			}
+		});
 
-   } else {
-      var sendData = {
-            "rep_url" : rep_url,
-            "cust_number":cust_number,
-            "rep_number" : rep_number,
-            "rep_content" : rep_content,
-            "post_number" : post_number
-         /*    ,"savedfilename" : savedfilename */
-      };
-      $.ajax({
+	} else {
+		var sendData = {
+				"rep_url" : rep_url,
+				"cust_number":cust_number,
+				"rep_number" : rep_number,
+				"rep_content" : rep_content,
+				"post_number" : post_number
+			/* 	,"savedfilename" : savedfilename */
+		};
+		$.ajax({
 
-         method : "POST",
-         url : status,
-         data : sendData,
-         success : function(resp) {
-            if (resp == 'success') {
-               replynotice();
-               init();
-               $("#rep_content").val("");
-               
-               
-            } else {
-               alert("작성실패")
-            }
-         }
-      });
+			method : "POST",
+			url : status,
+			data : sendData,
+			success : function(resp) {
+				if (resp == 'success') {
+					replynotice();
+					init();
+					$("#rep_content").val("");
+					
+					
+				} else {
+					alert("작성실패")
+				}
+			}
+		});
 
-   }
+	}
 }
 
 function replyDelete() {
-   var rep_number = $(this).attr('data-num');
-   var post_number = ${post.post_number};
+	var rep_number = $(this).attr('data-num');
+	var post_number = ${post.post_number};
 
-   var sendData = {
-      "post_number" : post_number,
-      "rep_number" : rep_number
-   };
+	var sendData = {
+		"post_number" : post_number,
+		"rep_number" : rep_number
+	};
 
-   $.ajax({
-      method : 'GET',
-      url : 'replyDelete',
-      data : sendData,
-      success : function(resp) {
-         if (resp == 'success') {
-            alert("삭제 성공");
-            //전체 댓글다시 불러온다.
-            init();
-         } else
-            alert('삭제 실패')
-      },
-      error : function() {
-         alert("에러 에러");
-      }
-   })
+	$.ajax({
+		method : 'GET',
+		url : 'replyDelete',
+		data : sendData,
+		success : function(resp) {
+			if (resp == 'success') {
+				alert("삭제 성공");
+				//전체 댓글다시 불러온다.
+				init();
+			} else
+				alert('삭제 실패')
+		},
+		error : function() {
+			alert("에러 에러");
+		}
+	})
 
 }
 
 function replynotice(){
-      var post_number = '${post.post_number}';
-      var mus_title = '${post.mus_title}';
-      var replyWriter_number = '${nickname}';
-      var postWriter_number = '${post.cust_number}';
-      console.log(mus_title+','+replyWriter_number+','+postWriter_number);
-    socket.emit('replynotice',replyWriter_number , postWriter_number,mus_title,post_number);
-    noti_save();
+		var post_number = '${post.post_number}';
+		var mus_title = '${post.mus_title}';
+		var replyWriter_number = '${nickname}';
+		var postWriter_number = '${post.cust_number}';
+		console.log(mus_title+','+replyWriter_number+','+postWriter_number);
+	 socket.emit('replynotice',replyWriter_number , postWriter_number,mus_title,post_number);
+	 noti_save();
+
 	}
 
 function noti_save(){
@@ -461,7 +405,6 @@ function noti_save(){
 			"not_content" : not_content,
 			"not_type" : not_type
 		}
-
 	});
 
 	}
@@ -480,98 +423,77 @@ function noti_getBycust_number(){
 		}
 	})
 
-   }
-function setup() {
-	userStartAudio();
-	var cvs = createCanvas(500,100);
-	cvs.parent('sketch-target');
-	colorMode(HSB);
-	angleMode(DEGREES);
-	//song = loadSound(path,loaded);
-	fft = new p5.FFT(0.9, 256);
-	w = width / 64;
-	//fft.setInput(song);
-}
-function draw() {
-	  background(0);
-	  var spectrum = fft.analyze();
-	  noStroke();
-	  translate(width/2, height/2);
-	  for (var i = 0; i < spectrum.length; i++) {
-		var angle = map(i,0,spectrum.length,0,360);
-		var amp = spectrum[i];
-		var r = map(amp, 0, 64, 20, 100);
-		var x = r * cos(angle);
-		var y = r * sin(angle);
-		stroke(i,255,255);
-		line(0,0,x,y);
-	  }
-}
-function tag_gets(){
-
-	console.log(${tagList});
-	var data = "";
-	$.each(${tagList},function(index, item) {
-		data += "<a class='a_tag_css' href = ''>#"+item+"</a>";
-			});
-	$('#tags').html(data);
 	}
-$(function() {
-    var post_number = '${post.post_number}';
-    var cust_number = '${cust_number}';
-    var target_number = '${post.cust_number}'   
 
-       
-    $.ajax({
-       method : 'GET',
-       url : 'likedchecking',
-       data : {
-          "post_number" : post_number,
-          "cust_number" : cust_number,
-          "target_number" : target_number
-       },
-       
-       
-       success : function(resp) {
-          if (resp == 'unliked')
-             $("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
-          if (resp == 'liked')
-             $("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
-             
-       }
-    })
-    $("#liked_button").on("click", function() {
-       $.ajax({
-          method : 'GET',
-          url : 'like_click',
-          data : {
-             "post_number":post_number,
-             "cust_number":cust_number,
-             "target_number" : target_number
-          },
-          success : function(resp) {
-             if (resp == 'unliked')
-                $("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
 
-             if (resp == 'liked')
-                $("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
-                
-              /* socket.emit('newFollow',follow_number,username ); */
-             
+		$(function() {
+			var post_number = '${post.post_number}';
+			var cust_number = '${cust_number}';
+			var target_number = '${post.cust_number}'	
 
-          }
+				
+			$.ajax({
+				method : 'GET',
+				url : 'likedchecking',
+				data : {
+					"post_number" : post_number,
+					"cust_number" : cust_number,
+					"target_number" : target_number
+				},
+				
+				
+				success : function(resp) {
+					if (resp == 'unliked')
+						$("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
+					if (resp == 'liked')
+						$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
+						
+				}
+			})
+			$("#liked_button").on("click", function() {
+				$.ajax({
+					method : 'GET',
+					url : 'like_click',
+					data : {
+						"post_number":post_number,
+						"cust_number":cust_number,
+						"target_number" : target_number
+					},
+					success : function(resp) {
+						if (resp == 'unliked')
+							$("#liked_button").html('<img  class="heart_icons"  src="resources/images/canheart.png">')
 
-       })
+						if (resp == 'liked')
+							$("#liked_button").html('<img class="heart_icons" src="resources/images/fullheart.png">')
+							
+						 /* socket.emit('newFollow',follow_number,username ); */
+						
 
-    })
- });  
+					}
+
+				})
+
+			})
+		});
+		
 </script>
 
 </head>
 <body>
+<div>
+
+${post}
+</div>
+<br><br>
+<div>
+${tagList}
+
+
+</div>
+<div id="data_notis"></div>
 <nav class="navigation">
 		<div class="navigation__column">
-			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -604,56 +526,36 @@ $(function() {
 			</div>
 		</div>
 	</nav>
-   <div id="wrapper">
-   <div id="visualizer">
-   	<div id="musicimg"><img id="postimg" src="${post.post_original}"></div>
-   	<div id="musicinfo">
-   		<div id="musictitle">${post.mus_title }</div>
-   		<div id="tags"></div>
-   		<div id="musicplayer">
-   			<div id="musicbtns"></div>
-   			<div id="sketch-target"></div>
-   		</div>
-   	</div>
-  	 <div id="profile">
-  	 
-  	 <div id="custphoto"><img class = "opps_orifile_img" alt="" src="<c:url value="/image/${post_profile.cust_photo_saved}"/>"/></div> 
-  		 	<div id="profile_data">${post_profile.cust_nickname}</div>
-  		 <div id="musiccontent">${post.post_content }</div>
-			<a id="liked_button" >like</a>
-  	 </div>
-   </div>
-      <div id="replyForm" style="text-align: center;">
-         <c:if test="${not empty nickname}">
-            <form action="replyWrite" method="POST">
-               <input type="hidden" name="cust_number" value="${cust_number}">
-               <input type="hidden" name="rep_nickname" value="${nickname}">
-            <%--    <input type="hidden" name="rep_url" value="${rep_url}"> --%>
-               <input type="hidden"  id="rep_url" name="rep_url" value="url입니다">
-               <span id="rep_nickname">
-<!--                작성자 :  -->
-         <%--       <c:if test="${not empty sessionScope.cust_photo_saved}">
-               <img src="<c:url value='/imgs/${sessionScope.cust_photo_saved}'/>"
-                  width="50px" height="30px" />
-            </c:if> <c:if test="${empty sessionScope.cust_photo_saved}">
-               <img src="<c:url value='/resources/images/userdefalut.png'/>"
-                  width="50px" height="30px" />
-            </c:if> --%>
-<%--                ${sessionScope.nickname} --%>
-               </span> <input type="text" id="rep_content"
-             placeholder="댓글 달기..." name="rep_content" >
-             <a id="replyControl" data-num=""><img class="write" src="resources/images/reply/sledit.png">
-			</a>
-<!--                <input id="replyControl" name="replyControl" data-num="" type="button" value="댓글달기">  -->
-            </form>
-         </c:if>
+	
+	<div id="wrapper">
+		<div id="replyForm" style="text-align: center;">
+			<c:if test="${not empty nickname}">
+				<form action="replyWrite" method="POST">post_number
+					<input type="hidden" name="cust_number" value="${cust_number}">
+					<input type="hidden" name="rep_nickname" value="${nickname}">
+				<%-- 	<input type="hidden" name="rep_url" value="${rep_url}"> --%>
+					<input type="hidden"  id="rep_url" name="rep_url" value="url입니다">
+					<span id="rep_nickname">
+					작성자 : 
+			<%-- 		<c:if test="${not empty sessionScope.cust_photo_saved}">
+					<img src="<c:url value='/imgs/${sessionScope.cust_photo_saved}'/>"
+						width="50px" height="30px" />
+				</c:if> <c:if test="${empty sessionScope.cust_photo_saved}">
+					<img src="<c:url value='/resources/images/userdefalut.png'/>"
+						width="50px" height="30px" />
+				</c:if> --%>
+					${sessionScope.nickname}
+					</span> <input type="text" id="rep_content"
+				 placeholder="댓글 입력" name="rep_content" >
+					<input id="replyControl" name="replyControl" data-num="" type="button" value="댓글달기"> 
+				</form>
+			</c:if>
 
-      </div>
-      <!-- 댓글 목록 출력 -->
-      
+		</div>
+		<a id="liked_button" >like</a> 
+		<!-- 댓글 목록 출력 -->
 
-   </div>
-   <div id="replyResult" style="width: 60%; margin: auto; "></div>
-   <div id="data_notis"></div>
+	</div>
+	<div id="replyResult" style="width: 60%; margin: auto; "></div>
 </body>
 </html>

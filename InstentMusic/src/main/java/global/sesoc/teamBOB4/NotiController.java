@@ -30,7 +30,7 @@ public class NotiController {
 
 	@RequestMapping(value = "/noti_save", method = RequestMethod.GET)
 	public @ResponseBody void noti_save(Notification2 noti) {
-	
+	System.out.println(noti.toString());
 
 		notidao.save_new_noti(noti);
 	}
@@ -41,7 +41,8 @@ public class NotiController {
 
 		List<Notification2> notiList = notidao.getnewnotisBycust_number(cust_number);
 		for (int i = 0; i < notiList.size(); i++) {
-			int cust_number1 = notiList.get(i).getNot_sender_number();
+			int cust_number1 = notiList.get(i).getNot_cust_number();
+			System.out.println(cust_number1);
 			Customer cust_profile = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
 			System.out.println(cust_profile.toString());
 			notiList.get(i).setNot_nickname(cust_profile.getCust_nickname());
@@ -61,9 +62,9 @@ public class NotiController {
 				tempData = notiList.get(i).getNot_nickname()+"님이"+posts.getMus_title()+"을 업로드하였습니다.";
 				
 				notiList.get(i).setNot_content(tempData);
-				
 			}
 			else if (notiList.get(i).getNot_type().equals("CHAT")) {
+				notiList.get(i).setNot_savedData("chaticon.png");
 				notiList.get(i).setNot_content(notiList.get(i).getNot_content()+"에게 새 매세지");
 			}
 

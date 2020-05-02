@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -137,7 +137,7 @@ padding-top: 75px;
 	var username = '${nickname}';
 	var controls = "all";
 	var data_flag = 0;
-	var socket = io.connect('10.10.12.92:4000');
+	var socket = io.connect('192.168.43.107:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -517,7 +517,7 @@ padding-top: 75px;
 <div id="followerList_Profiles"> </div>
 <br>
 <a onclick="id_change_to_all()"  >글 전체 보기</a>&nbsp;
-<a onclick="id_change_to_followOnly()" >팔로우한 글 보기</a>&nbsp;
+<a onclick="id_change_to_followOnly()" >팔로우 글만 보기</a>&nbsp;
 <a onclick="id_change_to_likes()">인기글 보기</a>
 <br>
 	<main id="profile" class="">	</main>

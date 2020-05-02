@@ -412,14 +412,14 @@ position: absolute;
 	</footer>
 		</div>
 	</div>
-	<script src="http://110.10.1.211:4000/socket.io/socket.io.js"></script>
+	<script src="http://192.168.43.107:4000/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	
 	<script type="text/javascript">
 	var $window = $(window);
 	var username = '${nickname}';
 							//Need to change IP address**
-	var socket = io.connect('http://10.10.1.211:4000');
+	var socket = io.connect('http://192.168.43.107:4000');
 
 	var opponentName = '${opponentName}';
 	var cust_number = '${cust_number}' ;
@@ -531,10 +531,12 @@ position: absolute;
 
 		 var data = "<div id = 'noti_list_thing'>"
 			 $.each(resp,function(index, item) {
-					
+				 
 					 	data += ' <div class="opps_profile_imgs_1" >'
 						data +='<div class="opps_profile_imgs_inner_1" style="float: left;">'
+							
 						data += '<img class = "opps_orifile_img_1" alt="" src="<c:url value="/image/'+item.not_savedData+'"/>"/></div>'
+						
 						data +='<div  class="opps_main_css_1" style ="padding-top: 15px;" ><span style="border: thick;font-size: 12pt;font-weight: bold;"></span>' 
 							
 						data +='<span style ="margin-left: 20px;">'+item.not_content+'</span>'; 
@@ -571,9 +573,10 @@ if(${messangerRoom}!=0){
 		$('form').submit(function() {
 			/*  = $('#newOpps_data')[0].currentSrc; */
 			var srcdata = $('#newOpps_data')[0].value;
+			var oppsnumber = $('#newOpps_number')[0].value;
+		
 			 socket.emit('chat message', $('#Mes_content').val(),srcdata); 
-			
-			noti_save();
+			noti_save(oppsnumber);
 			sendText();
 			$('#Mes_content').val('');
 			return false;
@@ -669,8 +672,11 @@ if(${messangerRoom}!=0){
 					"UserName" : UserName
 				},success :function(msList){
 				 	 /* $('#Opps_file').text();  */
-				 	/* '+msList.oppsProfile+' */
+				 	/* '+msList.oppsProfile+' 
+				 	
+				 	*/
 				 	var opData ='<input id ="newOpps_data" type="hidden" value="'+msList.oppsProfile+'">';
+				 	opData +='	<input id ="newOpps_number" type="hidden" value="'+msList.howManyChecks+'">';
 				 	 opData +=msList.opponentName+"의 메세지";
 					$('#Opps_file').html(opData);
 					
@@ -712,10 +718,11 @@ if(${messangerRoom}!=0){
 		function closeNav() {
 			  document.getElementById("mySidenav").style.width = "0";
 			}
-		function noti_save(){
+		function noti_save(oppsnumber){
 			var not_content  =opponentName;
-			var not_cust_number = cust_number;
+			var not_cust_number = oppsnumber;
 			var not_sender_number ='${cust_number}';
+			
 			var not_type = 'CHAT';
 			$.ajax({
 				method : 'GET',

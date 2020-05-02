@@ -5,7 +5,6 @@ import java.util.Map;
 
 import global.sesoc.teamBOB4.vo.Like_click;
 import global.sesoc.teamBOB4.vo.Post;
-import global.sesoc.teamBOB4.vo.SearchWord;
 
 public interface PostMapper {
 
@@ -18,29 +17,22 @@ public interface PostMapper {
 	int getOneByMus_number(Post post);
 
 	List<Post> getPostAll();
-	
-	List<Post> myList(int cust_number);
 
 	Post getPostByPostNum(int post_number);
 
-	List<SearchWord> searchPost(String search_word);
+	void update_click(Like_click like_click);
 
-	List<Post> postList(String search_word);
-	
-	int insertWord(String search_word);
-
-	SearchWord searchcheck(String search_word);
-
-	void down_like_in_post(int post_number);
-
-	void up_like_in_post(int post_number);
-
-	List<Post> getPostAllbyliked();
-
-	void unliked(Like_click like_click);
+	int checkLike_click(Like_click like_click);
 
 	void newliked(Like_click like_click);
 
-	int checkLike_click(Like_click like_click);
+	void unliked(Like_click like_click);
+
+	List<Post> getPostAllbyliked();
+
+	void up_like_in_post(int post_number);
+
+	void down_like_in_post(int post_number);
+
 
 }

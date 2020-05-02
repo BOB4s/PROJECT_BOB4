@@ -90,8 +90,7 @@ public class ChatController {
 	public @ResponseBody MessageList getOppsName(MessageList temp,HttpSession session) {
 		
 		/* (String) session.getAttribute("nickname"); */
-		String cust_nickname = temp.getUserName();
-		System.out.println(cust_nickname);
+		String cust_nickname = (String) session.getAttribute("nickname");
 		
 	  MessageList mesList =chatdao.selectMesRoom(temp.getMessangerRoom());
 	  
@@ -101,19 +100,15 @@ public class ChatController {
 		  mesList.setOpponentName(mesList.getUserName());	 
 		  mesList.setUserName(tempstr);
 	  }  
-	  System.out.println(mesList.toString());
+	
 	  int cust_number1 = 0;
-	    if(cust_nickname.equals(mesList.getOpponentName())) {
-	   	 cust_number1 = custdao.get_cust_number_by_nickname(mesList.getOpponentName());
-	  }
-	    if(cust_nickname.equals(mesList.getUserName())) {
-	     	cust_number1 = custdao.get_cust_number_by_nickname(mesList.getUserName());
-	    
-	 	  }
+	    	 
+	  cust_number1 = custdao.get_cust_number_by_nickname(mesList.getUserName());
+	 
 	 if(cust_number1!=0) {
-	   Customer customer = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
-	  	mesList.setOppsProfile(customer.getCust_photo_saved());
-	  	
+		 Customer customer = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
+		 mesList.setOppsProfile(customer.getCust_photo_saved());
+		 mesList.setHowManyChecks(customer.getCust_number());
 	 }
 	return mesList;
 }

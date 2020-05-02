@@ -20,7 +20,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.21:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/toastr.min.js"></script>
  <link href="resources/css/toastr.min.css" rel="stylesheet"/>
 <style>
@@ -58,6 +58,7 @@ float : left;
 	width : 100%;
 	height : 450px;
 	background-color : #D8D8D8;
+	margin-bottom : 10px;
 }
 #musicinfo{
 	float : left;
@@ -85,10 +86,10 @@ float : left;
 	height : 400px;
 }
 #musictitle{
-	font-size : 50px;
+	font-size : 80px;
 	text-align:center;
 	width : 600px;
-	height : 80px;
+	height : 180px;
 	text-decoration: underline;
 }
 #sketch-target{
@@ -107,12 +108,28 @@ float : left;
 	text-align: center;
 	background-color : white;
 	margin-bottom : 10px;
+	padding: 5px 5px 5px 5px;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+.post_tag{
+	float : left;
+	margin : 5px 5px 5px 5px;
 }
 #musicbtns{
-	width : 100px;
+	width : 150px;
 	height : 100px;
 	float : left;
 }
+#musicbtns img{
+	margin-top : 25px;
+	width : 50px;
+	height : 50px;
+	float : left;
+	margin-right : 15px;
+	margin-left : 5px;
+	cursor: pointer;
+	}
   .opps_orifile_img{
      border-radius: 50%;
     transform-style: preserve-3d;
@@ -129,7 +146,7 @@ float : left;
   .a_tag_css{
   margin: 15px;
   text-align: center;
-  
+  font-size : 20px;
   }
 </style>
 <script type="text/javascript">
@@ -138,7 +155,7 @@ var start_Page = -1;
 var cust_number = '${cust_number}';
 var username = '${nickname}';
 var data_flag = 0;
-var socket = io.connect('http://10.10.12.92:4000');
+var socket = io.connect('http://192.168.0.21:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,
@@ -291,13 +308,7 @@ function init() {
          alert("Error");
       }
    })
-
-   $.ajax({
-		
-   })
-
 }
-
 function output(resp) {
    var nickname = "${sessionScope.nickname}";
    var data = '   <table class="table table-dark"><thead><tr><th class="date"></th><th class="cid"></th><th class="recon"></th></tr></thead><tbody>';
@@ -481,31 +492,44 @@ function noti_getBycust_number(){
 	})
 
    }
+$(function(){
+	$("#playsong").click(function(){
+		song.play();
+	})
+	$("#stopsong").click(function(){
+		song.stop();
+	})
+})
+var amp;
+var volhistory = [];
+function preload(){
+	song = loadSound('${post.post_saved}');
+}
 function setup() {
 	userStartAudio();
-	var cvs = createCanvas(500,100);
+	var cvs = createCanvas(450,100);
 	cvs.parent('sketch-target');
-	colorMode(HSB);
-	angleMode(DEGREES);
-	//song = loadSound(path,loaded);
-	fft = new p5.FFT(0.9, 256);
-	w = width / 64;
-	//fft.setInput(song);
+	amp = new p5.Amplitude();
 }
 function draw() {
-	  background(0);
-	  var spectrum = fft.analyze();
-	  noStroke();
-	  translate(width/2, height/2);
-	  for (var i = 0; i < spectrum.length; i++) {
-		var angle = map(i,0,spectrum.length,0,360);
-		var amp = spectrum[i];
-		var r = map(amp, 0, 64, 20, 100);
-		var x = r * cos(angle);
-		var y = r * sin(angle);
-		stroke(i,255,255);
-		line(0,0,x,y);
-	  }
+	 background(0);
+	var vol = amp.getLevel();
+	stroke(255);
+	noFill();
+	beginShape();
+	volhistory.push(vol*10);
+	for(var i=0; i<volhistory.length; i++){
+		var y = map(volhistory[i], 0, 1, height, 0);
+		vertex(i, y);
+	}
+	endShape();
+
+	if(volhistory.length > width-50){
+		volhistory.splice(0,1);
+	}
+
+	stroke(255,0,0);
+	line(volhistory.length,0,volhistory.length,height);
 }
 function tag_gets(){
 
@@ -572,6 +596,9 @@ $(function() {
 <nav class="navigation">
 		<div class="navigation__column">
 			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			</a>&nbsp;&nbsp;&nbsp;
+			<a href="profile">
+			<img class="pro" style="width: 46px; height: 46px; border-radius: 23px;" src="<spring:url value='/image/${image}'/>"/>
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -611,7 +638,8 @@ $(function() {
    		<div id="musictitle">${post.mus_title }</div>
    		<div id="tags"></div>
    		<div id="musicplayer">
-   			<div id="musicbtns"></div>
+   			<div id="musicbtns"><img id="playsong" src="resources/images/sound/play.png">
+   			<img id="stopsong" src="resources/images/sound/stop.png"></div>
    			<div id="sketch-target"></div>
    		</div>
    	</div>

@@ -146,6 +146,9 @@
   opacity: 1;
 }
 
+.profile__photo-overlay{
+	cursor: pointer;
+}
 .profile__photo-overlay .overlay__item {
   font-size: 130%;
   display: flex;
@@ -185,7 +188,7 @@
     color: black;
     display: block;
     height: 31px;
-    width: 250px;
+    width: 244px;
 }
 #myUL img{
 	margin-top : -3px;

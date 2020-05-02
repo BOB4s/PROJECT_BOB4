@@ -30,7 +30,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+
 	<mvc:default-servlet-handler />
 
 <!-- 한글설정 시작 -->

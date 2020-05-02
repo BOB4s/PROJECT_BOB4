@@ -359,7 +359,8 @@ CREATE TABLE Temp
 Create TABLE searchword
 (
 search_number number PRIMARY KEY,
-search_word varchar2(50) not null
+search_word varchar2(50) not null,
+hitcount number default 0
 );
 
 /* Create Foreign Keys */

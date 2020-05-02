@@ -31,6 +31,7 @@ public interface PostMapper {
 
 	SearchWord searchcheck(String search_word);
 
+<<<<<<< HEAD
 	void down_like_in_post(int post_number);
 
 	void up_like_in_post(int post_number);
@@ -42,5 +43,8 @@ public interface PostMapper {
 	void newliked(Like_click like_click);
 
 	int checkLike_click(Like_click like_click);
+=======
+	int updateHit(String search_word);
+>>>>>>> branch 'jojang' of https://github.com/BOB4s/PROJECT_BOB4.git
 
 }

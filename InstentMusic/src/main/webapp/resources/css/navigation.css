@@ -7,6 +7,7 @@
   justify-content: space-between;
   padding: 0 100px;
   margin-bottom: 0px;
+  z-index: 10;
 }
 
 .navigation .navigation__column:first-child img {

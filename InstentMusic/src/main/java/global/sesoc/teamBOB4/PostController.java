@@ -149,7 +149,14 @@ public class PostController {
 		if (post_number == 0 && mus_number != 0) {
 			Post post = new Post();
 			post.setMus_number(mus_number);
-			post_number = postdao.getOneByMus_number(post);
+		 post_number = postdao.getOneByMus_number(post);
+	}
+		
+		Post post=postdao.getPostByPostNum(post_number);
+		if(post.getPost_original()==null) {
+			post.setPost_original("resources/images/IUfeed.jpg");
+		}else {
+			post.setPost_original("resources/uploadPath/"+post.getPost_original());
 		}
 			
 		
@@ -160,15 +167,9 @@ public class PostController {
 			tagList.add(tagdao.selectTagnameByTagnum(tag_number));
 			
 		}
-		Post post = postdao.getPostByPostNum(post_number);
 		int cust_number1 = post.getCust_number();
 		
 		Customer post_profile=custdao.searchOne_ByCustnumber_getProfile(cust_number1);
-		if (post.getPost_original() == null) {
-			post.setPost_original("resources/images/IUfeed.jpg");
-		} else {
-			post.setPost_original("resources/uploadPath/" + post.getPost_original());
-		}
 		 model.addAttribute("tagList",JSONArray.fromObject(tagList)); 
 		model.addAttribute("post", post);
 		model.addAttribute("post_profile",post_profile);
@@ -189,8 +190,10 @@ public class PostController {
 		SearchWord result1 = postdao.searchcheck(search_word);
 		if (result1 == null) {
 			postdao.insertWord(search_word);
+			postdao.hitcount(search_word);
 		}
 		List<Post> result = postdao.postList(search_word);
+		postdao.hitcount(search_word);
 		return result;
 	}
 	

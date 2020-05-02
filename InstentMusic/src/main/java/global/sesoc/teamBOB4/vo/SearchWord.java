@@ -6,4 +6,5 @@ import lombok.Data;
 public class SearchWord {
 	public int search_number;
 	public String search_word;
+	public int hitcount;
 }

@@ -50,4 +50,6 @@ public interface CustomerMapper {
 
 	int get_cust_number_by_nickname(String cust_nickname);
 
+	Customer getNumber1(int cust_number);
+
 }

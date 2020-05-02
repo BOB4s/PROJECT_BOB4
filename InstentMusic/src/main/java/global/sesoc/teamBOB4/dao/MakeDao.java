@@ -65,4 +65,14 @@ public class MakeDao {
 		MakeMapper mapper = session.getMapper(MakeMapper.class);
 		return mapper.savemusic(music);
 	}
+
+	public int delphrase(Part_music parts) {
+		MakeMapper mapper = session.getMapper(MakeMapper.class);
+		return mapper.delphrase(parts);
+	}
+
+	public int delpartone(Part_music parts) {
+		MakeMapper mapper = session.getMapper(MakeMapper.class);
+		return mapper.delpartone(parts);
+	}
 }

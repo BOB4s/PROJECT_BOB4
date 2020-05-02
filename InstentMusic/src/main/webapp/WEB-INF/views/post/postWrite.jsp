@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.21:4000/socket.io/socket.io.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/p5.min.js"></script>
@@ -20,6 +20,11 @@
 <script src="resources/js/toastr.min.js"></script>
 <title>글쓰기</title>
 <style type="text/css">
+body{
+	background-image: url("resources/images/zzzzz.jpg");
+	background-size:cover;
+	background-repeat:no-repeat;
+}
 #postForm{
 	width: 800px;
 	height: 600px;
@@ -27,6 +32,7 @@
 	margin-top : 40px;
 	border : 1px solid black;
 	text-align: center;
+	background-color: #FFFFFF;
 }
 #postcontent{
 	margin : 10px 10px 10px 10px;
@@ -86,7 +92,7 @@ var cust_number = '${cust_number}';
 var username = '${nickname}';
 
 var data_flag = 0;
-var socket = io.connect('http://10.10.12.92:4000');
+var socket = io.connect('http://192.168.0.21:4000');
  toastr.options = {
 		  "closeButton": true,
 		  "debug": false,

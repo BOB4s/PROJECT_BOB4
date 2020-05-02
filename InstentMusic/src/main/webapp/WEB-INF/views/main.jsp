@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="resources/css/styles.css">
 <link rel="stylesheet" href="resources/css/opps_data_css.css">
 <link rel="stylesheet" href="resources/css/followBar.css">
-<script src="http://10.10.12.92:4000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.21:4000/socket.io/socket.io.js"></script>
 <script src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="resources/js/toastr.min.js"></script>
 <link href="resources/css/toastr.min.css" rel="stylesheet"/>
@@ -137,7 +137,7 @@ padding-top: 75px;
 	var username = '${nickname}';
 	var controls = "all";
 	var data_flag = 0;
-	var socket = io.connect('10.10.12.92:4000');
+	var socket = io.connect('192.168.0.21:4000');
 	 toastr.options = {
 			  "closeButton": true,
 			  "debug": false,
@@ -192,7 +192,7 @@ padding-top: 75px;
 	$(function(){
 	
 		socket.emit('add user', username);
-		getPage_data();
+		getPage_data(controls);
 			$("#data_notis").hide(); 
 			
 		$(window).scroll(function() {
@@ -262,7 +262,7 @@ padding-top: 75px;
 
 
 });
-	function getPage_data(){
+	function getPage_data(controls){
 		if($("#profile")[0].className=='stop'){
 			$("#profile")[0].className='';
 			$('#endDan').html('');
@@ -316,10 +316,10 @@ padding-top: 75px;
 					data += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
 
 					//사진
-					if(item.post_saved==null){
-						data += "<img src='resources/images/IUfeed.jpg' />"
+					if(item.post_original==null){
+						data += '<img src="resources/images/IUfeed.jpg" />'
 						}else{
-							data += '<img src="<c:url value="/image/'+item.post_saved+'"/>"/>'	
+							data += '<img src="<c:url value="/resources/uploadPath/'+item.post_original+'"/>"/>'	
 							}
 				 	data += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
 				 	data += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"
@@ -346,6 +346,58 @@ padding-top: 75px;
 		location.href = "postGetOne?post_number=" + post_number;
 
 		}
+	$(function(){
+		$("#searchPost").keyup(function(){
+			var data = {'search_word':$("#searchPost").val()};
+			$.ajax({
+				method : 'get'
+				,url : 'searchpost'
+				,data : data
+				,success : function(resp){
+					var d = '';
+						if($("#searchPost").val()==''){
+						$("#myUL2").html('');
+						}else{
+						$.each(resp,function(index,item){
+							if(item.hitcount>50 && item.hitcount<100){
+								d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';
+							}
+							else if(item.hitcount>100){
+								d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';	
+							}else{
+							d+= '<li>'+'<a class="name" style="font-style: italic">'+item.search_word+'</a>'+'</li>';
+							}
+						})
+						$("#myUL2").html(d);
+						$(document).on("click",".name",function(){
+							var v = $(this).text();
+							$("#searchPost").val(v);
+							$("#myUL2").html('');
+							});
+						}
+					}
+			})
+		})
+	})
+	$(function(){
+		$("#searchp").click(function(){
+			var data = {'search_word':$("#searchPost").val()};
+			$.ajax({
+				method : 'get'
+				,url : 'postList'
+				,data : data
+				,success : function(resp){
+					var a = '';
+					$.each(resp,function(index,item){
+						a+='<a>'+item.post_nickname+'</a>';
+					})
+					$("#wrapper2").append(a);
+				}
+				})
+			})
+		
+		})
+	
 	/* function getfollwedList(){
 		var data = "<table border='1' style='font-size: 15pt'>";
 		var j[] = '${followed_Profiles_List}';
@@ -405,7 +457,7 @@ padding-top: 75px;
 			 controls="followOnly";
 			 $("#profile").html('');
 			 start_Page = -1;
-			 getPage_data();
+			 getPage_data(controls);
 		 }
 		 function id_change_to_likes(){
 			 controls="likes";
@@ -420,7 +472,7 @@ padding-top: 75px;
 	<!-- Top for logo and navibar -->
 	 <nav class="navigation" id="nav">
 		<div class="navigation__column">
-			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">
@@ -472,7 +524,7 @@ padding-top: 75px;
 						<a href="musiclist"><img alt="myMusicList" src="resources/images/main/headphone1.png"></a>
 				</header>
 					<p>
-					Click the icon for listening to the music list that built with what you composed music
+					Click the icon for listening to the music list that built by what you composed music.
 					</p>
 			</div>
 		</div>
@@ -488,7 +540,7 @@ padding-top: 75px;
 					<a href="makingMusic"><img alt="producing" src="resources/images/main/producing_icon.png"></a>
 				</header>
 				<p>
-				Click the icon for composing and producing your new music
+				Click the icon for composing and producing your new music.
 				</p>
 			</div>
 		</div>
@@ -504,7 +556,7 @@ padding-top: 75px;
 					<a href="#musicBoard"><img alt="musicBoard" src="resources/images/main/allList.png"></a>
 				</header>
 				<p>
-				Click the icon to see your friends' music and what's the trend
+				Click the icon to see your friends' music and what's the trend.
 				</p>
 			</div>
 		</div>

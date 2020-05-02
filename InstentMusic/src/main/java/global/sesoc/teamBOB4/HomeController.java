@@ -68,14 +68,15 @@ public class HomeController {
 			if(c.getCust_key().equals("Y")) {
 				List<Customer> followed_Profiles_List  = new ArrayList<>();
 				int follow_number = c.getCust_number();
-				List <Integer> followersList =custdao.getFollowers(follow_number);
-				for(int cust_number1:followersList) {
-					Customer temp = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
-					if(temp.getCust_photo_saved()==null) {
-						temp.setCust_photo_saved("디폴트값");
-					}
-					followed_Profiles_List.add(temp); 
-				}
+//				List <Integer> followersList =custdao.getFollowers(follow_number);
+//				for(int cust_number1:followersList) {
+//					Customer temp = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
+//					if(temp.getCust_photo_saved()==null) {
+//						temp.setCust_photo_saved("디폴트값");
+//					}
+//					followed_Profiles_List.add(temp); 
+//				}
+			session.setAttribute("id", c.getCust_id());
 			session.setAttribute("login", c.getCust_number());
 			session.setAttribute("cust_number", c.getCust_number());
 			session.setAttribute("nickname", c.getCust_nickname());
@@ -83,8 +84,8 @@ public class HomeController {
 			 * session.setAttribute("password", c.getCust_password());
 			 * session.setAttribute("email", c.getCust_email());
 			 */
-			/* session.setAttribute("introduce", c.getCust_introduce()); */
-			model.addAttribute("followed_Profiles_List",JSONArray.fromObject(followed_Profiles_List));
+			session.setAttribute("introduce", c.getCust_introduce());
+//			model.addAttribute("followed_Profiles_List",JSONArray.fromObject(followed_Profiles_List));
 			session.setAttribute("image", c.getCust_photo_saved());
 			return "main";
 			}else {
@@ -231,21 +232,35 @@ public class HomeController {
 	}
 	
 	@GetMapping("/followers")
-	public String followers(Customer customer, Model model) {
-		Customer c = custdao.selectOne(customer);
-		List<Integer> followersList=custdao.getFollowers(c.getCust_number());
-		
-		model.addAttribute("followersList", followersList);
-		
+	public String followers(Model model,HttpSession session) {
+		int follwer_number= (int) session.getAttribute("cust_number");
+		Customer c = custdao.getNumber(follwer_number);
+        List<Customer> followed_Profiles_List  = new ArrayList<>();
+        int follow_number = c.getCust_number();
+        List <Integer> followersList =custdao.getFollowers(follow_number);
+        for(int cust_number1:followersList) {
+           Customer temp = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
+           
+           followed_Profiles_List.add(temp); 
+        }
+        model.addAttribute("followed_Profiles_List",JSONArray.fromObject(followed_Profiles_List));
+        
 		return "customer/followers";
 	}
 	@GetMapping("/followings")
-	public String followings(Customer customer, Model model) {
-		Customer c = custdao.selectOne(customer);
-		List<Integer> followingList=custdao.getFollowings(c.getCust_number());
-		
-		model.addAttribute("followingList", followingList);
-		
+	public String followings(Model model,HttpSession session) {
+		int following_number= (int) session.getAttribute("cust_number");
+		Customer c = custdao.getNumber(following_number);
+        List<Customer> following_Profiles_List  = new ArrayList<>();
+        int followings_number = c.getCust_number();
+        List <Integer> followingList =custdao.getFollowings(followings_number);
+        for(int cust_number1:followingList) {
+           Customer temp = custdao.searchOne_ByCustnumber_getProfile(cust_number1);
+           
+           following_Profiles_List.add(temp); 
+        }
+        model.addAttribute("following_Profiles_List",JSONArray.fromObject(following_Profiles_List));
+        
 		return "customer/followings";
 	}
 	@GetMapping("/test1")
@@ -265,7 +280,13 @@ public class HomeController {
 	public String proDetail(int cust_number, Model model) {
 		// DB cust_number에대한 프로필 내용을 가져옴.
 		Customer customer = custdao.getNumber(cust_number);
+		List<Integer> followersList=custdao.getFollowers(cust_number);
+		int followersdt=followersList.size();
+		List<Integer> followingList=custdao.getFollowings(cust_number);
+		int followingsdt=followingList.size();
 		
+		model.addAttribute("followersdt", followersdt);
+		model.addAttribute("followingsdt", followingsdt);
 		model.addAttribute("pd", customer);
 		
 		return "customer/proDetail";

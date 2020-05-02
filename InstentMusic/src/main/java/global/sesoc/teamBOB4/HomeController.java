@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -231,8 +232,9 @@ public class HomeController {
 		return "customer/followlist";
 	}
 	
+	@ResponseBody
 	@GetMapping("/followers")
-	public String followers(Model model,HttpSession session) {
+	public List<Customer> followers(HttpSession session) {
 		int follwer_number= (int) session.getAttribute("cust_number");
 		Customer c = custdao.getNumber(follwer_number);
         List<Customer> followed_Profiles_List  = new ArrayList<>();
@@ -243,12 +245,12 @@ public class HomeController {
            
            followed_Profiles_List.add(temp); 
         }
-        model.addAttribute("followed_Profiles_List",JSONArray.fromObject(followed_Profiles_List));
         
-		return "customer/followers";
+		return JSONArray.fromObject(followed_Profiles_List);
 	}
+	@ResponseBody
 	@GetMapping("/followings")
-	public String followings(Model model,HttpSession session) {
+	public List<Customer> followings(HttpSession session) {
 		int following_number= (int) session.getAttribute("cust_number");
 		Customer c = custdao.getNumber(following_number);
         List<Customer> following_Profiles_List  = new ArrayList<>();
@@ -259,9 +261,8 @@ public class HomeController {
            
            following_Profiles_List.add(temp); 
         }
-        model.addAttribute("following_Profiles_List",JSONArray.fromObject(following_Profiles_List));
         
-		return "customer/followings";
+		return JSONArray.fromObject(following_Profiles_List);
 	}
 	@GetMapping("/test1")
 	public String tesst1(Customer customer, Model model) {

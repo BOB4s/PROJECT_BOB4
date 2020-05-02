@@ -484,7 +484,7 @@ padding-top: 75px;
 	<!-- Top for logo and navibar -->
 	 <nav class="navigation" id="nav">
 		<div class="navigation__column">
-			<a href="home"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
+			<a href="main"><img class="logo" alt="home" src="resources/images/home/im_logo_w.jpg">
 			</a>
 		</div>
 		<div class="navigation__column">

@@ -148,6 +148,46 @@ float : left;
   text-align: center;
   font-size : 20px;
   }
+   #data_notis {
+position: absolute;
+    right: 9%;
+    top: 9.4%;
+ 	width: 30.5%;
+	float: right;
+	box-sizing: border-box;
+	background-color: white;
+	max-height: 800px;
+    overflow-y: auto;
+    height: 400px;
+    background: white;
+    z-index: 4;
+}
+.opps_profile_1{
+	font-size: 15pt; position: fixed; 
+	 left: 33.01%;
+    top: 10.7%;
+    width: 55.5%;
+	height: 6.4%;
+	background: white;
+
+  }
+  .opps_orifile_img_1{
+     border-radius: 50%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s linear;
+    height: 45px;
+    margin-left: 15px;
+    margin-top: 15px;
+    text-align: center;
+      
+  }
+  .opps_main_css_1{
+  
+   border-left-style: groove;
+    border-left-color: cyan;
+    background: aliceblue;
+    height: 60px;
+  }
 </style>
 <script type="text/javascript">
 

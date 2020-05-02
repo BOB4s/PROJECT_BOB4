@@ -29,10 +29,10 @@ $(function() {
 	$("#slib").click(function(){
 		location.href="makingMusic";
 	})
-	gettemp();
 	$("#makingstart").click(function(){
 		userStartAudio();
 		stt.play();
+		gettemp();
 		getall();
 	})
 })
@@ -45,7 +45,7 @@ function gettemp(){
 					var newname = '<input type="text" id="mustitle"><button id="titlebtn" class="w3-btn w3-grey w3-round">save</button>';
 					$("#title").html(newname);
 					$("#bpmbar").val(80);
-					bpms.setBPM('80');
+					bpms.setBPM(80);
 					$("#titlebtn").on('click',function(){
 						var data = {'temp_title' : $("#mustitle").val()
 								,'temp_bpm' : $("#bpmnum").text()}
@@ -78,7 +78,6 @@ function gettemp(){
 						})
 					})
 				}
-				setup();
 			}
 	})
 }
@@ -113,16 +112,15 @@ function getall(){
 		addpart(partnum);
 	})
 }
-var s1,s2,s3;
-var h1,h2,h3,h4,h5,h6,h7,h8,h9,h10,h11,h12;
+var s1,s2,s3,s4,s5,s6,s7,s8;
+var h1,h2,h3,h4,h5,h6,h7,h8,h9,h10,h11,h12,h13,h14,h15,h16;
+var h17,h18,h19,h20,h21,h22,h23,h24,h25,h26,h27,h28,h29,h30,h31,h32;
 var recorder, soundFile, soundBlob;
 var masterGain;
-function preload(){
-	stt = loadSound("resources/sound/beatbox/bb17.mp3");
-}
 function setup(){
+	masterGain = new p5.Gain();
 	userStartAudio();
-	
+	stt = loadSound("resources/sound/beatbox/bb17.mp3");
 	bpmsong = loadSound('resources/sound/drum/drum7.wav');
 	mastersong = loadSound(master);
 	bpmpat = [1, 1, 1, 1];
@@ -138,14 +136,20 @@ function setup(){
 		bpms.setBPM(bpmCtrl);
 		$("#bpmnum").text(bpmCtrl);
 	})
-	masterGain = new p5.Gain();
 	masterGain.connect(); 
-	var p1 = new p5.Gain(); var p2 = new p5.Gain();var p3 = new p5.Gain();
+	var pp1 = new p5.Gain(); var pp2 = new p5.Gain();var pp3 = new p5.Gain();
+	var pp4 = new p5.Gain(); var pp5 = new p5.Gain();var pp6 = new p5.Gain();
+	var pp7 = new p5.Gain(); var pp8 = new p5.Gain();
 	$.each(paths,function(index,item){
 		if(item.phrase_number==5){
-		if(item.part_number==1){s1 = loadSound(item.phrase_saved);p1.setInput(s1);p1.connect(masterGain);}
-		if(item.part_number==2){s2 = loadSound(item.phrase_saved);p2.setInput(s2);p2.connect(masterGain);}
-		if(item.part_number==3){s3 = loadSound(item.phrase_saved);p3.setInput(s3);p3.connect(masterGain);}
+		if(item.part_number==1){s1 = loadSound(item.phrase_saved);pp1.setInput(s1);pp1.connect(masterGain);}
+		if(item.part_number==2){s2 = loadSound(item.phrase_saved);pp2.setInput(s2);pp2.connect(masterGain);}
+		if(item.part_number==3){s3 = loadSound(item.phrase_saved);pp3.setInput(s3);pp3.connect(masterGain);}
+		if(item.part_number==4){s4 = loadSound(item.phrase_saved);pp4.setInput(s4);pp4.connect(masterGain);}
+		if(item.part_number==5){s5 = loadSound(item.phrase_saved);pp5.setInput(s5);pp5.connect(masterGain);}
+		if(item.part_number==6){s6 = loadSound(item.phrase_saved);pp6.setInput(s6);pp6.connect(masterGain);}
+		if(item.part_number==7){s7 = loadSound(item.phrase_saved);pp7.setInput(s7);pp7.connect(masterGain);}
+		if(item.part_number==8){s8 = loadSound(item.phrase_saved);pp8.setInput(s8);pp8.connect(masterGain);}
 		} else{
 			if(item.part_number==1&&item.phrase_number==1){h1 = loadSound(item.phrase_saved);}
 			if(item.part_number==1&&item.phrase_number==2){h2 = loadSound(item.phrase_saved);}
@@ -159,8 +163,29 @@ function setup(){
 			if(item.part_number==3&&item.phrase_number==2){h10 = loadSound(item.phrase_saved);}
 			if(item.part_number==3&&item.phrase_number==3){h11 = loadSound(item.phrase_saved);}
 			if(item.part_number==3&&item.phrase_number==4){h12 = loadSound(item.phrase_saved);}
+			if(item.part_number==4&&item.phrase_number==1){h13 = loadSound(item.phrase_saved);}
+			if(item.part_number==4&&item.phrase_number==2){h14 = loadSound(item.phrase_saved);}
+			if(item.part_number==4&&item.phrase_number==3){h15 = loadSound(item.phrase_saved);}
+			if(item.part_number==4&&item.phrase_number==4){h16 = loadSound(item.phrase_saved);}
+			if(item.part_number==5&&item.phrase_number==1){h17 = loadSound(item.phrase_saved);}
+			if(item.part_number==5&&item.phrase_number==2){h18 = loadSound(item.phrase_saved);}
+			if(item.part_number==5&&item.phrase_number==3){h19 = loadSound(item.phrase_saved);}
+			if(item.part_number==5&&item.phrase_number==4){h20 = loadSound(item.phrase_saved);}
+			if(item.part_number==6&&item.phrase_number==1){h21 = loadSound(item.phrase_saved);}
+			if(item.part_number==6&&item.phrase_number==2){h22 = loadSound(item.phrase_saved);}
+			if(item.part_number==6&&item.phrase_number==3){h23 = loadSound(item.phrase_saved);}
+			if(item.part_number==6&&item.phrase_number==4){h24 = loadSound(item.phrase_saved);}
+			if(item.part_number==7&&item.phrase_number==1){h25 = loadSound(item.phrase_saved);}
+			if(item.part_number==7&&item.phrase_number==2){h26 = loadSound(item.phrase_saved);}
+			if(item.part_number==7&&item.phrase_number==3){h27 = loadSound(item.phrase_saved);}
+			if(item.part_number==7&&item.phrase_number==4){h28 = loadSound(item.phrase_saved);}
+			if(item.part_number==8&&item.phrase_number==1){h29 = loadSound(item.phrase_saved);}
+			if(item.part_number==8&&item.phrase_number==2){h30 = loadSound(item.phrase_saved);}
+			if(item.part_number==8&&item.phrase_number==3){h31 = loadSound(item.phrase_saved);}
+			if(item.part_number==8&&item.phrase_number==4){h32 = loadSound(item.phrase_saved);}
 		}
 	})
+	
 	recorder = new p5.SoundRecorder();
 	recorder.setInput(masterGain);
 	soundFile = new p5.SoundFile();
@@ -229,12 +254,10 @@ function addpart(partnums){
 	
 	$(".playpart").click(function(){
 		userStartAudio();
-		if($(this).val()==1){s1.play();}
-		if($(this).val()==2){s2.play();}
-		if($(this).val()==3){s3.play();}
-		if($(this).val()==4){s4.play();}
-		if($(this).val()==5){s5.play();}
-		if($(this).val()==6){s6.play();}
+		if($(this).val()==1){s1.play();}if($(this).val()==2){s2.play();}
+		if($(this).val()==3){s3.play();}if($(this).val()==4){s4.play();}
+		if($(this).val()==5){s5.play();}if($(this).val()==6){s6.play();}
+		if($(this).val()==7){s7.play();}if($(this).val()==8){s8.play();}
 	})
 	
 	$(".gotomake").click(function(){
@@ -277,18 +300,17 @@ function getphs(){
 
 	$('.ps').click(function(){
 		var ids = $(this).attr('id');
-		if(ids=="1-1"){h1.play();}
-		if(ids=="1-2"){h2.play();}
-		if(ids=="1-3"){h3.play();}
-		if(ids=="1-4"){h4.play();}
-		if(ids=="2-1"){h5.play();}
-		if(ids=="2-2"){h6.play();}
-		if(ids=="2-3"){h7.play();}
-		if(ids=="2-4"){h8.play();}
-		if(ids=="3-1"){h9.play();}
-		if(ids=="3-2"){h10.play();}
-		if(ids=="3-3"){h11.play();}
-		if(ids=="3-4"){h12.play();}
+		if(ids=="1-1"){h1.play();}if(ids=="1-2"){h2.play();}if(ids=="1-3"){h3.play();}
+		if(ids=="1-4"){h4.play();}if(ids=="2-1"){h5.play();}if(ids=="2-2"){h6.play();}
+		if(ids=="2-3"){h7.play();}if(ids=="2-4"){h8.play();}if(ids=="3-1"){h9.play();}
+		if(ids=="3-2"){h10.play();}if(ids=="3-3"){h11.play();}if(ids=="3-4"){h12.play();}
+		if(ids=="4-1"){h13.play();}if(ids=="4-2"){h14.play();}if(ids=="4-3"){h15.play();}
+		if(ids=="4-4"){h16.play();}if(ids=="5-1"){h17.play();}if(ids=="5-2"){h18.play();}
+		if(ids=="5-3"){h19.play();}if(ids=="5-4"){h20.play();}if(ids=="6-1"){h21.play();}
+		if(ids=="6-2"){h22.play();}if(ids=="6-3"){h23.play();}if(ids=="6-4"){h24.play();}
+		if(ids=="7-1"){h25.play();}if(ids=="7-2"){h26.play();}if(ids=="7-3"){h27.play();}
+		if(ids=="7-4"){h28.play();}if(ids=="8-1"){h39.play();}if(ids=="8-2"){h30.play();}
+		if(ids=="8-3"){h31.play();}if(ids=="8-4"){h32.play();}
 	})
 }
 function recordstart(){
@@ -296,9 +318,14 @@ function recordstart(){
     if(state===0){
     	recorder.record(soundFile);
     	s1.play();
-		s1.onended(function(){s2.play();});
-		s2.onended(function(){s3.play();});
-		s3.onended(function(){state=1;recordstart();});
+		s1.onended(function(){if(partnum==1){state=1;recordstart();}else{s2.play();}});
+		s2.onended(function(){if(partnum==2){state=1;recordstart();}else{s3.play();}});
+		s3.onended(function(){if(partnum==3){state=1;recordstart();}else{s4.play();}});
+		s4.onended(function(){if(partnum==4){state=1;recordstart();}else{s5.play();}});
+		s5.onended(function(){if(partnum==5){state=1;recordstart();}else{s6.play();}});
+		s6.onended(function(){if(partnum==6){state=1;recordstart();}else{s7.play();}});
+		s7.onended(function(){if(partnum==7){state=1;recordstart();}else{s8.play();}});
+		s8.onended(function(){state=1;recordstart();});
     }else if(state===1){
       recorder.stop();
       $("#mixing").val('play');

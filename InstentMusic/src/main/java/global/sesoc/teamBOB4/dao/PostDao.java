@@ -126,8 +126,6 @@ public class PostDao {
 		SearchWord list = mapper.searchcheck(search_word);
 		return list;
 	}
-<<<<<<< HEAD
-
 
 	public int checkLike_click(Like_click like_click) {
 		PostMapper mapper = session.getMapper(PostMapper.class);
@@ -165,12 +163,9 @@ public class PostDao {
 		 mapper.down_like_in_post(post_number);
 	}
 
-=======
-	
 	public int hitcount(String search_word) {
 		PostMapper mapper = session.getMapper(PostMapper.class);
 		
 		return mapper.updateHit(search_word);
 	}
->>>>>>> branch 'jojang' of https://github.com/BOB4s/PROJECT_BOB4.git
 }

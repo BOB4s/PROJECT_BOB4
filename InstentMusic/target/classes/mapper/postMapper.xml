@@ -106,7 +106,6 @@
 		#{search_word}
 	)
 	</insert>
-<<<<<<< HEAD
 	<select id="checkLike_click" parameterType="Like_click" resultType="int">
 	 (select NVL(max(likt_type),0)  from Like_click
 	where post_number =#{post_number}
@@ -153,10 +152,8 @@
 	</update>
 		<update id="down_like_in_post" parameterType="int">
 		update post set post_like= post_like-1
-	
-=======
+	</update>
 	<update id="updateHit" parameterType="string">
 	update searchword set hitcount = hitcount+1 where search_word = #{search_word}
->>>>>>> branch 'jojang' of https://github.com/BOB4s/PROJECT_BOB4.git
 	</update>
 </mapper>

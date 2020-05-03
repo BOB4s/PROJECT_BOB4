@@ -273,7 +273,6 @@ span.forgotPassword{
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			  <a href="#about">About</a>
 			  <a href="#team">Team</a>
-			  <a href="#">Clients</a>
 			  <a href="#">Contact</a>
 		</div>
 	</nav>

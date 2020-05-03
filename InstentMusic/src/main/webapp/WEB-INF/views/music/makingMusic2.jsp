@@ -29,10 +29,10 @@ $(function() {
 	$("#slib").click(function(){
 		location.href="makingMusic";
 	})
+	gettemp();
 	$("#makingstart").click(function(){
 		userStartAudio();
 		stt.play();
-		gettemp();
 		getall();
 	})
 })

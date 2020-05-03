@@ -141,6 +141,9 @@ padding-top: 75px;
 	height : 30px;
 	text-align: center;
 }
+#searchp{
+	cursor: pointer;
+}
 </style>
 <!-- 192.168.0.84 -->
 <script type="text/javascript">
@@ -358,6 +361,7 @@ padding-top: 75px;
 		location.href = "postGetOne?post_number=" + post_number;
 
 		}
+	
 	$(function(){
 		$("#searchPost").keyup(function(){
 			var data = {'search_word':$("#searchPost").val()};
@@ -392,23 +396,38 @@ padding-top: 75px;
 		})
 	})
 	$(function(){
-		$("#searchp").click(function(){
-			var data = {'search_word':$("#searchPost").val()};
-			$.ajax({
-				method : 'get'
-				,url : 'postList'
-				,data : data
-				,success : function(resp){
-					var a = '';
-					$.each(resp,function(index,item){
-						a+='<a>'+item.post_nickname+'</a>';
-					})
-					$("#wrapper2").append(a);
-				}
-				})
-			})
-		
-		})
+      $("#searchp").click(function(){
+         var data = {'search_word':$("#searchPost").val()};
+         $.ajax({
+            method : 'get'
+            ,url : 'postList'
+            ,data : data
+            ,success : function(resp){
+                $("#profile").html('');
+               var a = "<section class='profile__photos'>";
+               $.each(resp,function(index,item){
+                    var rannum =  Math.floor(Math.random() * 3)+0.65;/* 0.65 */
+                        a += "<div class='profile__photo' style='-webkit-transform: translateY(200px);transform: translateY(200px);-webkit-animation: moveUp "+rannum+"s ease forwards;animation: moveUp "+rannum+"s ease forwards;'>"
+                        //사진
+                        if(item.post_original==null){
+                           a += '<img src="resources/images/IUfeed.jpg" />'
+                           }else{
+                              a += '<img src="<c:url value="/resources/uploadPath/'+item.post_original+'"/>"/>'   
+                              }
+                         a += "<div class='profile__photo-overlay' onclick='postDetail(event)'>"
+                         a += "<input type='hidden' id='post_number'  name='post_number' value='"+item.post_number+"' >"
+                          a += "<span class='overlay__item'> <i class='fa fa-heart'>"+item.mus_title+"</i></span> ";
+                          a += "<span class='overlay__item'> <i class='fa fa-comment'>"+item.post_nickname+"</i></span> ";
+                          a += "</div></div>"
+                        
+                        });
+               data +="</section>";
+               $("#profile").append(a);
+            }
+            })
+         })
+      
+      })
 	
 	/* function getfollwedList(){
 		var data = "<table border='1' style='font-size: 15pt'>";
@@ -488,9 +507,13 @@ padding-top: 75px;
 			</a>
 		</div>
 		<div class="navigation__column">
-			<i class="fa fa-search"></i> <input type="text" placeholder="Search">
-		</div>
-	
+			<div class="searchingTool">
+         <a href="#musicBoard"><i id="searchp" class="fa fa-search"></i></a><input id="searchPost" type="text" placeholder="Search">
+      </div>
+      </div>
+      <div id="myUL3">
+         <ul id="myUL2"></ul>
+      </div>   
 		<div class="navigation__column">
 			<div class="navigations__links">
 				<div class="navigation__list-item"><a 
@@ -511,7 +534,6 @@ padding-top: 75px;
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			  <a href="musiclist"><i class="fa fa-music"></i> Music List</a>
 			  <a href="profile"><i class="fa fa-user-o"> Profile</i></a>
-			  <a href="follow"><i class="fa fa-user-plus"></i> Follow</a>
 			  <a href="chattingTemp" ><i class="fa fa-comments-o "></i> Texting</a>
 			  <a href="logout"><i class="fa fa-power-off"></i> Logout</a>
 			</div>
